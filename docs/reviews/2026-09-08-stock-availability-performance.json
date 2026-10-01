@@ -1,0 +1,97 @@
+{
+  "at": "2026-09-08T12:02:43.182Z",
+  "baseline": "25878b7e",
+  "baselineDependencyFiles": [
+    "backend/services/InventoryService.js",
+    "backend/services/StockLedgerService.js",
+    "backend/services/StockProductAdapter.js"
+  ],
+  "withSourceContext": true,
+  "baselineSourceContext": true,
+  "activated": true,
+  "runtime": "v24.16.0",
+  "cpu": "Intel(R) Core(TM) i7-14700KF",
+  "limitations": [
+    "Stock service transactions, not full checkout or HTTP.",
+    "Shared workstation; DB CPU/RAM and low-end hardware unmeasured.",
+    "RSS endpoints include retained fixture memory, not peak or incremental allocation."
+  ],
+  "results": [
+    {
+      "round": 0,
+      "label": "baseline",
+      "samples": 1000,
+      "p50_ms": 1.9862000000002809,
+      "p95_ms": 3.1763999999998305,
+      "p99_ms": 4.804599999999937,
+      "node_cpu_ms_per_call": 0.86,
+      "rss_before_mib": 92.12109375,
+      "rss_after_mib": 94.7734375
+    },
+    {
+      "round": 0,
+      "label": "current",
+      "samples": 1000,
+      "p50_ms": 2.249699999999393,
+      "p95_ms": 3.879399999999805,
+      "p99_ms": 4.594200000000001,
+      "node_cpu_ms_per_call": 1.156,
+      "rss_before_mib": 94.65625,
+      "rss_after_mib": 95.42578125
+    },
+    {
+      "round": 1,
+      "label": "current",
+      "samples": 1000,
+      "p50_ms": 3.712199999999939,
+      "p95_ms": 4.78519999999844,
+      "p99_ms": 5.208099999999831,
+      "node_cpu_ms_per_call": 1.734,
+      "rss_before_mib": 95.54296875,
+      "rss_after_mib": 92.046875
+    },
+    {
+      "round": 1,
+      "label": "baseline",
+      "samples": 1000,
+      "p50_ms": 3.3716000000003987,
+      "p95_ms": 4.622299999999086,
+      "p99_ms": 5.369599999999991,
+      "node_cpu_ms_per_call": 1.392,
+      "rss_before_mib": 92.14453125,
+      "rss_after_mib": 92.45703125
+    },
+    {
+      "round": 2,
+      "label": "baseline",
+      "samples": 1000,
+      "p50_ms": 3.397799999998824,
+      "p95_ms": 4.638699999999517,
+      "p99_ms": 5.350000000000364,
+      "node_cpu_ms_per_call": 1.124,
+      "rss_before_mib": 92.45703125,
+      "rss_after_mib": 92.8671875
+    },
+    {
+      "round": 2,
+      "label": "current",
+      "samples": 1000,
+      "p50_ms": 3.1130000000011933,
+      "p95_ms": 4.515499999997701,
+      "p99_ms": 5.257799999999406,
+      "node_cpu_ms_per_call": 1.438,
+      "rss_before_mib": 92.8671875,
+      "rss_after_mib": 92.703125
+    },
+    {
+      "label": "durable receipt",
+      "samples": 1000,
+      "p50_ms": 4.209000000002561,
+      "p95_ms": 5.747699999999895,
+      "p99_ms": 6.634699999998702,
+      "node_cpu_ms_per_call": 1.687,
+      "rss_before_mib": 92.87109375,
+      "rss_after_mib": 93.26171875
+    }
+  ]
+}

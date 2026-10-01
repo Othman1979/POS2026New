@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@import "./ink-ramp.css";
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  color: #000;
+  background: #fff;
+}
+
+html[data-print-layout="thermal"] body {
+  width: 80mm;
+  padding: 5mm;
+}
+
+html[data-print-layout="a4"] body {
+  width: auto;
+  padding: 0;
+}
+
+.dashed-line {
+  border-top: 2px dashed #000;
+  margin: 10px 0;
+}
+
+html[dir="rtl"][data-print-layout="thermal"] body {
+  font-family: Tahoma, 'Segoe UI', Arial, sans-serif;
+}
+
+.thermal-report {
+  --u: calc(70mm / 556);
+  color: #000;
+}
+
+.thermal-latin {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.thermal-arabic {
+  direction: rtl;
+  text-align: right;
+  font-family: Tahoma, 'Segoe UI', Arial, sans-serif;
+}
+
+.thermal-report .report-store {
+  margin-top: calc(8 * var(--u));
+  font-size: calc(30 * var(--u));
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.thermal-report .report-title {
+  margin-block: calc(8 * var(--u));
+  font-size: calc(38 * var(--u));
+  font-weight: 900;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.thermal-report .report-section-title {
+  margin-block: calc(10 * var(--u)) calc(5 * var(--u));
+  font-size: calc(25 * var(--u));
+  font-weight: 900;
+  text-align: center;
+}
+
+.thermal-report .report-row {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(12 * var(--u));
+  margin-bottom: calc(4 * var(--u));
+  font-size: calc(23 * var(--u));
+  font-weight: 700;
+}
+
+.thermal-report .report-row > :last-child {
+  direction: ltr;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.thermal-report .text-xl { font-size: calc(34 * var(--u)); }
+.thermal-report .text-lg { font-size: calc(30 * var(--u)); }
+.thermal-report .text-sm { font-size: calc(25 * var(--u)); }
+.thermal-report .text-xs { font-size: calc(23 * var(--u)); }
+.thermal-report .text-\[11px\] { font-size: calc(21 * var(--u)); }
+.thermal-report .text-\[10px\] { font-size: calc(19 * var(--u)); }
+.thermal-report .dashed-line {
+  border-top-width: calc(3 * var(--u));
+  margin-block: calc(9 * var(--u));
+}
+
+.report-major-rule {
+  border-top: calc(4 * var(--u)) solid #000;
+  margin-block: calc(10 * var(--u));
+}
+
+.report-minor-rule {
+  border-top: calc(3 * var(--u)) dashed #000;
+  margin-block: calc(9 * var(--u));
+}
+
+.print-preparing {
+  padding-top: 20mm;
+  font-size: 12pt;
+  font-weight: 700;
+  text-align: center;
+}

@@ -1,0 +1,69 @@
+{
+  "database": "posapp_review_recipe_p1_a077bac00001",
+  "version": "10.4.32-MariaDB",
+  "workload": {
+    "historicalOrders": 50000,
+    "historicalItems": 50000,
+    "dayOrders": 1,
+    "dayItems": 1
+  },
+  "periodMetricsMedianMs": 195.86599999999999,
+  "discountMs": 129.3831,
+  "discountRowsRead": 100002,
+  "explain": [
+    {
+      "id": 1,
+      "select_type": "PRIMARY",
+      "table": "<derived2>",
+      "type": "ALL",
+      "possible_keys": null,
+      "key": null,
+      "key_len": null,
+      "ref": null,
+      "rows": "498240",
+      "Extra": ""
+    },
+    {
+      "id": 2,
+      "select_type": "DERIVED",
+      "table": "o",
+      "type": "ALL",
+      "possible_keys": "idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+      "key": null,
+      "key_len": null,
+      "ref": null,
+      "rows": "49824",
+      "Extra": "Using where; Using temporary; Using filesort"
+    },
+    {
+      "id": 2,
+      "select_type": "DERIVED",
+      "table": "<derived3>",
+      "type": "ref",
+      "possible_keys": "key0",
+      "key": "key0",
+      "key_len": "5",
+      "ref": "posapp_review_recipe_p1_a077bac00001.o.invoice_id",
+      "rows": "10",
+      "Extra": ""
+    },
+    {
+      "id": 3,
+      "select_type": "DERIVED",
+      "table": "oi",
+      "type": "ref",
+      "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+      "key": "idx_order_items_parent_invoice",
+      "key_len": "5",
+      "ref": "const",
+      "rows": "24940",
+      "Extra": "Using index condition; Using where"
+    }
+  ],
+  "sourceHead": "01ef8df1316484a19e1f655c676d0b86901f5914",
+  "financialMetricsBlob": "6b97c067c2cddc250075266a006be30c3755dde4",
+  "sourceProvenance": {
+    "recordedDuringMeasurement": false,
+    "verification": "Source fields were added after measurement. sourceHead is the known audit base; financialMetricsBlob was derived from git rev-parse 01ef8df1316484a19e1f655c676d0b86901f5914:backend/services/financialEventMetrics.js. The original measurement runner did not record source hashes."
+  }
+}

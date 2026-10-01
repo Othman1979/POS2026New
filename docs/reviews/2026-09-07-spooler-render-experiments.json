@@ -1,0 +1,242 @@
+[
+  {
+    "name": "receipt",
+    "variant": "baseline",
+    "ms": 85.2,
+    "cpu": 47.0,
+    "rssMiB": 136.3,
+    "identical": true
+  },
+  {
+    "name": "receipt",
+    "variant": "png-speed",
+    "ms": 85.6,
+    "cpu": 64.0,
+    "rssMiB": 131.0,
+    "identical": true
+  },
+  {
+    "name": "receipt",
+    "variant": "reuse-page",
+    "ms": 52.5,
+    "cpu": 48.0,
+    "rssMiB": 122.6,
+    "identical": true
+  },
+  {
+    "name": "kitchen",
+    "variant": "baseline",
+    "ms": 80.5,
+    "cpu": 15.0,
+    "rssMiB": 150.8,
+    "identical": true
+  },
+  {
+    "name": "kitchen",
+    "variant": "png-speed",
+    "ms": 80.5,
+    "cpu": 16.0,
+    "rssMiB": 148.8,
+    "identical": true
+  },
+  {
+    "name": "kitchen",
+    "variant": "reuse-page",
+    "ms": 61.6,
+    "cpu": 79.0,
+    "rssMiB": 137.3,
+    "identical": true
+  },
+  {
+    "name": "report_200_rows",
+    "variant": "baseline",
+    "ms": 496.0,
+    "cpu": 47.0,
+    "rssMiB": 184.7,
+    "identical": true
+  },
+  {
+    "name": "report_200_rows",
+    "variant": "png-speed",
+    "ms": 431.6,
+    "cpu": 47.0,
+    "rssMiB": 189.8,
+    "identical": true
+  },
+  {
+    "name": "report_200_rows",
+    "variant": "reuse-page",
+    "ms": 461.1,
+    "cpu": 63.0,
+    "rssMiB": 184.1,
+    "identical": true
+  },
+  {
+    "name": "compiled_receipt-basic",
+    "variant": "baseline",
+    "ms": 96.6,
+    "cpu": 15.0,
+    "rssMiB": 132.7,
+    "identical": true
+  },
+  {
+    "name": "compiled_receipt-basic",
+    "variant": "png-speed",
+    "ms": 96.5,
+    "cpu": 0.0,
+    "rssMiB": 145.4,
+    "identical": true
+  },
+  {
+    "name": "compiled_receipt-basic",
+    "variant": "reuse-page",
+    "ms": 47.6,
+    "cpu": 16.0,
+    "rssMiB": 143.5,
+    "identical": true
+  },
+  {
+    "name": "compiled_receipt-bundle",
+    "variant": "baseline",
+    "ms": 96.5,
+    "cpu": 0.0,
+    "rssMiB": 132.5,
+    "identical": true
+  },
+  {
+    "name": "compiled_receipt-bundle",
+    "variant": "png-speed",
+    "ms": 96.5,
+    "cpu": 0.0,
+    "rssMiB": 132.9,
+    "identical": true
+  },
+  {
+    "name": "compiled_receipt-bundle",
+    "variant": "reuse-page",
+    "ms": 47.6,
+    "cpu": 15.0,
+    "rssMiB": 131.9,
+    "identical": true
+  },
+  {
+    "name": "compiled_receipt-accepted-jofotara",
+    "variant": "baseline",
+    "ms": 97.0,
+    "cpu": 47.0,
+    "rssMiB": 132.0,
+    "identical": true
+  },
+  {
+    "name": "compiled_receipt-accepted-jofotara",
+    "variant": "png-speed",
+    "ms": 80.5,
+    "cpu": 0.0,
+    "rssMiB": 132.2,
+    "identical": true
+  },
+  {
+    "name": "compiled_receipt-accepted-jofotara",
+    "variant": "reuse-page",
+    "ms": 55.8,
+    "cpu": 0.0,
+    "rssMiB": 131.4,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-normal",
+    "variant": "baseline",
+    "ms": 79.4,
+    "cpu": 15.0,
+    "rssMiB": 130.1,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-normal",
+    "variant": "png-speed",
+    "ms": 95.1,
+    "cpu": 15.0,
+    "rssMiB": 130.1,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-normal",
+    "variant": "reuse-page",
+    "ms": 61.1,
+    "cpu": 0.0,
+    "rssMiB": 129.3,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-void",
+    "variant": "baseline",
+    "ms": 79.7,
+    "cpu": 0.0,
+    "rssMiB": 127.7,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-void",
+    "variant": "png-speed",
+    "ms": 80.1,
+    "cpu": 0.0,
+    "rssMiB": 128.0,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-void",
+    "variant": "reuse-page",
+    "ms": 46.6,
+    "cpu": 15.0,
+    "rssMiB": 126.9,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-subscription",
+    "variant": "baseline",
+    "ms": 79.7,
+    "cpu": 16.0,
+    "rssMiB": 127.7,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-subscription",
+    "variant": "png-speed",
+    "ms": 80.9,
+    "cpu": 0.0,
+    "rssMiB": 128.1,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-subscription",
+    "variant": "reuse-page",
+    "ms": 46.8,
+    "cpu": 16.0,
+    "rssMiB": 127.4,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-subscription-void",
+    "variant": "baseline",
+    "ms": 79.8,
+    "cpu": 16.0,
+    "rssMiB": 128.2,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-subscription-void",
+    "variant": "png-speed",
+    "ms": 80.3,
+    "cpu": 0.0,
+    "rssMiB": 128.5,
+    "identical": true
+  },
+  {
+    "name": "compiled_kitchen-subscription-void",
+    "variant": "reuse-page",
+    "ms": 46.1,
+    "cpu": 0.0,
+    "rssMiB": 127.4,
+    "identical": true
+  }
+]

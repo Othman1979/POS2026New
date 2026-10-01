@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/" />
+    <title>POS System</title>
+
+
+
+    <link rel="stylesheet" href="/src/pos.css" />
+    <link rel="stylesheet" href="/assets/css/fonts.css" />
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="/assets/css/fontawesome-subset.css" />
+
+    <script>try{if(!localStorage.getItem('pos_active_user_id'))document.documentElement.classList.add('pos-boot-signed-out')}catch(e){}</script>
+    <style>
+      html, body, #app { width: 100%; height: 100%; margin: 0; }
+      #pos-boot-shell { position: fixed; inset: 0; display: grid; grid-template-rows: 3rem minmax(0, 1fr); background: #d7dce2; }
+      .pos-boot-top { background: #f2f4f6; border-bottom: 1px solid #aeb8c2; }
+      .pos-boot-body { display: grid; grid-template-columns: 10rem minmax(0, 1fr) minmax(20rem, 30%); min-height: 0; gap: 1px; background: #aeb8c2; }
+      .pos-boot-rail, .pos-boot-cart { background: #e7eaef; }
+      .pos-boot-products { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.875rem, 1fr)); align-content: start; gap: 1px; padding: 1px; overflow: hidden; background: #d7dce2; }
+      .pos-boot-products span { display: block; height: 6rem; background: #edf0f3; border-bottom: 2px solid #aeb8c2; }
+      /* Signed-out visitor: the neutral login shell instead of a POS skeleton. */
+      .pos-boot-signed-out #pos-boot-shell { display: block; background: #e7e9ee; }
+      .pos-boot-signed-out #pos-boot-shell > * { display: none; }
+      @media (max-width: 63.99rem) {
+        .pos-boot-body { grid-template-columns: minmax(0, 1fr); grid-template-rows: 2.75rem minmax(0, 1fr) 35%; }
+        .pos-boot-rail { grid-row: 1; }
+      }
+    </style>
+
+</head>
+
+<body class="bg-surface font-sans h-[100dvh] overflow-hidden no-select text-on-surface selection:bg-primary selection:text-white">
+    <div id="app" class="flex flex-col h-full w-full relative overflow-hidden">
+      <div id="pos-boot-shell" role="status" aria-label="Loading">
+        <div class="pos-boot-top" aria-hidden="true"></div>
+        <div class="pos-boot-body" aria-hidden="true">
+          <div class="pos-boot-rail"></div>
+          <div class="pos-boot-products">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="pos-boot-cart"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+[
+  {
+    "case": "arabic-mobile-ingredient-flow",
+    "status": "failed",
+    "error": "Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for get_by_role(\"row\").filter(has=get_by_text(\"دجاج اختبار b9992\", exact=True)).get_by_role(\"button\", name=\"جرد\", exact=True)\n",
+    "seconds": 31.02
+  }
+]

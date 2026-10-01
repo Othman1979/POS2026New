@@ -1,0 +1,26 @@
+/* Tailwind's own teal scale, remapped to the ledger ink the product uses.
+
+   The POS and admin carry ~538 teal-* utilities across 39 components. Rather
+   than rename every call site, the ramp itself was moved to ink, step for
+   step, so every light/dark relationship the layouts already rely on is
+   preserved and no markup had to change.
+
+   This lives in one file because every Tailwind entrypoint needs it —
+   including menu.css and print.css, which render no teal today. Without it
+   those two bundles keep the stock teal, and the first teal-* class anyone
+   writes there would come out green while the identical class renders ink
+   everywhere else. */
+
+@theme {
+  --color-teal-50:  #eef2f7;
+  --color-teal-100: #dce4ee;
+  --color-teal-200: #bcc9dc;
+  --color-teal-300: #8fa6c4;
+  --color-teal-400: #5c7ca3;
+  --color-teal-500: #3a5c85;
+  --color-teal-600: #2c4b6e;
+  --color-teal-700: #24405e;
+  --color-teal-800: #1d3450;
+  --color-teal-900: #182b42;
+  --color-teal-950: #121f30;
+}

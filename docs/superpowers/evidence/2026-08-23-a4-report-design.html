@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POSAPP A4 Report Mock</title>
+<!-- In the real print window this is: <link rel="stylesheet" href="/assets/css/fonts.css">
+     which self-hosts IBM Plex Sans Arabic 300-700 (already in assets/fonts/).
+     This standalone mock falls back to Segoe UI so it opens anywhere. -->
+<style>
+/* ═══════════════════════════════════════════════════════════════════════
+   POSAPP ADMIN REPORT — A4 DESIGN SYSTEM
+   A ledger sheet, not a widened receipt. Black on white, paged media.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root{
+  /* INK — hierarchy comes from rule weight and type weight, never from grey
+     figures. Every number on the page is pure black so a photocopy or a
+     faxed audit copy survives. Grey is reserved for labels and metadata. */
+  --ink:        #000;
+  --ink-70:     #4a4a4a;
+  --ink-40:     #8a8a8a;
+  --wash:       #f2f2f2;   /* the only tint: table head bands + total rows */
+
+  /* RULES — four weights, each with one job */
+  --rule-hair:  0.5pt solid var(--ink);   /* between data rows            */
+  --rule-thin:  1pt   solid var(--ink);   /* under an eyebrow, above total*/
+  --rule-thick: 2pt   solid var(--ink);   /* document boundary            */
+  --rule-dash:  0.75pt dashed var(--ink); /* minor split (mirrors thermal)*/
+
+  /* SPACE — 3mm base */
+  --s1: 1.5mm; --s2: 3mm; --s3: 6mm; --s4: 9mm;
+}
+
+@page{ size: A4 portrait; margin: 0; }
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif;
+  font-weight:400; color:var(--ink); background:#fff;
+  font-size:8.5pt; line-height:1.35;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── RUNNING HEADER / FOOTER ────────────────────────────────────────────
+   position:fixed repeats these on every printed page. The @page margins
+   above reserve the band so body text never collides with them. Serial and
+   hash repeat per page so a stapled report stays defensible when pages
+   are separated — that is why they repeat, not decoration. */
+.run-head,.run-foot{ position:fixed; left:0; right:0; }
+.run-head{ top:-10mm; border-bottom:var(--rule-thick); padding-bottom:1.2mm; }
+.run-foot{ bottom:-8mm; border-top:var(--rule-hair); padding-top:1.2mm;
+           font-size:6.5pt; font-weight:300; color:var(--ink-40); }
+.run-row{ display:flex; justify-content:space-between; align-items:baseline; gap:var(--s2); }
+.run-store{ font-size:8pt; font-weight:600; letter-spacing:.08em; text-transform:uppercase; }
+.run-serial{ font-size:8pt; font-weight:700; }
+.run-window{ font-size:6.5pt; font-weight:300; color:var(--ink-70); }
+
+/* ── DOCKET — the signature block ───────────────────────────────────────
+   The evidentiary facts of the document: serial, window, issuer, hash,
+   copy state when the payload actually supplies them. Page 1 only. */
+.docket{ border:var(--rule-thick); padding:var(--s2) var(--s3);
+         display:grid; grid-template-columns:repeat(3,1fr); gap:var(--s2) var(--s3);
+         break-inside:avoid; margin-bottom:var(--s4); }
+.docket div{ display:flex; flex-direction:column; gap:.6mm; }
+.docket dt{ font-size:6.5pt; font-weight:300; letter-spacing:.06em;
+            text-transform:uppercase; color:var(--ink-70); }
+.docket dd{ font-size:9pt; font-weight:600; }
+.hash{ letter-spacing:.08em; font-weight:400; font-size:8pt; }
+
+/* COPY STATE — the one reversed element in the system, and it appears only
+   on a reprint. An original document reads calm; a copy shouts. The
+   reversal carries information, so it earns the toner. */
+.copy{ display:inline-block; padding:.8mm 2.5mm; font-size:7.5pt;
+       font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+.copy--original{ border:1.5pt solid var(--ink); }
+.copy--reprint{ background:var(--ink); color:#fff; }
+
+.report-title{ text-align:center; margin-bottom:var(--s4); }
+.report-title p{ margin-bottom:1mm; font-size:8pt; font-weight:600;
+                 letter-spacing:.08em; text-transform:uppercase; }
+.report-title h1{ font-size:15pt; line-height:1.2; }
+.report-title .report-purpose{ margin-top:1.5mm; color:var(--ink-70); font-size:7pt;
+                               font-weight:400; letter-spacing:0; text-transform:none; }
+
+/* The first question an owner asks is whether the day closed cleanly. This
+   register answers it before the reader enters the supporting ledgers. */
+.verdict{ display:grid; grid-template-columns:1.1fr 2fr; align-items:stretch;
+          border:var(--rule-thick); margin-bottom:var(--s4); break-inside:avoid; }
+.verdict-main{ display:flex; flex-direction:column; justify-content:center; padding:var(--s3);
+               border-inline-end:var(--rule-thin); }
+.verdict-label{ color:var(--ink-70); font-size:6.5pt; font-weight:400;
+                letter-spacing:.08em; text-transform:uppercase; }
+.verdict-result{ margin-top:1mm; font-size:20pt; font-weight:700; line-height:1; }
+.verdict-facts{ display:grid; grid-template-columns:repeat(3,1fr); }
+.verdict-facts div{ display:flex; flex-direction:column; justify-content:center; gap:1mm;
+                    padding:var(--s2); border-inline-start:var(--rule-hair); }
+.verdict-facts div:first-child{ border-inline-start:0; }
+.verdict-facts span{ color:var(--ink-70); font-size:6.5pt; }
+.verdict-facts strong{ font-size:10pt; }
+
+/* ── SECTION ────────────────────────────────────────────────────────────*/
+.section{ margin-bottom:var(--s4); }
+.section-head{ font-size:8.5pt; font-weight:700; letter-spacing:.12em;
+               text-transform:uppercase; border-bottom:var(--rule-thin);
+               padding-bottom:1mm; margin-bottom:var(--s3);
+               break-after:avoid; }      /* a heading never ends a page */
+
+/* ── METRIC REGISTER ────────────────────────────────────────────────────
+   A ruled register, not cards. No boxes, no shadow, no radius — the
+   hairline verticals do the separating, which is how a ledger book does it
+   and is the deliberate opposite of the dashboard-card default. */
+.metrics{ display:grid; grid-template-columns:repeat(4,1fr);
+          border-top:var(--rule-hair); border-bottom:var(--rule-hair);
+          break-inside:avoid; }
+.metrics > div{ padding:var(--s2) var(--s2); border-inline-start:var(--rule-hair); }
+.metrics > div:nth-child(4n+1){ border-inline-start:0; }
+.metric-label{ font-size:6.5pt; font-weight:300; letter-spacing:.06em;
+               text-transform:uppercase; color:var(--ink-70); margin-bottom:1mm; }
+.metric-value{ font-size:16pt; font-weight:600; line-height:1.1; }
+.metric-value small{ font-size:8pt; font-weight:400; color:var(--ink-70); }
+
+/* ── LEDGER TABLE ───────────────────────────────────────────────────────*/
+table{ width:100%; border-collapse:collapse; }
+thead{ display:table-header-group; }          /* headings repeat per page  */
+/* NOTE: never `display:table-footer-group` on a totals row — it would
+   repeat the total on every page, which on a financial document reads as
+   several totals. Totals live in the last tbody row instead. */
+th{ background:var(--wash); font-size:7pt; font-weight:600; letter-spacing:.07em;
+    text-transform:uppercase; text-align:start; padding:var(--s1) 2mm;
+    border-top:var(--rule-thin); border-bottom:var(--rule-thin); }
+td{ padding:var(--s1) 2mm; border-bottom:var(--rule-hair); }
+tbody tr{ break-inside:avoid; }               /* a row never splits        */
+tr.total td{ background:var(--wash); font-weight:700; font-size:9.5pt;
+             border-top:var(--rule-thin); border-bottom:var(--rule-thin); }
+.num{ text-align:end; font-weight:600; font-variant-numeric:tabular-nums;
+      direction:ltr; unicode-bidi:isolate; }  /* figures stay LTR in RTL   */
+th.num{ font-weight:600; }
+.dim{ color:var(--ink-70); font-weight:400; }
+
+.minor-split{ border-top:var(--rule-dash); margin:var(--s2) 0; }
+.split-ledger{ display:grid; grid-template-columns:1fr 1fr; gap:var(--s3); align-items:start; }
+.split-ledger .section{ margin-bottom:0; }
+.compact td,.compact th{ padding-block:1.1mm; }
+.row-note{ display:block; margin-top:.4mm; color:var(--ink-70); font-size:6.25pt; font-weight:400; }
+.review-register{ display:grid; grid-template-columns:repeat(3,1fr); border-block:var(--rule-thin);
+                  break-inside:avoid; }
+.review-register > div{ padding:var(--s2); border-inline-start:var(--rule-hair); }
+.review-register > div:first-child{ border-inline-start:0; }
+.review-register strong{ display:block; margin-bottom:1mm; font-size:8pt; }
+.review-register span{ display:block; color:var(--ink-70); font-size:7pt; line-height:1.45; }
+.trace{ margin-top:var(--s4); padding-top:var(--s2); border-top:var(--rule-thin);
+        display:grid; grid-template-columns:1fr 1fr; gap:var(--s4); break-inside:avoid; }
+.trace div{ min-height:13mm; border-bottom:var(--rule-hair); }
+.trace span{ color:var(--ink-70); font-size:6.5pt; text-transform:uppercase; letter-spacing:.06em; }
+
+/* ── RTL ────────────────────────────────────────────────────────────────
+   The table flips; the numbers do not. `unicode-bidi:isolate` on .num is
+   what stops "-32.00 د.أ" reordering into "د.أ 32.00-". */
+[dir=rtl]{ text-align:right; }
+
+/* ═══ MOCK CHROME — not part of the system ════════════════════════════ */
+.stage{ background:#e8e8e8; padding:24px; font-family:'IBM Plex Sans Arabic',sans-serif; }
+.preview-bar{ position:sticky; top:0; z-index:2; max-width:210mm; margin:0 auto 18px;
+              padding:12px 14px; display:flex; align-items:center; justify-content:space-between;
+              gap:18px; background:#fff; border:1px solid #bdbdbd; box-shadow:0 2px 10px rgba(0,0,0,.1); }
+.preview-bar h1{ font-size:15px; margin:0 0 2px; }
+.preview-bar p{ font-size:11px; color:#555; }
+.preview-bar button{ flex:0 0 auto; border:0; border-radius:0; background:#111; color:#fff;
+                     padding:9px 14px; font:600 12px/1 'Segoe UI',Arial,sans-serif; cursor:pointer; }
+.preview-bar button:hover{ background:#333; }
+.preview-bar button:focus-visible{ outline:3px solid #767676; outline-offset:2px; }
+.sheet{ width:210mm; min-height:297mm; padding:22mm 12mm 16mm; background:#fff;
+        margin:0 auto 24px; box-shadow:0 2px 12px rgba(0,0,0,.18); position:relative; }
+.sheet .run-head{ position:absolute; top:12mm; left:12mm; right:12mm; }
+.sheet .run-foot{ position:absolute; bottom:8mm; left:12mm; right:12mm; }
+.sheet-body{ padding-top:4mm; }
+.note{ max-width:210mm; margin:0 auto 10px; font-size:11px; color:#555;
+       letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
+@media print{
+  .stage{background:#fff;padding:0}
+  .preview-bar,.note{display:none}
+  .sheet{width:210mm;min-height:297mm;padding:22mm 12mm 16mm;box-shadow:none;
+         margin:0;break-after:page;}
+  .sheet--last{break-after:auto;}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+
+<header class="preview-bar">
+  <div>
+    <h1>POSAPP A4 report preview</h1>
+    <p>Two-page audit report with fictional sample data. Page one summarizes the business day. Page two contains the supporting details.</p>
+  </div>
+  <button type="button" onclick="window.print()">Print preview</button>
+</header>
+
+<p class="note">Sample data | A4 Z report | Page 1 of 2 | Financial summary</p>
+<div class="sheet" dir="rtl">
+  <div class="run-head">
+    <div class="run-row">
+      <span class="run-store">مطعم تجريبي</span>
+      <span class="run-serial">جرد Z / Z-114</span>
+    </div>
+    <div class="run-row">
+      <span class="run-window num">2026-08-22 06:00 / 2026-08-23 05:59</span>
+      <span class="run-window">الملخص المالي وتسوية الصندوق</span>
+    </div>
+  </div>
+
+  <div class="sheet-body">
+    <div class="report-title">
+      <p>مطعم تجريبي</p>
+      <h1>جرد Z</h1>
+      <p class="report-purpose">إغلاق يوم العمل ومراجعة المبيعات وتسوية الصندوق</p>
+    </div>
+
+    <div class="docket">
+      <div><dt>فترة العمل</dt><dd class="num">2026-08-22 06:00 / 2026-08-23 05:59</dd></div>
+      <div><dt>وقت الإعداد</dt><dd class="num">2026-08-23 05:12</dd></div>
+      <div><dt>أعده</dt><dd>مستخدم تجريبي</dd></div>
+      <div><dt>الرقم المتسلسل</dt><dd class="num">Z-114</dd></div>
+      <div style="grid-column:span 3"><dt>بصمة التقرير</dt><dd class="hash num">9f2c4a71e8b30d5c</dd></div>
+      <div style="align-items:center;justify-content:center"><span class="copy copy--original">نسخة أصلية</span></div>
+    </div>
+
+    <section class="verdict" aria-label="نتيجة الإغلاق">
+      <div class="verdict-main">
+        <span class="verdict-label">حالة إغلاق الصندوق</span>
+        <strong class="verdict-result">الصندوق متوازن</strong>
+      </div>
+      <div class="verdict-facts">
+        <div><span>فرق الصندوق</span><strong class="num">-0.10 د.أ</strong></div>
+        <div><span>المناوبات المفتوحة</span><strong class="num">0</strong></div>
+        <div><span>حالة التقرير</span><strong>جاهز لاعتماد المدير</strong></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-head">الملخص المالي</h2>
+      <div class="metrics">
+        <div><div class="metric-label">المبيعات شاملة الضريبة</div><div class="metric-value num">1,214.50<small> د.أ</small></div></div>
+        <div><div class="metric-label">صافي المبيعات قبل الضريبة</div><div class="metric-value num">1,150.00<small> د.أ</small></div></div>
+        <div><div class="metric-label">الضريبة المحصلة</div><div class="metric-value num">64.50<small> د.أ</small></div></div>
+        <div><div class="metric-label">متوسط الفاتورة</div><div class="metric-value num">20.24<small> د.أ</small></div></div>
+        <div><div class="metric-label">إجمالي الخصومات</div><div class="metric-value num">20.50<small> د.أ</small></div></div>
+        <div><div class="metric-label">قيمة المرتجعات</div><div class="metric-value num">25.00<small> د.أ</small></div></div>
+        <div><div class="metric-label">قيمة الإلغاءات</div><div class="metric-value num">8.50<small> د.أ</small></div></div>
+        <div><div class="metric-label">عدد الطلبات</div><div class="metric-value num">60</div></div>
+      </div>
+    </section>
+
+    <div class="split-ledger">
+      <section class="section">
+        <h2 class="section-head">احتساب صافي المبيعات</h2>
+        <table class="compact">
+          <tbody>
+            <tr><td>مبيعات الأصناف قبل الخصومات</td><td class="num">1,260.00 د.أ</td></tr>
+            <tr><td>الخصومات</td><td class="num">-20.50 د.أ</td></tr>
+            <tr><td>المرتجعات</td><td class="num">-25.00 د.أ</td></tr>
+            <tr class="total"><td>المبيعات شاملة الضريبة</td><td class="num">1,214.50 د.أ</td></tr>
+            <tr><td>ضريبة المبيعات</td><td class="num">-64.50 د.أ</td></tr>
+            <tr class="total"><td>صافي المبيعات قبل الضريبة</td><td class="num">1,150.00 د.أ</td></tr>
+          </tbody>
+        </table>
+        <span class="row-note">قيمة الطلبات الملغاة 8.50 د.أ معروضة في الصفحة الثانية. لا تدخل ضمن المبيعات لأنها ألغيت قبل الدفع.</span>
+      </section>
+
+      <section class="section">
+        <h2 class="section-head">تسوية الصندوق</h2>
+        <table class="compact">
+          <tbody>
+            <tr><td>رصيد الصندوق عند الفتح</td><td class="num">100.00 د.أ</td></tr>
+            <tr><td>المبيعات النقدية</td><td class="num">+720.00 د.أ</td></tr>
+            <tr><td>المصروفات النقدية</td><td class="num">-42.50 د.أ</td></tr>
+            <tr><td>المرتجعات النقدية</td><td class="num">-15.00 د.أ</td></tr>
+            <tr class="total"><td>النقد المتوقع</td><td class="num">762.50 د.أ</td></tr>
+            <tr><td>النقد الفعلي</td><td class="num">762.40 د.أ</td></tr>
+            <tr class="total"><td>الفرق</td><td class="num">-0.10 د.أ</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <section class="section" style="margin-top:9mm">
+      <h2 class="section-head">توزيع المبيعات حسب طريقة التحصيل</h2>
+      <table class="compact">
+        <thead><tr><th>طريقة التحصيل</th><th class="num">عدد العمليات</th><th class="num">المبلغ</th><th class="num">النسبة من المبيعات</th><th>حالة التحصيل</th></tr></thead>
+        <tbody>
+          <tr><td>نقدًا</td><td class="num">37</td><td class="num">720.00 د.أ</td><td class="num">59.28%</td><td>موجود في الصندوق</td></tr>
+          <tr><td>بطاقة</td><td class="num">16</td><td class="num">366.30 د.أ</td><td class="num">30.16%</td><td>تم التحصيل</td></tr>
+          <tr><td>مبالغ مستحقة على منصات التوصيل</td><td class="num">7</td><td class="num">128.20 د.أ</td><td class="num">10.56%</td><td>لم تُحصّل بعد</td></tr>
+          <tr class="total"><td>الإجمالي</td><td class="num">60</td><td class="num">1,214.50 د.أ</td><td class="num">100%</td><td>مطابق لإجمالي المبيعات</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <div class="run-foot">
+    <div class="run-row">
+      <span class="hash num">9f2c4a71e8b30d5c</span>
+      <span>الملخص المالي</span>
+      <span class="num">Z-114</span>
+    </div>
+  </div>
+</div>
+
+<p class="note">Sample data | A4 Z report | Page 2 of 2 | Operational details</p>
+<div class="sheet sheet--last" dir="rtl">
+  <div class="run-head">
+    <div class="run-row">
+      <span class="run-store">مطعم تجريبي</span>
+      <span class="run-serial">جرد Z / Z-114</span>
+    </div>
+    <div class="run-row">
+      <span class="run-window num">2026-08-22 06:00 / 2026-08-23 05:59</span>
+      <span class="run-window">تفاصيل المناوبات والحركات المالية</span>
+    </div>
+  </div>
+
+  <div class="sheet-body">
+    <div class="report-title">
+      <p>جرد Z / Z-114</p>
+      <h1>التفاصيل التشغيلية</h1>
+      <p class="report-purpose">تفاصيل المناوبات وأنواع الطلبات والخصومات والمرتجعات والمصروفات</p>
+    </div>
+
+    <section class="section">
+      <h2 class="section-head">المناوبات</h2>
+      <table class="compact">
+        <thead><tr><th>المناوبة</th><th>الكاشير</th><th>وقت العمل</th><th class="num">الطلبات</th><th class="num">المبيعات</th><th class="num">النقد المتوقع</th><th class="num">النقد الفعلي</th><th class="num">الفرق</th></tr></thead>
+        <tbody>
+          <tr><td class="num">#412</td><td>مستخدم تجريبي 1</td><td class="num">06:00 / 15:00</td><td class="num">32</td><td class="num">650.10</td><td class="num">401.50</td><td class="num">401.40</td><td class="num">-0.10</td></tr>
+          <tr><td class="num">#413</td><td>مستخدم تجريبي 2</td><td class="num">15:00 / 23:55</td><td class="num">28</td><td class="num">564.40</td><td class="num">361.00</td><td class="num">361.00</td><td class="num">0.00</td></tr>
+          <tr class="total"><td colspan="3">الإجمالي</td><td class="num">60</td><td class="num">1,214.50</td><td class="num">762.50</td><td class="num">762.40</td><td class="num">-0.10</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2 class="section-head">المبيعات حسب نوع الطلب</h2>
+      <table class="compact">
+        <thead><tr><th>نوع الطلب</th><th class="num">عدد الطلبات</th><th class="num">متوسط الطلب</th><th class="num">المبيعات</th><th class="num">النسبة من المبيعات</th></tr></thead>
+        <tbody>
+          <tr><td>داخل المطعم</td><td class="num">32</td><td class="num">20.32 د.أ</td><td class="num">650.30 د.أ</td><td class="num">53.54%</td></tr>
+          <tr><td>سفري</td><td class="num">18</td><td class="num">20.39 د.أ</td><td class="num">367.00 د.أ</td><td class="num">30.22%</td></tr>
+          <tr><td>توصيل</td><td class="num">10</td><td class="num">19.72 د.أ</td><td class="num">197.20 د.أ</td><td class="num">16.24%</td></tr>
+          <tr class="total"><td>الإجمالي</td><td class="num">60</td><td class="num">20.24 د.أ</td><td class="num">1,214.50 د.أ</td><td class="num">100%</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="split-ledger">
+      <section class="section">
+        <h2 class="section-head">الخصومات والمرتجعات والإلغاءات</h2>
+        <table class="compact">
+          <thead><tr><th>نوع الحركة</th><th class="num">عدد العمليات</th><th class="num">القيمة</th></tr></thead>
+          <tbody>
+            <tr><td>خصومات أصناف</td><td class="num">8</td><td class="num">12.00 د.أ</td></tr>
+            <tr><td>خصومات طلبات</td><td class="num">3</td><td class="num">8.50 د.أ</td></tr>
+            <tr><td>مرتجعات</td><td class="num">2</td><td class="num">25.00 د.أ</td></tr>
+            <tr><td>إلغاءات قبل الدفع</td><td class="num">2</td><td class="num">8.50 د.أ</td></tr>
+            <tr class="total"><td>إجمالي الحركات المعروضة</td><td class="num">15</td><td class="num">54.00 د.أ</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section">
+        <h2 class="section-head">المصروفات النقدية</h2>
+        <table class="compact">
+          <thead><tr><th>فئة المصروف</th><th class="num">عدد العمليات</th><th class="num">القيمة</th></tr></thead>
+          <tbody>
+            <tr><td>مستلزمات تشغيل</td><td class="num">2</td><td class="num">22.50 د.أ</td></tr>
+            <tr><td>نثريات</td><td class="num">1</td><td class="num">20.00 د.أ</td></tr>
+          <tr class="total"><td>إجمالي المصروفات المدفوعة من الصندوق</td><td class="num">3</td><td class="num">42.50 د.أ</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+    <section class="section" style="margin-top:9mm">
+      <h2 class="section-head">تسوية حسابات منصات التوصيل</h2>
+      <table class="compact">
+        <thead><tr><th>المنصة</th><th class="num">الطلبات</th><th class="num">إجمالي المبيعات</th><th class="num">المحصل نقدًا</th><th class="num">المبلغ المستحق من المنصة</th></tr></thead>
+        <tbody>
+          <tr><td>طلبات</td><td class="num">7</td><td class="num">132.20 د.أ</td><td class="num">44.00 د.أ</td><td class="num">88.20 د.أ</td></tr>
+          <tr><td>كريم</td><td class="num">3</td><td class="num">65.00 د.أ</td><td class="num">25.00 د.أ</td><td class="num">40.00 د.أ</td></tr>
+          <tr class="total"><td>الإجمالي</td><td class="num">10</td><td class="num">197.20 د.أ</td><td class="num">69.00 د.أ</td><td class="num">128.20 د.أ</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2 class="section-head">نتيجة المراجعة</h2>
+      <div class="review-register">
+        <div><strong>لا توجد مناوبات مفتوحة</strong><span>جميع المناوبات المشمولة في التقرير مغلقة وتم احتسابها في التسوية.</span></div>
+        <div><strong>فرق الصندوق ضمن الحد المسموح</strong><span class="num">فرق الصندوق -0.10 د.أ، والحد المسموح 0.25 د.أ.</span></div>
+        <div><strong>الخصومات والمرتجعات والإلغاءات موثقة</strong><span>جميع هذه الحركات ظاهرة في التقرير ويمكن مراجعتها.</span></div>
+      </div>
+    </section>
+
+    <div class="trace">
+      <div><span>اعتماد المدير</span></div>
+      <div><span>ملاحظات المراجعة</span></div>
+    </div>
+  </div>
+
+  <div class="run-foot">
+    <div class="run-row">
+      <span class="hash num">9f2c4a71e8b30d5c</span>
+      <span>نهاية جرد Z</span>
+      <span class="num">Z-114</span>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

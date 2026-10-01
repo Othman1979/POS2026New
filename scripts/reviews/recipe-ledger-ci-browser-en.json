@@ -1,0 +1,122 @@
+{
+  "language": "en",
+  "steps": [
+    {
+      "step": "disabled sale",
+      "evidence": {
+        "invoice": 1
+      }
+    },
+    {
+      "step": "ingredient and recipe setup",
+      "evidence": {
+        "chicken_id": 1,
+        "pepsi_id": 2,
+        "plate_cost": 0.9,
+        "margin_percent": 82
+      }
+    },
+    {
+      "step": "table save and resave",
+      "evidence": {
+        "after_resave_chicken_g": 9400,
+        "after_added_burger_g": 9200,
+        "pepsi": 98
+      }
+    },
+    {
+      "step": "split and settle",
+      "evidence": {
+        "invoices": [
+          3,
+          4
+        ],
+        "settlement_does_not_repeat_usage": true
+      }
+    },
+    {
+      "step": "partial refund",
+      "evidence": {
+        "chicken_g": 9400,
+        "used_cost": 2.7,
+        "portions_response": {
+          "success": true,
+          "portions": [
+            {
+              "product_id": 1,
+              "name": "Test Burger",
+              "portions_possible": 47,
+              "limiting_ingredient": {
+                "id": 1,
+                "name": "Chicken en 4ede8"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": "receipt waste correction and count",
+      "evidence": {
+        "expected_before_count_g": 11400,
+        "counted_g": 11100,
+        "variance_g": -300
+      }
+    },
+    {
+      "step": "day report and print",
+      "evidence": {
+        "chicken_report": {
+          "id": 1,
+          "name": "Chicken en 4ede8",
+          "measure": "weight",
+          "display_unit": "kg",
+          "unit_cost": 0.0045,
+          "par_qty": 5000,
+          "pack_name": "sack",
+          "pack_size": 10000,
+          "is_active": true,
+          "opening": 10000,
+          "received": 3000,
+          "used": 600,
+          "waste": 500,
+          "waste_by_reason": {
+            "spoiled": 500
+          },
+          "corrections": -500,
+          "closing_expected": 11100,
+          "below_par": false,
+          "counts": [
+            {
+              "at": "2026-09-06T12:27:18.000Z",
+              "qty": 10000,
+              "expected_qty": null,
+              "variance_qty": null,
+              "variance_pct": null
+            },
+            {
+              "at": "2026-09-06T12:27:27.000Z",
+              "qty": 11100,
+              "expected_qty": 11400,
+              "variance_qty": -300,
+              "variance_pct": -0.5
+            }
+          ],
+          "used_cost": 2.7,
+          "waste_cost": 2.25
+        },
+        "a4_and_thermal_rendered": true
+      }
+    },
+    {
+      "step": "opening prefill and refund while disabled",
+      "evidence": {
+        "prior_history_shifted_to_yesterday": true,
+        "opening_prefill_kg": 11.1,
+        "opening_saved_kg": 11,
+        "disabled_refund_remaining_g": 11200
+      }
+    }
+  ],
+  "status": "passed"
+}

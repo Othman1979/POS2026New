@@ -1,0 +1,470 @@
+[
+  {
+    "prefix": "scratch/spooler-audit/lowend-base",
+    "jobs": 432,
+    "cpu_s": 19.578125,
+    "wall_s": 28.107,
+    "peak_commit_mib": 248.46875,
+    "peak_ws_mib": 399.95703125,
+    "event_loop": {
+      "p99": 31.113215,
+      "max": 243.531775
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.21830000000045,
+        "first_byte_p95": 115.46939999999995,
+        "transport_median": 1.1444999999985157,
+        "transport_p95": 1.4599000000000615
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 65.42240000000004,
+        "first_byte_p95": 103.72119999999995,
+        "transport_median": 1.1582000000016706,
+        "transport_p95": 1.5571999999999662
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 66.0141999999978,
+        "first_byte_p95": 99.53870000000006,
+        "transport_median": 1.163700000000972,
+        "transport_p95": 1.5241000000000895
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.38880000000017,
+        "first_byte_p95": 100.43659999999727,
+        "transport_median": 1.1161999999999352,
+        "transport_p95": 1.6395999999995183
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 66.23189999999977,
+        "first_byte_p95": 95.9380999999994,
+        "transport_median": 1.0836999999992258,
+        "transport_p95": 1.408900000000358
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 66.15329999999813,
+        "first_byte_p95": 98.25199999999859,
+        "transport_median": 1.0689000000002125,
+        "transport_p95": 1.4390000000003056
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 51.76800000000003,
+        "first_byte_p95": 94.40620000000126,
+        "transport_median": 0.9623999999998887,
+        "transport_p95": 1.226200000000972
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 50.92690000000039,
+        "first_byte_p95": 84.65819999999985,
+        "transport_median": 0.944999999999709,
+        "transport_p95": 1.2034000000003289
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 63.16760000000022,
+        "first_byte_p95": 97.00059999999985,
+        "transport_median": 1.0021999999999025,
+        "transport_p95": 1.2335999999995693
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/lowend-release",
+    "jobs": 432,
+    "cpu_s": 17.8125,
+    "wall_s": 28.056,
+    "peak_commit_mib": 246.40625,
+    "peak_ws_mib": 401.9453125,
+    "event_loop": {
+      "p99": 30.097407,
+      "max": 232.521727
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.9376999999995,
+        "first_byte_p95": 116.57279999999992,
+        "transport_median": 1.0967000000000553,
+        "transport_p95": 1.4223000000019965
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 64.31760000000031,
+        "first_byte_p95": 105.33520000000135,
+        "transport_median": 1.1585999999997512,
+        "transport_p95": 1.5240999999987253
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 66.8089,
+        "first_byte_p95": 100.36819999999989,
+        "transport_median": 1.150499999999738,
+        "transport_p95": 1.3288999999995212
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 65.82320000000004,
+        "first_byte_p95": 100.69120000000112,
+        "transport_median": 1.1036000000003696,
+        "transport_p95": 1.4429999999993015
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 66.58619999999974,
+        "first_byte_p95": 98.18249999999898,
+        "transport_median": 1.0575000000008004,
+        "transport_p95": 1.3286000000007334
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 65.76310000000012,
+        "first_byte_p95": 98.01109999999971,
+        "transport_median": 1.0900000000001455,
+        "transport_p95": 1.298000000000684
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 51.07360000000335,
+        "first_byte_p95": 94.25169999999889,
+        "transport_median": 0.9755000000004657,
+        "transport_p95": 1.2901999999994587
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 51.17270000000099,
+        "first_byte_p95": 83.50350000000253,
+        "transport_median": 0.9706999999998516,
+        "transport_p95": 1.2594000000008236
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 51.35959999999977,
+        "first_byte_p95": 83.66949999999997,
+        "transport_median": 0.9459999999999127,
+        "transport_p95": 1.2941999999966356
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/lowend-pngjs",
+    "jobs": 432,
+    "cpu_s": 21.828125,
+    "wall_s": 28.626,
+    "peak_commit_mib": 233.31640625,
+    "peak_ws_mib": 379.48828125,
+    "event_loop": {
+      "p99": 32.440319,
+      "max": 56.524799
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.8130999999994,
+        "first_byte_p95": 116.05449999999837,
+        "transport_median": 1.1926000000003114,
+        "transport_p95": 1.7197999999989406
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 65.97029999999995,
+        "first_byte_p95": 108.67229999999836,
+        "transport_median": 1.3166000000001077,
+        "transport_p95": 3.850000000002183
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 67.04669999999896,
+        "first_byte_p95": 99.32809999999972,
+        "transport_median": 1.2659999999996217,
+        "transport_p95": 2.1513999999997395
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.23039999999946,
+        "first_byte_p95": 100.27520000000004,
+        "transport_median": 1.2570999999998094,
+        "transport_p95": 3.912000000000262
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 66.09419999999955,
+        "first_byte_p95": 98.64510000000155,
+        "transport_median": 1.181800000000294,
+        "transport_p95": 3.5750000000007276
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 66.09729999999763,
+        "first_byte_p95": 97.3798999999999,
+        "transport_median": 1.0576000000000931,
+        "transport_p95": 1.4086999999999534
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 58.108100000001286,
+        "first_byte_p95": 94.25479999999993,
+        "transport_median": 1.0505000000011933,
+        "transport_p95": 1.454200000000128
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 52.396199999999226,
+        "first_byte_p95": 97.15959999999995,
+        "transport_median": 1.0179999999995744,
+        "transport_p95": 1.2606999999998152
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 66.2552999999989,
+        "first_byte_p95": 95.97569999999905,
+        "transport_median": 1.0504000000000815,
+        "transport_p95": 1.3209999999999127
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/lowend-blank",
+    "jobs": 432,
+    "cpu_s": 19.421875,
+    "wall_s": 28.363,
+    "peak_commit_mib": 225.203125,
+    "peak_ws_mib": 348.73046875,
+    "event_loop": {
+      "p99": 31.506431,
+      "max": 222.167039
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.58439999999973,
+        "first_byte_p95": 116.57589999999982,
+        "transport_median": 1.1880999999993946,
+        "transport_p95": 1.580699999999979
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 66.91519999999946,
+        "first_byte_p95": 91.47699999999895,
+        "transport_median": 1.2242999999998574,
+        "transport_p95": 1.5197999999999183
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 66.46919999999955,
+        "first_byte_p95": 115.5471,
+        "transport_median": 1.1527999999998428,
+        "transport_p95": 1.6165999999998348
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 65.43939999999998,
+        "first_byte_p95": 101.8018000000011,
+        "transport_median": 1.1612000000004628,
+        "transport_p95": 1.5289000000000215
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 65.63230000000112,
+        "first_byte_p95": 99.30529999999999,
+        "transport_median": 1.076799999999821,
+        "transport_p95": 1.407100000000355
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 65.21619999999984,
+        "first_byte_p95": 99.01699999999983,
+        "transport_median": 1.1084999999984575,
+        "transport_p95": 1.5170000000000528
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 51.21769999999742,
+        "first_byte_p95": 94.808500000001,
+        "transport_median": 0.9694999999992433,
+        "transport_p95": 1.2203999999996995
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 51.37459999999919,
+        "first_byte_p95": 100.14700000000084,
+        "transport_median": 1.012800000000425,
+        "transport_p95": 1.3492000000005646
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 52.30369999999675,
+        "first_byte_p95": 91.41100000000006,
+        "transport_median": 1.0435999999999694,
+        "transport_p95": 1.5064000000020314
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/lowend-blank-repeat",
+    "jobs": 432,
+    "cpu_s": 19.609375,
+    "wall_s": 28.634,
+    "peak_commit_mib": 227.515625,
+    "peak_ws_mib": 346.12109375,
+    "event_loop": {
+      "p99": 28.803071,
+      "max": 238.419967
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.98599999999897,
+        "first_byte_p95": 117.31369999999879,
+        "transport_median": 1.2004000000006272,
+        "transport_p95": 1.5874000000003434
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 66.08030000000144,
+        "first_byte_p95": 96.70720000000074,
+        "transport_median": 1.2318999999988591,
+        "transport_p95": 1.608900000000176
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 66.41870000000017,
+        "first_byte_p95": 99.32319999999982,
+        "transport_median": 1.2134000000005472,
+        "transport_p95": 1.5652000000000044
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 67.98669999999993,
+        "first_byte_p95": 100.88670000000002,
+        "transport_median": 1.2070999999998548,
+        "transport_p95": 1.560299999997369
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 66.40160000000014,
+        "first_byte_p95": 103.23879999999917,
+        "transport_median": 1.1314999999995052,
+        "transport_p95": 1.3805999999999585
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 67.1768000000011,
+        "first_byte_p95": 98.01859999999942,
+        "transport_median": 1.0887000000002445,
+        "transport_p95": 1.4989000000005035
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 51.556700000001,
+        "first_byte_p95": 93.6958999999988,
+        "transport_median": 0.9899000000000342,
+        "transport_p95": 1.3182999999999083
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 51.67729999999938,
+        "first_byte_p95": 99.4851000000017,
+        "transport_median": 0.9967999999998938,
+        "transport_p95": 1.301900000002206
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 51.42160000000149,
+        "first_byte_p95": 84.53039999999964,
+        "transport_median": 1.010599999999613,
+        "transport_p95": 1.2565999999997075
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/lowend-base-repeat",
+    "jobs": 432,
+    "cpu_s": 19.84375,
+    "wall_s": 28.112,
+    "peak_commit_mib": 247.1484375,
+    "peak_ws_mib": 408.83203125,
+    "event_loop": {
+      "p99": 31.326207,
+      "max": 224.526335
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.8748000000005,
+        "first_byte_p95": 115.85819999999876,
+        "transport_median": 1.1586999999999534,
+        "transport_p95": 1.646600000000035
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 66.35020000000077,
+        "first_byte_p95": 91.00220000000081,
+        "transport_median": 1.204200000000128,
+        "transport_p95": 1.483600000000024
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 66.85999999999694,
+        "first_byte_p95": 99.20060000000012,
+        "transport_median": 1.1777000000001863,
+        "transport_p95": 1.540899999999965
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.1234000000004,
+        "first_byte_p95": 100.08890000000065,
+        "transport_median": 1.173000000000684,
+        "transport_p95": 1.5570999999999913
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 66.80029999999988,
+        "first_byte_p95": 97.07459999999992,
+        "transport_median": 1.1118999999998778,
+        "transport_p95": 1.504699999999957
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 66.33519999999999,
+        "first_byte_p95": 96.86969999999928,
+        "transport_median": 1.0405000000000655,
+        "transport_p95": 1.3891999999996187
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 51.71509999999944,
+        "first_byte_p95": 94.01610000000028,
+        "transport_median": 0.9660000000003492,
+        "transport_p95": 1.347700000000259
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 52.482200000000375,
+        "first_byte_p95": 83.43349999999919,
+        "transport_median": 1.0181999999986147,
+        "transport_p95": 1.3517000000001644
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 52.793800000000374,
+        "first_byte_p95": 96.26419999999962,
+        "transport_median": 0.9766999999992549,
+        "transport_p95": 1.4998000000000502
+      }
+    ]
+  }
+]

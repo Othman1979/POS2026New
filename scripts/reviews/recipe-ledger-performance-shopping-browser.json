@@ -1,0 +1,10 @@
+[
+  {
+    "case": "shopping-loose-quantity",
+    "status": "passed",
+    "evidence": {
+      "item": "Review c47fa658\n1 kg"
+    },
+    "seconds": 0.78
+  }
+]

@@ -1,0 +1,711 @@
+{
+  "date": "2026-09-06",
+  "reviewStartedAtCommit": "041d3a99",
+  "branch": "codex/inventory-recipe-research",
+  "applicationChange": "Table save recognizes a newly added line beside explicitly identified saved duplicates, independently of cart order.",
+  "red": {
+    "file": "scripts/reviews/recipe-ledger-phase4-red.json",
+    "sha256": "bd25d96f31acc9dd2cea76f9a74eee7154579a7a611b87e14c1be4ed4a18104a",
+    "passed": 1,
+    "failed": 2,
+    "cases": [
+      {
+        "name": "recipe ledger combined restaurant flow regressions adds a fresh burger beside 1 saved duplicate lines (newFirst=false) with a current recipe and independent key",
+        "status": "passed",
+        "failure": null
+      },
+      {
+        "name": "recipe ledger combined restaurant flow regressions adds a fresh burger beside 3 saved duplicate lines (newFirst=false) with a current recipe and independent key",
+        "status": "failed",
+        "failure": "AssertionError: {\"success\":false,\"message\":\"Saved item context is stale or ambiguous. Refresh the order and try again.\"}: expected 409 to be 200 // Object.is equality"
+      },
+      {
+        "name": "recipe ledger combined restaurant flow regressions adds a fresh burger beside 3 saved duplicate lines (newFirst=true) with a current recipe and independent key",
+        "status": "failed",
+        "failure": "AssertionError: {\"success\":false,\"message\":\"Saved item context is stale or ambiguous. Refresh the order and try again.\"}: expected 409 to be 200 // Object.is equality"
+      }
+    ]
+  },
+  "tests": {
+    "note": "The combined run began before the fix; focused and table runs supersede entire affected files. Preserve repeated parameterized titles as separate cases.",
+    "runs": [
+      {
+        "name": "combined",
+        "file": "scripts/reviews/recipe-ledger-phase4-combined.json",
+        "sha256": "a8e19d1094d047383825654a2f7b3dff7646305e3acc4e02ae3b40bdc656ed15",
+        "passed": 629,
+        "failed": 0,
+        "files": 30
+      },
+      {
+        "name": "fix-green",
+        "file": "scripts/reviews/recipe-ledger-phase4-fix-green.json",
+        "sha256": "41e392fad0423cc1f602b31ec60f270b8a0bfab065a1a3e873e84ecf5501d7a7",
+        "passed": 66,
+        "failed": 0,
+        "files": 7
+      },
+      {
+        "name": "tables-green",
+        "file": "scripts/reviews/recipe-ledger-phase4-tables-green.json",
+        "sha256": "6a19a6b01716c1ab8404b5b33960bac987bb12c7e6b2d409d85522f51a32a2a5",
+        "passed": 247,
+        "failed": 0,
+        "files": 3
+      }
+    ],
+    "files": [
+      {
+        "file": "backend/tests/integration/bundle.checkout.test.js",
+        "run": "combined",
+        "passed": 14,
+        "caseResultsSha256": "5c08e344daa2b8e820d813ff1ddc426302fd45cf3d18816d214ec9e45c59b524"
+      },
+      {
+        "file": "backend/tests/integration/bundle.tables.test.js",
+        "run": "tables-green",
+        "passed": 35,
+        "caseResultsSha256": "8fd0414fde0f256dc4e4a7070a655dbe0aff3577e4ced1011eebc78645a8dca7"
+      },
+      {
+        "file": "backend/tests/integration/categoryCopy.test.js",
+        "run": "combined",
+        "passed": 3,
+        "caseResultsSha256": "fc5c076f260278f19a704fe785770de3b88a010e1c2d7709853307e565c5e758"
+      },
+      {
+        "file": "backend/tests/integration/checkout.test.js",
+        "run": "combined",
+        "passed": 133,
+        "caseResultsSha256": "1d3e05f4e35b42b240ac362376307f52987caa5c15404269f8ab397061cfd8c4"
+      },
+      {
+        "file": "backend/tests/integration/checkoutPerformanceContract.test.js",
+        "run": "fix-green",
+        "passed": 12,
+        "caseResultsSha256": "0a05275f94a6c9242600caa316f04d054bdd3e53ac0efa43c9441b0e3f861ab8"
+      },
+      {
+        "file": "backend/tests/integration/checkoutPostCommit.test.js",
+        "run": "combined",
+        "passed": 5,
+        "caseResultsSha256": "0136079225b7271f2a8fea4cab1a70bf03a9e5415db6a21d56c6009d46273859"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerAdmin.test.js",
+        "run": "combined",
+        "passed": 2,
+        "caseResultsSha256": "eaa32999ae6aa106404708fcfc27442fb3835e02def44f39e084c5148af37b8f"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerPerformance.test.js",
+        "run": "combined",
+        "passed": 6,
+        "caseResultsSha256": "2f2bd4fc6c33151fd2a2ded7ab85ecadfe70b0f153300a7543ea24e5b1271fe6"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerPhase1Regression.test.js",
+        "run": "combined",
+        "passed": 10,
+        "caseResultsSha256": "b94ee127f533f66130827ac01ff2aaaa60d01c5a4b77485c5224517d558b49ed"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerPhase2Regression.test.js",
+        "run": "fix-green",
+        "passed": 19,
+        "caseResultsSha256": "7e247d7bdff3031de43c2926639a0ce1b68003bbd902f65120b7c6f74b66f4ae"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerPhase3Regression.test.js",
+        "run": "combined",
+        "passed": 12,
+        "caseResultsSha256": "743c5535ce209b92516803c4a9bf3aec29e1280f1afda6a44dcda440f5b65a0c"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerPhase4Regression.test.js",
+        "run": "fix-green",
+        "passed": 3,
+        "caseResultsSha256": "e14cc09f09433381105ae72022e6389dc08a5e58fdc6842301afe04ac224d04f"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerReport.test.js",
+        "run": "combined",
+        "passed": 3,
+        "caseResultsSha256": "451f342c0cb8e805b9792003be2c4f0e1ff72fcd50e72c6d656b948619381dbe"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerReversals.test.js",
+        "run": "combined",
+        "passed": 4,
+        "caseResultsSha256": "517571cb7f7fa4e8b5e97bf9aff2e99ec0ec49133714dd84929b6d05205dfa09"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerSchema.test.js",
+        "run": "combined",
+        "passed": 2,
+        "caseResultsSha256": "abfb170ef08fc5bc6626288045612c322fea28a40ad947b8737f1ef738fb76f1"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerService.test.js",
+        "run": "combined",
+        "passed": 6,
+        "caseResultsSha256": "8839e04ad6e54bcf51dd395886dc9ba2061b91a54dc2243cd7b195df57ad2456"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerSplitsMerges.test.js",
+        "run": "fix-green",
+        "passed": 3,
+        "caseResultsSha256": "dedef1414e50fac133399ae0a0d5926726ddd61e0a81bbd2beadc1e0e61215d9"
+      },
+      {
+        "file": "backend/tests/integration/recipeLedgerTables.test.js",
+        "run": "fix-green",
+        "passed": 3,
+        "caseResultsSha256": "9128ec0640061aff9d3eb3bafa1cd13b6a5c65db5abb2afc39f7ee40cdf4e761"
+      },
+      {
+        "file": "backend/tests/integration/refunds.test.js",
+        "run": "combined",
+        "passed": 73,
+        "caseResultsSha256": "fd3343d76648086c5ead13828b2ddeadbe63964f503fea6fb130fac15d04b413"
+      },
+      {
+        "file": "backend/tests/integration/reportsRefunds.test.js",
+        "run": "combined",
+        "passed": 9,
+        "caseResultsSha256": "3f9db36bddd5675318ab38a5f6734dd294c7f333327d91f9d8e9f54d65e44f7e"
+      },
+      {
+        "file": "backend/tests/integration/subscriptionManagement.test.js",
+        "run": "combined",
+        "passed": 19,
+        "caseResultsSha256": "c18d55fcebddf7b2ede5f46f580fdb5b5a83bdcfd60bbddfc8bb07596a1ea028"
+      },
+      {
+        "file": "backend/tests/integration/subscriptionRedemptions.test.js",
+        "run": "combined",
+        "passed": 15,
+        "caseResultsSha256": "e689ba6a66881fa9d57986fc2b120221dc46ffed2acabe4eafc85ebb3c952125"
+      },
+      {
+        "file": "backend/tests/integration/tableOrderPostCommit.test.js",
+        "run": "fix-green",
+        "passed": 2,
+        "caseResultsSha256": "a035ee58f8fb85c00acf60ab681c048876c993cde2973050a7ed96f3fbe4d785"
+      },
+      {
+        "file": "backend/tests/integration/tables.test.js",
+        "run": "tables-green",
+        "passed": 199,
+        "caseResultsSha256": "d645f7f369f0bac68edb2d287232fd45eba1a3fdd5aea5915b789f73a7f083c8"
+      },
+      {
+        "file": "backend/tests/integration/tableSettlementContext.test.js",
+        "run": "tables-green",
+        "passed": 13,
+        "caseResultsSha256": "61ca281fa17dbbd45cce899c0dbe2b2970e40859f03157f92765474cdc519108"
+      },
+      {
+        "file": "backend/tests/unit/inventoryService.test.js",
+        "run": "combined",
+        "passed": 6,
+        "caseResultsSha256": "eee729f50966a86b6e3f01e1f55bb855a5755c75025a7c27582ef102d024f7b4"
+      },
+      {
+        "file": "backend/tests/unit/recipeLedgerMigration.test.js",
+        "run": "combined",
+        "passed": 1,
+        "caseResultsSha256": "9e7638532d037d2ccb5e47e5581e8e609a244f88948043efdd38914ee1f93bd5"
+      },
+      {
+        "file": "backend/tests/unit/recipeLedgerPure.test.js",
+        "run": "combined",
+        "passed": 12,
+        "caseResultsSha256": "660e6c695b97725970e478a25ea049ecf267f4afec4e9ffd2d22cc1f7ce1123a"
+      },
+      {
+        "file": "backend/tests/unit/SavedOrderLines.test.js",
+        "run": "fix-green",
+        "passed": 24,
+        "caseResultsSha256": "02305fbd594af84f6c3414abc6ef7a5405f5e5fdbc6f45bc3a30c5b86886eaba"
+      },
+      {
+        "file": "src/admin/components/__tests__/productRecipeEditor.spec.js",
+        "run": "combined",
+        "passed": 1,
+        "caseResultsSha256": "4d4086e856f15c24b7d2da0d679e7896d322ad834fd7b33d4bbc9c0aa3ac8078"
+      },
+      {
+        "file": "src/admin/pages/__tests__/ingredientsPage.spec.js",
+        "run": "combined",
+        "passed": 4,
+        "caseResultsSha256": "9134d7cc06ea0af0e98b0d5aad25563788138fcc0e95968c801059976563b47d"
+      },
+      {
+        "file": "src/admin/pages/__tests__/reportsIngredients.spec.js",
+        "run": "combined",
+        "passed": 3,
+        "caseResultsSha256": "c6d1cdea7748c7deb3ac42934650cbbd207e6c498e1a9a02e83b176b84a311b8"
+      }
+    ],
+    "passed": 656,
+    "failed": 0
+  },
+  "browsers": [
+    {
+      "file": "scripts/reviews/recipe-ledger-phase4-browser-en.json",
+      "sha256": "df508e58412b5efa156accd06896abf9e77dfe6881f1e2ac60931bb7bff91b4c",
+      "results": {
+        "language": "en",
+        "steps": [
+          {
+            "step": "disabled sale",
+            "evidence": {
+              "invoice": 1
+            }
+          },
+          {
+            "step": "ingredient and recipe setup",
+            "evidence": {
+              "chicken_id": 1,
+              "pepsi_id": 2,
+              "plate_cost": 0.9,
+              "margin_percent": 82
+            }
+          },
+          {
+            "step": "table save and resave",
+            "evidence": {
+              "after_resave_chicken_g": 9400,
+              "after_added_burger_g": 9200,
+              "pepsi": 98
+            }
+          },
+          {
+            "step": "split and settle",
+            "evidence": {
+              "invoices": [
+                3,
+                4
+              ],
+              "settlement_does_not_repeat_usage": true
+            }
+          },
+          {
+            "step": "partial refund",
+            "evidence": {
+              "chicken_g": 9400,
+              "used_cost": 2.7,
+              "portions_response": {
+                "success": true,
+                "portions": [
+                  {
+                    "product_id": 1,
+                    "name": "Test Burger",
+                    "portions_possible": 47,
+                    "limiting_ingredient": {
+                      "id": 1,
+                      "name": "Chicken en afd78"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "step": "receipt waste correction and count",
+            "evidence": {
+              "expected_before_count_g": 11400,
+              "counted_g": 11100,
+              "variance_g": -300
+            }
+          },
+          {
+            "step": "day report and print",
+            "evidence": {
+              "chicken_report": {
+                "id": 1,
+                "name": "Chicken en afd78",
+                "measure": "weight",
+                "display_unit": "kg",
+                "unit_cost": 0.0045,
+                "par_qty": 5000,
+                "pack_name": "sack",
+                "pack_size": 10000,
+                "is_active": true,
+                "opening": 10000,
+                "received": 3000,
+                "used": 600,
+                "waste": 500,
+                "waste_by_reason": {
+                  "spoiled": 500
+                },
+                "corrections": -500,
+                "closing_expected": 11100,
+                "below_par": false,
+                "counts": [
+                  {
+                    "at": "2026-09-06T11:38:08.000Z",
+                    "qty": 10000,
+                    "expected_qty": null,
+                    "variance_qty": null,
+                    "variance_pct": null
+                  },
+                  {
+                    "at": "2026-09-06T11:38:16.000Z",
+                    "qty": 11100,
+                    "expected_qty": 11400,
+                    "variance_qty": -300,
+                    "variance_pct": -0.5
+                  }
+                ],
+                "used_cost": 2.7,
+                "waste_cost": 2.25
+              },
+              "a4_and_thermal_rendered": true
+            }
+          },
+          {
+            "step": "opening prefill and refund while disabled",
+            "evidence": {
+              "prior_history_shifted_to_yesterday": true,
+              "opening_prefill_kg": 11.1,
+              "opening_saved_kg": 11,
+              "disabled_refund_remaining_g": 11200
+            }
+          }
+        ],
+        "status": "passed"
+      }
+    },
+    {
+      "file": "scripts/reviews/recipe-ledger-phase4-browser-ar.json",
+      "sha256": "f4a2110befee5cb95d5ff608c0de5e07bade46d709299f22f37b950311d50011",
+      "results": {
+        "language": "ar",
+        "steps": [
+          {
+            "step": "disabled sale",
+            "evidence": {
+              "invoice": 1
+            }
+          },
+          {
+            "step": "ingredient and recipe setup",
+            "evidence": {
+              "chicken_id": 1,
+              "pepsi_id": 2,
+              "plate_cost": 0.9,
+              "margin_percent": 82
+            }
+          },
+          {
+            "step": "table save and resave",
+            "evidence": {
+              "after_resave_chicken_g": 9400,
+              "after_added_burger_g": 9200,
+              "pepsi": 98
+            }
+          },
+          {
+            "step": "split and settle",
+            "evidence": {
+              "invoices": [
+                3,
+                4
+              ],
+              "settlement_does_not_repeat_usage": true
+            }
+          },
+          {
+            "step": "partial refund",
+            "evidence": {
+              "chicken_g": 9400,
+              "used_cost": 2.7,
+              "portions_response": {
+                "success": true,
+                "portions": [
+                  {
+                    "product_id": 1,
+                    "name": "Test Burger",
+                    "portions_possible": 47,
+                    "limiting_ingredient": {
+                      "id": 1,
+                      "name": "Chicken ar 44753"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "step": "receipt waste correction and count",
+            "evidence": {
+              "expected_before_count_g": 11400,
+              "counted_g": 11100,
+              "variance_g": -300
+            }
+          },
+          {
+            "step": "day report and print",
+            "evidence": {
+              "chicken_report": {
+                "id": 1,
+                "name": "Chicken ar 44753",
+                "measure": "weight",
+                "display_unit": "kg",
+                "unit_cost": 0.0045,
+                "par_qty": 5000,
+                "pack_name": "sack",
+                "pack_size": 10000,
+                "is_active": true,
+                "opening": 10000,
+                "received": 3000,
+                "used": 600,
+                "waste": 500,
+                "waste_by_reason": {
+                  "spoiled": 500
+                },
+                "corrections": -500,
+                "closing_expected": 11100,
+                "below_par": false,
+                "counts": [
+                  {
+                    "at": "2026-09-06T11:37:00.000Z",
+                    "qty": 10000,
+                    "expected_qty": null,
+                    "variance_qty": null,
+                    "variance_pct": null
+                  },
+                  {
+                    "at": "2026-09-06T11:37:08.000Z",
+                    "qty": 11100,
+                    "expected_qty": 11400,
+                    "variance_qty": -300,
+                    "variance_pct": -0.5
+                  }
+                ],
+                "used_cost": 2.7,
+                "waste_cost": 2.25
+              },
+              "a4_and_thermal_rendered": true
+            }
+          },
+          {
+            "step": "opening prefill and refund while disabled",
+            "evidence": {
+              "prior_history_shifted_to_yesterday": true,
+              "opening_prefill_kg": 11.1,
+              "opening_saved_kg": 11,
+              "disabled_refund_remaining_g": 11200
+            }
+          }
+        ],
+        "status": "passed"
+      }
+    },
+    {
+      "file": "scripts/reviews/recipe-ledger-phase4-browser-regressions.json",
+      "sha256": "62fde512f72a879b74474039f8308dd473e3f00a67a6e0cde5702a2dfd8dcc43",
+      "results": [
+        {
+          "case": "ingredient-controls",
+          "status": "passed",
+          "evidence": {
+            "button_height": 44
+          },
+          "seconds": 0.75
+        },
+        {
+          "case": "display-unit-preserves-values",
+          "status": "passed",
+          "evidence": {
+            "unit_cost": 0.0045,
+            "par_qty": 5000,
+            "pack_size": 10000
+          },
+          "seconds": 0.83
+        },
+        {
+          "case": "blank-count-is-not-zero",
+          "status": "passed",
+          "evidence": {
+            "expected_remaining": null
+          },
+          "seconds": 2.75
+        },
+        {
+          "case": "opening-lost-response-retry",
+          "status": "passed",
+          "evidence": {
+            "same_key": true,
+            "expected_remaining": 11000
+          },
+          "seconds": 0.95
+        },
+        {
+          "case": "shopping-loose-quantity",
+          "status": "passed",
+          "evidence": {
+            "item": "Review 10370f95\n1 kg"
+          },
+          "seconds": 0.8
+        },
+        {
+          "case": "history-readable-units",
+          "status": "passed",
+          "evidence": {
+            "quantity": "10 kg",
+            "escape_closes": true
+          },
+          "seconds": 0.8
+        },
+        {
+          "case": "ingredient-load-error",
+          "status": "passed",
+          "evidence": {
+            "error_visible": true
+          },
+          "seconds": 0.7
+        },
+        {
+          "case": "recipe-loading-cannot-clear-lines",
+          "status": "passed",
+          "evidence": {
+            "save_disabled_until_recipe_loaded": true
+          },
+          "seconds": 0.97
+        },
+        {
+          "case": "recipe-draft-hides-stale-cost",
+          "status": "passed",
+          "evidence": {
+            "stale_cost_hidden_for_draft": true
+          },
+          "seconds": 0.92
+        },
+        {
+          "case": "report-date-error-cannot-print-old-day",
+          "status": "passed",
+          "evidence": {
+            "old_day_print_disabled": true,
+            "date_picker_still_available": true
+          },
+          "seconds": 0.76
+        },
+        {
+          "case": "ingredient-report-is-one-day",
+          "status": "passed",
+          "evidence": {
+            "report_and_header_use_one_business_day": true
+          },
+          "seconds": 0.73
+        },
+        {
+          "case": "history-pagination-and-late-response",
+          "status": "passed",
+          "evidence": {
+            "paginated_rows": 52,
+            "old_request_cannot_replace_new_ingredient": true
+          },
+          "seconds": 1.97
+        },
+        {
+          "case": "report-print-a4-and-thermal",
+          "status": "passed",
+          "evidence": {
+            "a4_and_thermal_rendered": true,
+            "display_units_and_waste_reason": true,
+            "physical_print": false
+          },
+          "seconds": 1.25
+        },
+        {
+          "case": "arabic-mobile-ingredient-flow",
+          "status": "passed",
+          "evidence": {
+            "rtl": true,
+            "mobile_width": 390,
+            "create_saved": true,
+            "blank_count_error_arabic": true
+          },
+          "seconds": 1.03
+        }
+      ]
+    }
+  ],
+  "build": {
+    "command": "npm run build:admin",
+    "passed": true,
+    "logSha256": "e93d097410187c06eae61554ea125a084a5553683c9689108e91fc49e1dd79fc"
+  },
+  "architecture": {
+    "commands": [
+      "npm run architecture",
+      "npm run architecture:check"
+    ],
+    "passed": true,
+    "nodes": 232,
+    "flows": 65,
+    "steps": 493,
+    "distinctFiles": 173,
+    "existingDeclaredDefects": 1
+  },
+  "schema": {
+    "command": "node scripts/validate-schema-drift.js",
+    "readOnly": true,
+    "result": "zero drift"
+  },
+  "unchangedPerformanceSources": [
+    "backend/services/RecipeLedgerService.js",
+    "backend/routes/admin/recipeLedger.js",
+    "backend/modules/checkout/executeCheckout.js",
+    "backend/routes/pos/subscriptions.js",
+    "backend/tests/fixtures/seed.js",
+    "backend/tests/integration/recipeLedgerPerformance.test.js",
+    "backend/tests/integration/checkoutPerformanceContract.test.js",
+    "backend/migrations/2026-09-06-recipe-ledger-performance-v1.auto.sql",
+    "backend/migrations/auto-manifest.json",
+    "src/shared/ingredientUnits.js",
+    "src/admin/pages/Ingredients.vue",
+    "src/admin/pages/ReportsIngredients.vue",
+    "src/admin/components/ProductRecipeEditor.vue",
+    "src/admin/components/IngredientFormModal.vue",
+    "src/admin/components/IngredientOpeningModal.vue",
+    "src/admin/components/IngredientMovementModal.vue",
+    "src/admin/components/IngredientHistoryDrawer.vue",
+    "src/print/ingredientReportPresentation.js"
+  ],
+  "sourceSha256": {
+    "backend/services/RecipeLedgerService.js": "c7c984320aa178f9be9e9eefe7b7ce6ce15f34ebaeb82ea212d306199b770ac7",
+    "backend/routes/admin/recipeLedger.js": "9f809639b44c2fa73ef7455a048c4c774430395063227b3e239a0c562b96001d",
+    "backend/modules/checkout/executeCheckout.js": "ed0433bff885e8189cdcb88842092444016707a84ccffd252ca42507f0be313f",
+    "backend/modules/tables/saveTableOrder.js": "83ce8f274f28efc2ca5a1d809ec648365564469e5ed6aa988b91bdb4eefa4d42",
+    "backend/routes/pos/subscriptions.js": "625f0d352c92d9466a15eed6e7a3c83a0347ee2ab6f122c857bf2f92e5659761",
+    "backend/tests/fixtures/seed.js": "cf5e80aa783582d5113014b2196bbd493c5aaade5c9bc210949df1f3706d5dbc",
+    "backend/tests/integration/recipeLedgerPerformance.test.js": "34de68e2ec0684360e957b1dd904415415c5a8de2d4a6c4c9e3115c483509e23",
+    "backend/tests/integration/checkoutPerformanceContract.test.js": "4fb7651f767fbbdfd0f3b473718e03c435c5912b800a0812923c86108702db99",
+    "backend/migrations/2026-09-06-recipe-ledger-performance-v1.auto.sql": "44098e8aca6bbc1a087b26f1c180bfaa0d604be13ca3309fd025e06e3445aa7b",
+    "backend/migrations/auto-manifest.json": "13285653104167a563cf9932699546719a1b39e7e1f5f17f8fb57ad1fccae652",
+    "src/shared/ingredientUnits.js": "a900d193c1ee2bd376381379012a6dd1bef2f155b5c74ca5ec3a4b2a136b4d94",
+    "src/admin/pages/Ingredients.vue": "7a939b544a15cfbd74f76c0126fd74766f23be76c6bed082dbbf28e439a768d2",
+    "src/admin/pages/ReportsIngredients.vue": "54db5941b32a28c11779e3346bf1e17838ef21027db77a9945176220e8269e7f",
+    "src/admin/components/ProductRecipeEditor.vue": "1e439ff21bdd903460583b89e52a1f1c0d17bcc71e8d6e85c336bdea61fd1cd4",
+    "src/admin/components/IngredientFormModal.vue": "899e2a272ab257d13196376500002d9bcfa87b70e7462c25bdebbb5a3ec64a59",
+    "src/admin/components/IngredientOpeningModal.vue": "b4c4ea0d28c2f11ed19cb0602f3080db9ce0ee17fa40d5f37e4e5b4ec3a25f5c",
+    "src/admin/components/IngredientMovementModal.vue": "1d48890081ff9535bbf4d074ba6b130997f2a77bee5895bfb5fb983f07d8a22b",
+    "src/admin/components/IngredientHistoryDrawer.vue": "2228c50ace6e48325724a96f28b2890b72d841d919690cd053494c762a0aa778",
+    "src/print/ingredientReportPresentation.js": "6e7c9fbdec63fda145ce3434a9fb47e9905f154be917a292b8cb87f505ed541b",
+    "backend/tests/integration/recipeLedgerPhase4Regression.test.js": "cac557f65de87063073f31a62355ffb01027154926ac90eac5481b13e5658caa",
+    "scripts/reviews/recipe-ledger-phase4-browser.py": "ad5f1f3e35d409c2216e7f2d2d0e99d7659a1ca4104578491dc9282cd806bd67",
+    "scripts/reviews/recipe-ledger-phase4-rollover.cjs": "5b03c10cc72635a0c764ecb44ce2bc4b7ffb3787619c8a77c1b11b7a355f6c57",
+    "docs/architecture.json": "0b78b6182e2802ad1e157407a9f887a4a25738fd18c3a6c57f6bd5d4c7f92e3a"
+  },
+  "limits": [
+    "Local MariaDB and Chromium only; no production or Hostinger verification.",
+    "Physical paper output was not tested.",
+    "Next-day browser opening uses guarded backdating of only the named scratch ingredient history.",
+    "Existing gross receipt/waste plus separate correction reporting semantics were retained.",
+    "No push, merge, deployment, schema migration, dependency change, or environment-file change."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "pos-spooler",
+  "version": "1.2.23",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "node --check server.js && node tests/run-tests.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "dotenv": "17.3.1",
+    "request": "file:vendor/request-disabled"
+  },
+  "overrides": {
+    "request": "$request"
+  }
+}

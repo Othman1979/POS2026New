@@ -1,0 +1,92 @@
+{
+  "database": "posapp_review_recipe_p1_92d616942a43",
+  "predecessorCommit": "dfb5262d",
+  "runtime": {
+    "version": "10.4.32-MariaDB"
+  },
+  "upgrade": {
+    "applied": [
+      "2026-09-06-recipe-ledger-performance-v1"
+    ],
+    "skipped": [
+      "2026-07-31-platform-held-order-settlement-v1",
+      "2026-07-31-tax-exempt-checks-v1",
+      "2026-08-01-additive-schema-reconciliation-v1",
+      "2026-08-03-platform-provider-reconciliation-v1",
+      "2026-08-04-jofotara-tax-categories-v1",
+      "2026-08-04-special-source-buyer-snapshots-v1",
+      "2026-08-05-service-charge-jofotara-tax-category-v1",
+      "2026-08-08-settings-value-capacity-v1",
+      "2026-08-09-imported-schema-drift-repair-v1",
+      "2026-08-09-baseline-foreign-key-authority-v1",
+      "2026-08-10-order-reference-authority-v1",
+      "2026-08-10-legacy-permission-column-retirement-v1",
+      "2026-08-10-refund-status-reconciliation-v1",
+      "2026-08-10-order-reference-index-authority-v1",
+      "2026-08-10-held-order-lifecycle-v1",
+      "2026-08-10-call-center-held-orders-v1",
+      "2026-08-11-receipt-tax-display-v1",
+      "2026-08-13-split-quantity-precision-v1",
+      "2026-08-13-webauthn-registered-device-access-v1",
+      "2026-08-17-spooler-v2-agents-v1",
+      "2026-08-23-audit-browser-preview-v1",
+      "2026-08-30-jofotara-stale-submission-index-v1",
+      "2026-08-31-pos-order-history-default-v1",
+      "2026-09-01-product-price-override-lock-v1",
+      "2026-09-01-fractional-stock-precision-v1",
+      "2026-09-02-expense-zero-amount-v1",
+      "2026-09-03-y-order-type-setting-v1",
+      "2026-09-05-recipe-ledger-v1"
+    ]
+  },
+  "backfill": {
+    "frozenEmpty": true,
+    "composed": true,
+    "fullyReversed": true,
+    "removedLine": true,
+    "wideComposition": 500,
+    "movementRowsUnchanged": 503
+  },
+  "noop": {
+    "applied": [],
+    "skipped": [
+      "2026-07-31-platform-held-order-settlement-v1",
+      "2026-07-31-tax-exempt-checks-v1",
+      "2026-08-01-additive-schema-reconciliation-v1",
+      "2026-08-03-platform-provider-reconciliation-v1",
+      "2026-08-04-jofotara-tax-categories-v1",
+      "2026-08-04-special-source-buyer-snapshots-v1",
+      "2026-08-05-service-charge-jofotara-tax-category-v1",
+      "2026-08-08-settings-value-capacity-v1",
+      "2026-08-09-imported-schema-drift-repair-v1",
+      "2026-08-09-baseline-foreign-key-authority-v1",
+      "2026-08-10-order-reference-authority-v1",
+      "2026-08-10-legacy-permission-column-retirement-v1",
+      "2026-08-10-refund-status-reconciliation-v1",
+      "2026-08-10-order-reference-index-authority-v1",
+      "2026-08-10-held-order-lifecycle-v1",
+      "2026-08-10-call-center-held-orders-v1",
+      "2026-08-11-receipt-tax-display-v1",
+      "2026-08-13-split-quantity-precision-v1",
+      "2026-08-13-webauthn-registered-device-access-v1",
+      "2026-08-17-spooler-v2-agents-v1",
+      "2026-08-23-audit-browser-preview-v1",
+      "2026-08-30-jofotara-stale-submission-index-v1",
+      "2026-08-31-pos-order-history-default-v1",
+      "2026-09-01-product-price-override-lock-v1",
+      "2026-09-01-fractional-stock-precision-v1",
+      "2026-09-02-expense-zero-amount-v1",
+      "2026-09-03-y-order-type-setting-v1",
+      "2026-09-05-recipe-ledger-v1",
+      "2026-09-06-recipe-ledger-performance-v1"
+    ]
+  },
+  "directRepeat": "unchanged",
+  "fallbackParity": "exact",
+  "failClosed": [
+    "missing predecessor",
+    "conflicting checksum"
+  ],
+  "upgradedLineOperations": "empty edit and full refund passed",
+  "status": "PASS"
+}

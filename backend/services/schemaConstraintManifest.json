@@ -1,0 +1,1406 @@
+{
+  "foreignKeys": [
+    {
+      "name": "fk_webauthn_recovery_user",
+      "table": "webauthn_recovery_codes",
+      "columns": [
+        "user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_webauthn_recovery_creator",
+      "table": "webauthn_recovery_codes",
+      "columns": [
+        "created_by_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_webauthn_credentials_user",
+      "table": "webauthn_credentials",
+      "columns": [
+        "user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_webauthn_credentials_registrar",
+      "table": "webauthn_credentials",
+      "columns": [
+        "registered_by_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_webauthn_credentials_revoker",
+      "table": "webauthn_credentials",
+      "columns": [
+        "revoked_by_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_auth_sessions_user",
+      "table": "auth_sessions",
+      "columns": [
+        "user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_auth_sessions_credential",
+      "table": "auth_sessions",
+      "columns": [
+        "credential_id"
+      ],
+      "references": "webauthn_credentials",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_webauthn_ceremonies_user",
+      "table": "webauthn_ceremonies",
+      "columns": [
+        "user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_webauthn_ceremonies_requester",
+      "table": "webauthn_ceremonies",
+      "columns": [
+        "requesting_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_webauthn_ceremonies_replacement",
+      "table": "webauthn_ceremonies",
+      "columns": [
+        "replacement_credential_id"
+      ],
+      "references": "webauthn_credentials",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_webauthn_ceremonies_recovery",
+      "table": "webauthn_ceremonies",
+      "columns": [
+        "recovery_code_id"
+      ],
+      "references": "webauthn_recovery_codes",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_scs_parent",
+      "table": "service_charge_snapshots",
+      "columns": [
+        "parent_snapshot_id"
+      ],
+      "references": "service_charge_snapshots",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_scs_creator",
+      "table": "service_charge_snapshots",
+      "columns": [
+        "created_by"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_uperm_user",
+      "table": "user_permissions",
+      "columns": [
+        "user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_uperm_perm",
+      "table": "user_permissions",
+      "columns": [
+        "perm_key"
+      ],
+      "references": "permissions",
+      "referencedColumns": [
+        "perm_key"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_audit_documents_user",
+      "table": "audit_report_documents",
+      "columns": [
+        "issued_by_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_audit_documents_last_printed_by",
+      "table": "audit_report_documents",
+      "columns": [
+        "last_printed_by_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_categories_price_list_root",
+      "table": "categories",
+      "columns": [
+        "price_list_root_id"
+      ],
+      "references": "categories",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "products_ibfk_1",
+      "table": "products",
+      "columns": [
+        "category_id"
+      ],
+      "references": "categories",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_product_price_overrides_root",
+      "table": "product_price_overrides",
+      "columns": [
+        "price_list_root_id"
+      ],
+      "references": "categories",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_product_price_overrides_product",
+      "table": "product_price_overrides",
+      "columns": [
+        "product_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_tables_seating_parent",
+      "table": "restaurant_tables",
+      "columns": [
+        "seating_parent_id"
+      ],
+      "references": "restaurant_tables",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_parent_table",
+      "table": "restaurant_tables",
+      "columns": [
+        "parent_table_id"
+      ],
+      "references": "restaurant_tables",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "restaurant_tables_ibfk_1",
+      "table": "restaurant_tables",
+      "columns": [
+        "section_id"
+      ],
+      "references": "sections",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "shifts_ibfk_1",
+      "table": "shifts",
+      "columns": [
+        "user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_expense_categories_user",
+      "table": "expense_categories",
+      "columns": [
+        "created_by"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_expenses_category",
+      "table": "expenses",
+      "columns": [
+        "category_id"
+      ],
+      "references": "expense_categories",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_expenses_shift",
+      "table": "expenses",
+      "columns": [
+        "shift_id"
+      ],
+      "references": "shifts",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_expenses_created_by",
+      "table": "expenses",
+      "columns": [
+        "created_by"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_expenses_canceled_by",
+      "table": "expenses",
+      "columns": [
+        "canceled_by"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "orders_ibfk_1",
+      "table": "orders",
+      "columns": [
+        "user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "orders_ibfk_2",
+      "table": "orders",
+      "columns": [
+        "shift_id"
+      ],
+      "references": "shifts",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_orders_waiter",
+      "table": "orders",
+      "columns": [
+        "waiter_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_orders_order_type",
+      "table": "orders",
+      "columns": [
+        "order_type_id"
+      ],
+      "references": "order_types",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_orders_customer",
+      "table": "orders",
+      "columns": [
+        "customer_id"
+      ],
+      "references": "customers",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_orders_table",
+      "table": "orders",
+      "columns": [
+        "table_id"
+      ],
+      "references": "restaurant_tables",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_orders_call_center_user",
+      "table": "orders",
+      "columns": [
+        "call_center_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_orders_service_charge_snapshot",
+      "table": "orders",
+      "columns": [
+        "service_charge_snapshot_id"
+      ],
+      "references": "service_charge_snapshots",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_platform_remittances_user",
+      "table": "platform_remittances",
+      "columns": [
+        "recorded_by"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_platform_remittances_reversal",
+      "table": "platform_remittances",
+      "columns": [
+        "reverses_remittance_id"
+      ],
+      "references": "platform_remittances",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_platform_remittance_lines_remittance",
+      "table": "platform_remittance_lines",
+      "columns": [
+        "remittance_id"
+      ],
+      "references": "platform_remittances",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_platform_remittance_lines_order",
+      "table": "platform_remittance_lines",
+      "columns": [
+        "invoice_id"
+      ],
+      "references": "orders",
+      "referencedColumns": [
+        "invoice_id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_platform_remittance_adjustments_remittance",
+      "table": "platform_remittance_adjustments",
+      "columns": [
+        "remittance_id"
+      ],
+      "references": "platform_remittances",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "order_items_ibfk_1",
+      "table": "order_items",
+      "columns": [
+        "invoice_id"
+      ],
+      "references": "orders",
+      "referencedColumns": [
+        "invoice_id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "order_items_ibfk_2",
+      "table": "order_items",
+      "columns": [
+        "product_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_order_items_parent_invoice",
+      "table": "order_items",
+      "columns": [
+        "parent_item_id",
+        "invoice_id"
+      ],
+      "references": "order_items",
+      "referencedColumns": [
+        "id",
+        "invoice_id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_refunds_invoice",
+      "table": "refunds",
+      "columns": [
+        "invoice_id"
+      ],
+      "references": "orders",
+      "referencedColumns": [
+        "invoice_id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_deleted_refund",
+      "table": "deleted",
+      "columns": [
+        "refund_id"
+      ],
+      "references": "refunds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_refund_items_refund",
+      "table": "refund_items",
+      "columns": [
+        "refund_id"
+      ],
+      "references": "refunds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_jofotara_order",
+      "table": "jofotara_documents",
+      "columns": [
+        "order_invoice_id"
+      ],
+      "references": "orders",
+      "referencedColumns": [
+        "invoice_id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_jofotara_refund",
+      "table": "jofotara_documents",
+      "columns": [
+        "refund_id"
+      ],
+      "references": "refunds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_jofotara_original",
+      "table": "jofotara_documents",
+      "columns": [
+        "original_document_id"
+      ],
+      "references": "jofotara_documents",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_jofotara_user",
+      "table": "jofotara_documents",
+      "columns": [
+        "submitted_by_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_pbi_bundle",
+      "table": "product_bundle_items",
+      "columns": [
+        "bundle_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_pbi_product",
+      "table": "product_bundle_items",
+      "columns": [
+        "product_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_held_service_charge_snapshot",
+      "table": "held_orders",
+      "columns": [
+        "service_charge_snapshot_id"
+      ],
+      "references": "service_charge_snapshots",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_held_orders_call_center_user",
+      "table": "held_orders",
+      "columns": [
+        "call_center_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_held_orders_claim_user",
+      "table": "held_orders",
+      "columns": [
+        "claimed_by_user_id"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_held_orders_parent_invoice",
+      "table": "held_orders",
+      "columns": [
+        "parent_invoice_id"
+      ],
+      "references": "orders",
+      "referencedColumns": [
+        "invoice_id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_held_orders_split_table",
+      "table": "held_orders",
+      "columns": [
+        "table_id"
+      ],
+      "references": "restaurant_tables",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_print_template_revisions_template",
+      "table": "print_template_revisions",
+      "columns": [
+        "template_id"
+      ],
+      "references": "print_templates",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_print_template_revisions_creator",
+      "table": "print_template_revisions",
+      "columns": [
+        "created_by"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_print_template_tests_revision",
+      "table": "print_template_revision_tests",
+      "columns": [
+        "revision_id"
+      ],
+      "references": "print_template_revisions",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_print_template_tests_printer",
+      "table": "print_template_revision_tests",
+      "columns": [
+        "printer_id"
+      ],
+      "references": "printers",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_print_template_tests_queue",
+      "table": "print_template_revision_tests",
+      "columns": [
+        "queue_id"
+      ],
+      "references": "print_queue",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "fk_print_template_tests_confirmer",
+      "table": "print_template_revision_tests",
+      "columns": [
+        "confirmed_by"
+      ],
+      "references": "users",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
+    },
+    {
+      "name": "qr_table_drafts_ibfk_1",
+      "table": "qr_table_drafts",
+      "columns": [
+        "table_id"
+      ],
+      "references": "restaurant_tables",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_print_templates_active_revision",
+      "table": "print_templates",
+      "columns": [
+        "active_revision_id"
+      ],
+      "references": "print_template_revisions",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_print_templates_draft_revision",
+      "table": "print_templates",
+      "columns": [
+        "draft_revision_id"
+      ],
+      "references": "print_template_revisions",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE RESTRICT"
+    },
+    {
+      "name": "fk_stock_balance_item",
+      "table": "stock_balances",
+      "columns": [
+        "stock_item_id"
+      ],
+      "references": "stock_items",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_stock_movement_operation",
+      "table": "stock_movements",
+      "columns": [
+        "operation_id"
+      ],
+      "references": "stock_operations",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_stock_movement_balance",
+      "table": "stock_movements",
+      "columns": [
+        "stock_item_id"
+      ],
+      "references": "stock_balances",
+      "referencedColumns": [
+        "stock_item_id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_product_stock_item",
+      "table": "product_stock_links",
+      "columns": [
+        "stock_item_id"
+      ],
+      "references": "stock_items",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_product_stock_product",
+      "table": "product_stock_links",
+      "columns": [
+        "product_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_stock_report_active_build",
+      "table": "stock_report_dirty",
+      "columns": [
+        "active_build_id"
+      ],
+      "references": "stock_report_builds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_stock_report_published_build",
+      "table": "stock_report_dirty",
+      "columns": [
+        "published_build_id"
+      ],
+      "references": "stock_report_builds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_stock_report_meal_build",
+      "table": "stock_report_meals",
+      "columns": [
+        "build_id"
+      ],
+      "references": "stock_report_builds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_stock_report_ingredient_build",
+      "table": "stock_report_ingredients",
+      "columns": [
+        "build_id"
+      ],
+      "references": "stock_report_builds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_stock_report_event_build",
+      "table": "stock_report_events",
+      "columns": [
+        "build_id"
+      ],
+      "references": "stock_report_builds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_stock_report_operation_build",
+      "table": "stock_report_operations",
+      "columns": [
+        "build_id"
+      ],
+      "references": "stock_report_builds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_stock_source_operation",
+      "table": "stock_operation_sources",
+      "columns": [
+        "operation_id"
+      ],
+      "references": "stock_operations",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_ingredient_stock_item",
+      "table": "ingredients",
+      "columns": [
+        "stock_item_id"
+      ],
+      "references": "stock_items",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_ingredient_stock_operation",
+      "table": "ingredients",
+      "columns": [
+        "stock_activation_operation_id"
+      ],
+      "references": "stock_operations",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_prl_product",
+      "table": "product_recipe_lines",
+      "columns": [
+        "product_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_prl_ingredient",
+      "table": "product_recipe_lines",
+      "columns": [
+        "ingredient_id"
+      ],
+      "references": "ingredients",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_stock_movement_ingredient",
+      "table": "stock_movements",
+      "columns": [
+        "ingredient_id"
+      ],
+      "references": "ingredients",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_stock_report_count_build",
+      "table": "stock_report_counts",
+      "columns": [
+        "build_id"
+      ],
+      "references": "stock_report_builds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_stock_report_count_correction_build",
+      "table": "stock_report_count_corrections",
+      "columns": [
+        "build_id"
+      ],
+      "references": "stock_report_builds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_stock_daily_build",
+      "table": "stock_report_daily",
+      "columns": [
+        "build_id"
+      ],
+      "references": "stock_report_builds",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_stock_document_supplier",
+      "table": "stock_documents",
+      "columns": [
+        "supplier_id"
+      ],
+      "references": "purchase_suppliers",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_stock_document_line_document",
+      "table": "stock_document_lines",
+      "columns": [
+        "document_id"
+      ],
+      "references": "stock_documents",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_stock_document_line_product",
+      "table": "stock_document_lines",
+      "columns": [
+        "product_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_stock_document_line_ingredient",
+      "table": "stock_document_lines",
+      "columns": [
+        "ingredient_id"
+      ],
+      "references": "ingredients",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": ""
+    },
+    {
+      "name": "fk_product_barcodes_product",
+      "table": "product_barcodes",
+      "columns": [
+        "product_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    }
+  ],
+  "checks": [
+    {
+      "name": "chk_service_charge_snapshots_jofotara_tax_category",
+      "table": "service_charge_snapshots",
+      "expression": "jofotara_tax_category IN ('S','Z','O')"
+    },
+    {
+      "name": "chk_products_jofotara_tax_category",
+      "table": "products",
+      "expression": "jofotara_tax_category IN ('S','Z','O')"
+    },
+    {
+      "name": "chk_product_price_overrides_nonnegative",
+      "table": "product_price_overrides",
+      "expression": "price >= 0"
+    },
+    {
+      "name": "chk_expenses_amount",
+      "table": "expenses",
+      "expression": "amount >= 0"
+    },
+    {
+      "name": "chk_expenses_source",
+      "table": "expenses",
+      "expression": "source IN ('drawer','outside')"
+    },
+    {
+      "name": "chk_expenses_status",
+      "table": "expenses",
+      "expression": "status IN ('active','canceled')"
+    },
+    {
+      "name": "chk_expenses_drawer_shift",
+      "table": "expenses",
+      "expression": "(source='drawer' AND shift_id IS NOT NULL) OR (source='outside' AND shift_id IS NULL)"
+    },
+    {
+      "name": "chk_orders_receivable_terms",
+      "table": "orders",
+      "expression": "(payment_method='receivable' AND payment_due_on IS NOT NULL AND char_length(trim(receivable_reason)) > 0 AND char_length(trim(buyer_name_at_sale)) > 0 AND coalesce(cash_amount,0)=0 AND coalesce(card_amount,0)=0 AND coalesce(amount_tendered,0)=0 AND coalesce(change_due,0)=0) OR (payment_method<>'receivable' AND payment_due_on IS NULL AND receivable_reason IS NULL)"
+    },
+    {
+      "name": "chk_platform_remittances_net",
+      "table": "platform_remittances",
+      "expression": "net_received >= 0"
+    },
+    {
+      "name": "chk_platform_remittances_statement_dates",
+      "table": "platform_remittances",
+      "expression": "(statement_start_date IS NULL AND statement_end_date IS NULL) OR (statement_start_date IS NOT NULL AND statement_end_date IS NOT NULL AND statement_start_date <= statement_end_date)"
+    },
+    {
+      "name": "chk_platform_remittances_reversal_shape",
+      "table": "platform_remittances",
+      "expression": "(kind='settlement' AND reverses_remittance_id IS NULL AND reason IS NULL) OR (kind='reversal' AND reverses_remittance_id IS NOT NULL AND char_length(trim(reason)) > 0)"
+    },
+    {
+      "name": "chk_platform_remittance_lines_amount",
+      "table": "platform_remittance_lines",
+      "expression": "allocated_amount <> 0"
+    },
+    {
+      "name": "chk_platform_remittance_adjustments_amount",
+      "table": "platform_remittance_adjustments",
+      "expression": "amount > 0"
+    },
+    {
+      "name": "chk_platform_remittance_adjustments_shape",
+      "table": "platform_remittance_adjustments",
+      "expression": "(category IN ('commission','service_fee','marketing_fee','penalty','withholding_tax') AND direction='deduction') OR (category IN ('reimbursement','incentive') AND direction='addition') OR (category IN ('correction','other') AND char_length(trim(note)) > 0)"
+    },
+    {
+      "name": "chk_order_items_quantity_positive",
+      "table": "order_items",
+      "expression": "quantity > 0"
+    },
+    {
+      "name": "chk_order_items_jofotara_tax_category",
+      "table": "order_items",
+      "expression": "jofotara_tax_category IN ('S','Z','O')"
+    },
+    {
+      "name": "chk_deleted_quantity",
+      "table": "deleted",
+      "expression": "quantity > 0 OR (quantity = 0 AND source_parent_item_id IS NOT NULL)"
+    },
+    {
+      "name": "chk_print_templates_document_type",
+      "table": "print_templates",
+      "expression": "document_type IN ('receipt','kitchen')"
+    },
+    {
+      "name": "chk_print_template_revision_no",
+      "table": "print_template_revisions",
+      "expression": "revision_no > 0"
+    },
+    {
+      "name": "chk_print_template_revision_json",
+      "table": "print_template_revisions",
+      "expression": "json_valid(definition_json)"
+    },
+    {
+      "name": "ck_stock_item_source",
+      "table": "stock_items",
+      "expression": "legacy_product_id IS NULL OR legacy_ingredient_id IS NULL"
+    },
+    {
+      "name": "ck_stock_item_measure",
+      "table": "stock_items",
+      "expression": "(measure='weight' AND base_unit='g') OR (measure='volume' AND base_unit='ml') OR (measure='count' AND base_unit='unit')"
+    },
+    {
+      "name": "ck_stock_item_state",
+      "table": "stock_items",
+      "expression": "tracking_state IN ('draft','active')"
+    },
+    {
+      "name": "ck_stock_item_flags",
+      "table": "stock_items",
+      "expression": "is_active IN (0,1)"
+    },
+    {
+      "name": "ck_stock_balance_known",
+      "table": "stock_balances",
+      "expression": "quantity_known IN (0,1)"
+    },
+    {
+      "name": "ck_stock_movement_identity",
+      "table": "stock_movements",
+      "expression": "(movement_type='stock' AND ingredient_id IS NULL AND kind IS NULL AND qty IS NULL AND operation_id IS NOT NULL AND occurred_at IS NULL) OR (movement_type='ingredient' AND ingredient_id IS NOT NULL AND kind IS NOT NULL AND qty IS NOT NULL AND source_type IS NOT NULL AND occurred_at IS NOT NULL)"
+    },
+    {
+      "name": "ck_stock_movement_physical",
+      "table": "stock_movements",
+      "expression": "(operation_id IS NULL AND stock_item_id IS NULL AND line_ordinal IS NULL AND quantity IS NULL AND unit_snapshot IS NULL AND establishes_known=0) OR (operation_id IS NOT NULL AND stock_item_id IS NOT NULL AND line_ordinal IS NOT NULL AND quantity IS NOT NULL AND unit_snapshot IS NOT NULL AND establishes_known IN (0,1))"
+    },
+    {
+      "name": "chk_im_signs",
+      "table": "stock_movements",
+      "expression": "kind IS NULL OR (kind IN ('usage','waste') AND qty<=0) OR (kind IN ('reversal','receipt','count') AND qty>=0) OR kind='correction'"
+    },
+    {
+      "name": "chk_im_reason",
+      "table": "stock_movements",
+      "expression": "kind='waste' OR reason IS NULL"
+    },
+    {
+      "name": "ck_product_stock_qty",
+      "table": "product_stock_links",
+      "expression": "qty_per_sale > 0"
+    },
+    {
+      "name": "chk_stock_report_build_scope",
+      "table": "stock_report_builds",
+      "expression": "scope_id<32"
+    },
+    {
+      "name": "chk_stock_report_build_state",
+      "table": "stock_report_builds",
+      "expression": "state IN ('building','published','abandoned','obsolete')"
+    },
+    {
+      "name": "chk_stock_report_dirty_scope",
+      "table": "stock_report_dirty",
+      "expression": "scope_id<32"
+    },
+    {
+      "name": "chk_stock_report_pending",
+      "table": "stock_report_dirty",
+      "expression": "pending IN (0,1)"
+    },
+    {
+      "name": "chk_stock_report_worker_singleton",
+      "table": "stock_report_worker",
+      "expression": "id=1"
+    },
+    {
+      "name": "chk_stock_report_event_kind",
+      "table": "stock_report_events",
+      "expression": "kind IN ('sale','refund')"
+    },
+    {
+      "name": "ck_stock_item_availability",
+      "table": "stock_items",
+      "expression": "availability_policy IN ('strict','estimate')"
+    },
+    {
+      "name": "ck_stock_source_kind",
+      "table": "stock_operation_sources",
+      "expression": "source_kind IN ('ingredient_cutover','ingredient_usage','ingredient_manual','ingredient_correction')"
+    },
+    {
+      "name": "ck_stock_item_attention",
+      "table": "stock_items",
+      "expression": "attention IN ('ok','unknown','negative','inactive')"
+    },
+    {
+      "name": "chk_ingredients_unit",
+      "table": "ingredients",
+      "expression": "(measure='weight' AND display_unit IN ('g','kg')) OR (measure='volume' AND display_unit IN ('ml','l')) OR (measure='count' AND display_unit='unit')"
+    },
+    {
+      "name": "chk_ingredients_pack",
+      "table": "ingredients",
+      "expression": "(pack_name IS NULL AND pack_size IS NULL) OR (pack_name IS NOT NULL AND pack_size > 0)"
+    },
+    {
+      "name": "ck_ingredient_stock_link",
+      "table": "ingredients",
+      "expression": "(stock_item_id IS NULL AND stock_activation_operation_id IS NULL AND stock_movement_watermark IS NULL AND stock_activation_count_id IS NULL AND stock_observation_token IS NULL AND stock_activation_quantity IS NULL AND stock_activation_quantity_known IS NULL AND stock_activation_request_key IS NULL AND stock_activated_at IS NULL) OR (stock_item_id IS NOT NULL AND stock_activation_operation_id IS NOT NULL AND stock_movement_watermark IS NOT NULL AND stock_observation_token IS NOT NULL AND stock_activation_request_key IS NOT NULL AND stock_activated_at IS NOT NULL AND stock_activation_quantity_known IS NOT NULL AND stock_activation_quantity_known IN (0,1) AND ((stock_activation_quantity_known=0 AND stock_activation_quantity IS NULL) OR (stock_activation_quantity_known=1 AND stock_activation_quantity IS NOT NULL)))"
+    },
+    {
+      "name": "ck_ingredient_working_state",
+      "table": "ingredients",
+      "expression": "working_quantity_known IN (0,1) AND working_initialized IN (0,1)"
+    },
+    {
+      "name": "chk_prl_qty",
+      "table": "product_recipe_lines",
+      "expression": "qty_per_unit > 0"
+    },
+    {
+      "name": "chk_rll_array",
+      "table": "recipe_ledger_lines",
+      "expression": "JSON_TYPE(ingredient_ids)='ARRAY'"
+    },
+    {
+      "name": "ck_stock_report_backfill_source",
+      "table": "stock_report_backfill",
+      "expression": "source IN ('orders','refunds','ingredient_movements','stock_operations')"
+    },
+    {
+      "name": "chk_order_intake_result_json",
+      "table": "order_intake_requests",
+      "expression": "JSON_VALID(result_json)"
+    },
+    {
+      "name": "ck_purchase_supplier_active",
+      "table": "purchase_suppliers",
+      "expression": "is_active IN (0,1)"
+    },
+    {
+      "name": "ck_stock_document_shape",
+      "table": "stock_documents",
+      "expression": "(doc_type = 'purchase' AND item_kind IS NOT NULL AND supplier_id IS NOT NULL AND reference IS NOT NULL AND payment_status IS NOT NULL AND subtotal >= 0 AND tax_total >= 0 AND total >= 0) OR (doc_type = 'count' AND item_kind IS NULL AND supplier_id IS NULL AND payment_status IS NULL AND status IN ('draft','posted'))"
+    },
+    {
+      "name": "ck_stock_document_line_item",
+      "table": "stock_document_lines",
+      "expression": "(product_id IS NOT NULL AND ingredient_id IS NULL) OR (product_id IS NULL AND ingredient_id IS NOT NULL)"
+    },
+    {
+      "name": "ck_stock_document_line_qty",
+      "table": "stock_document_lines",
+      "expression": "qty IS NULL OR qty >= 0"
+    },
+    {
+      "name": "ck_stock_document_line_factor",
+      "table": "stock_document_lines",
+      "expression": "unit_factor > 0"
+    },
+    {
+      "name": "ck_stock_document_line_price",
+      "table": "stock_document_lines",
+      "expression": "unit_price IS NULL OR unit_price >= 0"
+    },
+    {
+      "name": "ck_stock_document_line_tax",
+      "table": "stock_document_lines",
+      "expression": "tax_rate IN (0,4,16)"
+    }
+  ]
+}

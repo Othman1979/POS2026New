@@ -1,0 +1,300 @@
+{
+  "collectedAt": "2026-09-06T15:58:47.742Z",
+  "branch": "codex/system-performance-audit",
+  "baseCommit": "f464a828b1dc8638e966fec8c27132f3a8f17eb9",
+  "implementationHead": "3f2d1cd2df04815905c21e9b0ec39dca1360e955",
+  "provenance": "Runs were staged. Source hashes were collected after final affected checks. JSON-reported and separately reported checks are distinguished; do not add repeated suite totals.",
+  "jsonReportedDistinctPassed": 699,
+  "jsonReportedDistinctFiles": 26,
+  "runs": [
+    {
+      "label": "checkout and authorization",
+      "rawReport": "scratch/pos-workflow-checkout-tests.json",
+      "rawSha256": "78d5a92f4cece24324f6938fd6afa20f7d5a1650459abf5d461a9957dc669e24",
+      "connectionLimit": null,
+      "passed": 220,
+      "failed": 0,
+      "files": [
+        {
+          "file": "backend/tests/integration/checkout.test.js",
+          "passed": 133
+        },
+        {
+          "file": "backend/tests/integration/checkoutPerformanceContract.test.js",
+          "passed": 12
+        },
+        {
+          "file": "backend/tests/integration/checkoutPostCommit.test.js",
+          "passed": 5
+        },
+        {
+          "file": "backend/tests/integration/permissions.test.js",
+          "passed": 45
+        },
+        {
+          "file": "backend/tests/integration/security.test.js",
+          "passed": 10
+        },
+        {
+          "file": "backend/tests/integration/subscriptionPurchase.test.js",
+          "passed": 15
+        }
+      ]
+    },
+    {
+      "label": "manager and pricing final",
+      "rawReport": "scratch/pos-manager-final-tests.json",
+      "rawSha256": "67105cc6b9ebf24d41fa3a1be2c3c63cd59da96a99ec8d2110def36ba45acb7e",
+      "connectionLimit": 1,
+      "passed": 19,
+      "failed": 0,
+      "files": [
+        {
+          "file": "backend/tests/integration/managerOverrideCheckout.test.js",
+          "passed": 11
+        },
+        {
+          "file": "backend/tests/unit/managerOverrideAttempts.test.js",
+          "passed": 3
+        },
+        {
+          "file": "backend/tests/unit/orderPricing.test.js",
+          "passed": 5
+        }
+      ]
+    },
+    {
+      "label": "POS actions final",
+      "rawReport": "scratch/pos-action-lifetime-tests.json",
+      "rawSha256": "7dbd5512708aba75954e47bf2106c85de4d49593b1aee6ac64da6b9242ab9c2b",
+      "connectionLimit": 1,
+      "passed": 5,
+      "failed": 0,
+      "files": [
+        {
+          "file": "backend/tests/integration/posActionLifetime.test.js",
+          "passed": 5
+        }
+      ]
+    },
+    {
+      "label": "POS business follow-up",
+      "rawReport": "scratch/pos-action-business-tests.json",
+      "rawSha256": "9282ac96ae2e9fc0af38866ac1c13e0ac62cf44466a00f5ac592ae7a06491290",
+      "connectionLimit": null,
+      "passed": 117,
+      "failed": 0,
+      "files": [
+        {
+          "file": "backend/tests/integration/bundle.catalog.test.js",
+          "passed": 24
+        },
+        {
+          "file": "backend/tests/integration/categoryPriceLists.test.js",
+          "passed": 4
+        },
+        {
+          "file": "backend/tests/integration/customers.test.js",
+          "passed": 6
+        },
+        {
+          "file": "backend/tests/integration/expenses.test.js",
+          "passed": 10
+        },
+        {
+          "file": "backend/tests/integration/refunds.test.js",
+          "passed": 73
+        }
+      ]
+    },
+    {
+      "label": "table broad",
+      "rawReport": "scratch/table-workflow-audit-integration.json",
+      "rawSha256": "68533134bcf0aa707e68c7ede875534f6542bd0a6131aefa46eddc6e2b9f1d39",
+      "connectionLimit": 4,
+      "passed": 327,
+      "failed": 0,
+      "files": [
+        {
+          "file": "backend/tests/integration/bundle.tables.test.js",
+          "passed": 35
+        },
+        {
+          "file": "backend/tests/integration/callCenterRoleWalls.test.js",
+          "passed": 2
+        },
+        {
+          "file": "backend/tests/integration/openTableNumbers.test.js",
+          "passed": 12
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerSplitsMerges.test.js",
+          "passed": 3
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerTables.test.js",
+          "passed": 3
+        },
+        {
+          "file": "backend/tests/integration/serviceChargeSnapshots.test.js",
+          "passed": 42
+        },
+        {
+          "file": "backend/tests/integration/tableOrderPostCommit.test.js",
+          "passed": 2
+        },
+        {
+          "file": "backend/tests/integration/tables.test.js",
+          "passed": 199
+        },
+        {
+          "file": "backend/tests/integration/tableSettlementContext.test.js",
+          "passed": 13
+        },
+        {
+          "file": "backend/tests/integration/tableWorkflowAudit.test.js",
+          "passed": 16
+        }
+      ]
+    },
+    {
+      "label": "table final",
+      "rawReport": "scratch/table-workflow-audit-pool1.json",
+      "rawSha256": "100ba6191b5bead798bbe74dbbe78788db9e4a1a620fbcc68720038d38943f2f",
+      "connectionLimit": 1,
+      "passed": 27,
+      "failed": 0,
+      "files": [
+        {
+          "file": "backend/tests/integration/tableConnectionLifetime.test.js",
+          "passed": 10
+        },
+        {
+          "file": "backend/tests/integration/tableWorkflowAudit.test.js",
+          "passed": 17
+        }
+      ]
+    }
+  ],
+  "separatelyVerified": [
+    {
+      "label": "held authority final",
+      "passed": 24,
+      "files": 1,
+      "evidence": "docs/reviews/2026-09-06-held-checkout-workflow-audit.md",
+      "scope": "Final source including UUID/replay compatibility."
+    },
+    {
+      "label": "held related",
+      "passed": 116,
+      "files": 7,
+      "evidence": "docs/reviews/2026-09-06-held-checkout-workflow-audit.md",
+      "scope": "After tax/kitchen corrections, before final UUID corrections; final focused run covers the later change."
+    },
+    {
+      "label": "frontend broad",
+      "passed": 530,
+      "files": 88,
+      "evidence": "docs/reviews/2026-09-06-pos-tables-frontend-audit.md",
+      "scope": "Broad run before final navigation and Clear corrections. Terminal output; no raw JSON report was requested."
+    },
+    {
+      "label": "frontend affected final",
+      "passed": 34,
+      "files": 3,
+      "transitionRegressions": 17,
+      "evidence": "docs/reviews/2026-09-06-pos-tables-frontend-audit.md"
+    },
+    {
+      "label": "existing order and table stores final",
+      "passed": 246,
+      "files": 2,
+      "evidence": "docs/reviews/2026-09-06-pos-tables-frontend-audit.md"
+    }
+  ],
+  "build": {
+    "passed": true,
+    "modules": 349,
+    "seconds": 7.41
+  },
+  "architecture": {
+    "passed": true,
+    "nodes": 232,
+    "flows": 65,
+    "steps": 493,
+    "existingNotes": 1
+  },
+  "browser": [
+    {
+      "language": "en",
+      "passed": true,
+      "rawReport": "scratch/pos-workflow-browser-en.json",
+      "rawSha256": "90d2efbb76b62cdd459fb6f989cc7633d7fef17fb15285f56c24cc370407cd2e",
+      "scope": "Existing complete restaurant workflow, locally built app and owned loopback fixture.",
+      "databaseRemoved": true
+    },
+    {
+      "language": "ar",
+      "passed": true,
+      "rawReport": "scratch/pos-workflow-browser-ar.json",
+      "rawSha256": "e8a3c1aa4b1482a86a102c3d42ba541c43c9aaa027dc5a01af5f25839a478d45",
+      "scope": "Existing complete restaurant workflow, locally built app and owned loopback fixture.",
+      "databaseRemoved": true
+    },
+    {
+      "evidence": "scripts/reviews/pos-tables-frontend-browser-verification.json",
+      "sha256": "5c9b7984cd8edc81968956c09485110a07dbb093ea0d3a287bb207b3770e4093",
+      "steps": 5,
+      "uncaughtErrors": 0,
+      "databaseRemoved": true
+    },
+    {
+      "evidence": "scripts/reviews/pos-held-clear-browser-verification.json",
+      "sha256": "19cce7fc79c0b0e54157a2f344363a49cb3c8c97354b158dfe6744bc36f75b90",
+      "steps": 1,
+      "uncaughtErrors": 0,
+      "databaseRemoved": true
+    }
+  ],
+  "review": "Root and independent agents reviewed each owned change. A pending-hold/Clear busy-state regression was reproduced, corrected and verified before completion.",
+  "boundaries": [
+    "Production URL and printer/station requested but not supplied.",
+    "No physical paper, live fiscal provider, customer load or Release gate verification.",
+    "No push, merge, deployment or machine environment change."
+  ],
+  "sourceSha256": {
+    "backend/modules/checkout/executeCheckout.js": "f6602c093b9762d1809c7c7fd9e9006304f62a93bc889a8419500f56a4e4c9e4",
+    "backend/modules/tables/saveTableOrder.js": "7a9dc354a56a184dfb770094f29f1f55060d2c7bf0e9dd8b0d2b84e42b35b94b",
+    "backend/modules/tables/splitChecks.js": "a5827b941fc87fbc5f1102b083240797b0a6d6cf5b71623a07259d1cbed5cf07",
+    "backend/modules/tables/tableRelationships.js": "a6491afa27370218113225b5f9580450275e82075111f6e1200f9af12179c3ab",
+    "backend/routes/pos/catalog.js": "2b58c5f1a1a478160b4d2a70e8d3b88b7bc9513a7afa905c9b4c99a74dfec1b4",
+    "backend/routes/pos/checkout.js": "916654409a7926dbb9077094ec790f191732cf13905da1bb95445b0b1accaff0",
+    "backend/routes/pos/expenses.js": "1c75cd586c4bedaf88068a442d0c6e0599da923dc05d57a1ca6808d977cfac3e",
+    "backend/routes/pos/orders.js": "d4d6baf2d6d2fd5ff77d9c448fdd3d20ecc858daa4683036604220608ca22b03",
+    "backend/routes/pos/refunds.js": "0a0f9420aea4618be7df2504568d8249949bb97cebcfa620e49fbd3a7155220a",
+    "backend/routes/pos/tables.js": "67f0dce905bc99568e43bc3bf1d7d4d81d62b6c2b3a355e8d03d7484927cfc39",
+    "backend/services/ManagerOverrideService.js": "c0a144b5f34cb3795eac2b32eb385140a87a498e59a1f223e96c4622e0e7a339",
+    "backend/services/OrderPricing.js": "9d25a708f27409c13ddecfedb70bc28512f8f801599ecf68992543d54ef60adc",
+    "backend/services/PermissionService.js": "647b87d7eb635c586c71f39f79690336d08f8ac0fb10e0ef49174247aeff0f80",
+    "backend/services/TableRealtime.js": "29173bf4c0520e7204b178da2b6a20e04dfea88346be3c506324a60085b794ae",
+    "backend/services/TableSettlementContext.js": "a8f4764e9836972fc35bd8aaa5b2a96a2980e4d4d435ac7eda0bc7d8626f681c",
+    "backend/tests/integration/heldOrderAuthority.test.js": "a8a22ba86db0ef156466ccb790be3324f421ef257c93ad524b3ad5140eb2cd56",
+    "backend/tests/integration/managerOverrideCheckout.test.js": "8686d2bd101c6bf5a76f99a844fcddc6f1ce63b7529377e61fa47fa5b65e8d22",
+    "backend/tests/integration/posActionLifetime.test.js": "58673326342a7726e5cc99221b0a5245f40598bd59a932b9edca51be6bd408f8",
+    "backend/tests/integration/tableWorkflowAudit.test.js": "d1ed1476dfe8540f053014eaa3c6e1eef5c8f11dbfcff376555ec3bee2b426fb",
+    "backend/tests/unit/orderPricing.test.js": "9f76a7a3d7c5b5620bdcebd7c8917db99d5d2d55dc6602657328fcfe9d744056",
+    "backend/tests/unit/orderSessionStore.test.js": "228764d846933492a2fcac2db367e86f2971f93d2c0cb063f6e128b308c3cd5c",
+    "src/pos/orderWorkflowTransitions.spec.js": "de8091a8c6d4b1b278ce2b04b6e02ef1cb10e20f9a7a08e8c2dcdf12e8c4ef06",
+    "src/pos/stores/orderSession/tableOrderWorkflow.js": "10bd45be6628762e2727e99565b6fa020bf12506ef8b6b2e4a5d18ff63a3776f",
+    "src/pos/stores/orderSession/tableSession.js": "e5cb2f3dc299dc860585449e6bcfd07f26635d6e649950adf2fec62981bbea0e",
+    "src/pos/stores/orderSessionStore.js": "2953d4ba0a51fbb129a0313d2c54a488bb8b4572dcb854dc2d5e9b8918604966",
+    "src/pos/useTables.js": "f5623a61137adbb3b7ee4c3e0d7097f10618742dca1e0b36bd825e32bbadd3cd",
+    "src/pos/useTerminal.js": "c4069d7a702f9085b371997b310b0c89fa072d0863f4e76d473aedb1db011025"
+  },
+  "implementationCommits": [
+    "4cc0011b4695a81589cc278183deacb40ccba533",
+    "6cac351ac4a09a54d4771eed3a36e41a31e47906",
+    "b1f0fddf8876d7ca253dab1ab4b64263dc85c1ea",
+    "3f2d1cd2df04815905c21e9b0ec39dca1360e955"
+  ]
+}

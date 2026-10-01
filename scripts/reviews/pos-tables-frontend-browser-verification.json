@@ -1,0 +1,49 @@
+{
+  "success": true,
+  "steps": [
+    {
+      "step": "Delayed paid response after POS -> Tables -> POS",
+      "evidence": {
+        "chargedInvoice": 1,
+        "chargedProduct": 1,
+        "preservedDraftProduct": 2,
+        "screenshot": "scratch/pos-tables-new-draft-preserved.png"
+      }
+    },
+    {
+      "step": "Saved table",
+      "evidence": {
+        "invoice": 2
+      }
+    },
+    {
+      "step": "Split create and rewrite",
+      "evidence": {
+        "parentInvoice": 2,
+        "rewrite": true
+      }
+    },
+    {
+      "step": "Pay rewritten split after reload",
+      "evidence": {
+        "splitCheck": 2,
+        "restoredRevision": 2,
+        "submittedRevision": 2,
+        "chargedInvoice": 3
+      }
+    },
+    {
+      "step": "Cashier manager access and Price amount entry",
+      "evidence": {
+        "chargedInvoice": 4,
+        "total": 3,
+        "unitPrice": 2,
+        "quantity": 1.5,
+        "discount": 0,
+        "managerAuthorizationPresent": true,
+        "boundary": "The Price control adjusts quantity to a target amount; it is not a unit-price editor."
+      }
+    }
+  ],
+  "errors": []
+}

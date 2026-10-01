@@ -1,0 +1,6 @@
+{
+  "save_causes_list_gets": 2,
+  "receipt_events": 10,
+  "list_gets_while_previous_get_held": 10,
+  "held_requests": 10
+}

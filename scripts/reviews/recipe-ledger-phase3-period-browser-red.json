@@ -1,0 +1,8 @@
+[
+  {
+    "case": "ingredient-report-is-one-day",
+    "status": "failed",
+    "error": "Locator expected to have count '0'\nActual value: 1 \nCall log:\n  - Expect \"to_have_count\" with timeout 5000ms\n  - waiting for locator(\".report-period__count\")\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n",
+    "seconds": 5.91
+  }
+]

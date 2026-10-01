@@ -1,0 +1,125 @@
+[
+  {
+    "case": "ingredient-controls",
+    "status": "passed",
+    "evidence": {
+      "button_height": 44
+    },
+    "seconds": 0.75
+  },
+  {
+    "case": "display-unit-preserves-values",
+    "status": "passed",
+    "evidence": {
+      "unit_cost": 0.0045,
+      "par_qty": 5000,
+      "pack_size": 10000
+    },
+    "seconds": 0.81
+  },
+  {
+    "case": "blank-count-is-not-zero",
+    "status": "passed",
+    "evidence": {
+      "expected_remaining": null
+    },
+    "seconds": 2.75
+  },
+  {
+    "case": "opening-lost-response-retry",
+    "status": "passed",
+    "evidence": {
+      "same_key": true,
+      "expected_remaining": 11000
+    },
+    "seconds": 0.91
+  },
+  {
+    "case": "shopping-loose-quantity",
+    "status": "passed",
+    "evidence": {
+      "item": "Review cad54fa5\n1 kg"
+    },
+    "seconds": 0.77
+  },
+  {
+    "case": "history-readable-units",
+    "status": "passed",
+    "evidence": {
+      "quantity": "10 kg",
+      "escape_closes": true
+    },
+    "seconds": 0.77
+  },
+  {
+    "case": "ingredient-load-error",
+    "status": "passed",
+    "evidence": {
+      "error_visible": true
+    },
+    "seconds": 0.7
+  },
+  {
+    "case": "recipe-loading-cannot-clear-lines",
+    "status": "passed",
+    "evidence": {
+      "save_disabled_until_recipe_loaded": true
+    },
+    "seconds": 0.91
+  },
+  {
+    "case": "recipe-draft-hides-stale-cost",
+    "status": "passed",
+    "evidence": {
+      "stale_cost_hidden_for_draft": true
+    },
+    "seconds": 0.86
+  },
+  {
+    "case": "report-date-error-cannot-print-old-day",
+    "status": "passed",
+    "evidence": {
+      "old_day_print_disabled": true,
+      "date_picker_still_available": true
+    },
+    "seconds": 0.75
+  },
+  {
+    "case": "ingredient-report-is-one-day",
+    "status": "passed",
+    "evidence": {
+      "report_and_header_use_one_business_day": true
+    },
+    "seconds": 0.73
+  },
+  {
+    "case": "history-pagination-and-late-response",
+    "status": "passed",
+    "evidence": {
+      "paginated_rows": 52,
+      "old_request_cannot_replace_new_ingredient": true
+    },
+    "seconds": 1.74
+  },
+  {
+    "case": "report-print-a4-and-thermal",
+    "status": "passed",
+    "evidence": {
+      "a4_and_thermal_rendered": true,
+      "display_units_and_waste_reason": true,
+      "physical_print": false
+    },
+    "seconds": 1.09
+  },
+  {
+    "case": "arabic-mobile-ingredient-flow",
+    "status": "passed",
+    "evidence": {
+      "rtl": true,
+      "mobile_width": 390,
+      "create_saved": true,
+      "blank_count_error_arabic": true
+    },
+    "seconds": 0.99
+  }
+]

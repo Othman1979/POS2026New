@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><style>
+            /* 576 dots is the printable width of the supported 80 mm / 203 dpi receipt target. */
+            @page { size: 80mm auto; margin: 0; }
+            * { box-sizing: border-box; margin: 0; padding: 0; }
+            body {
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                background: white; color: black; width: 576px;
+                padding: 5px 10px 60px 10px; line-height: 1.2;
+            }
+            .text-center { text-align: center; } .text-right { text-align: right; }
+            .font-black { font-weight: 800; letter-spacing: 0.02em; }
+            .font-bold { font-weight: 600; letter-spacing: 0.01em; }
+            .font-normal { font-weight: 400; }
+            .italic { font-style: italic; } .uppercase { text-transform: uppercase; }
+            .tracking-widest { letter-spacing: 0.06em; }
+            .mt-1 { margin-top: 4px; } .mt-2 { margin-top: 8px; } .mt-4 { margin-top: 16px; }
+            .mb-1 { margin-bottom: 4px; } .mb-2 { margin-bottom: 8px; }
+            .flex { display: flex; } .justify-between { justify-content: space-between; } .items-start { align-items: flex-start; }
+            .dashed-line { border-bottom: 2px dashed #000; margin: 10px 0; width: 100%; }
+            .solid-line { border-bottom: 3px solid #000; margin: 10px 0; width: 100%; }
+            .text-sm { font-size: 22px; } .text-base { font-size: 26px; } .text-lg { font-size: 30px; } .text-xl { font-size: 36px; } .text-2xl { font-size: 44px; }
+            .item-header { display: flex; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px; margin-bottom: 6px;}
+            .item-row { display: flex; font-size: 25px; margin-bottom: 4px; align-items: flex-start; font-weight: 600; }
+            .col-qty { width: 65px; flex-shrink: 0; text-align: left; }
+            .col-name { flex: 1; padding-right: 15px; text-align: left; }
+            .col-total { flex-shrink: 0; text-align: right; }
+            .item-note { font-size: 24px; font-style: normal; margin-left: 65px; margin-bottom: 6px; font-weight: 600; color: #000; text-align: left; white-space: pre-wrap; }
+            .kitchen-item-qty { flex: 0 0 auto; min-width: 75px; padding-right: 12px; white-space: nowrap; }
+            .kitchen-item-name { flex: 1 1 auto; min-width: 0; text-align: left; }
+            .text-lr { display: flex; justify-content: space-between; font-size: 25px; margin-bottom: 4px; }
+            .total-box { color: black; padding: 12px; display: flex; justify-content: space-between; font-weight: 800; font-size: 34px; margin: 12px 0; border-radius: 4px; width: 100%; }
+            .kitchen-header { color: black; padding: 10px; text-align: center; font-weight: 800; font-size: 48px; margin-bottom: 12px; border-radius: 4px; }
+        </style></head><body id="receipt-body"><div class="kitchen-header">KITCHEN TICKET</div><div class="text-center font-black text-2xl mb-2 uppercase">Dine In</div><div class="dashed-line"></div><div class="text-lr font-black text-xl mb-1"><span>Ticket: 916</span></div><div class="text-lr font-black text-xl mb-1"><span>Order: #916</span><span class="font-bold text-lg">2026-07-25 02:25:06 PM</span></div><div class="total-box" style="justify-content: center; margin-top: 8px;">TABLE: T11</div><div class="font-bold text-lg mb-1" style="text-align: left; opacity: 0.7;">[Combo]</div><div class="flex items-start font-black text-xl mb-2 leading-tight"><div class="kitchen-item-qty">2x</div><div class="kitchen-item-name">Kitchen Primary</div></div><div class="font-black text-lg mb-2 italic" style="margin-left: 75px; text-align: left; white-space: pre-wrap;">*** Fresh only ***</div><div class="dashed-line"></div><div class="text-center font-bold text-lg mb-2" style="letter-spacing: 1px;">-- ALSO ON ORDER --</div><div class="flex items-start font-bold text-xl mb-1 leading-tight" style="opacity: 0.55;"><div class="kitchen-item-qty">1x</div><div class="kitchen-item-name">Also On Order</div></div></body></html>

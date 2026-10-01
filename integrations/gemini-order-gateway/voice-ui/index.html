@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>POSApp Voice Order Experiment</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <main>
+        <header>
+            <p class="eyebrow">Local experiment</p>
+            <h1>Voice order assistant</h1>
+            <p class="lede">Gemini speaks through this browser. POSApp remains the authority for products, prices, quotes and held orders.</p>
+        </header>
+
+        <section class="session" aria-live="polite">
+            <span id="status-dot" class="status-dot"></span>
+            <div>
+                <strong id="status">Not connected</strong>
+                <p id="call-id">No call started</p>
+            </div>
+        </section>
+        <p id="order-state" class="diagnostics" aria-live="assertive">No held order has been created in this call.</p>
+
+        <div class="actions">
+            <label class="language">
+                <span>Agent language</span>
+                <select id="language">
+                    <option value="en">English</option>
+                    <option value="ar">Jordanian Arabic</option>
+                </select>
+            </label>
+            <button id="start" class="secondary">Start voice session</button>
+            <button id="talk" class="talk" disabled>
+                <span class="talk-icon" aria-hidden="true"></span>
+                <span>Hold to speak</span>
+            </button>
+            <button id="stop" class="quiet" disabled>End session</button>
+        </div>
+        <p class="hint">Hold the center button or Space while you speak. Mic chunks increase while recording; the final transcript appears after release.</p>
+
+        <section class="transcripts">
+            <article>
+                <p class="speaker">You</p>
+                <p id="you-said" class="speech">Your live transcript will appear here.</p>
+            </article>
+            <article>
+                <p class="speaker">Gemini</p>
+                <p id="gemini-said" class="speech">The spoken reply transcript will appear here.</p>
+            </article>
+        </section>
+        <p id="diagnostics" class="diagnostics">Waiting for microphone data.</p>
+
+        <p id="error" class="error" role="alert"></p>
+    </main>
+    <script type="module" src="/app.js"></script>
+</body>
+</html>

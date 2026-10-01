@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-08T14:49:15.013Z",
+  "runtime": "v24.16.0",
+  "cpu": "Intel(R) Core(TM) i7-14700KF",
+  "samples": 100,
+  "p50_ms": 6.4913000000001375,
+  "p95_ms": 7.413700000000063,
+  "p99_ms": 17.932999999999993,
+  "node_cpu_ms_per_call": 3.91,
+  "pending_dirty_scopes": 32,
+  "limitations": [
+    "Loopback HTTP checkout on this workstation, including auth cookie and JSON parsing.",
+    "Not a before/after comparison against c17fbfb3; command-count contract records the constant dirty INSERT.",
+    "No report rebuild runs inside checkout. Pending dirty scopes are left for the worker.",
+    "Not 2-CPU/4-GiB or mixed-load certification."
+  ]
+}

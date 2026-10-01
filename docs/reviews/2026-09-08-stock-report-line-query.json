@@ -1,0 +1,375 @@
+{
+  "at": "2026-09-08T11:11:07.120Z",
+  "runtime": "v24.16.0",
+  "invoices": 100000,
+  "lines": 300000,
+  "results": [
+    {
+      "hint": "optimizer",
+      "samples": 100,
+      "p50_ms": 30.510199999998804,
+      "p95_ms": 35.08690000000024,
+      "max_ms": 43.330400000000736,
+      "node_cpu_ms": 63,
+      "sourceRows": 4800,
+      "plans": [
+        {
+          "offset": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "ref",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "5",
+              "ref": "const",
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 43.294,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"ref\",\n      \"possible_keys\": [\n        \"idx_order_items_invoice\",\n        \"idx_order_items_parent_invoice\"\n      ],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"5\",\n      \"used_key_parts\": [\"parent_item_id\"],\n      \"ref\": [\"const\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 43.194,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (47,52,96,142,193,224,236,264,357,381,393,403,430,441,445,499) and order_items.parent_item_id is null\",\n      \"attached_condition\": \"order_items.parent_item_id <=> NULL\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 750,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "ref",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "5",
+              "ref": "const",
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 22.002,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"ref\",\n      \"possible_keys\": [\n        \"idx_order_items_invoice\",\n        \"idx_order_items_parent_invoice\"\n      ],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"5\",\n      \"used_key_parts\": [\"parent_item_id\"],\n      \"ref\": [\"const\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 21.974,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (24204,24265,24413,24485,24499,24500,24542,24591,24606,24645,24651,24654,24680,24694,24718,24756) and order_items.parent_item_id is null\",\n      \"attached_condition\": \"order_items.parent_item_id <=> NULL\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 1500,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "ref",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "5",
+              "ref": "const",
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 31.055,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"ref\",\n      \"possible_keys\": [\n        \"idx_order_items_invoice\",\n        \"idx_order_items_parent_invoice\"\n      ],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"5\",\n      \"used_key_parts\": [\"parent_item_id\"],\n      \"ref\": [\"const\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 31.006,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (47809,47832,47844,48008,48070,48095,48111,48137,48179,48304,48324,48325,48346,48363,48383,48395) and order_items.parent_item_id is null\",\n      \"attached_condition\": \"order_items.parent_item_id <=> NULL\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 2250,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "ref",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "5",
+              "ref": "const",
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 27.907,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"ref\",\n      \"possible_keys\": [\n        \"idx_order_items_invoice\",\n        \"idx_order_items_parent_invoice\"\n      ],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"5\",\n      \"used_key_parts\": [\"parent_item_id\"],\n      \"ref\": [\"const\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 27.883,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (71923,71926,72008,72041,72107,72134,72146,72221,72307,72371,72374,72445,72526,72530,72564,72582) and order_items.parent_item_id is null\",\n      \"attached_condition\": \"order_items.parent_item_id <=> NULL\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 3000,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "ref",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "5",
+              "ref": "const",
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 27.423,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"ref\",\n      \"possible_keys\": [\n        \"idx_order_items_invoice\",\n        \"idx_order_items_parent_invoice\"\n      ],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"5\",\n      \"used_key_parts\": [\"parent_item_id\"],\n      \"ref\": [\"const\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 27.395,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (96725,96736,96758,96780,96794,96819,96857,96868,96892,96921,96923,96924,96929,96964,96966,96973) and order_items.parent_item_id is null\",\n      \"attached_condition\": \"order_items.parent_item_id <=> NULL\"\n    }\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "hint": "FORCE INDEX (idx_order_items_invoice)",
+      "samples": 100,
+      "p50_ms": 0.6484000000000378,
+      "p95_ms": 0.8641000000006898,
+      "max_ms": 3.5702000000001135,
+      "node_cpu_ms": 125,
+      "sourceRows": 4800,
+      "plans": [
+        {
+          "offset": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_invoice",
+              "key": "idx_order_items_invoice",
+              "key_len": "4",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 2.3641,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_invoice\"],\n      \"key\": \"idx_order_items_invoice\",\n      \"key_length\": \"4\",\n      \"used_key_parts\": [\"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 2.3275,\n      \"filtered\": 100,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (47,52,96,142,193,224,236,264,357,381,393,403,430,441,445,499)\",\n      \"attached_condition\": \"order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 750,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_invoice",
+              "key": "idx_order_items_invoice",
+              "key_len": "4",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 2.1781,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_invoice\"],\n      \"key\": \"idx_order_items_invoice\",\n      \"key_length\": \"4\",\n      \"used_key_parts\": [\"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 2.141,\n      \"filtered\": 100,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (24204,24265,24413,24485,24499,24500,24542,24591,24606,24645,24651,24654,24680,24694,24718,24756)\",\n      \"attached_condition\": \"order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 1500,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_invoice",
+              "key": "idx_order_items_invoice",
+              "key_len": "4",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 1.8111,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_invoice\"],\n      \"key\": \"idx_order_items_invoice\",\n      \"key_length\": \"4\",\n      \"used_key_parts\": [\"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 1.7885,\n      \"filtered\": 100,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (47809,47832,47844,48008,48070,48095,48111,48137,48179,48304,48324,48325,48346,48363,48383,48395)\",\n      \"attached_condition\": \"order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 2250,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_invoice",
+              "key": "idx_order_items_invoice",
+              "key_len": "4",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 0.1885,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_invoice\"],\n      \"key\": \"idx_order_items_invoice\",\n      \"key_length\": \"4\",\n      \"used_key_parts\": [\"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 0.1465,\n      \"filtered\": 100,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (71923,71926,72008,72041,72107,72134,72146,72221,72307,72371,72374,72445,72526,72530,72564,72582)\",\n      \"attached_condition\": \"order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 3000,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_invoice",
+              "key": "idx_order_items_invoice",
+              "key_len": "4",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition; Using where"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 0.1603,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_invoice\"],\n      \"key\": \"idx_order_items_invoice\",\n      \"key_length\": \"4\",\n      \"used_key_parts\": [\"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 0.13,\n      \"filtered\": 100,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (96725,96736,96758,96780,96794,96819,96857,96868,96892,96921,96923,96924,96929,96964,96966,96973)\",\n      \"attached_condition\": \"order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "hint": "FORCE INDEX (idx_order_items_parent_invoice)",
+      "samples": 100,
+      "p50_ms": 0.5914999999986321,
+      "p95_ms": 0.7777000000005501,
+      "max_ms": 0.9729999999999563,
+      "node_cpu_ms": 0,
+      "sourceRows": 4800,
+      "plans": [
+        {
+          "offset": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "9",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 0.1646,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_parent_invoice\"],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"9\",\n      \"used_key_parts\": [\"parent_item_id\", \"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 0.143,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (47,52,96,142,193,224,236,264,357,381,393,403,430,441,445,499) and order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 750,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "9",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 0.1578,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_parent_invoice\"],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"9\",\n      \"used_key_parts\": [\"parent_item_id\", \"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 0.1386,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (24204,24265,24413,24485,24499,24500,24542,24591,24606,24645,24651,24654,24680,24694,24718,24756) and order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 1500,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "9",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 0.1602,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_parent_invoice\"],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"9\",\n      \"used_key_parts\": [\"parent_item_id\", \"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 0.1409,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (47809,47832,47844,48008,48070,48095,48111,48137,48179,48304,48324,48325,48346,48363,48383,48395) and order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 2250,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "9",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 0.152,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_parent_invoice\"],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"9\",\n      \"used_key_parts\": [\"parent_item_id\", \"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 0.1328,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (71923,71926,72008,72041,72107,72134,72146,72221,72307,72371,72374,72445,72526,72530,72564,72582) and order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        },
+        {
+          "offset": 3000,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "order_items",
+              "type": "range",
+              "possible_keys": "idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "9",
+              "ref": null,
+              "rows": "48",
+              "Extra": "Using index condition"
+            }
+          ],
+          "actual": [
+            {
+              "ANALYZE": "{\n  \"query_block\": {\n    \"select_id\": 1,\n    \"r_loops\": 1,\n    \"r_total_time_ms\": 0.1501,\n    \"table\": {\n      \"table_name\": \"order_items\",\n      \"access_type\": \"range\",\n      \"possible_keys\": [\"idx_order_items_parent_invoice\"],\n      \"key\": \"idx_order_items_parent_invoice\",\n      \"key_length\": \"9\",\n      \"used_key_parts\": [\"parent_item_id\", \"invoice_id\"],\n      \"r_loops\": 1,\n      \"rows\": 48,\n      \"r_rows\": 48,\n      \"r_total_time_ms\": 0.1307,\n      \"filtered\": 0.016,\n      \"r_filtered\": 100,\n      \"index_condition\": \"order_items.invoice_id in (96725,96736,96758,96780,96794,96819,96857,96868,96892,96921,96923,96924,96929,96964,96966,96973) and order_items.parent_item_id is null\"\n    }\n  }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Single workstation; Node CPU excludes database CPU.",
+    "Warm sparse lookup only; not complete worker, concurrent load or low-end certification."
+  ]
+}

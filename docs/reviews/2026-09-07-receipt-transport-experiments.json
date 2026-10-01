@@ -1,0 +1,392 @@
+[
+  {
+    "prefix": "scratch/spooler-audit/receipt-baseline",
+    "jobs": 288,
+    "cpu_s": 14.359375,
+    "wall_s": 24.069,
+    "peak_commit_mib": 242.79296875,
+    "peak_ws_mib": 409.1796875,
+    "event_loop": {
+      "p99": 31.539199,
+      "max": 1132.462079
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 67.6114000000016,
+        "first_byte_p95": 112.14940000000024,
+        "transport_median": 1.1461999999992258,
+        "transport_p95": 3.160399999999754
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 66.45839999999953,
+        "first_byte_p95": 90.93059999999969,
+        "transport_median": 1.2153999999991356,
+        "transport_p95": 1.8166000000001077
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 65.4897000000019,
+        "first_byte_p95": 100.3155999999999,
+        "transport_median": 1.1624999999985448,
+        "transport_p95": 1.8076000000000931
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 67.23999999999796,
+        "first_byte_p95": 100.68499999999949,
+        "transport_median": 1.1542999999983294,
+        "transport_p95": 1.6252000000004045
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 65.79449999999997,
+        "first_byte_p95": 99.09439999999995,
+        "transport_median": 1.0788999999995212,
+        "transport_p95": 1.3542999999999665
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 66.16419999999925,
+        "first_byte_p95": 99.04769999999917,
+        "transport_median": 1.0751999999993131,
+        "transport_p95": 1.4799999999995634
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 52.62680000000182,
+        "first_byte_p95": 93.12199999999939,
+        "transport_median": 0.9730999999992491,
+        "transport_p95": 1.2443999999995867
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 50.98960000000079,
+        "first_byte_p95": 82.94350000000122,
+        "transport_median": 0.9737999999997555,
+        "transport_p95": 1.317800000000716
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 51.13839999999982,
+        "first_byte_p95": 84.15459999999803,
+        "transport_median": 0.971400000000358,
+        "transport_p95": 1.2665000000015425
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/receipt-png",
+    "jobs": 288,
+    "cpu_s": 13.015625,
+    "wall_s": 18.256,
+    "peak_commit_mib": 247.7734375,
+    "peak_ws_mib": 396.23046875,
+    "event_loop": {
+      "p99": 30.048255,
+      "max": 257.818623
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.19950000000017,
+        "first_byte_p95": 113.55479999999989,
+        "transport_median": 1.1793999999990774,
+        "transport_p95": 2.26400000000001
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 65.86830000000009,
+        "first_byte_p95": 91.68730000000005,
+        "transport_median": 1.3139000000001033,
+        "transport_p95": 1.715699999998833
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 66.36280000000079,
+        "first_byte_p95": 99.9336000000003,
+        "transport_median": 1.297800000000052,
+        "transport_p95": 1.5850000000000364
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.03550000000178,
+        "first_byte_p95": 98.77180000000044,
+        "transport_median": 1.282099999996717,
+        "transport_p95": 1.8699999999989814
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 65.31630000000041,
+        "first_byte_p95": 99.26020000000062,
+        "transport_median": 1.1829999999990832,
+        "transport_p95": 1.3695999999999913
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 65.35899999999856,
+        "first_byte_p95": 96.01789999999892,
+        "transport_median": 1.0667000000000826,
+        "transport_p95": 1.312599999999975
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 51.88140000000021,
+        "first_byte_p95": 93.75040000000081,
+        "transport_median": 1.0132000000003245,
+        "transport_p95": 1.3263000000006286
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 50.23880000000099,
+        "first_byte_p95": 83.92770000000019,
+        "transport_median": 1.0094000000008236,
+        "transport_p95": 1.2256999999999607
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 50.477499999999054,
+        "first_byte_p95": 83.70989999999983,
+        "transport_median": 1.021099999999933,
+        "transport_p95": 1.265700000000379
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/receipt-nodelay",
+    "jobs": 288,
+    "cpu_s": 13.859375,
+    "wall_s": 19.115,
+    "peak_commit_mib": 246.11328125,
+    "peak_ws_mib": 388.515625,
+    "event_loop": {
+      "p99": 30.425087,
+      "max": 234.618879
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.49079999999958,
+        "first_byte_p95": 117.36030000000028,
+        "transport_median": 1.2266000000017812,
+        "transport_p95": 1.6242000000002008
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 66.15439999999944,
+        "first_byte_p95": 93.41749999999956,
+        "transport_median": 1.212600000002567,
+        "transport_p95": 1.72649999999976
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 65.9987000000001,
+        "first_byte_p95": 100.36319999999978,
+        "transport_median": 1.289400000000569,
+        "transport_p95": 1.8121000000001004
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.86869999999999,
+        "first_byte_p95": 100.25730000000112,
+        "transport_median": 1.2588999999989028,
+        "transport_p95": 2.0847999999987223
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 67.3784999999989,
+        "first_byte_p95": 98.30220000000008,
+        "transport_median": 1.118199999999888,
+        "transport_p95": 1.3842999999999392
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 68.29899999999907,
+        "first_byte_p95": 98.30320000000029,
+        "transport_median": 1.0979999999999563,
+        "transport_p95": 1.3497000000002117
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 52.54340000000229,
+        "first_byte_p95": 95.11819999999898,
+        "transport_median": 1.0648999999993976,
+        "transport_p95": 1.3362999999999374
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 52.52019999999902,
+        "first_byte_p95": 96.17040000000088,
+        "transport_median": 0.9828000000006796,
+        "transport_p95": 1.4171999999998661
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 53.60109999999986,
+        "first_byte_p95": 83.10130000000026,
+        "transport_median": 1.064300000000003,
+        "transport_p95": 1.3955000000000837
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/receipt-baseline-repeat",
+    "jobs": 288,
+    "cpu_s": 13.671875,
+    "wall_s": 18.985,
+    "peak_commit_mib": 246.90625,
+    "peak_ws_mib": 398.859375,
+    "event_loop": {
+      "p99": 30.097407,
+      "max": 238.813183
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.66690000000017,
+        "first_byte_p95": 114.01509999999871,
+        "transport_median": 1.149199999999837,
+        "transport_p95": 1.533899999998539
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 65.55270000000019,
+        "first_byte_p95": 92.09090000000015,
+        "transport_median": 1.2403999999996813,
+        "transport_p95": 1.7377999999998792
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 65.7666999999999,
+        "first_byte_p95": 100.4286000000011,
+        "transport_median": 1.1770000000001346,
+        "transport_p95": 1.5987999999997555
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.04809999999998,
+        "first_byte_p95": 100.56489999999985,
+        "transport_median": 1.191899999997986,
+        "transport_p95": 1.6388999999999214
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 66.85369999999966,
+        "first_byte_p95": 98.72370000000001,
+        "transport_median": 1.1075999999993655,
+        "transport_p95": 1.4485999999997148
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 66.03700000000026,
+        "first_byte_p95": 99.48649999999907,
+        "transport_median": 1.0833000000002357,
+        "transport_p95": 1.3369000000000142
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 51.06560000000081,
+        "first_byte_p95": 94.67610000000059,
+        "transport_median": 1.0131000000001222,
+        "transport_p95": 1.3662999999996828
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 52.645299999999224,
+        "first_byte_p95": 82.61019999999917,
+        "transport_median": 0.9800000000013824,
+        "transport_p95": 1.2802000000001499
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 53.367599999999584,
+        "first_byte_p95": 97.14020000000164,
+        "transport_median": 1.0005000000001019,
+        "transport_p95": 1.4166999999997643
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/receipt-png-repeat",
+    "jobs": 288,
+    "cpu_s": 16.6875,
+    "wall_s": 19.885,
+    "peak_commit_mib": 245.68359375,
+    "peak_ws_mib": 390.46875,
+    "event_loop": {
+      "p99": 36.601855,
+      "max": 227.672063
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 68.3163999999997,
+        "first_byte_p95": 123.12970000000041,
+        "transport_median": 1.733699999999999,
+        "transport_p95": 2.622200000000703
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 65.89790000000005,
+        "first_byte_p95": 99.77139999999781,
+        "transport_median": 1.7776000000001204,
+        "transport_p95": 6.510999999999967
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 66.90450000000055,
+        "first_byte_p95": 105.72329999999965,
+        "transport_median": 1.7524000000012165,
+        "transport_p95": 2.4067999999988388
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.58449999999993,
+        "first_byte_p95": 113.32420000000002,
+        "transport_median": 1.5257999999998901,
+        "transport_p95": 2.9416000000001077
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 66.90940000000046,
+        "first_byte_p95": 96.74519999999939,
+        "transport_median": 1.764499999999316,
+        "transport_p95": 2.731899999998859
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 65.37239999999838,
+        "first_byte_p95": 98.49539999999979,
+        "transport_median": 1.6123999999981606,
+        "transport_p95": 2.15520000000015
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 60.38020000000142,
+        "first_byte_p95": 96.5978,
+        "transport_median": 1.2294999999999163,
+        "transport_p95": 2.458199999999124
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 54.42900000000009,
+        "first_byte_p95": 92.5654999999997,
+        "transport_median": 1.3466000000007625,
+        "transport_p95": 2.189300000000003
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 64.6218000000008,
+        "first_byte_p95": 98.61839999999938,
+        "transport_median": 1.4472999999998137,
+        "transport_p95": 2.043399999999565
+      }
+    ]
+  }
+]

@@ -1,0 +1,1041 @@
+{
+  "auditBase": "01ef8df1316484a19e1f655c676d0b86901f5914",
+  "branch": "codex/system-performance-audit",
+  "collectedAt": "2026-09-06T14:43:10.297Z",
+  "provenance": "Source hashes collected after verification. Suites were run in stages; the evidence documents distinguish final affected reruns from earlier broad coverage.",
+  "vitestDistinctPassed": 1113,
+  "vitestDistinctFiles": 118,
+  "suites": [
+    {
+      "name": "backend business/report/lifetime union",
+      "source": "docs/reviews/2026-09-06-backend-runtime-audit.md; agent verification output",
+      "passed": 512,
+      "files": [
+        {
+          "file": "backend/tests/integration/dailyReportsAdversarial.test.js",
+          "passed": 11
+        },
+        {
+          "file": "backend/tests/integration/dailyReportsSummary.test.js",
+          "passed": 5
+        },
+        {
+          "file": "backend/tests/integration/tableConnectionLifetime.test.js",
+          "passed": 10
+        },
+        {
+          "file": "backend/tests/integration/checkoutPerformanceContract.test.js",
+          "passed": 12
+        },
+        {
+          "file": "backend/tests/integration/checkoutPostCommit.test.js",
+          "passed": 5
+        },
+        {
+          "file": "backend/tests/integration/tableOrderPostCommit.test.js",
+          "passed": 2
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerReport.test.js",
+          "passed": 3
+        },
+        {
+          "file": "backend/tests/integration/financialEventRange.test.js",
+          "passed": 1
+        },
+        {
+          "file": "backend/tests/integration/tables.test.js",
+          "passed": 199
+        },
+        {
+          "file": "backend/tests/integration/checkout.test.js",
+          "passed": 133
+        },
+        {
+          "file": "backend/tests/integration/refunds.test.js",
+          "passed": 73
+        },
+        {
+          "file": "backend/tests/integration/bundle.tables.test.js",
+          "passed": 35
+        },
+        {
+          "file": "backend/tests/integration/tableSettlementContext.test.js",
+          "passed": 13
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerReversals.test.js",
+          "passed": 4
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerTables.test.js",
+          "passed": 3
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerSplitsMerges.test.js",
+          "passed": 3
+        }
+      ],
+      "verifiedPoolCapacity": 1,
+      "poolCapacityScope": "ten table lifetime cases, ordinary checkout and join/disjoin PIN; not mid-transaction checkout PIN override"
+    },
+    {
+      "name": "runtime and safety",
+      "runtime": "Node 22.23.0",
+      "passed": 48,
+      "rawResultSha256": "1dc266702aeae6b6a5789a825142247ce4bbfc0967d5cc2deaf93d6d828106cc",
+      "elapsedMs": 6633,
+      "files": [
+        {
+          "file": "backend/tests/integration/databasePoolAcquireTimeout.test.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "8a6b1f0c6b406c77f059e59e5da8af06a82c06c71585308b00aea2a306ad30cc"
+        },
+        {
+          "file": "backend/tests/integration/databaseRuntime.test.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "1b39e5199c6a70d66f28b12fd2c069072037183388fb1155de883bbdba0d806b"
+        },
+        {
+          "file": "backend/tests/unit/databasePoolAcquireTimeout.test.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "7c801cd8bd9d62ea3e9d968e4730ffbddb65837ae8779a00663b40eea3d02c30"
+        },
+        {
+          "file": "backend/tests/unit/databasePoolOptions.test.js",
+          "passed": 6,
+          "orderedCaseNamesSha256": "555d4216e116fb59aa155218580704995cccfa60ec32a509d0a75e447d469b19"
+        },
+        {
+          "file": "backend/tests/unit/databaseRuntime.test.js",
+          "passed": 17,
+          "orderedCaseNamesSha256": "e290175b711d2722122f74d994c22d17a2a1b71435a5eb1efae26e3f5a7fbf86"
+        },
+        {
+          "file": "backend/tests/unit/deviceAuthModeCache.test.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "f92d1d96d2337783d76542f998f9c4f61955034fc7acf2e4e36a6e0fe4177757"
+        },
+        {
+          "file": "backend/tests/unit/globalSetup.test.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "9fcf01d6de3f637f8d1caa0caa54d53a88a40b8446b982545d09d49cc82eb566"
+        },
+        {
+          "file": "backend/tests/unit/menuCache.test.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "3360381ec21529cd91557a7e3c1202dfe62f4c2b134730936c6f8b4f9160329b"
+        },
+        {
+          "file": "backend/tests/unit/testDatabaseSafety.test.js",
+          "passed": 9,
+          "orderedCaseNamesSha256": "2c8852975cd48b8c82f19af0ef6410a55b5cf50d69063caf86892f161064803c"
+        }
+      ]
+    },
+    {
+      "name": "frontend final",
+      "runtime": "Node 24.16.0; invalid DB_HOST",
+      "passed": 516,
+      "rawResultSha256": "d75007ae1209f358407c0b49d266233e02fe78e37a11a7c3d7977d7f4e1aabb9",
+      "elapsedMs": 13085,
+      "files": [
+        {
+          "file": "src/pos/tableWorkspaceRequests.spec.js",
+          "passed": 8,
+          "orderedCaseNamesSha256": "edabeed272800f86727372beb92fc66aeba499ce5bd89b9e13c7f8530331be2f"
+        },
+        {
+          "file": "src/pos/usePermissions.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "ecea631c89113695a98fc10b55f34e2ba23d4ca5af4faadb24606756882cc378"
+        },
+        {
+          "file": "src/pos/useProductsRequests.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "985cdbaf9837499d93467707b748bbc86accf1a84d83dd4f97530d282554c49b"
+        },
+        {
+          "file": "src/utils/defaultOrderType.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "6423e2ce2e510e2d2a4ec38cf18412a45a83d1c3525ac9ebc238c85023b9f04c"
+        },
+        {
+          "file": "src/utils/money.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "64d74e685d729901deeff12a7a613004328777f2a851d0e986e4a73612d797e6"
+        },
+        {
+          "file": "src/utils/orderNotesBoard.spec.js",
+          "passed": 15,
+          "orderedCaseNamesSha256": "f980cf42ccfc3f21ad995ab11e9a841b245681b06605445284e229236a1d6131"
+        },
+        {
+          "file": "src/utils/orderNotesFormat.spec.js",
+          "passed": 6,
+          "orderedCaseNamesSha256": "a9c97987182d6c4656887a7701f6466ba4f14d3dc9e5a874860c224ec8fac1ca"
+        },
+        {
+          "file": "src/utils/orderNotesTax.spec.js",
+          "passed": 16,
+          "orderedCaseNamesSha256": "448d0dcde3caf6e7f43ec66f9f6a74dadeddc711a02a3f9738a056af1da31e33"
+        },
+        {
+          "file": "src/utils/orderTypeAccent.spec.js",
+          "passed": 5,
+          "orderedCaseNamesSha256": "d832a232db9e6efe284c3c825def9642d0df170fc08c10c0790f7cc0a7fe44cd"
+        },
+        {
+          "file": "src/utils/receiptLineTotals.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "ef2a44eb1d83b394fa64a7a24727238bc7b49f24bf9acdf484bcbf65bff0b392"
+        },
+        {
+          "file": "src/utils/tableFloorPlanPresentation.spec.js",
+          "passed": 6,
+          "orderedCaseNamesSha256": "3a7e6b919c5154723b31e1f094591b539685bd20f1958bc2b476492da3e31e36"
+        },
+        {
+          "file": "src/utils/useAuthHydration.spec.js",
+          "passed": 13,
+          "orderedCaseNamesSha256": "28fdc948f6767e027235e0a2f61a79d75b20a3694a6ca4867442d4f27016108f"
+        },
+        {
+          "file": "src/admin/__tests__/jofotaraOperationsPage.spec.js",
+          "passed": 5,
+          "orderedCaseNamesSha256": "648e762073f2fbe05587989f2e7522798e94b6566dc16f0138e9f829517eab9a"
+        },
+        {
+          "file": "src/admin/__tests__/realtime.spec.js",
+          "passed": 5,
+          "orderedCaseNamesSha256": "3d348cf519df021d11634ab668fcacf76704f14320b00ea9cec4f33356471162"
+        },
+        {
+          "file": "src/admin/__tests__/settingsOperationalReset.spec.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "35fda4dd79c4936f96b2fed523234e459e7c50271c3598ee44093c6546649205"
+        },
+        {
+          "file": "src/components/__tests__/categoryPricePosWiring.spec.js",
+          "passed": 7,
+          "orderedCaseNamesSha256": "62963ae27b9f8bb827b262c787b34d23e794e7346803eb99d67dd0848788f7ce"
+        },
+        {
+          "file": "src/components/__tests__/deviceEnrollment.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "d06e149ea8a2381d423023bb4733f3645127f57e531c6f9770d3ef559d3585ae"
+        },
+        {
+          "file": "src/components/__tests__/deviceRecovery.spec.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "28962f4bcaced2204d21d95cb7cee074bb84081d5b4f3d4ed76a5756caf1a3c4"
+        },
+        {
+          "file": "src/components/__tests__/loginWebAuthn.spec.js",
+          "passed": 9,
+          "orderedCaseNamesSha256": "f680d509590de372091b3cf15f160815c97776ceaf31915fb299df2fc208ce68"
+        },
+        {
+          "file": "src/components/__tests__/posPermissionWiring.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "09422c14019868f3b15c4a9e85203e7aabdad54ef6e987f3abd4559e1f5e2325"
+        },
+        {
+          "file": "src/components/__tests__/posSubscriptionWiring.spec.js",
+          "passed": 5,
+          "orderedCaseNamesSha256": "54e4abc9b76143324b8c50a3a1e814a48a189c3679a07f5edd56b09469fb0005"
+        },
+        {
+          "file": "src/components/__tests__/posTerminalOwnership.spec.js",
+          "passed": 24,
+          "orderedCaseNamesSha256": "52a137ff8b8420dd74ec72dedd5e0abe2b7bb74851dcb2469778d745fe455a5c"
+        },
+        {
+          "file": "src/components/__tests__/tableFloorPlanDesignContract.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "837d1d70ddc5189578581cb07133294c41645bbfe792181fedfee556b26fa23b"
+        },
+        {
+          "file": "src/components/__tests__/tableFloorPlanLocalization.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "4fa210bfe73edc40df93942fdb4ed08a6c943bfb49bc45bd4e96a539d9407ef1"
+        },
+        {
+          "file": "src/pos/__tests__/useSocketRoleBoundary.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "df7c4260249c4b1f0db7a6708f1cac54c32e96e29a9486eb355d7a4219264630"
+        },
+        {
+          "file": "src/shared/__tests__/authInterceptor.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "5d78ac1baddf1d2c30707df00ebdc5179194fcb0af73557b805ad92a1efaf371"
+        },
+        {
+          "file": "src/shared/__tests__/browserDeviceClient.spec.js",
+          "passed": 11,
+          "orderedCaseNamesSha256": "2fee6bb82c0f6045a9b8d8a03d96b754b83fac1cd47f1a9315158973d0351c99"
+        },
+        {
+          "file": "src/shared/__tests__/http.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "5d79b768b5ce4c57379620d50fde7e5a2b7c592c7f164ede2acbc95dadd94888"
+        },
+        {
+          "file": "src/shared/__tests__/i18nCatalog.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "07df47651de7b72c9c638f7795b6dd293d9f75fa0345da8602d4a12413a4a51a"
+        },
+        {
+          "file": "src/shared/__tests__/systemSettings.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "9d87f19850e2241f24bd961c3657a4f5344d05909a82bc7bb13d270576fb1261"
+        },
+        {
+          "file": "src/utils/__tests__/businessDate.spec.js",
+          "passed": 7,
+          "orderedCaseNamesSha256": "e5015cdd913a33705413027950a2f3a82805c492d584a5729fe0625e223f4ab1"
+        },
+        {
+          "file": "src/print/__tests__/adminReportA4Rendering.spec.js",
+          "passed": 18,
+          "orderedCaseNamesSha256": "eced522532a3a1dc42f16d0eddd5924ee3f722f22296d7e422ae55c7912dd12d"
+        },
+        {
+          "file": "src/print/__tests__/adminReportPrintDesign.spec.js",
+          "passed": 13,
+          "orderedCaseNamesSha256": "0fca7fceb60799fffb76b6f2c6d4f0f4819ffaabeb1e86726337a79606f0e3c4"
+        },
+        {
+          "file": "src/print/__tests__/auditReportPresentation.spec.js",
+          "passed": 9,
+          "orderedCaseNamesSha256": "1cc6a360e1bae035676d8596f50a6b4e06168359dcb5c67c6ae70af9f5b2af87"
+        },
+        {
+          "file": "src/print/__tests__/reportPrintBranches.spec.js",
+          "passed": 5,
+          "orderedCaseNamesSha256": "5e4d43a9296307e600e4310e8bf0dbdcbdcbdf669a8e6e44d7e7cf7470a309d3"
+        },
+        {
+          "file": "src/admin/components/__tests__/importModal.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "1eb2b3d087124d86b41aa303096101f98655e938b0a7383c1bcb19c3c4c01949"
+        },
+        {
+          "file": "src/admin/components/__tests__/productPriceOverrideLock.spec.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "1ae302cea4de863504327b5a44c3c686d7a9a14369503710c7c80c69045fe2ca"
+        },
+        {
+          "file": "src/admin/components/__tests__/productRecipeEditor.spec.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "ed83be12a9a9e51f96a01d14ac459275a1a3fecdd9e32f7b23487e1378b2a0e9"
+        },
+        {
+          "file": "src/admin/components/__tests__/reportPrintMenu.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "4e6be5d0fbe29e980003b0803e4f31e492162b9172a55dc6911dee4e026625e6"
+        },
+        {
+          "file": "src/admin/utils/__tests__/dashboardPresentation.spec.js",
+          "passed": 7,
+          "orderedCaseNamesSha256": "51b9902031b78e90e7f93b6e8b664e7b710a57f2af105ec55c93d21c82bf046f"
+        },
+        {
+          "file": "src/admin/utils/__tests__/printTemplateLayout.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "7c173da0d39f3178680e699cc3baa7cfee1fd29d106fb7763d76c5e0d90e6a96"
+        },
+        {
+          "file": "src/admin/utils/__tests__/reportFormatting.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "0a3b613379e9965644cbb4ce1d4f7143b3be1aabf339dd2ebfe8bdfa92175e1a"
+        },
+        {
+          "file": "src/admin/pages/__tests__/dailyReportPayloads.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "ac83d53eb1c05146035a325a755846529c21eca36f15f7f280c93cab330fc23e"
+        },
+        {
+          "file": "src/admin/pages/__tests__/dailyReportsLocalization.spec.js",
+          "passed": 5,
+          "orderedCaseNamesSha256": "b2d0b070124805ecb74f4f4705cb8d1b95de75782349312fae164ee4e184eeab"
+        },
+        {
+          "file": "src/admin/pages/__tests__/dailyReportsNavigation.spec.js",
+          "passed": 7,
+          "orderedCaseNamesSha256": "307fc312bdd73489a702b2a28e6cc3525b9666ad86ac6459ea863de492388e2f"
+        },
+        {
+          "file": "src/admin/pages/__tests__/dashboardLocalization.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "de43814ef895688f54d9142d88227aa6588988e6613d64e5379ee2f3bb473d98"
+        },
+        {
+          "file": "src/admin/pages/__tests__/dashboardStructure.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "e1d1c065ad0b1b4c5999c8da6a164fc40391c1a72f8637ce7c4cda0d5c0d17ca"
+        },
+        {
+          "file": "src/admin/pages/__tests__/deviceAccessSettings.spec.js",
+          "passed": 9,
+          "orderedCaseNamesSha256": "593ee169e6fefe73705167706ceccbadd6bfaab5619db93dcfeb2e42643e9e6a"
+        },
+        {
+          "file": "src/admin/pages/__tests__/ingredientsPage.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "f3037286bf12fc41c76efe3c34614f876d45edbe5634d81f2d15e4aaebd313cd"
+        },
+        {
+          "file": "src/admin/pages/__tests__/inventoryPriceLists.spec.js",
+          "passed": 6,
+          "orderedCaseNamesSha256": "37f70a5fd783e44e1f058cd4ea0c06706d7beb35c079cb5d6119bed5c268cbc5"
+        },
+        {
+          "file": "src/admin/pages/__tests__/inventorySettingsRequests.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "afa9c47295cdada08c6f9815c913c97b7efa297fc2ace54ffe063b6132d54cba"
+        },
+        {
+          "file": "src/admin/pages/__tests__/jofotaraOperationsLocalization.spec.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "10bed09dfa9ef0d6bcee4783a8b3aa5d8a1d4142474e8e1aca0226e51bd98ac1"
+        },
+        {
+          "file": "src/admin/pages/__tests__/ordersOverlayState.spec.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "0d79405e8fd15fe789b2b299382be869630d1bbd77cb76c5d94b90827628efa6"
+        },
+        {
+          "file": "src/admin/pages/__tests__/ordersRequests.spec.js",
+          "passed": 4,
+          "orderedCaseNamesSha256": "8b4ed7fef255b81040bbeb4853e59da90f6899956996a93d1a6e5c804a234e48"
+        },
+        {
+          "file": "src/admin/pages/__tests__/ordersSetupBindings.spec.js",
+          "passed": 8,
+          "orderedCaseNamesSha256": "a832b38b10b051cf9992907343b957c2984d7331b4c9b58fd394fe149fcb6e0c"
+        },
+        {
+          "file": "src/admin/pages/__tests__/platformRemittancesPage.spec.js",
+          "passed": 8,
+          "orderedCaseNamesSha256": "0bebab4b8dc1de0a199205ce01f3eb0d1cfc4f9a99425ebf1227bb0f77012e6c"
+        },
+        {
+          "file": "src/admin/pages/__tests__/printerStationPicker.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "32e8a20c6e923a5d657bae4b46d1dbcc712260a176f7f9c3f4eec9b8659029dd"
+        },
+        {
+          "file": "src/admin/pages/__tests__/printTemplatesPage.spec.js",
+          "passed": 14,
+          "orderedCaseNamesSha256": "58d745dc6edfe908eff087a6383a736a0616ef46bcb7a5a2763eb517fbb4799f"
+        },
+        {
+          "file": "src/admin/pages/__tests__/reportsIngredients.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "2b6b374bab7ec6d3a4526e3bf298807750879aeacbece80d51a9d2e614ea3d05"
+        },
+        {
+          "file": "src/admin/pages/__tests__/reportsSummaryCashStatus.spec.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "de4666eeda6c39b70807612e6f173d08d6d76936d868f30894c176b99055bbdc"
+        },
+        {
+          "file": "src/admin/pages/__tests__/settingsFirstShiftCash.spec.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "56e8a33023e9120bed0e5a59ace6509be81d43769df81a8fe672f0581f147cdc"
+        },
+        {
+          "file": "src/admin/pages/__tests__/settingsQuickNumpad.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "6ef66280c3acd5a65e5f584d81349fffd4ad358b51a27c81e209e8e293c71f43"
+        },
+        {
+          "file": "src/admin/pages/__tests__/shiftsCashCorrections.spec.js",
+          "passed": 12,
+          "orderedCaseNamesSha256": "0a3e0677af4b9c0af578460d929b71912cdfbb57210e90f1aa38670d8f112d2c"
+        },
+        {
+          "file": "src/admin/pages/__tests__/shiftsPage.bugfix.spec.js",
+          "passed": 7,
+          "orderedCaseNamesSha256": "939bd1565cf7b75b28748903fc7875c549382cb88ff581f96f8b401bff1edd11"
+        },
+        {
+          "file": "src/admin/pages/__tests__/shiftsPage.quality.spec.js",
+          "passed": 8,
+          "orderedCaseNamesSha256": "8eb834482ceca2f7f583e5607ee23c0370d0602aaa326e21b686317eaf892fc7"
+        },
+        {
+          "file": "src/admin/pages/__tests__/spoolerV2Settings.spec.js",
+          "passed": 6,
+          "orderedCaseNamesSha256": "bf0868ac0d4f1e41b444f7cf4b2e409fe220ae6f2ab85bef64183b6126f813a2"
+        },
+        {
+          "file": "src/admin/pages/__tests__/subscriptionsLocalization.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "924d2a86b76cf0384c5026651834b045626ed399e483f835aadb33de4e39240f"
+        },
+        {
+          "file": "src/admin/pages/__tests__/subscriptionsPage.spec.js",
+          "passed": 14,
+          "orderedCaseNamesSha256": "3313457a673161debe09b09aeae77ab002b7cee04ba093a176971a1bfb551cfb"
+        },
+        {
+          "file": "src/admin/pages/__tests__/usersPage.bugfix.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "db3998897f9e5551143d5098bb0599b1591287b1c2dc064749611e86b39d43d6"
+        },
+        {
+          "file": "src/admin/pages/__tests__/usersPage.quality.spec.js",
+          "passed": 11,
+          "orderedCaseNamesSha256": "7e6efa3d83208d100cbe6a30e8c8e416ecc19e3ab45f74b6b8dbc74b1517d39f"
+        },
+        {
+          "file": "src/admin/composables/__tests__/printQueueRefreshController.spec.js",
+          "passed": 10,
+          "orderedCaseNamesSha256": "d4ee28e41a91a7b3d3410e8dcbe70ecaf2715f3397c7cb3d0b1b7ff49b1e595c"
+        },
+        {
+          "file": "src/admin/composables/__tests__/useBrowserReportPrint.spec.js",
+          "passed": 8,
+          "orderedCaseNamesSha256": "dc53d8c112fa7ed9ec2566335ff106d8dbdc5a429781a2cf71de4d17ca3f4450"
+        },
+        {
+          "file": "src/admin/composables/__tests__/useDashboardData.spec.js",
+          "passed": 12,
+          "orderedCaseNamesSha256": "1f5c72b3ab812fa8d404b44f80120d013f3e652a9d29ff85459af71ae02b2f62"
+        },
+        {
+          "file": "src/admin/composables/__tests__/useDeviceAccess.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "d2fa96d963c0fb0cd1ae68b30bdfa4e4080597701268698937f4c44050d8f15e"
+        },
+        {
+          "file": "src/admin/composables/__tests__/useInventoryActivity.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "4002317ea6b7d2dccd2940bc4105e5a565a8c17bb9fdd8f1fbd3546de7914eb4"
+        },
+        {
+          "file": "src/admin/composables/__tests__/usePrintTemplates.spec.js",
+          "passed": 8,
+          "orderedCaseNamesSha256": "8f5343e86394f5855490bfac8a29283142146b4f320579b96d02b7f2d7b0b86c"
+        },
+        {
+          "file": "src/admin/composables/__tests__/useStockAlerts.spec.js",
+          "passed": 7,
+          "orderedCaseNamesSha256": "ba438a7d2885270f9de80481ea6e29cb98944f0c3dda6516f77974dfe58084ab"
+        },
+        {
+          "file": "src/components/pos/__tests__/callCenterWorkflow.spec.js",
+          "passed": 10,
+          "orderedCaseNamesSha256": "409ce137e4859a96a2b01bc5999cca055fa757c0d47ed7edcd544a0e71d45c29"
+        },
+        {
+          "file": "src/components/pos/__tests__/checkoutSplitPayment.spec.js",
+          "passed": 7,
+          "orderedCaseNamesSha256": "a360440e74d4b87d0ce9db9d0201a5035eeff2062813c24835708fedffa31680"
+        },
+        {
+          "file": "src/components/pos/__tests__/expenseModal.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "e944c94c6526884d53072e8d2e5e264f008c1723c3d8feaddb215837e41c42b8"
+        },
+        {
+          "file": "src/components/pos/__tests__/quickNumpadMode.spec.js",
+          "passed": 7,
+          "orderedCaseNamesSha256": "bec6d6488bc21ce0c6282ef53bfe4ed379761292d2b6b2dd3b4161d52467a07a"
+        },
+        {
+          "file": "src/components/pos/__tests__/receiptSplitPayment.spec.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "62d2efe38362479856bd0f86e627f3c0cabce6156c3b700be9705994747bcb46"
+        },
+        {
+          "file": "src/components/pos/__tests__/splitCheckModal.spec.js",
+          "passed": 11,
+          "orderedCaseNamesSha256": "8f6503933802efb414ed0b73c9bcddab3c1a80821dd5c97cf7e33bac2d6101db"
+        },
+        {
+          "file": "src/components/pos/__tests__/subscriptionLocalization.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "dd63d37a79ff276a09c48eadf8ff47f1012b91cd904c1737aa55924637e05fef"
+        },
+        {
+          "file": "src/components/pos/__tests__/subscriptionModal.spec.js",
+          "passed": 8,
+          "orderedCaseNamesSha256": "efcf27de64f24380109e48b66f0f8ad1a9615c130212f072a545bec00a036920"
+        },
+        {
+          "file": "src/components/pos/__tests__/tableSplitsBoard.spec.js",
+          "passed": 6,
+          "orderedCaseNamesSha256": "b0ec656c57c70fe9cfe03f7ef85d240deb4f81494621c1de06d08a36a57b43cd"
+        },
+        {
+          "file": "src/admin/components/dashboard/__tests__/dashboardComponents.spec.js",
+          "passed": 2,
+          "orderedCaseNamesSha256": "7ac49ec6e509edc461e2d4f8a3413e376fc0cff1c149402d7e0edd1555663ed1"
+        }
+      ]
+    },
+    {
+      "name": "POS store and permission compatibility",
+      "runtime": "Node 22.23.0",
+      "passed": 37,
+      "rawResultSha256": "16f1c6cd1ef9cd52f40715fedf5d26d678077679a667b368248e168a2f00ed53",
+      "elapsedMs": 3685,
+      "files": [
+        {
+          "file": "backend/tests/unit/managerOverrideAttempts.test.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "86249c838af743805fdb0e7ecdffa8ce5a5b0da96b9c892c6db4d4b5f229361f"
+        },
+        {
+          "file": "backend/tests/unit/tableRealtime.test.js",
+          "passed": 7,
+          "orderedCaseNamesSha256": "7737f64e2fe79c65c7e2a46b5fc00dfbd25cac47cdce83b40c554e7a43459cc7"
+        },
+        {
+          "file": "backend/tests/unit/tableRelationshipModuleWiring.test.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "a36aa3bef520da48a9dd05e16bb2be4a47d4199d8575dbb32f744fa6b527daa0"
+        },
+        {
+          "file": "backend/tests/unit/tableSession.logic.test.js",
+          "passed": 20,
+          "orderedCaseNamesSha256": "09e7884753621c511c5c5f136297a73787d9cb466dec3d6e897dde731fe8f9df"
+        },
+        {
+          "file": "backend/tests/unit/useCart.logic.test.js",
+          "passed": 3,
+          "orderedCaseNamesSha256": "aac0f7cf5ad34ea8cd9f70c93c90d202a85cd7f84ebf19906997f7e081eb7075"
+        },
+        {
+          "file": "backend/tests/unit/useProducts.independence.test.js",
+          "passed": 1,
+          "orderedCaseNamesSha256": "6cad2d10a26d7d5bce35f0421e33cdb07b6682d4700101d3baacb4d88d81c46e"
+        }
+      ]
+    }
+  ],
+  "finalMenuTest": {
+    "passed": 3,
+    "rawResultSha256": "bcba6f725e80b46fd9d888c1064e4628a81d4e2dcae41619c9458c3aab5d5f0a"
+  },
+  "spooler": {
+    "runtime": "Node 22.23.0",
+    "evidence": "docs/reviews/2026-09-06-spooler-runtime-audit.md",
+    "passedScripts": [
+      "http-client",
+      "v2-sync-client",
+      "v2-sync-runtime",
+      "v2-job-store",
+      "v2-status-monitor",
+      "v2-print-priority",
+      "v2-printer-workers",
+      "v2-printer-transports",
+      "v2-agent-connect",
+      "v2-platform-helper",
+      "v2-hostile-runtime"
+    ]
+  },
+  "browser": {
+    "restaurant": [
+      {
+        "language": "en",
+        "steps": [
+          {
+            "step": "disabled sale",
+            "evidence": {
+              "invoice": 1
+            }
+          },
+          {
+            "step": "ingredient and recipe setup",
+            "evidence": {
+              "chicken_id": 1,
+              "pepsi_id": 2,
+              "plate_cost": 0.9,
+              "margin_percent": 82
+            }
+          },
+          {
+            "step": "table save and resave",
+            "evidence": {
+              "after_resave_chicken_g": 9400,
+              "after_added_burger_g": 9200,
+              "pepsi": 98
+            }
+          },
+          {
+            "step": "split and settle",
+            "evidence": {
+              "invoices": [
+                3,
+                4
+              ],
+              "settlement_does_not_repeat_usage": true
+            }
+          },
+          {
+            "step": "partial refund",
+            "evidence": {
+              "chicken_g": 9400,
+              "used_cost": 2.7,
+              "portions_response": {
+                "success": true,
+                "portions": [
+                  {
+                    "product_id": 1,
+                    "name": "Test Burger",
+                    "portions_possible": 47,
+                    "limiting_ingredient": {
+                      "id": 1,
+                      "name": "Chicken en 79510"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "step": "receipt waste correction and count",
+            "evidence": {
+              "expected_before_count_g": 11400,
+              "counted_g": 11100,
+              "variance_g": -300
+            }
+          },
+          {
+            "step": "day report and print",
+            "evidence": {
+              "chicken_report": {
+                "id": 1,
+                "name": "Chicken en 79510",
+                "measure": "weight",
+                "display_unit": "kg",
+                "unit_cost": 0.0045,
+                "par_qty": 5000,
+                "pack_name": "sack",
+                "pack_size": 10000,
+                "is_active": true,
+                "opening": 10000,
+                "received": 3000,
+                "used": 600,
+                "waste": 500,
+                "waste_by_reason": {
+                  "spoiled": 500
+                },
+                "corrections": -500,
+                "closing_expected": 11100,
+                "below_par": false,
+                "counts": [
+                  {
+                    "at": "2026-09-06T14:30:14.000Z",
+                    "qty": 10000,
+                    "expected_qty": null,
+                    "variance_qty": null,
+                    "variance_pct": null
+                  },
+                  {
+                    "at": "2026-09-06T14:30:22.000Z",
+                    "qty": 11100,
+                    "expected_qty": 11400,
+                    "variance_qty": -300,
+                    "variance_pct": -0.5
+                  }
+                ],
+                "used_cost": 2.7,
+                "waste_cost": 2.25
+              },
+              "a4_and_thermal_rendered": true
+            }
+          },
+          {
+            "step": "opening prefill and refund while disabled",
+            "evidence": {
+              "prior_history_shifted_to_yesterday": true,
+              "opening_prefill_kg": 11.1,
+              "opening_saved_kg": 11,
+              "disabled_refund_remaining_g": 11200
+            }
+          }
+        ],
+        "status": "passed"
+      },
+      {
+        "language": "ar",
+        "steps": [
+          {
+            "step": "disabled sale",
+            "evidence": {
+              "invoice": 1
+            }
+          },
+          {
+            "step": "ingredient and recipe setup",
+            "evidence": {
+              "chicken_id": 1,
+              "pepsi_id": 2,
+              "plate_cost": 0.9,
+              "margin_percent": 82
+            }
+          },
+          {
+            "step": "table save and resave",
+            "evidence": {
+              "after_resave_chicken_g": 9400,
+              "after_added_burger_g": 9200,
+              "pepsi": 98
+            }
+          },
+          {
+            "step": "split and settle",
+            "evidence": {
+              "invoices": [
+                3,
+                4
+              ],
+              "settlement_does_not_repeat_usage": true
+            }
+          },
+          {
+            "step": "partial refund",
+            "evidence": {
+              "chicken_g": 9400,
+              "used_cost": 2.7,
+              "portions_response": {
+                "success": true,
+                "portions": [
+                  {
+                    "product_id": 1,
+                    "name": "Test Burger",
+                    "portions_possible": 47,
+                    "limiting_ingredient": {
+                      "id": 1,
+                      "name": "Chicken ar 3a2a5"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "step": "receipt waste correction and count",
+            "evidence": {
+              "expected_before_count_g": 11400,
+              "counted_g": 11100,
+              "variance_g": -300
+            }
+          },
+          {
+            "step": "day report and print",
+            "evidence": {
+              "chicken_report": {
+                "id": 1,
+                "name": "Chicken ar 3a2a5",
+                "measure": "weight",
+                "display_unit": "kg",
+                "unit_cost": 0.0045,
+                "par_qty": 5000,
+                "pack_name": "sack",
+                "pack_size": 10000,
+                "is_active": true,
+                "opening": 10000,
+                "received": 3000,
+                "used": 600,
+                "waste": 500,
+                "waste_by_reason": {
+                  "spoiled": 500
+                },
+                "corrections": -500,
+                "closing_expected": 11100,
+                "below_par": false,
+                "counts": [
+                  {
+                    "at": "2026-09-06T14:33:17.000Z",
+                    "qty": 10000,
+                    "expected_qty": null,
+                    "variance_qty": null,
+                    "variance_pct": null
+                  },
+                  {
+                    "at": "2026-09-06T14:33:25.000Z",
+                    "qty": 11100,
+                    "expected_qty": 11400,
+                    "variance_qty": -300,
+                    "variance_pct": -0.5
+                  }
+                ],
+                "used_cost": 2.7,
+                "waste_cost": 2.25
+              },
+              "a4_and_thermal_rendered": true
+            }
+          },
+          {
+            "step": "opening prefill and refund while disabled",
+            "evidence": {
+              "prior_history_shifted_to_yesterday": true,
+              "opening_prefill_kg": 11.1,
+              "opening_saved_kg": 11,
+              "disabled_refund_remaining_g": 11200
+            }
+          }
+        ],
+        "status": "passed"
+      }
+    ],
+    "frontend": {
+      "success": true,
+      "steps": [
+        {
+          "step": "Order History quick date",
+          "evidence": {
+            "ordersGetRequests": 1
+          }
+        },
+        {
+          "step": "Remote table setting",
+          "evidence": {
+            "hiddenTableFilterResetTo": "register",
+            "page": 1
+          }
+        },
+        {
+          "step": "Remote stock setting with low filter",
+          "evidence": {
+            "beforeProducts": 1,
+            "afterProducts": 135,
+            "stockFilterPresent": false,
+            "recipeNavigationHidden": true
+          }
+        },
+        {
+          "step": "Remote stock setting in replenishment",
+          "evidence": {
+            "resultingView": "products",
+            "products": 135
+          }
+        },
+        {
+          "step": "Remote language setting",
+          "evidence": {
+            "language": "ar",
+            "direction": "rtl",
+            "screenshot": "scratch/system-frontend-arabic-inventory.png"
+          }
+        },
+        {
+          "step": "Catalog rapid Load More",
+          "evidence": {
+            "initialProducts": 120,
+            "loadedProducts": 135,
+            "appendRequestsForThreeClicks": 1
+          }
+        },
+        {
+          "step": "Floor plan startup",
+          "evidence": {
+            "tableSnapshotRequests": 1
+          }
+        },
+        {
+          "step": "Return to floor plan",
+          "evidence": {
+            "tableSnapshotRequests": 1
+          }
+        },
+        {
+          "step": "Socket reconnect after missed setting",
+          "evidence": {
+            "tableSnapshotRequests": 1,
+            "currentMode": "dynamic"
+          }
+        },
+        {
+          "step": "Browser errors",
+          "evidence": {
+            "uncaught": 0
+          }
+        }
+      ]
+    },
+    "screenshotPathNote": "After browser acceptance, the Phase 4 runner was adjusted only to save screenshots beside its output JSON. Syntax/help verified; no business flow changed. Historical tracked screenshots were restored and new ones kept in scratch."
+  },
+  "build": {
+    "success": true,
+    "durationSeconds": 7.34
+  },
+  "architecture": {
+    "success": true,
+    "nodes": 232,
+    "flows": 65,
+    "steps": 493,
+    "preexistingMinorDefects": 1,
+    "artifactsChanged": false
+  },
+  "externalActions": {
+    "pushed": false,
+    "merged": false,
+    "deployed": false,
+    "productionTested": false,
+    "physicalPrintingTested": false,
+    "machineEnvironmentFilesChanged": false
+  },
+  "sourceSha256": {
+    "backend/config/menuCache.js": "f32b6b0eeea6607cfcb20eb24970431999ed250b94cf9c9934efa4123c08065c",
+    "backend/modules/checkout/executeCheckout.js": "c6744577e838ec1c4f1aaed69273f6f808c920232a814e7fa32ac38cb1f15c5a",
+    "backend/modules/refunds/voidOpenTableOrder.js": "9bd5033e2211f65528531168d16adcd575af1bfb0c9cd40de4ba894211e9660c",
+    "backend/modules/tables/markTablePrinted.js": "afaca4db54e26f034460e266266c1f7b2f5d53ca760a20c4586f45bc832f7a32",
+    "backend/modules/tables/saveTableOrder.js": "93277463a2ed3477f7b482b19281b95358e4807a3ccc17df2e1aff186c45c0d2",
+    "backend/modules/tables/splitChecks.js": "db45fbb47997a79713dd5d5541ad2ccde0e950e66eb14825ba0ded880b6e0149",
+    "backend/modules/tables/tableRelationships.js": "85d887690857045211b883d6a3dce06f382094d7e7a9e625c423862c97a6a947",
+    "backend/services/ManagerOverrideService.js": "ba68f4083fd7d80c8959698e4987a1e4e79888656bbdf607622af478fbdcab67",
+    "backend/services/financialEventMetrics.js": "407b83da595f6cd757578c957d6b1407a6634d79265526b62172af7632fed276",
+    "backend/tests/fixtures/seed.js": "5a3c2a58333eb456904f86070c7fb5b7f13b022503e1980ffa77131760832bdf",
+    "backend/tests/globalSetup.mjs": "233df6e5fdb4ed31de58d2f4d5b8d3195d3ab36f39d3898c45ac70479b0c17b8",
+    "backend/tests/integration/financialEventRange.test.js": "9ea2dfa74cc781ac4e2b69eb41d9b34a6a438d733fa76651b6e5ff206da02a9d",
+    "backend/tests/integration/tableConnectionLifetime.test.js": "35983e99c17c1b9ed9d1d4aa9bf3253b7fbdc05479a2f817786d4c7fb3524030",
+    "backend/tests/testDatabase.cjs": "9e61ed102c3f82e3255146321afa43a0ce1ebb2ca5810a982db8e7f94210c3ed",
+    "backend/tests/unit/globalSetup.test.js": "b1cbe399e1cb38c00ccecbb96f57af489a0a112d295985795393e9055ab5e5d8",
+    "backend/tests/unit/menuCache.test.js": "3e80ffee3fe1a131384ffcffaffea4fb42af8fe99c7b6274e0a59cca3bd63315",
+    "backend/tests/unit/testDatabaseSafety.test.js": "b399c57839f4c59e4b9e3e9cb6218e9557497de0d3b82e9b66c905822f4484ca",
+    "docs/reviews/2026-09-06-spooler-journal-probe.cjs": "f320113b4e403e93896d0145abee6b3db228883e3348ff0aecdaecac33894b63",
+    "package.json": "dea0700625c468e495e9b7958f67c2cd23e04132f88b414419f56a05452f8fe0",
+    "pos-spooler-printer/http-client.js": "be4cb8811e676c560ce38c572f2dbecf50279f63d6be66a1b973519e2619b819",
+    "pos-spooler-printer/tests/http-client.test.js": "6177d6165436fa7cc3aa89a61d0581b34e19c4ef8112b0cb3d412accdab4f0ab",
+    "pos-spooler-printer/tests/v2-job-store.test.js": "9d66414e71e9463e07551af24e9800b484a1b666d6dc51d0df7476e051c8ebfa",
+    "pos-spooler-printer/tests/v2-status-monitor.test.js": "69f2dec8b572619a9faf08ea13a1c6dbc895764c68ec1561f769fb0be207dfb5",
+    "pos-spooler-printer/tests/v2-sync-client.test.js": "5ab6198cb27e393bca906b25e97a007652638fa05eda6ae7583c106d7772abe7",
+    "pos-spooler-printer/v2/job-store.js": "9b63870ba3f992dfe9feb7a86b5d79177b78463622bc54a3eea5f38c960a9da2",
+    "pos-spooler-printer/v2/status-monitor.js": "2de950d0e0e5d985215860f9df51707d21dcee8616c2cd426c1f61a7924dbb5f",
+    "pos-spooler-printer/v2/sync-client.js": "6145fb4834ca753658507bb6478a9711825fd23854a61dc671b2eb9809f59554",
+    "scripts/reviews/recipe-ledger-phase1-preload.cjs": "31044756c9adeb57e011b6d8035bd697a7d5ea3099bd28e5bfa7eaac9bfcd904",
+    "scripts/reviews/recipe-ledger-phase4-browser.py": "fbf14b30de98ac90f1823546bd70dc5629928da42b058e2213203264134e3ded",
+    "scripts/reviews/system-report-performance.cjs": "3de95ee00b5dcd6f0b10815a95472d342408aa18614253a6eba72065f5e29e4a",
+    "scripts/test-isolated.cjs": "7d916ce2e1a6b53e44f022449fe305c7ad95c74a33ac15d68faa3571f4cad18f",
+    "src/admin/App.vue": "8a74a0da9774d1f5098308736aa62344b8418bc5e2b4ecf97ccf155729bcb040",
+    "src/admin/__tests__/realtime.spec.js": "ad636ca7e1af09226008fa411c45de14e49e4db15ab9ae22ba9ef317d3ce8c00",
+    "src/admin/components/Sidebar.vue": "488974c9ae53c9edaf2ab7dbaa653efbb4bd0d98a920cf01b4d5a35cfe4aa588",
+    "src/admin/pages/Inventory.vue": "0108da4ec7b7c83b4ef6a5f38e81cf89d365caf6e9d7f15b41a6b7eccadf6aa0",
+    "src/admin/pages/Orders.vue": "a410054ed58cb2d46ec692e758cfe56c9e42ff713a4acbadb13530a6978ed802",
+    "src/admin/pages/__tests__/inventorySettingsRequests.spec.js": "2c772d5dedd8aa447376d17a22824eb16efab912b3f55eb925ba394d45db78a6",
+    "src/admin/pages/__tests__/ordersRequests.spec.js": "7d9ab34af9fb2751a4cffebfcbea57bb1dd1bdd99682c75a535473b3148a59e7",
+    "src/admin/realtime.js": "8534bd6870ef93db24c2142bd80a138ee53885d24b17ba1f1a4a806661608476",
+    "src/components/TableFloorPlan.vue": "16b87ac846efdb06e4cb6566ebfaa9643b572d3758b5253e12e42577da027057",
+    "src/pos/stores/orderSession/tableOrderWorkflow.js": "8f83563245dc4f964845c9d8362e6c8cfb3d4891c962efbc85fce5557794f9d6",
+    "src/pos/tableWorkspaceRequests.spec.js": "19b43a1862fc89a5a1f1dbad21304290e50bbb3f9b905f771ccbf647b40c5bdb",
+    "src/pos/useProducts.js": "2ce043389b43c8eed905659d8783ff17299402579d70f86622099d4a86af56f6",
+    "src/pos/useProductsRequests.spec.js": "07698446b0bc24e5de74de51ca0bf49259a8d60aa1bac9c67cc3409172fb7ed6",
+    "src/shared/__tests__/systemSettings.spec.js": "fdb361904f22d08eea62da56c8f2cba70bbcbea3ec53b230b48d5a03add15f8b",
+    "src/shared/systemSettings.js": "e7779e7d605a362ef988fbbc2824ee6da33de65ee24051bda72a8f051cdc4726",
+    "vitest.config.mjs": "ab3051b17f3b2bf7afd48907eb800629ed9cae8b214920ae2bddf048e87915a4",
+    "vitest.frontend.config.mjs": "1855fddf174330401518423a47a56660c14f7188bf71eb49580e88c7fdb97509"
+  },
+  "localImplementationCommits": [
+    "1241582c",
+    "1bd70cd6",
+    "44eee19d",
+    "49818afa"
+  ]
+}

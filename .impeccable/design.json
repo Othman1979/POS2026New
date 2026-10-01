@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-18T13:37:02.8793477+03:00",
+  "title": "Design System: POSAPP",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Service Teal",
+        "canonical": "#0f766e",
+        "tonalRamp": ["#052f2c", "#084d48", "#0b615a", "#0f766e", "#14b8a6", "#5eead4", "#99f6e4", "#f0fdfa"]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Deep Service Teal",
+        "canonical": "#115e59",
+        "tonalRamp": ["#052f2c", "#084d48", "#0b615a", "#0f766e", "#14b8a6", "#5eead4", "#99f6e4", "#f0fdfa"]
+      },
+      "primary-soft": {
+        "role": "primary",
+        "displayName": "Service Teal Wash",
+        "canonical": "#dcece9",
+        "tonalRamp": ["#052f2c", "#084d48", "#0b615a", "#0f766e", "#14b8a6", "#5eead4", "#99f6e4", "#f0fdfa"]
+      },
+      "pos-canvas": {
+        "role": "neutral",
+        "displayName": "Low-Glare Steel",
+        "canonical": "#e3e6ea",
+        "tonalRamp": ["#1f2937", "#374151", "#6b7280", "#9ca3af", "#c2c8d0", "#d7dce2", "#e3e6ea", "#f6f7f9"]
+      },
+      "pos-surface": {
+        "role": "neutral",
+        "displayName": "Work Surface",
+        "canonical": "#f2f4f6",
+        "tonalRamp": ["#1f2937", "#374151", "#6b7280", "#9ca3af", "#c2c8d0", "#d7dce2", "#e3e6ea", "#f6f7f9"]
+      },
+      "admin-canvas": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "#fafafa",
+        "tonalRamp": ["#18181b", "#3f3f46", "#71717a", "#a1a1aa", "#d4d4d8", "#e4e4e7", "#f4f4f5", "#fafafa"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Pure Surface",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#18181b", "#3f3f46", "#71717a", "#a1a1aa", "#d4d4d8", "#e4e4e7", "#f4f4f5", "#ffffff"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Operational Ink",
+        "canonical": "#111827",
+        "tonalRamp": ["#111827", "#1f2937", "#374151", "#4b5563", "#6b7280", "#9ca3af", "#d1d5db", "#f9fafb"]
+      },
+      "admin-ink": {
+        "role": "neutral",
+        "displayName": "Console Ink",
+        "canonical": "#09090b",
+        "tonalRamp": ["#09090b", "#18181b", "#27272a", "#3f3f46", "#71717a", "#a1a1aa", "#e4e4e7", "#fafafa"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Zinc",
+        "canonical": "#71717a",
+        "tonalRamp": ["#18181b", "#3f3f46", "#71717a", "#a1a1aa", "#d4d4d8", "#e4e4e7", "#f4f4f5", "#fafafa"]
+      },
+      "pos-border": {
+        "role": "neutral",
+        "displayName": "POS Divider",
+        "canonical": "#c2c8d0",
+        "tonalRamp": ["#1f2937", "#374151", "#6b7280", "#9ca3af", "#c2c8d0", "#d7dce2", "#e3e6ea", "#f6f7f9"]
+      },
+      "admin-border": {
+        "role": "neutral",
+        "displayName": "Admin Divider",
+        "canonical": "#e4e4e7",
+        "tonalRamp": ["#18181b", "#3f3f46", "#71717a", "#a1a1aa", "#d4d4d8", "#e4e4e7", "#f4f4f5", "#fafafa"]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Incident Rose",
+        "canonical": "#e11d48",
+        "tonalRamp": ["#4c0519", "#881337", "#9f1239", "#be123c", "#e11d48", "#fb7185", "#fecdd3", "#fff1f2"]
+      },
+      "warning": {
+        "role": "tertiary",
+        "displayName": "Warning Amber",
+        "canonical": "#f59e0b",
+        "tonalRamp": ["#451a03", "#78350f", "#92400e", "#b45309", "#f59e0b", "#fbbf24", "#fde68a", "#fffbeb"]
+      },
+      "console": {
+        "role": "tertiary",
+        "displayName": "Console Black",
+        "canonical": "#111315",
+        "tonalRamp": ["#090909", "#111315", "#181b1d", "#27272a", "#52525b", "#a1a1aa", "#e4e4e7", "#fafafa"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Large Latin dashboard metrics only; Arabic falls back to IBM Plex Sans Arabic." },
+      "headline": { "displayName": "Headline", "purpose": "Page titles and decisive modal headings." },
+      "title": { "displayName": "Title", "purpose": "Panel, card, and section headings." },
+      "body": { "displayName": "Body", "purpose": "Operational explanations, tables, and form values." },
+      "label": { "displayName": "Label", "purpose": "Controls, statuses, fields, and compact metadata." },
+      "data": { "displayName": "Operational Data", "purpose": "Tabular Latin digits for monetary values, times, identifiers, and counts." }
+    },
+    "shadows": [
+      { "name": "tactile-edge", "value": "0 2px 0 #a5b0b9", "purpose": "Shallow physical feedback for product, category, and numpad controls." },
+      { "name": "primary-tactile-edge", "value": "0 2px 0 #084c47", "purpose": "Main POS confirmation action only." },
+      { "name": "focused-dialog", "value": "0 4px 8px rgb(17 24 39 / 24%)", "purpose": "POS dialogs over a darkened backdrop." },
+      { "name": "console-popover", "value": "0 12px 32px rgba(0, 0, 0, 0.45)", "purpose": "Dark administrative popovers above the console bar." }
+    ],
+    "motion": [
+      { "name": "press", "value": "50ms ease", "purpose": "Physical down-state for tactile POS controls." },
+      { "name": "state", "value": "150ms cubic-bezier(0.25, 1, 0.5, 1)", "purpose": "Color and border feedback for selections and controls." },
+      { "name": "page", "value": "180ms cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Small administrative page state changes." },
+      { "name": "panel", "value": "240ms cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Structural checkout and integrated panel expansion." }
+    ],
+    "breakpoints": [
+      { "name": "phone", "value": "480px" },
+      { "name": "compact", "value": "700px" },
+      { "name": "tablet", "value": "900px" },
+      { "name": "pos-desktop", "value": "1024px" },
+      { "name": "wide", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action for checkout, saving, and decisive administrative work.",
+      "html": "<button class=\"ds-btn-primary\">Confirm payment <strong>13.50 JD</strong></button>",
+      "css": ".ds-btn-primary { min-height:44px; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 16px; border:1px solid #0b615a; border-radius:8px; background:#0f766e; color:#fff; font:750 12px/1.35 Inter, sans-serif; transition:background-color 150ms cubic-bezier(.25,1,.5,1), transform 50ms ease, box-shadow 50ms ease; box-shadow:0 2px 0 #084c47; } .ds-btn-primary:hover { background:#115e59; } .ds-btn-primary:focus-visible { outline:2px solid #0f766e; outline-offset:2px; } .ds-btn-primary:active { transform:translateY(2px); box-shadow:none; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Flat secondary action for supporting workflow choices.",
+      "html": "<button class=\"ds-btn-secondary\">Print report</button>",
+      "css": ".ds-btn-secondary { min-height:44px; padding:10px 14px; border:1px solid #c2c8d0; border-radius:6px; background:#f2f4f6; color:#111827; font:750 12px/1.35 Inter, sans-serif; transition:background-color 150ms ease, border-color 150ms ease, color 150ms ease; } .ds-btn-secondary:hover { border-color:#83aaa6; background:#dcece9; color:#115e59; } .ds-btn-secondary:focus-visible { outline:2px solid #0f766e; outline-offset:2px; } .ds-btn-secondary:active { background:#d7dce2; }"
+    },
+    {
+      "name": "Tactile POS Key",
+      "kind": "button",
+      "refersTo": "button-tactile",
+      "description": "Repeatedly pressed product, category, or numpad control.",
+      "html": "<button class=\"ds-tactile-key\">7</button>",
+      "css": ".ds-tactile-key { width:72px; min-height:44px; padding:10px; border:1px solid #b9c2ca; border-radius:8px; background:#f2f4f6; color:#111827; font:800 16px/1 Inter, sans-serif; box-shadow:0 2px 0 #a5b0b9; transition:background-color 150ms ease, border-color 150ms ease, transform 50ms ease, box-shadow 50ms ease; } .ds-tactile-key:hover { border-color:#87a9a5; background:#e4eeec; color:#174f4a; } .ds-tactile-key:focus-visible { outline:2px solid #0f766e; outline-offset:2px; } .ds-tactile-key:active { transform:translateY(2px); box-shadow:none; }"
+    },
+    {
+      "name": "Operational Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Compact touch-friendly search and data-entry field.",
+      "html": "<label class=\"ds-field\"><span>Search products</span><input placeholder=\"Product name or barcode\"></label>",
+      "css": ".ds-field { display:grid; gap:6px; color:#4b5563; font:750 12px/1.35 Inter, sans-serif; } .ds-field input { min-width:240px; height:44px; padding:10px 12px; border:1px solid #c2c8d0; border-radius:6px; outline:0; background:#f2f4f6; color:#111827; font:500 14px/1.5 Inter, sans-serif; box-shadow:inset 0 1px 2px rgb(17 24 39 / 9%); } .ds-field input:focus { border-color:#0f766e; box-shadow:0 0 0 2px rgb(15 118 110 / 15%); } .ds-field input:disabled { opacity:.55; cursor:not-allowed; }"
+    },
+    {
+      "name": "Selected State Chip",
+      "kind": "chip",
+      "description": "Restrained active-state label for filters and operational status.",
+      "html": "<span class=\"ds-state-chip\">Saved</span>",
+      "css": ".ds-state-chip { display:inline-flex; min-height:28px; align-items:center; padding:4px 8px; border:1px solid #83aaa6; border-radius:6px; background:#dcece9; color:#115e59; font:800 11px/1.35 Inter, sans-serif; }"
+    },
+    {
+      "name": "POS Product Card",
+      "kind": "card",
+      "refersTo": "card-pos",
+      "description": "Compact product tile with stable price and tactile response.",
+      "html": "<button class=\"ds-product-card\"><strong>Shish tawook</strong><span>4.75 JD</span></button>",
+      "css": ".ds-product-card { width:130px; aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:10px; border:1px solid #b9c2ca; border-radius:8px; background:#f2f4f6; color:#111827; box-shadow:0 2px 0 #a5b0b9; transition:filter 150ms ease, transform 50ms ease, box-shadow 50ms ease; } .ds-product-card strong { font:800 13px/1.35 Inter, sans-serif; } .ds-product-card span { color:#115e59; font:850 12px/1.35 Inter, sans-serif; font-variant-numeric:tabular-nums; } .ds-product-card:hover { filter:brightness(.985); } .ds-product-card:focus-visible { outline:2px solid #0f766e; outline-offset:2px; } .ds-product-card:active { transform:translateY(2px); box-shadow:none; }"
+    },
+    {
+      "name": "Administrative Card",
+      "kind": "card",
+      "refersTo": "card-admin",
+      "description": "Flat reading surface for metrics, reports, and settings.",
+      "html": "<section class=\"ds-admin-card\"><span>Net sales</span><strong>482.30 JD</strong><small>Current business day</small></section>",
+      "css": ".ds-admin-card { width:240px; display:grid; gap:7px; padding:16px; border:1px solid #e4e4e7; border-radius:12px; background:#fff; color:#09090b; } .ds-admin-card span { color:#71717a; font:750 12px/1.35 Inter, sans-serif; } .ds-admin-card strong { color:#0f766e; font:800 24px/1.2 Inter, sans-serif; font-variant-numeric:tabular-nums; } .ds-admin-card small { color:#71717a; font:500 11px/1.5 Inter, sans-serif; }"
+    },
+    {
+      "name": "Focused Dialog",
+      "kind": "custom",
+      "refersTo": "dialog",
+      "description": "Compact modal surface for a focused operational decision.",
+      "html": "<section class=\"ds-dialog\"><header>Complete payment</header><div>Choose the payment method and confirm the total.</div><button>Confirm 13.50 JD</button></section>",
+      "css": ".ds-dialog { width:340px; overflow:hidden; border:1px solid #aeb6c1; border-radius:10px; background:#f2f4f6; color:#111827; box-shadow:0 4px 8px rgb(17 24 39 / 24%); font:500 14px/1.5 Inter, sans-serif; } .ds-dialog header { padding:12px 16px; border-bottom:1px solid #c2c8d0; background:#e9edf0; font-weight:800; } .ds-dialog div { padding:16px; } .ds-dialog button { width:calc(100% - 32px); min-height:44px; margin:0 16px 16px; border:1px solid #0b615a; border-radius:8px; background:#0f766e; color:#fff; font-weight:800; } .ds-dialog button:hover { background:#115e59; } .ds-dialog button:focus-visible { outline:2px solid #0f766e; outline-offset:2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Working Counter",
+    "overview": "POSAPP should feel like a well-kept restaurant counter: calm enough to read under pressure, compact enough to keep the next action close, and dependable enough to disappear into the work. The voice is calm, operational, and direct. Familiar controls win over decorative novelty.\n\nThe terminal, administration, and reporting surfaces are contextual expressions of the same system. The POS terminal uses low-glare layered neutrals and shallow tactile feedback for frequently pressed controls. Administration stays flatter and quieter. Reports use ledger-like alignment and hierarchy so operational and financial numbers can be checked quickly.\n\nThe system explicitly rejects generic AI-style layouts, excessive rounding or padding, glare, gradients, decorative icons, heavy shadows, clutter, oversized cards, unnecessary motion, flicker, and unnatural interface copy.",
+    "keyCharacteristics": [
+      "Restrained Service Teal used only for action, selection, and meaningful state",
+      "Low-glare POS surfaces with brighter administrative reading surfaces",
+      "Compact, tactile, dependable controls with clear focus and pressed states",
+      "Flat-by-default containers separated by tone and one-pixel borders",
+      "Arabic and English parity, logical RTL layout, and Latin tabular digits",
+      "Structural responsiveness for phones, tablets, POS touchscreens, and desktops"
+    ],
+    "rules": [
+      { "name": "The Teal Means Action Rule", "body": "Service Teal marks a primary action, current selection, or meaningful live state. It is never background decoration.", "section": "colors" },
+      { "name": "The Low-Glare Rule", "body": "POS work areas use Low-Glare Steel and Work Surface instead of large pure-white fields. Administrative reports may use Paper White because reading density is the task.", "section": "colors" },
+      { "name": "The Semantic Color Rule", "body": "Rose is destructive, amber is cautionary, and teal is affirmative. Never use these colors interchangeably.", "section": "colors" },
+      { "name": "The One Operational Voice Rule", "body": "Routine UI uses the body family. Space Grotesk is limited to large Latin dashboard data, and Arabic never inherits Latin display tracking.", "section": "typography" },
+      { "name": "The Latin Digit Rule", "body": "Digits remain Latin in Arabic and English. Monetary values, times, identifiers, and counts use tabular numerals while preserving the existing currency presentation.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Cards and panels rest flat. If a normal content card needs a large shadow to be understood, its border or tonal hierarchy is wrong.", "section": "elevation" },
+      { "name": "The Pressed-State Rule", "body": "Tactile controls move down by two pixels and lose their edge shadow while pressed. They never bounce, scale, or glow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Service Teal (#0f766e) for primary action, active selection, and meaningful operational state.",
+      "Do keep frequently pressed POS controls at least 44px high and give them a clear pressed state.",
+      "Do use low-glare POS surfaces and flatter administrative surfaces within the same component vocabulary.",
+      "Do use logical CSS properties, mirrored directional affordances, and natural Arabic translations.",
+      "Do keep Latin tabular digits for prices, times, identifiers, and counts in both languages.",
+      "Do adapt layouts structurally at phone, tablet, POS touchscreen, and desktop breakpoints.",
+      "Do honor prefers-reduced-motion and keep ordinary state transitions between 150ms and 240ms.",
+      "Do make sensitive, destructive, and permission-controlled actions visually explicit without turning every action into a warning."
+    ],
+    "donts": [
+      "Don't create generic AI-style layouts or unnatural interface copy.",
+      "Don't use excessive rounding, padding, glare, gradients, decorative icons, or heavy shadows.",
+      "Don't create clutter, oversized cards, or decoration that competes with operational information.",
+      "Don't add unnecessary motion, flicker, or transitions that slow down live service.",
+      "Don't introduce inconsistent controls or unfamiliar affordances without an operational reason.",
+      "Don't use Service Teal as decoration or apply saturated color to inactive states.",
+      "Don't shrink touch controls below practical use on phones, tablets, or dedicated POS hardware.",
+      "Don't apply uppercase letter spacing to Arabic or substitute Arabic numerals for Latin digits.",
+      "Don't use modal dialogs as the first solution when inline or progressive disclosure keeps the workflow clearer."
+    ]
+  }
+}

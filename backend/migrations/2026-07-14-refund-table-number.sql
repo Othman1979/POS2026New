@@ -1,0 +1,2 @@
+ALTER TABLE refunds
+  ADD COLUMN IF NOT EXISTS table_number VARCHAR(50) NULL AFTER table_id;

@@ -1,0 +1,289 @@
+{
+  "revision": "6bd101a0ecf25ed6907c06666b0bad671bba28f9",
+  "cases": [
+    {
+      "lang": "en",
+      "observations": [
+        {
+          "label": "healthy responses switch products correctly",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Food item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "new category pending while old products stay visible",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "Food item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "out-of-order old response is correctly ignored",
+          "active": 3,
+          "highlighted": "Dessert",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "failed request silently leaves wrong-category products",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "stale product remains clickable and is added to the isolated local cart"
+        },
+        {
+          "label": "server 503 produces the same visible mismatch",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "successful retry recovers without reloading the page",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Drinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "held transport keeps loading without a visible loading state",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "Drinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        }
+      ],
+      "requests": [
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "network-failure"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "hold"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "lang": "ar",
+      "observations": [
+        {
+          "label": "healthy responses switch products correctly",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Food item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "new category pending while old products stay visible",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "Food item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "out-of-order old response is correctly ignored",
+          "active": 3,
+          "highlighted": "Dessert",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "failed request silently leaves wrong-category products",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "stale product remains clickable and is added to the isolated local cart"
+        },
+        {
+          "label": "server 503 produces the same visible mismatch",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "successful retry recovers without reloading the page",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Drinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "held transport keeps loading without a visible loading state",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "Drinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        }
+      ],
+      "requests": [
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "network-failure"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "hold"
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

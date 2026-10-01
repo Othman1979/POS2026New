@@ -1,0 +1,92 @@
+[
+  {
+    "name": "fixed line plus percentage order discount",
+    "input": {
+      "items": [{ "key": "a", "name": "Burger", "qty": 2, "unitPrice": 10, "discountType": "fixed", "discountValue": 2 }],
+      "summary": { "subtotal": 16, "tax": 2.05, "total": 14.85 },
+      "orderDiscount": { "type": "percent", "value": 20, "amount": 3.2 },
+      "taxMode": "exclusive",
+      "status": "original"
+    },
+    "expected": {
+      "rowNetCents": [1600],
+      "discountCents": 320,
+      "taxCents": 205,
+      "roundingCents": 0,
+      "totalCents": 1485
+    }
+  },
+  {
+    "name": "inclusive bundle and service charge",
+    "input": {
+      "items": [
+        { "key": "parent", "name": "Meal", "qty": 1, "unitPrice": 12, "discountType": null, "discountValue": 0 },
+        { "key": "child", "kind": "bundle_child", "name": "Fries", "qty": 1, "unitPrice": 0 },
+        { "key": "fee", "name": "10% Service Charge", "note": "Auto-Gratuity", "qty": 1, "unitPrice": 1.2 }
+      ],
+      "summary": { "subtotal": 13.2, "tax": 0, "total": 13.2 },
+      "orderDiscount": { "type": null, "value": 0, "amount": 0 },
+      "taxMode": "inclusive",
+      "status": "original"
+    },
+    "expected": {
+      "rowNetCents": [1200, 0, 120],
+      "discountCents": 0,
+      "taxCents": 0,
+      "roundingCents": 0,
+      "totalCents": 1320
+    }
+  },
+  {
+    "name": "tax-exempt receipt keeps exclusive mode and prints label",
+    "input": {
+      "items": [{ "key": "exempt", "name": "Exempt Meal", "qty": 1, "unitPrice": 17 }],
+      "summary": { "subtotal": 17, "tax": 0, "total": 17 },
+      "orderDiscount": { "type": null, "value": 0, "amount": 0 },
+      "taxMode": "exclusive",
+      "taxExempt": true,
+      "status": "original"
+    },
+    "expected": {
+      "rowNetCents": [1700],
+      "discountCents": 0,
+      "taxCents": 0,
+      "roundingCents": 0,
+      "totalCents": 1700
+    }
+  },
+  {
+    "name": "header rounding residue remains explicit",
+    "input": {
+      "items": [{ "key": "tiny", "name": "Sample", "qty": 1, "unitPrice": 0.1 }],
+      "summary": { "subtotal": 0.1, "tax": 0.02, "total": 0.11 },
+      "orderDiscount": { "type": "percent", "value": 1, "amount": 0 },
+      "taxMode": "exclusive",
+      "status": "original"
+    },
+    "expected": {
+      "rowNetCents": [10],
+      "discountCents": 0,
+      "taxCents": 2,
+      "roundingCents": -1,
+      "totalCents": 11
+    }
+  },
+  {
+    "name": "percentage line half-cent operation-order boundary",
+    "input": {
+      "items": [{ "key": "percent-boundary", "name": "Boundary", "qty": 1, "unitPrice": 21.15, "discountType": "percent", "discountValue": 10 }],
+      "summary": { "subtotal": 19.04, "tax": 0, "total": 19.04 },
+      "orderDiscount": { "type": null, "value": 0, "amount": 0 },
+      "taxMode": "exclusive",
+      "status": "original"
+    },
+    "expected": {
+      "rowNetCents": [1904],
+      "discountCents": 0,
+      "taxCents": 0,
+      "roundingCents": 0,
+      "totalCents": 1904
+    }
+  }
+]

@@ -1,0 +1,20 @@
+POSApp Typst 0.15.1 fast-watch modification
+
+The bundled typst.exe starts from the official Typst 0.15.1 Windows x64 release:
+https://github.com/typst/typst/releases/tag/v0.15.1
+
+POSApp changes the watcher event batch timeout from 100 milliseconds to
+5 milliseconds. Receipt sources and assets are written synchronously before the
+watch event, so the editor-oriented 100 millisecond batching delay is unnecessary.
+The compiler, renderer, command line, fonts and document source are unchanged.
+
+The corresponding Typst source change is:
+    const BATCH_TIMEOUT: Duration = Duration::from_millis(100);
+to:
+    const BATCH_TIMEOUT: Duration = Duration::from_millis(5);
+
+The official and modified executable SHA-256 values are enforced by
+deployment/tools/patch-typst-fast-watch.js before the runtime is staged.
+
+Typst is licensed under Apache-2.0. Its LICENSE and NOTICE files are shipped beside
+the executable. This file is the prominent notice that the executable was modified.

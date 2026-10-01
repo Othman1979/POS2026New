@@ -1,0 +1,136 @@
+{
+  "baseline": "Initial activation query: eight full-cart JSON_CONTAINS checks",
+  "candidate": "Product-ID JSON_EXTRACT projection with numeric/string containment checks",
+  "before": {
+    "at": "2026-09-08T09:11:37.426Z",
+    "runtime": "v24.16.0",
+    "cpu": "Intel(R) Core(TM) i7-14700KF",
+    "limitations": [
+      "One-time activation service, not checkout or HTTP.",
+      "Workstation, not constrained low-end hardware.",
+      "Node CPU excludes database work; RSS endpoints include fixture retention and are not peak or incremental memory.",
+      "Large held-order backlog deliberately measured; current preflight has a JSON scan."
+    ],
+    "results": [
+      {
+        "holds": 0,
+        "bytes_per_cart": 1701,
+        "label": "preflight, absent target",
+        "samples": 100,
+        "p50_ms": 0.7963999999999487,
+        "p95_ms": 1.322300000000041,
+        "node_cpu_ms_per_call": 0.79,
+        "node_rss_before_mib": 79.2734375,
+        "node_rss_after_mib": 87.56640625
+      },
+      {
+        "holds": 100,
+        "bytes_per_cart": 1701,
+        "label": "preflight, absent target",
+        "samples": 100,
+        "p50_ms": 7.143499999999904,
+        "p95_ms": 10.038000000000011,
+        "node_cpu_ms_per_call": 0.31,
+        "node_rss_before_mib": 91.453125,
+        "node_rss_after_mib": 96.58203125
+      },
+      {
+        "holds": 1000,
+        "bytes_per_cart": 1701,
+        "label": "preflight, absent target",
+        "samples": 100,
+        "p50_ms": 92.03479999999945,
+        "p95_ms": 109.26999999999998,
+        "node_cpu_ms_per_call": 1.25,
+        "node_rss_before_mib": 111.32421875,
+        "node_rss_after_mib": 71.78515625
+      },
+      {
+        "holds": 10000,
+        "bytes_per_cart": 1701,
+        "label": "preflight, absent target",
+        "samples": 25,
+        "p50_ms": 948.0731999999989,
+        "p95_ms": 1029.1695,
+        "node_cpu_ms_per_call": 2.52,
+        "node_rss_before_mib": 128.13671875,
+        "node_rss_after_mib": 128.6171875
+      },
+      {
+        "label": "activation, committed known balance",
+        "samples": 100,
+        "p50_ms": 3.4320999999981723,
+        "p95_ms": 5.769500000002154,
+        "node_cpu_ms_per_call": 2.49,
+        "node_rss_before_mib": 128.4296875,
+        "node_rss_after_mib": 129.26171875
+      }
+    ]
+  },
+  "after": {
+    "at": "2026-09-08T09:15:30.216Z",
+    "runtime": "v24.16.0",
+    "cpu": "Intel(R) Core(TM) i7-14700KF",
+    "limitations": [
+      "One-time activation service, not checkout or HTTP.",
+      "Workstation, not constrained low-end hardware.",
+      "Node CPU excludes database work; RSS endpoints include fixture retention and are not peak or incremental memory.",
+      "Large held-order backlog deliberately measured; current preflight has a JSON scan."
+    ],
+    "results": [
+      {
+        "holds": 0,
+        "bytes_per_cart": 1701,
+        "label": "preflight, absent target",
+        "samples": 100,
+        "p50_ms": 0.7380000000000564,
+        "p95_ms": 1.7035000000000764,
+        "node_cpu_ms_per_call": 0.15,
+        "node_rss_before_mib": 79.65625,
+        "node_rss_after_mib": 88.53515625
+      },
+      {
+        "holds": 100,
+        "bytes_per_cart": 1701,
+        "label": "preflight, absent target",
+        "samples": 100,
+        "p50_ms": 4.9345999999998185,
+        "p95_ms": 7.54079999999999,
+        "node_cpu_ms_per_call": 0.47,
+        "node_rss_before_mib": 91.796875,
+        "node_rss_after_mib": 96.7578125
+      },
+      {
+        "holds": 1000,
+        "bytes_per_cart": 1701,
+        "label": "preflight, absent target",
+        "samples": 100,
+        "p50_ms": 56.3134,
+        "p95_ms": 77.03980000000001,
+        "node_cpu_ms_per_call": 0.62,
+        "node_rss_before_mib": 111.97265625,
+        "node_rss_after_mib": 113.10546875
+      },
+      {
+        "holds": 10000,
+        "bytes_per_cart": 1701,
+        "label": "preflight, absent target",
+        "samples": 25,
+        "p50_ms": 594.2296999999999,
+        "p95_ms": 679.9533999999985,
+        "node_cpu_ms_per_call": 1.24,
+        "node_rss_before_mib": 151.4765625,
+        "node_rss_after_mib": 72.82421875
+      },
+      {
+        "label": "activation, committed known balance",
+        "samples": 100,
+        "p50_ms": 3.601200000000972,
+        "p95_ms": 5.359599999999773,
+        "node_cpu_ms_per_call": 2.03,
+        "node_rss_before_mib": 74.44921875,
+        "node_rss_after_mib": 74.83984375
+      }
+    ]
+  }
+}

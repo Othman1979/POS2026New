@@ -1,0 +1,66 @@
+dist/
+node_modules/
+assets/dist/
+.env
+.env.*
+.vscode/
+backup/
+*.log
+logs/
+data/
+integrations/gemini-order-gateway/gateway.env
+integrations/gemini-order-gateway/bin/posapp-order-gateway.exe
+
+# AI assistant session data
+.antigravitycli/
+.agents/
+.claude/
+.remember/
+.worktrees/
+.superpowers/
+
+# Local scratch scripts & data dumps (not project source)
+scratch/
+nul
+
+# Subagent-driven-development review scratch (transient)
+docs/superpowers/plans/*.patch
+docs/superpowers/plans/task-*-brief.md
+docs/superpowers/plans/task-*-report.md
+
+# The spooler is deployable source. Ignore only machine state and secrets.
+pos-spooler-printer/.env
+pos-spooler-printer/.env.*
+!pos-spooler-printer/.env.example
+pos-spooler-printer/node_modules/
+pos-spooler-printer/.cache/
+pos-spooler-printer/*.log
+pos-spooler-printer/*.pem
+pos-spooler-printer/*.key
+pos-spooler-printer/*.pfx
+pos-spooler-printer/*.p12
+pos-spooler-printer/*.zip
+pos-spooler-printer/*.msi
+
+# Playwright test artifacts & local session authentication tokens
+playwright-report/
+test-results/
+playwright/.auth/
+
+# Uploaded store brand icons
+/uploads/store_icon.*
+
+# Fresh installer build inputs and generated output
+deployment/vendor/
+deployment/out/
+tests/installer/results/
+pos-spooler-printer/bin/
+tools/invoice-support/bin/
+
+# Local-only invoice support utility and its build/test harnesses
+/tools/invoice-support/
+/scripts/build-invoice-engine.cjs
+/scripts/build-invoice-support.ps1
+/scripts/test-invoice-support.ps1
+/scripts/reviews/invoice-maintenance-*.cjs
+/backend/tests/integration/invoiceMaintenance.test.js

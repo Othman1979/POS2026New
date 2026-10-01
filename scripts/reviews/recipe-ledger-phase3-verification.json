@@ -1,0 +1,1159 @@
+{
+  "base_commit": "0d79fc08",
+  "distinct_verified_tests": 106,
+  "runs": {
+    "initial-api-red": {
+      "passed": 0,
+      "failed": 11,
+      "files": [
+        {
+          "file": "backend/tests/integration/recipeLedgerPhase3Regression.test.js",
+          "cases": [
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for cost on create and update",
+              "status": "failed",
+              "failure": "AssertionError: expected [ 200, 200 ] to deeply equal [ 400, 400 ]\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:33:48\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for par on create and update",
+              "status": "failed",
+              "failure": "AssertionError: expected [ 200, 200 ] to deeply equal [ 400, 400 ]\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:33:48\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for pack on create and update",
+              "status": "failed",
+              "failure": "AssertionError: expected [ 200, 200 ] to deeply equal [ 400, 400 ]\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:33:48\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a receipt cost expressed in an incompatible measure",
+              "status": "failed",
+              "failure": "AssertionError: expected 200 to be 400 // Object.is equality\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:42:31\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions preserves the stored pack size when only its name changes",
+              "status": "failed",
+              "failure": "AssertionError: expected { Object (id, name, ...) } to match object { pack_name: 'renamed sack', …(1) }\n(7 matching properties omitted from actual)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1283:10)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/xampp/htdocs/posapp/node_modules/chai/index.js:1700:25)\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:50:40\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects negative unit_cost without changing the ingredient",
+              "status": "failed",
+              "failure": "AssertionError: expected 200 to be 400 // Object.is equality\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:59:31\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects negative par_qty without changing the ingredient",
+              "status": "failed",
+              "failure": "AssertionError: expected 200 to be 400 // Object.is equality\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:59:31\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a negative receipt cost",
+              "status": "failed",
+              "failure": "AssertionError: expected 200 to be 400 // Object.is equality\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:66:31\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions includes every intervening day after the prior Count in the report closing balance",
+              "status": "failed",
+              "failure": "AssertionError: expected { id: 1, …(19) } to match object { opening: null, received: 1000, …(2) }\n(16 matching properties omitted from actual)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1283:10)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/xampp/htdocs/posapp/node_modules/chai/index.js:1700:25)\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:89:79\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions carries the actual balance through a day with no new movements",
+              "status": "failed",
+              "failure": "AssertionError: expected { id: 1, …(19) } to match object { closing_expected: 4000, …(1) }\n(18 matching properties omitted from actual)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1283:10)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/xampp/htdocs/posapp/node_modules/chai/index.js:1700:25)\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:98:79\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions ignores a correction of a pre-Count receipt but includes later movements across days",
+              "status": "failed",
+              "failure": "AssertionError: expected { id: 1, …(19) } to match object { corrections: -2000, …(1) }\n(18 matching properties omitted from actual)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1283:10)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/xampp/htdocs/posapp/node_modules/chai/index.js:1700:25)\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:115:79\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            }
+          ]
+        }
+      ]
+    },
+    "print-red": {
+      "passed": 0,
+      "failed": 1,
+      "files": [
+        {
+          "file": "src/print/__tests__/adminReportA4Rendering.spec.js",
+          "cases": [
+            {
+              "name": "AdminReportA4 rendered financial contracts prints ingredient display units and keeps unlike waste quantities separate",
+              "status": "failed",
+              "failure": "AssertionError: expected 'POS System Ingredients Report 2026-09…' to contain '0.2 kg'\n    at C:/xampp/htdocs/posapp/src/print/__tests__/adminReportA4Rendering.spec.js:41:22\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts renders the official audit as the approved two-page A4 ledger",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts reconciles non-period X/Z reports per cashier without netting drawer balances",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts never prints sequential drawer snapshots as a combined 1,100 or 500 total",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts keeps opposite shortages and overages in review instead of a balanced drawer",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts omits the drawer equation when within_window is false",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts prints the drawer equation only when within_window is true",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts renders stale rows without flags as per-shift balances and ignores legacy totals",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts does not keep period aggregate expected, actual, or variance columns",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts renders the Daily Summary producer field names and units",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts prints shortage, overage, and net variance instead of combined drawer balances",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts does not invent variance money when no shift settled in the report window",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts keeps every refund channel and uses the event fields returned by the server",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts renders complete Daily Sales category and dimension rows",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts labels X/Z collection counts by event type and keeps the V2 expense breakdown",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts localizes bounded expense values instead of leaking enum tokens into Arabic output",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts retains platform and receivable values in Arabic audit shift rows",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts shows both Y discount components in the A4 metric register",
+              "status": "skipped",
+              "failure": ""
+            }
+          ]
+        }
+      ]
+    },
+    "snapshot-red": {
+      "passed": 0,
+      "failed": 1,
+      "files": [
+        {
+          "file": "backend/tests/integration/recipeLedgerPhase3Regression.test.js",
+          "cases": [
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for cost on create and update",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for par on create and update",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for pack on create and update",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a receipt cost expressed in an incompatible measure",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions preserves the stored pack size when only its name changes",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects negative unit_cost without changing the ingredient",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects negative par_qty without changing the ingredient",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a negative receipt cost",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions reads the closing balance and daily movements from one report snapshot",
+              "status": "failed",
+              "failure": "AssertionError: expected 10000 to be 11000 // Object.is equality\n    at C:/xampp/htdocs/posapp/backend/tests/integration/recipeLedgerPhase3Regression.test.js:101:42\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions includes every intervening day after the prior Count in the report closing balance",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions carries the actual balance through a day with no new movements",
+              "status": "skipped",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions ignores a correction of a pre-Count receipt but includes later movements across days",
+              "status": "skipped",
+              "failure": ""
+            }
+          ]
+        }
+      ]
+    },
+    "focused-green": {
+      "passed": 85,
+      "failed": 0,
+      "files": [
+        {
+          "file": "backend/tests/integration/recipeLedgerAdmin.test.js",
+          "cases": [
+            {
+              "name": "recipe ledger admin API creates ingredients, recipes, movements, opening, and reports through the admin API",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger admin API rejects a cashier",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerPhase1Regression.test.js",
+          "cases": [
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions keeps uncounted history and first-count variance unknown",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions compares the entire opening batch, supports long keys, and rejects changed payloads",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions rejects opening duplicates and rolls back a batch with an invalid later entry",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions reads count expectations after serialization even if its caller already has an old snapshot",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions replays the winner even when the retry transaction has an older snapshot",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions returns success/replay for simultaneous HTTP receipt requests and permits independent writers",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions never returns an impossible balance when writes commit between any summary queries",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions restores tiny and ordinary components through checkout and full fractional refund",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions returns exact whole portions and never rounds a shortage upward",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 1 adversarial regressions loads a bounded history page while including the entire prefix and later count resets",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerPhase2Regression.test.js",
+          "cases": [
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions refunds at the original usage cost after the ingredient cost changes",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions keeps an originally unknown cost unknown on reversal",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions unwinds multiple usage cost snapshots exactly and emits once for a multi-row reversal",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions fully reverses all three fractional split children",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions keeps tracked and legacy lines separate through merge, resave, settlement, and refund",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions keeps an empty composition empty after a recipe is added and the saved line grows",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions rejects split allocations that borrow quantity from a different saved line",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions does not duplicate a saved recipe key when the same saved item id occurs twice",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions rejects duplicate saved identities during checkout even when aggregate quantity matches",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions rejects ambiguous recipe identities when saved ids are omitted",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions reverses removed tracked lines while disabled without charging newly added lines",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions serializes reversals of one shared line despite an older caller snapshot",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions fully refunds two split children concurrently through HTTP",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions preserves server-owned recipe identity through a split-board rewrite and all refunds",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions sees a frozen composition committed after the caller established its snapshot",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions allows independent new recipe writes while another ingredient transaction remains open",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions rolls back order, stock, and ledger together when a usage insert fails",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions rolls back the settings batch when its recipe-toggle audit cannot be written",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 2 adversarial regressions audits one transition for two simultaneous identical setting updates",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerPhase3Regression.test.js",
+          "cases": [
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for cost on create and update",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for par on create and update",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for pack on create and update",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a receipt cost expressed in an incompatible measure",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions preserves the stored pack size when only its name changes",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects negative unit_cost without changing the ingredient",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects negative par_qty without changing the ingredient",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a negative receipt cost",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions includes every intervening day after the prior Count in the report closing balance",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions carries the actual balance through a day with no new movements",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions ignores a correction of a pre-Count receipt but includes later movements across days",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerReport.test.js",
+          "cases": [
+            {
+              "name": "recipe ledger day report returns opening, waste by reason, counts, costs, and sales totals for the day",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger day report returns empty arrays when the date is missing",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger day report rejects a cashier",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerService.test.js",
+          "cases": [
+            {
+              "name": "RecipeLedgerService writes and reads sync writes usage for new lines only, snapshots cost, and is idempotent",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "RecipeLedgerService writes and reads a recipe change after the first save does not touch the saved line",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "RecipeLedgerService writes and reads reverseLineUsage is bounded and exact",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "RecipeLedgerService writes and reads counts store expected and period usage; corrections respect count order",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "RecipeLedgerService writes and reads shopping list and portions use expected remaining",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "RecipeLedgerService writes and reads history running balance includes hidden prefix rows",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "backend/tests/unit/recipeLedgerPure.test.js",
+          "cases": [
+            {
+              "name": "units and costs converts within a dimension only",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "units and costs converts cost per display unit to cost per base unit and back",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "units and costs packs plus loose",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "resolveComposition uses own lines, or bundle members minus removed ones, or nothing",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "planLineRows new line writes usage; empty composition writes nothing",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "planLineRows existing line without rows stays empty",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "planLineRows unchanged writes nothing; increase uses frozen unit_qty",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "planLineRows decrease reverses, bounded, last fraction exact",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "planLineRows conserves tiny components across fractional additions and reversals",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "effectiveBalance and portions ignores corrections whose target predates the count",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "effectiveBalance and portions portions possible is the floor of the tightest ingredient",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "assignLineKey copies a saved key once and mints a sibling; pre-activation stays null",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "src/print/__tests__/adminReportA4Rendering.spec.js",
+          "cases": [
+            {
+              "name": "AdminReportA4 rendered financial contracts prints ingredient display units and keeps unlike waste quantities separate",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts renders the official audit as the approved two-page A4 ledger",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts reconciles non-period X/Z reports per cashier without netting drawer balances",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts never prints sequential drawer snapshots as a combined 1,100 or 500 total",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts keeps opposite shortages and overages in review instead of a balanced drawer",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts omits the drawer equation when within_window is false",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts prints the drawer equation only when within_window is true",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts renders stale rows without flags as per-shift balances and ignores legacy totals",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts does not keep period aggregate expected, actual, or variance columns",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts renders the Daily Summary producer field names and units",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts prints shortage, overage, and net variance instead of combined drawer balances",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts does not invent variance money when no shift settled in the report window",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts keeps every refund channel and uses the event fields returned by the server",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts renders complete Daily Sales category and dimension rows",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts labels X/Z collection counts by event type and keeps the V2 expense breakdown",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts localizes bounded expense values instead of leaking enum tokens into Arabic output",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts retains platform and receivable values in Arabic audit shift rows",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "AdminReportA4 rendered financial contracts shows both Y discount components in the A4 metric register",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "src/admin/components/__tests__/productRecipeEditor.spec.js",
+          "cases": [
+            {
+              "name": "product recipe editor source spec loads and saves recipe lines with units and skips inactive ingredients",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "src/admin/pages/__tests__/reportsIngredients.spec.js",
+          "cases": [
+            {
+              "name": "Ingredients day report source spec fetches the single-day admin ingredients report",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Ingredients day report source spec shows used cost, waste cost, food cost, below-par count, the table, and waste by reason",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Ingredients day report source spec registers the page, reports tab, and print helper",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        }
+      ]
+    },
+    "report-green": {
+      "passed": 35,
+      "failed": 0,
+      "files": [
+        {
+          "file": "backend/tests/integration/recipeLedgerPhase3Regression.test.js",
+          "cases": [
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for cost on create and update",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for par on create and update",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a different measure for pack on create and update",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a receipt cost expressed in an incompatible measure",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions preserves the stored pack size when only its name changes",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects negative unit_cost without changing the ingredient",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects negative par_qty without changing the ingredient",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions rejects a negative receipt cost",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions reads the closing balance and daily movements from one report snapshot",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions includes every intervening day after the prior Count in the report closing balance",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions carries the actual balance through a day with no new movements",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger Phase 3 API and report regressions ignores a correction of a pre-Count receipt but includes later movements across days",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "backend/tests/integration/recipeLedgerReport.test.js",
+          "cases": [
+            {
+              "name": "recipe ledger day report returns opening, waste by reason, counts, costs, and sales totals for the day",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger day report returns empty arrays when the date is missing",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "recipe ledger day report rejects a cashier",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "src/admin/pages/__tests__/dailyReportPayloads.spec.js",
+          "cases": [
+            {
+              "name": "dailyReportPayloads builders buildDailySummaryPrintPayload normalizes report data correctly",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "dailyReportPayloads builders buildDailySalesPrintPayload normalizes categories and filters out Auto-Gratuity",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "dailyReportPayloads builders buildDailyRefundPrintPayload normalizes refunds and events",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "dailyReportPayloads builders buildDailyExpensePrintPayload keeps totals and itemized history",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "src/admin/pages/__tests__/dailyReportsLocalization.spec.js",
+          "cases": [
+            {
+              "name": "Daily Reports localization contract has an Arabic entry for every static report translation key",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports localization contract covers dynamic tab, payment, state, event, and fallback error keys",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports localization contract uses natural Arabic labels for subscription receivable payment rows",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports localization contract uses restaurant-friendly Arabic wording for the summary accounting story",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports localization contract does not hard-code English currency or typographic dash placeholders",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "src/admin/pages/__tests__/dailyReportsNavigation.spec.js",
+          "cases": [
+            {
+              "name": "Daily Reports Navigation Structure router.js defines the four focused report routes and handles legacy redirection",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports Navigation Structure ReportsLayout.vue defines four focused tabs and one browser-only print layout menu",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports Navigation Structure Sidebar.vue routes Daily Reports to reports-summary",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports Navigation Structure uses two-decimal ledgers and resilient report states",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports Navigation Structure presents one ordered sales story without double-subtracting voids or discounts",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports Navigation Structure keeps refund investigation row-local, retryable, and keyboard accessible",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Daily Reports Navigation Structure keeps expense category ordering automatic and shows readable expense times",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        },
+        {
+          "file": "src/admin/pages/__tests__/ingredientsPage.spec.js",
+          "cases": [
+            {
+              "name": "Ingredients page source spec uses fetchJson and the admin ingredient endpoints",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Ingredients page source spec sends movement units, packs, waste reason, receipt cost, and a rotating client_key",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Ingredients page source spec registers the page, sidebar item, and settings toggle",
+              "status": "passed",
+              "failure": ""
+            },
+            {
+              "name": "Ingredients page source spec colors last-count variance with 0.03 and 0.05 thresholds",
+              "status": "passed",
+              "failure": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "browser": {
+    "initial-red": [
+      {
+        "case": "ingredient-controls",
+        "status": "failed",
+        "error": "Add ingredient button is 24px high",
+        "seconds": 0.81
+      },
+      {
+        "case": "display-unit-preserves-values",
+        "status": "failed",
+        "error": "display change altered stored values: {'unit_cost': 4.5, 'par_qty': 5, 'pack_size': 10}",
+        "seconds": 0.88
+      },
+      {
+        "case": "blank-count-is-not-zero",
+        "status": "failed",
+        "error": "blank Count was submitted successfully",
+        "seconds": 0.83
+      },
+      {
+        "case": "opening-lost-response-retry",
+        "status": "failed",
+        "error": "retry changed the opening client key",
+        "seconds": 0.97
+      },
+      {
+        "case": "shopping-loose-quantity",
+        "status": "failed",
+        "error": "Locator expected to contain text '1 kg'\nActual value: Review ca22a197 \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for get_by_role(\"dialog\").get_by_text(\"Review ca22a197\", exact=True).locator(\"..\")\n    13 × locator resolved to <div class=\"flex justify-between gap-3\">…</div>\n       - unexpected value \"Review ca22a197\"\n",
+        "seconds": 5.83
+      },
+      {
+        "case": "history-readable-units",
+        "status": "failed",
+        "error": "Locator expected to contain text '10 kg'\nActual value: HistoryCount10000.0000002026-09-05T00:00:00.000Z \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for get_by_role(\"dialog\")\n    - locator resolved to <aside role=\"dialog\" aria-modal=\"true\" aria-label=\"History\" class=\"h-full w-full max-w-md bg-card border-s border-zinc-200 shadow-2xl flex flex-col\">…</aside>\n    - unexpected value \"History\"\n    13 × locator resolved to <aside role=\"dialog\" aria-modal=\"true\" aria-label=\"History\" class=\"h-full w-full max-w-md bg-card border-s border-zinc-200 shadow-2xl flex flex-col\">…</aside>\n       - unexpected value \"HistoryCount10000.0000002026-09-05T00:00:00.000Z\"\n",
+        "seconds": 5.8
+      },
+      {
+        "case": "ingredient-load-error",
+        "status": "failed",
+        "error": "Locator expected to be visible\nActual value: - complementary:\n  - text: PS POS Admin\n  - button \"Collapse menu\"\n  - navigation \"Menu\":\n    - text: Daily work\n    - link \"Dashboard\":\n      - /url: \"#\"\n    - link \"Order History\":\n      - /url: \"#\"\n    - link \"Daily Reports\":\n      - /url: \"#\"\n    - link \"Shifts\":\n      - /url: \"#\"\n    - text: Management\n    - link \"Customers\":\n      - /url: \"#\"\n    - link \"Subscriptions\":\n      - /url: \"#\"\n    - link \"Platform Payouts\":\n      - /url: \"#\"\n    - link \"JoFotara Operations\":\n      - /url: \"#\"\n    - link \"Print Templates\":\n      - /url: \"#\"\n    - link \"Inventory\":\n      - /url: \"#\"\n    - link \"Ingredients\":\n      - /url: \"#\"\n    - link \"Table Editor\":\n      - /url: \"#\"\n    - link \"User Security\":\n      - /url: \"#\"\n    - link \"Settings\":\n      - /url: \"#\"\n  - link \"Launch POS POS\":\n    - /url: /pos\n- banner:\n  - heading \"Ingredients\" [level=2]\n  - text: 02:09 AM Sun, Sep 6\n  - button \"System\"\n  - button \"Stock alerts\"\n  - button \"Account\": Test Admin admin T\n- main:\n  - heading \"Ingredients\" [level=2]\n  - button \"Set today's opening\"\n  - button \"Shopping list\"\n  - button \"Portions\"\n  - button \"Add ingredient\"\n  - table:\n    - rowgroup:\n      - row \"Name Unit Opening Received Used Waste Expected Variance\":\n        - columnheader \"Name\"\n        - columnheader \"Unit\"\n        - columnheader \"Opening\"\n        - columnheader \"Received\"\n        - columnheader \"Used\"\n        - columnheader \"Waste\"\n        - columnheader \"Expected\"\n        - columnheader \"Variance\"\n        - columnheader\n    - rowgroup\nError: element(s) not found \nCall log:\n  - Expect \"to_be_visible\" with timeout 5000ms\n  - waiting for get_by_text(\"Review ingredient load failed\", exact=True)\n",
+        "seconds": 5.73
+      },
+      {
+        "case": "recipe-loading-cannot-clear-lines",
+        "status": "failed",
+        "error": "Locator expected to be disabled\nActual value: enabled \nCall log:\n  - Expect \"to_be_disabled\" with timeout 5000ms\n  - waiting for get_by_role(\"dialog\").get_by_role(\"button\", name=\"Save\", exact=True)\n    14 × locator resolved to <button type=\"button\" class=\"px-4 h-9 bg-teal-600 text-white text-xs font-bold rounded-md\">Save</button>\n       - unexpected value \"enabled\"\n",
+        "seconds": 5.92
+      },
+      {
+        "case": "recipe-draft-hides-stale-cost",
+        "status": "failed",
+        "error": "Locator expected not to be visible\nActual value: visible \nCall log:\n  - Expect \"to_be_visible\" with timeout 5000ms\n  - waiting for get_by_role(\"dialog\").get_by_text(\"0.90\", exact=True)\n    14 × locator resolved to <span data-no-i18n=\"\">0.90</span>\n       - unexpected value \"visible\"\n",
+        "seconds": 5.92
+      }
+    ],
+    "date-red": [
+      {
+        "case": "report-date-error-cannot-print-old-day",
+        "status": "failed",
+        "error": "Locator expected to be disabled\nActual value: enabled \nCall log:\n  - Expect \"to_be_disabled\" with timeout 5000ms\n  - waiting for get_by_role(\"button\", name=\"Print\", exact=True)\n    14 × locator resolved to <button type=\"button\" data-v-78a28a08=\"\" aria-haspopup=\"menu\" aria-expanded=\"false\" class=\"report-print-menu__trigger report-action-button--primary\">…</button>\n       - unexpected value \"enabled\"\n",
+        "seconds": 5.98
+      }
+    ],
+    "period-red": [
+      {
+        "case": "ingredient-report-is-one-day",
+        "status": "failed",
+        "error": "Locator expected to have count '0'\nActual value: 1 \nCall log:\n  - Expect \"to_have_count\" with timeout 5000ms\n  - waiting for locator(\".report-period__count\")\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n",
+        "seconds": 5.91
+      }
+    ],
+    "final-green": [
+      {
+        "case": "ingredient-controls",
+        "status": "passed",
+        "evidence": {
+          "button_height": 44
+        },
+        "seconds": 0.8
+      },
+      {
+        "case": "display-unit-preserves-values",
+        "status": "passed",
+        "evidence": {
+          "unit_cost": 0.0045,
+          "par_qty": 5000,
+          "pack_size": 10000
+        },
+        "seconds": 0.84
+      },
+      {
+        "case": "blank-count-is-not-zero",
+        "status": "passed",
+        "evidence": {
+          "expected_remaining": null
+        },
+        "seconds": 2.77
+      },
+      {
+        "case": "opening-lost-response-retry",
+        "status": "passed",
+        "evidence": {
+          "same_key": true,
+          "expected_remaining": 11000
+        },
+        "seconds": 0.95
+      },
+      {
+        "case": "shopping-loose-quantity",
+        "status": "passed",
+        "evidence": {
+          "item": "Review 9bead1da\n1 kg"
+        },
+        "seconds": 0.83
+      },
+      {
+        "case": "history-readable-units",
+        "status": "passed",
+        "evidence": {
+          "quantity": "10 kg",
+          "escape_closes": true
+        },
+        "seconds": 0.84
+      },
+      {
+        "case": "ingredient-load-error",
+        "status": "passed",
+        "evidence": {
+          "error_visible": true
+        },
+        "seconds": 0.77
+      },
+      {
+        "case": "recipe-loading-cannot-clear-lines",
+        "status": "passed",
+        "evidence": {
+          "save_disabled_until_recipe_loaded": true
+        },
+        "seconds": 0.95
+      },
+      {
+        "case": "recipe-draft-hides-stale-cost",
+        "status": "passed",
+        "evidence": {
+          "stale_cost_hidden_for_draft": true
+        },
+        "seconds": 0.95
+      },
+      {
+        "case": "report-date-error-cannot-print-old-day",
+        "status": "passed",
+        "evidence": {
+          "old_day_print_disabled": true,
+          "date_picker_still_available": true
+        },
+        "seconds": 0.81
+      },
+      {
+        "case": "ingredient-report-is-one-day",
+        "status": "passed",
+        "evidence": {
+          "report_and_header_use_one_business_day": true
+        },
+        "seconds": 0.75
+      },
+      {
+        "case": "history-pagination-and-late-response",
+        "status": "passed",
+        "evidence": {
+          "paginated_rows": 52,
+          "old_request_cannot_replace_new_ingredient": true
+        },
+        "seconds": 1.97
+      },
+      {
+        "case": "report-print-a4-and-thermal",
+        "status": "passed",
+        "evidence": {
+          "a4_and_thermal_rendered": true,
+          "display_units_and_waste_reason": true,
+          "physical_print": false
+        },
+        "seconds": 1.22
+      },
+      {
+        "case": "arabic-mobile-ingredient-flow",
+        "status": "passed",
+        "evidence": {
+          "rtl": true,
+          "mobile_width": 390,
+          "create_saved": true,
+          "blank_count_error_arabic": true
+        },
+        "seconds": 1.0
+      }
+    ]
+  },
+  "build": "npm run build:admin passed",
+  "architecture": "generate/check passed: 231 nodes, 65 flows, 492 steps",
+  "source_sha256": {
+    "backend/routes/admin/recipeLedger.js": "7ce5052872d6b711208bc11b86e2c94de1ef69ce86bc4b39c8864478fe23f17f",
+    "backend/routes/admin/reports.js": "c610889b19ea8a770b86bc98a3dbeecdb09523c06743efa9dc9a7eb8797e85e8",
+    "backend/services/RecipeLedgerService.js": "83fa880e7553d0627f6676248e43a4a046bd96624d2c62f42ed4f2dcb0a91866",
+    "src/admin/components/IngredientFormModal.vue": "2e4a695b8857765ad236c0088ade7b81835e0f1f4d7e7d0978541dcf0d890adb",
+    "src/admin/components/IngredientHistoryDrawer.vue": "28401597e242934f8082d46dede1dff62dda09f29ba6708ad1ab7f2b08994a46",
+    "src/admin/components/IngredientMovementModal.vue": "aa0df434ed17543a34552a6a8820ff42113a8edfd020c58df0dbf3eedce75592",
+    "src/admin/components/IngredientOpeningModal.vue": "184771f8ead380542549c2ad7ef16d5005d832adfa5b1790c468e2bd7532fa57",
+    "src/admin/components/ProductRecipeEditor.vue": "43e24db20eff9b91858eea3113ef3583de141a07ca226ae33fea2573e66ca457",
+    "src/admin/components/ReportsLayout.vue": "9f347edf1aa503466710109b320164290092e874ba7da4926eca107aa878fda7",
+    "src/admin/pages/Ingredients.vue": "f8eaebf88bc93711081ec9a198310e2c41048940eb30bc54917cfaf67ebd8287",
+    "src/admin/pages/ReportsIngredients.vue": "2b44eb978fe840022d2258b9b8fee40b382c1f83dfbb8513bd44e2ef6af2088e",
+    "src/print/AdminReportA4.vue": "729bb1f7e7a2ff8d7758646fb2eb4631b6d57b01b485ddf1c2383abf9dbc3173",
+    "src/print/PrintReceiptApp.vue": "ad3bfcd08ef6cb6cfc5f11565b3862e2ad962e985e98c8ae2f4ad5a8f69187d7",
+    "src/print/ingredientReportPresentation.js": "a5355f53bd4bc32d2ad9469d6045d5b8af1f000460d332870c0a4a07fe0d0a43",
+    "src/shared/i18n/ar.json": "78b09ac5abea955edb4e101582ffa533edd1e3237ca112c1dc33003ee84c01d9"
+  },
+  "limits": [
+    "Scratch databases and loopback browser only",
+    "No production testing, deployment, historical ledger repair or physical printer validation",
+    "Frontend source specs supplemented by 14 real-browser scenarios and actual A4 SSR rendering"
+  ]
+}

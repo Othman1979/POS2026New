@@ -1,0 +1,48 @@
+import { afterEach, expect, it, vi } from 'vitest';
+import { effectScope, reactive, nextTick } from 'vue';
+const fixture = vi.hoisted(() => ({ provided: new Map(), route: null, mounted: [] }));
+vi.mock('vue', async original => ({ ...await original(), useSSRContext: () => ({ modules: new Set() }), provide: (key, value) => fixture.provided.set(key, value), inject: key => fixture.provided.get(key), onMounted: fn => fixture.mounted.push(fn), onUnmounted: vi.fn() }));
+vi.mock('vue-router', () => ({ useRoute: () => fixture.route }));
+vi.mock('../../composables/useBrowserReportPrint.js', () => ({ useBrowserReportPrint: () => ({ printReport: vi.fn(), isPrinting: false }) }));
+vi.mock('@/shared/http.js', () => ({ fetchJson: vi.fn(async () => ({ success: true, ingredients: [] })) }));
+import Layout from '../ReportsLayout.vue';
+import Ingredients from '../../pages/IngredientDailyMovements.vue';
+let scope;
+afterEach(() => { scope?.stop(); fixture.provided.clear(); fixture.mounted = []; vi.unstubAllGlobals(); vi.useRealTimers(); });
+it('keeps shared report dates intact and reloads daily movements when the header day changes', async () => {
+    const stored = new Map([['pos_reports_start_date', '2026-09-01'], ['pos_reports_end_date', '2026-09-05']]);
+    vi.stubGlobal('sessionStorage', { getItem: key => stored.get(key), setItem: (key, value) => stored.set(key, value) });
+    fixture.route = reactive({ name: 'reports-summary' }); scope = effectScope();
+    const layout = scope.run(() => Layout.setup());
+    expect(layout.startDate.value).toBe('2026-09-01'); expect(layout.endDate.value).toBe('2026-09-05');
+    fixture.route.name = 'reports-ingredients';
+    const props = reactive({ date: layout.startDate.value });
+    const daily = scope.run(() => Ingredients.setup(props, { expose: () => {} }));
+    fixture.mounted.forEach(fn => fn());
+    props.date = '2026-09-03';
+    await nextTick();
+    expect(daily.selectedDate.value).toBe('2026-09-03');
+    expect(layout.endDate.value).toBe('2026-09-05');
+    fixture.route.name = 'reports-sales';
+    expect(layout.startDate.value).toBe('2026-09-01'); expect(layout.endDate.value).toBe('2026-09-05');
+    expect(stored.get('pos_reports_end_date')).toBe('2026-09-05');
+});
+
+it('advances today at the business cutoff without moving a historical period', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-09-10T02:59:59Z'));
+    const stored = new Map();
+    vi.stubGlobal('sessionStorage', { getItem: key => stored.get(key), setItem: (key,value) => stored.set(key,value) });
+    fixture.route = reactive({name:'reports-summary'}); scope = effectScope();
+    const layout = scope.run(() => Layout.setup());
+    fixture.mounted.forEach(fn => fn());
+    expect(layout.startDate.value).toBe('2026-09-09');
+    vi.advanceTimersByTime(1000);
+    expect(layout.today.value).toBe('2026-09-10');
+    expect(layout.startDate.value).toBe('2026-09-10');
+    expect(layout.endDate.value).toBe('2026-09-10');
+    layout.moveDay(-1);
+    vi.advanceTimersByTime(86400000);
+    expect(layout.today.value).toBe('2026-09-11');
+    expect(layout.startDate.value).toBe('2026-09-09');
+});

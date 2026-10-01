@@ -1,0 +1,27 @@
+[
+  {
+    "table": "ingredients",
+    "definitionsMatch": true,
+    "note": "Ignores line ordering and AUTO_INCREMENT counters only"
+  },
+  {
+    "table": "product_recipe_lines",
+    "definitionsMatch": true,
+    "note": "Ignores line ordering and AUTO_INCREMENT counters only"
+  },
+  {
+    "table": "ingredient_movements",
+    "definitionsMatch": true,
+    "note": "Ignores line ordering and AUTO_INCREMENT counters only"
+  },
+  {
+    "table": "order_items",
+    "definitionsMatch": true,
+    "note": "Ignores line ordering and AUTO_INCREMENT counters only"
+  },
+  {
+    "table": "subscription_redemption_items",
+    "definitionsMatch": true,
+    "note": "Ignores line ordering and AUTO_INCREMENT counters only"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "save_causes_list_gets": 1,
+  "receipt_events": 10,
+  "list_gets_while_previous_get_held": 1,
+  "held_requests": 1,
+  "burst_total_gets_after_followup": 2,
+  "latest_receipt_total_visible": 10,
+  "filter_during_refresh_uses_latest_state": true
+}

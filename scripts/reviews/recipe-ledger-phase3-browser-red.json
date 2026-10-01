@@ -1,0 +1,56 @@
+[
+  {
+    "case": "ingredient-controls",
+    "status": "failed",
+    "error": "Add ingredient button is 24px high",
+    "seconds": 0.81
+  },
+  {
+    "case": "display-unit-preserves-values",
+    "status": "failed",
+    "error": "display change altered stored values: {'unit_cost': 4.5, 'par_qty': 5, 'pack_size': 10}",
+    "seconds": 0.88
+  },
+  {
+    "case": "blank-count-is-not-zero",
+    "status": "failed",
+    "error": "blank Count was submitted successfully",
+    "seconds": 0.83
+  },
+  {
+    "case": "opening-lost-response-retry",
+    "status": "failed",
+    "error": "retry changed the opening client key",
+    "seconds": 0.97
+  },
+  {
+    "case": "shopping-loose-quantity",
+    "status": "failed",
+    "error": "Locator expected to contain text '1 kg'\nActual value: Review ca22a197 \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for get_by_role(\"dialog\").get_by_text(\"Review ca22a197\", exact=True).locator(\"..\")\n    13 × locator resolved to <div class=\"flex justify-between gap-3\">…</div>\n       - unexpected value \"Review ca22a197\"\n",
+    "seconds": 5.83
+  },
+  {
+    "case": "history-readable-units",
+    "status": "failed",
+    "error": "Locator expected to contain text '10 kg'\nActual value: HistoryCount10000.0000002026-09-05T00:00:00.000Z \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for get_by_role(\"dialog\")\n    - locator resolved to <aside role=\"dialog\" aria-modal=\"true\" aria-label=\"History\" class=\"h-full w-full max-w-md bg-card border-s border-zinc-200 shadow-2xl flex flex-col\">…</aside>\n    - unexpected value \"History\"\n    13 × locator resolved to <aside role=\"dialog\" aria-modal=\"true\" aria-label=\"History\" class=\"h-full w-full max-w-md bg-card border-s border-zinc-200 shadow-2xl flex flex-col\">…</aside>\n       - unexpected value \"HistoryCount10000.0000002026-09-05T00:00:00.000Z\"\n",
+    "seconds": 5.8
+  },
+  {
+    "case": "ingredient-load-error",
+    "status": "failed",
+    "error": "Locator expected to be visible\nActual value: - complementary:\n  - text: PS POS Admin\n  - button \"Collapse menu\"\n  - navigation \"Menu\":\n    - text: Daily work\n    - link \"Dashboard\":\n      - /url: \"#\"\n    - link \"Order History\":\n      - /url: \"#\"\n    - link \"Daily Reports\":\n      - /url: \"#\"\n    - link \"Shifts\":\n      - /url: \"#\"\n    - text: Management\n    - link \"Customers\":\n      - /url: \"#\"\n    - link \"Subscriptions\":\n      - /url: \"#\"\n    - link \"Platform Payouts\":\n      - /url: \"#\"\n    - link \"JoFotara Operations\":\n      - /url: \"#\"\n    - link \"Print Templates\":\n      - /url: \"#\"\n    - link \"Inventory\":\n      - /url: \"#\"\n    - link \"Ingredients\":\n      - /url: \"#\"\n    - link \"Table Editor\":\n      - /url: \"#\"\n    - link \"User Security\":\n      - /url: \"#\"\n    - link \"Settings\":\n      - /url: \"#\"\n  - link \"Launch POS POS\":\n    - /url: /pos\n- banner:\n  - heading \"Ingredients\" [level=2]\n  - text: 02:09 AM Sun, Sep 6\n  - button \"System\"\n  - button \"Stock alerts\"\n  - button \"Account\": Test Admin admin T\n- main:\n  - heading \"Ingredients\" [level=2]\n  - button \"Set today's opening\"\n  - button \"Shopping list\"\n  - button \"Portions\"\n  - button \"Add ingredient\"\n  - table:\n    - rowgroup:\n      - row \"Name Unit Opening Received Used Waste Expected Variance\":\n        - columnheader \"Name\"\n        - columnheader \"Unit\"\n        - columnheader \"Opening\"\n        - columnheader \"Received\"\n        - columnheader \"Used\"\n        - columnheader \"Waste\"\n        - columnheader \"Expected\"\n        - columnheader \"Variance\"\n        - columnheader\n    - rowgroup\nError: element(s) not found \nCall log:\n  - Expect \"to_be_visible\" with timeout 5000ms\n  - waiting for get_by_text(\"Review ingredient load failed\", exact=True)\n",
+    "seconds": 5.73
+  },
+  {
+    "case": "recipe-loading-cannot-clear-lines",
+    "status": "failed",
+    "error": "Locator expected to be disabled\nActual value: enabled \nCall log:\n  - Expect \"to_be_disabled\" with timeout 5000ms\n  - waiting for get_by_role(\"dialog\").get_by_role(\"button\", name=\"Save\", exact=True)\n    14 × locator resolved to <button type=\"button\" class=\"px-4 h-9 bg-teal-600 text-white text-xs font-bold rounded-md\">Save</button>\n       - unexpected value \"enabled\"\n",
+    "seconds": 5.92
+  },
+  {
+    "case": "recipe-draft-hides-stale-cost",
+    "status": "failed",
+    "error": "Locator expected not to be visible\nActual value: visible \nCall log:\n  - Expect \"to_be_visible\" with timeout 5000ms\n  - waiting for get_by_role(\"dialog\").get_by_text(\"0.90\", exact=True)\n    14 × locator resolved to <span data-no-i18n=\"\">0.90</span>\n       - unexpected value \"visible\"\n",
+    "seconds": 5.92
+  }
+]

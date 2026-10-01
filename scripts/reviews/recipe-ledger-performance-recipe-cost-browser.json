@@ -1,0 +1,10 @@
+[
+  {
+    "case": "recipe-draft-hides-stale-cost",
+    "status": "passed",
+    "evidence": {
+      "stale_cost_hidden_for_draft": true
+    },
+    "seconds": 0.89
+  }
+]

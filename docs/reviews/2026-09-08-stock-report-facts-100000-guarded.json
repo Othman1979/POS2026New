@@ -1,0 +1,859 @@
+{
+  "at": "2026-09-08T11:42:11.193Z",
+  "implementation": {
+    "revision": "25878b7e359dc066324a531d684346f4955276c2",
+    "baseline_revision": "1f67284f",
+    "source_hashes": {
+      "backend/services/IngredientAnalysisService.js": "aaa17182f03d911cbac15e228cfdd81d60b49715c1c38f13b7126b862362dcd0",
+      "backend/services/StockReportFactService.js": "6ecdd911e80f523c6dc48540d3e03fbc070b00e08bdb3f0ad103a52212d290cb",
+      "backend/services/StockReportGenerationService.js": "fd30f7c73c953c19f3c36107e6274e33c3b22c02951fd693a0b1f714e54c1170",
+      "backend/services/StockReportWorker.js": "8f94173d2d52f19e042c8f5743e356fe8c4d50851020a81a9d1b258481041f86",
+      "scripts/reviews/stock-report-fact-performance.cjs": "954a320e2aef88996c895653ba9f84f6300e3ab79c27fcc9f44c5ab4540dca40"
+    }
+  },
+  "runtime": "v24.16.0",
+  "cpu": "Intel(R) Core(TM) i7-14700KF",
+  "logical_cpus": 28,
+  "system_memory_gib": 31.841732025146484,
+  "database_version": "10.4.32-MariaDB",
+  "invoices": 100000,
+  "invoice_lines": 300000,
+  "refunds": 10000,
+  "partitions": 32,
+  "includedInvoices": 100000,
+  "includedRefunds": 10000,
+  "expected": {
+    "cents": 69220000,
+    "cost": 136000
+  },
+  "references": [
+    {
+      "label": "before",
+      "elapsed_ms": 19968.789499999995,
+      "node_cpu_ms": 2077,
+      "queries": 1154,
+      "totals": {
+        "net_revenue": 692200,
+        "known_cost": 136000.00000009,
+        "estimated_margin": null,
+        "food_cost_pct": null,
+        "incomplete": true,
+        "complete_meals": 0,
+        "total_meals": 2,
+        "legacy_lines": 0,
+        "unallocated_records": 0,
+        "unallocated_revenue": 0,
+        "excluded_revenue": 0
+      }
+    },
+    {
+      "label": "current",
+      "elapsed_ms": 4249.861400000002,
+      "node_cpu_ms": 1985,
+      "queries": 1154,
+      "totals": {
+        "net_revenue": 692200,
+        "known_cost": 136000,
+        "estimated_margin": null,
+        "food_cost_pct": null,
+        "incomplete": true,
+        "complete_meals": 0,
+        "total_meals": 2,
+        "legacy_lines": 0,
+        "unallocated_records": 0,
+        "unallocated_revenue": 0,
+        "excluded_revenue": 0
+      }
+    }
+  ],
+  "rebuild": {
+    "elapsed_ms": 566780.2432,
+    "node_cpu_ms": 12968,
+    "source_and_metadata_pool_queries": 14774,
+    "max_source_rows": 48,
+    "max_source_payload_bytes": 32341,
+    "sampled_peak_rss_mib": 237.51953125,
+    "sampled_peak_heap_mib": 72.41228485107422,
+    "builds": [
+      {
+        "status": "published",
+        "build_id": "1",
+        "rows": 27999,
+        "chunks": 56,
+        "max_work_ms": 64.43760000000475,
+        "invoices": 3111,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "2",
+        "rows": 27981,
+        "chunks": 56,
+        "max_work_ms": 62.82800000000134,
+        "invoices": 3109,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "3",
+        "rows": 27720,
+        "chunks": 56,
+        "max_work_ms": 61.619899999990594,
+        "invoices": 3080,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "4",
+        "rows": 28836,
+        "chunks": 58,
+        "max_work_ms": 63.48220000001311,
+        "invoices": 3204,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "5",
+        "rows": 28161,
+        "chunks": 57,
+        "max_work_ms": 63.65529999999853,
+        "invoices": 3129,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "6",
+        "rows": 28872,
+        "chunks": 58,
+        "max_work_ms": 68.7162000000244,
+        "invoices": 3208,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "7",
+        "rows": 28935,
+        "chunks": 58,
+        "max_work_ms": 62.13770000002114,
+        "invoices": 3215,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "8",
+        "rows": 28746,
+        "chunks": 58,
+        "max_work_ms": 61.787200000020675,
+        "invoices": 3194,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "9",
+        "rows": 28053,
+        "chunks": 57,
+        "max_work_ms": 61.851000000024214,
+        "invoices": 3117,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "10",
+        "rows": 28197,
+        "chunks": 57,
+        "max_work_ms": 64.3069999999716,
+        "invoices": 3133,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "11",
+        "rows": 28890,
+        "chunks": 58,
+        "max_work_ms": 63.899399999994785,
+        "invoices": 3210,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "12",
+        "rows": 27909,
+        "chunks": 56,
+        "max_work_ms": 84.57010000001173,
+        "invoices": 3101,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "13",
+        "rows": 28116,
+        "chunks": 57,
+        "max_work_ms": 61.25169999996433,
+        "invoices": 3124,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "14",
+        "rows": 27756,
+        "chunks": 56,
+        "max_work_ms": 65.4136999999173,
+        "invoices": 3084,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "15",
+        "rows": 27504,
+        "chunks": 56,
+        "max_work_ms": 57.285300000046846,
+        "invoices": 3056,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "16",
+        "rows": 28413,
+        "chunks": 57,
+        "max_work_ms": 62.09409999998752,
+        "invoices": 3157,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "17",
+        "rows": 28395,
+        "chunks": 57,
+        "max_work_ms": 61.2048000000068,
+        "invoices": 3155,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "18",
+        "rows": 28251,
+        "chunks": 57,
+        "max_work_ms": 60.51379999995697,
+        "invoices": 3139,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "19",
+        "rows": 27162,
+        "chunks": 55,
+        "max_work_ms": 62.66219999996247,
+        "invoices": 3018,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "20",
+        "rows": 27657,
+        "chunks": 56,
+        "max_work_ms": 61.087999999988824,
+        "invoices": 3073,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "21",
+        "rows": 28431,
+        "chunks": 57,
+        "max_work_ms": 67.90240000002086,
+        "invoices": 3159,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "22",
+        "rows": 28116,
+        "chunks": 57,
+        "max_work_ms": 65.66399999993155,
+        "invoices": 3124,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "23",
+        "rows": 28044,
+        "chunks": 57,
+        "max_work_ms": 59.68589999998221,
+        "invoices": 3116,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "24",
+        "rows": 27639,
+        "chunks": 56,
+        "max_work_ms": 61.331300000078045,
+        "invoices": 3071,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "25",
+        "rows": 27162,
+        "chunks": 55,
+        "max_work_ms": 62.7848000000231,
+        "invoices": 3018,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "26",
+        "rows": 27369,
+        "chunks": 55,
+        "max_work_ms": 63.15420000004815,
+        "invoices": 3041,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "27",
+        "rows": 28719,
+        "chunks": 58,
+        "max_work_ms": 61.81280000001425,
+        "invoices": 3191,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "28",
+        "rows": 28170,
+        "chunks": 57,
+        "max_work_ms": 66.86189999995986,
+        "invoices": 3130,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "29",
+        "rows": 28134,
+        "chunks": 57,
+        "max_work_ms": 61.39000000001397,
+        "invoices": 3126,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "30",
+        "rows": 28233,
+        "chunks": 57,
+        "max_work_ms": 71.58719999995083,
+        "invoices": 3137,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "31",
+        "rows": 28458,
+        "chunks": 57,
+        "max_work_ms": 62.39229999994859,
+        "invoices": 3162,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "32",
+        "rows": 27972,
+        "chunks": 56,
+        "max_work_ms": 71.03830000001471,
+        "invoices": 3108,
+        "refunds": 0,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "33",
+        "rows": 963,
+        "chunks": 2,
+        "max_work_ms": 54.96669999998994,
+        "invoices": 0,
+        "refunds": 321,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "34",
+        "rows": 1068,
+        "chunks": 3,
+        "max_work_ms": 51.88939999998547,
+        "invoices": 0,
+        "refunds": 356,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "35",
+        "rows": 879,
+        "chunks": 2,
+        "max_work_ms": 56.258299999986775,
+        "invoices": 0,
+        "refunds": 293,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "36",
+        "rows": 957,
+        "chunks": 2,
+        "max_work_ms": 59.68350000004284,
+        "invoices": 0,
+        "refunds": 319,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "37",
+        "rows": 843,
+        "chunks": 2,
+        "max_work_ms": 52.758099999977276,
+        "invoices": 0,
+        "refunds": 281,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "38",
+        "rows": 945,
+        "chunks": 2,
+        "max_work_ms": 53.29989999998361,
+        "invoices": 0,
+        "refunds": 315,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "39",
+        "rows": 945,
+        "chunks": 2,
+        "max_work_ms": 57.33250000001863,
+        "invoices": 0,
+        "refunds": 315,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "40",
+        "rows": 954,
+        "chunks": 2,
+        "max_work_ms": 56.29269999999087,
+        "invoices": 0,
+        "refunds": 318,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "41",
+        "rows": 933,
+        "chunks": 2,
+        "max_work_ms": 59.382899999967776,
+        "invoices": 0,
+        "refunds": 311,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "42",
+        "rows": 1002,
+        "chunks": 3,
+        "max_work_ms": 53.22039999999106,
+        "invoices": 0,
+        "refunds": 334,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "43",
+        "rows": 837,
+        "chunks": 2,
+        "max_work_ms": 52.4706999999471,
+        "invoices": 0,
+        "refunds": 279,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "44",
+        "rows": 951,
+        "chunks": 2,
+        "max_work_ms": 52.1203000000678,
+        "invoices": 0,
+        "refunds": 317,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "45",
+        "rows": 900,
+        "chunks": 2,
+        "max_work_ms": 54.69650000007823,
+        "invoices": 0,
+        "refunds": 300,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "46",
+        "rows": 921,
+        "chunks": 2,
+        "max_work_ms": 51.740800000028685,
+        "invoices": 0,
+        "refunds": 307,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "47",
+        "rows": 930,
+        "chunks": 2,
+        "max_work_ms": 52.77189999993425,
+        "invoices": 0,
+        "refunds": 310,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "48",
+        "rows": 948,
+        "chunks": 2,
+        "max_work_ms": 57.81059999985155,
+        "invoices": 0,
+        "refunds": 316,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "49",
+        "rows": 1008,
+        "chunks": 3,
+        "max_work_ms": 52.111600000062026,
+        "invoices": 0,
+        "refunds": 336,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "50",
+        "rows": 939,
+        "chunks": 2,
+        "max_work_ms": 57.68759999994654,
+        "invoices": 0,
+        "refunds": 313,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "51",
+        "rows": 846,
+        "chunks": 2,
+        "max_work_ms": 53.787899999995716,
+        "invoices": 0,
+        "refunds": 282,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "52",
+        "rows": 918,
+        "chunks": 2,
+        "max_work_ms": 54.706400000141,
+        "invoices": 0,
+        "refunds": 306,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "53",
+        "rows": 942,
+        "chunks": 2,
+        "max_work_ms": 53.0346000000136,
+        "invoices": 0,
+        "refunds": 314,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "54",
+        "rows": 948,
+        "chunks": 2,
+        "max_work_ms": 53.956800000043586,
+        "invoices": 0,
+        "refunds": 316,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "55",
+        "rows": 996,
+        "chunks": 2,
+        "max_work_ms": 64.42359999998007,
+        "invoices": 0,
+        "refunds": 332,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "56",
+        "rows": 963,
+        "chunks": 2,
+        "max_work_ms": 67.26929999992717,
+        "invoices": 0,
+        "refunds": 321,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "57",
+        "rows": 861,
+        "chunks": 2,
+        "max_work_ms": 56.9957000000868,
+        "invoices": 0,
+        "refunds": 287,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "58",
+        "rows": 915,
+        "chunks": 2,
+        "max_work_ms": 59.96719999995548,
+        "invoices": 0,
+        "refunds": 305,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "59",
+        "rows": 915,
+        "chunks": 2,
+        "max_work_ms": 52.12059999990743,
+        "invoices": 0,
+        "refunds": 305,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "60",
+        "rows": 972,
+        "chunks": 2,
+        "max_work_ms": 54.000800000038,
+        "invoices": 0,
+        "refunds": 324,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "61",
+        "rows": 918,
+        "chunks": 2,
+        "max_work_ms": 52.71790000004694,
+        "invoices": 0,
+        "refunds": 306,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "62",
+        "rows": 1002,
+        "chunks": 3,
+        "max_work_ms": 52.21820000000298,
+        "invoices": 0,
+        "refunds": 334,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "63",
+        "rows": 969,
+        "chunks": 2,
+        "max_work_ms": 52.31240000005346,
+        "invoices": 0,
+        "refunds": 323,
+        "movements": 0
+      },
+      {
+        "status": "published",
+        "build_id": "64",
+        "rows": 912,
+        "chunks": 2,
+        "max_work_ms": 53.680399999953806,
+        "invoices": 0,
+        "refunds": 304,
+        "movements": 0
+      }
+    ],
+    "totals": {
+      "cents": "69220000",
+      "cost": "136000.0000000000000000",
+      "sold": "350000.000000",
+      "refunded": "10000.000000",
+      "incomplete": "40000"
+    },
+    "cost_difference_from_reference": 0,
+    "query_timings": {
+      "other": {
+        "count": 7763,
+        "total_ms": 4838.413000001674,
+        "max_ms": 16.02509999999893
+      },
+      "fact_write": {
+        "count": 5711,
+        "total_ms": 11295.048900001391,
+        "max_ms": 28.279899999994086
+      },
+      "sales_source": {
+        "count": 6330,
+        "total_ms": 16254.629799996947,
+        "max_ms": 21.337900000042282
+      },
+      "invoice_lines": {
+        "count": 6266,
+        "total_ms": 17853.35949999904,
+        "max_ms": 16.64879999999539
+      },
+      "refund_source": {
+        "count": 704,
+        "total_ms": 2175.138100000513,
+        "max_ms": 27.098700000031386
+      }
+    }
+  },
+  "plans": {
+    "sales": [
+      {
+        "id": 1,
+        "select_type": "SIMPLE",
+        "table": "o",
+        "type": "range",
+        "possible_keys": "PRIMARY,idx_orders_invoice_issued_at,idx_orders_created_at,idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+        "key": "PRIMARY",
+        "key_len": "4",
+        "ref": null,
+        "rows": "49819",
+        "Extra": "Using where"
+      }
+    ],
+    "invoice_lines": [
+      {
+        "id": 1,
+        "select_type": "SIMPLE",
+        "table": "order_items",
+        "type": "range",
+        "possible_keys": "idx_order_items_parent_invoice",
+        "key": "idx_order_items_parent_invoice",
+        "key_len": "9",
+        "ref": null,
+        "rows": "48",
+        "Extra": "Using index condition"
+      }
+    ],
+    "refunds": [
+      {
+        "id": 1,
+        "select_type": "SIMPLE",
+        "table": "r",
+        "type": "range",
+        "possible_keys": "PRIMARY,idx_refunds_kind,idx_refunds_created",
+        "key": "idx_refunds_kind",
+        "key_len": "5",
+        "ref": null,
+        "rows": "9847",
+        "Extra": "Using where"
+      }
+    ],
+    "ingredients": [
+      {
+        "id": 1,
+        "select_type": "SIMPLE",
+        "table": "m",
+        "type": "range",
+        "possible_keys": "PRIMARY,idx_im_day",
+        "key": "PRIMARY",
+        "key_len": "8",
+        "ref": null,
+        "rows": "1",
+        "Extra": "Using where"
+      },
+      {
+        "id": 1,
+        "select_type": "SIMPLE",
+        "table": "r",
+        "type": "eq_ref",
+        "possible_keys": "PRIMARY",
+        "key": "PRIMARY",
+        "key_len": "4",
+        "ref": "posapp_review_recipe_p1_6e13da8a3ac0.m.source_id",
+        "rows": "1",
+        "Extra": "Using where"
+      }
+    ],
+    "stock": [
+      {
+        "id": 1,
+        "select_type": "SIMPLE",
+        "table": "m",
+        "type": "range",
+        "possible_keys": "PRIMARY,uq_stock_movement_operation,idx_stock_movement_day",
+        "key": "PRIMARY",
+        "key_len": "8",
+        "ref": null,
+        "rows": "1",
+        "Extra": "Using where"
+      },
+      {
+        "id": 1,
+        "select_type": "SIMPLE",
+        "table": "o",
+        "type": "eq_ref",
+        "possible_keys": "PRIMARY",
+        "key": "PRIMARY",
+        "key_len": "8",
+        "ref": "posapp_review_recipe_p1_6e13da8a3ac0.m.operation_id",
+        "rows": "1",
+        "Extra": ""
+      }
+    ]
+  },
+  "limitations": [
+    "One workstation run, not latency percentiles or 2-CPU/4-GiB certification.",
+    "Source writers are not wired; fixture marks all scopes explicitly.",
+    "Two business days; no million-movement, split or concurrent-writer dataset.",
+    "Node CPU excludes DB; memory samples include fixture retention and miss between-yield peaks.",
+    "Query count excludes metadata/fact transactions that acquire a connection directly.",
+    "Financial source retains up to 16 invoices; unusually large invoices still need measurement."
+  ]
+}

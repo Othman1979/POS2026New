@@ -1,0 +1,778 @@
+{
+  "revision": "f0eddce9297923fe6ea16ff476c47a8e0f2301fe",
+  "expectedBehavior": "fixed recovery",
+  "sourceSha256": {
+    "src/pos/useProducts.js": "3965af21ffbcc8d450d995d447e90891f25ff9942fa106ff03d2caa82aaf34aa",
+    "src/components/pos/PosCatalogWorkspace.vue": "feea656e27a5f0988dbe2d4dcb59f3ce6a7c14eaca0f88fdaf8722434433e73e"
+  },
+  "cases": [
+    {
+      "lang": "en",
+      "width": 1280,
+      "observations": [
+        {
+          "label": "healthy responses switch products correctly",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Food item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "new category pending with loading feedback and no previous-category cards",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "LOADING...",
+          "loadingSpinnerVisible": true
+        },
+        {
+          "label": "out-of-order old response is correctly ignored",
+          "active": 3,
+          "highlighted": "Dessert",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "failed selection hides stale cards and offers visible retry",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Unable to load products.\n\nRetry",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "stale DOM click cannot add an item and the existing cart is preserved"
+        },
+        {
+          "label": "server 503 exposes retry without stale cards",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Unable to load products.\n\nRetry",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "successful retry recovers without reloading the page",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Drinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "held transport displays loading and hides old-category cards",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "LOADING...",
+          "loadingSpinnerVisible": true
+        },
+        {
+          "label": "stalled headers reach the deadline and expose a retry",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": false,
+          "error": "Loading products took too long. Please try again.",
+          "search": "",
+          "stageText": "Loading products took too long. Please try again.\n\nRetry",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "native HTTP body stall is aborted by the whole-read deadline",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": false,
+          "error": "Loading products took too long. Please try again.",
+          "search": "",
+          "stageText": "Loading products took too long. Please try again.\n\nRetry",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "same-category background failure retains usable matching rows and visible retry",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Unable to load products.\n\nRetry\nDrinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "recovered visible product can be added normally without changing the existing cart line"
+        }
+      ],
+      "requests": [
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "network-failure"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "body-stall"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2",
+          "mode": "normal"
+        }
+      ],
+      "abortedRequests": [
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "error": "net::ERR_INTERNET_DISCONNECTED"
+        },
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "lang": "ar",
+      "width": 1280,
+      "observations": [
+        {
+          "label": "healthy responses switch products correctly",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Food item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "new category pending with loading feedback and no previous-category cards",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "جار التحميل...",
+          "loadingSpinnerVisible": true
+        },
+        {
+          "label": "out-of-order old response is correctly ignored",
+          "active": 3,
+          "highlighted": "Dessert",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "failed selection hides stale cards and offers visible retry",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "تعذر تحميل المنتجات.\n\nإعادة المحاولة",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "stale DOM click cannot add an item and the existing cart is preserved"
+        },
+        {
+          "label": "server 503 exposes retry without stale cards",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "تعذر تحميل المنتجات.\n\nإعادة المحاولة",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "successful retry recovers without reloading the page",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Drinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "held transport displays loading and hides old-category cards",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "جار التحميل...",
+          "loadingSpinnerVisible": true
+        },
+        {
+          "label": "stalled headers reach the deadline and expose a retry",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": false,
+          "error": "Loading products took too long. Please try again.",
+          "search": "",
+          "stageText": "استغرق تحميل المنتجات وقتًا طويلًا. يرجى إعادة المحاولة.\n\nإعادة المحاولة",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "native HTTP body stall is aborted by the whole-read deadline",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": false,
+          "error": "Loading products took too long. Please try again.",
+          "search": "",
+          "stageText": "استغرق تحميل المنتجات وقتًا طويلًا. يرجى إعادة المحاولة.\n\nإعادة المحاولة",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "same-category background failure retains usable matching rows and visible retry",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "تعذر تحميل المنتجات.\n\nإعادة المحاولة\nDrinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "recovered visible product can be added normally without changing the existing cart line"
+        }
+      ],
+      "requests": [
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "network-failure"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "body-stall"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2",
+          "mode": "normal"
+        }
+      ],
+      "abortedRequests": [
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "error": "net::ERR_INTERNET_DISCONNECTED"
+        },
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "width": 390,
+      "observations": [
+        {
+          "label": "healthy responses switch products correctly",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Food item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "new category pending with loading feedback and no previous-category cards",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "LOADING...",
+          "loadingSpinnerVisible": true
+        },
+        {
+          "label": "out-of-order old response is correctly ignored",
+          "active": 3,
+          "highlighted": "Dessert",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "failed selection hides stale cards and offers visible retry",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Unable to load products.\n\nRetry",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "stale DOM click cannot add an item and the existing cart is preserved"
+        },
+        {
+          "label": "server 503 exposes retry without stale cards",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Unable to load products.\n\nRetry",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "successful retry recovers without reloading the page",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Drinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "held transport displays loading and hides old-category cards",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "LOADING...",
+          "loadingSpinnerVisible": true
+        },
+        {
+          "label": "same-category background failure retains usable matching rows and visible retry",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "Unable to load products.\n\nRetry\nFood item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "recovered visible product can be added normally without changing the existing cart line"
+        }
+      ],
+      "requests": [
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "network-failure"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1",
+          "mode": "normal"
+        }
+      ],
+      "abortedRequests": [
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "error": "net::ERR_INTERNET_DISCONNECTED"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "lang": "ar",
+      "width": 390,
+      "observations": [
+        {
+          "label": "healthy responses switch products correctly",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Food item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "new category pending with loading feedback and no previous-category cards",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "جار التحميل...",
+          "loadingSpinnerVisible": true
+        },
+        {
+          "label": "out-of-order old response is correctly ignored",
+          "active": 3,
+          "highlighted": "Dessert",
+          "displayed": [
+            "Dessert item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Dessert item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "failed selection hides stale cards and offers visible retry",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "تعذر تحميل المنتجات.\n\nإعادة المحاولة",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "stale DOM click cannot add an item and the existing cart is preserved"
+        },
+        {
+          "label": "server 503 exposes retry without stale cards",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "تعذر تحميل المنتجات.\n\nإعادة المحاولة",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "successful retry recovers without reloading the page",
+          "active": 2,
+          "highlighted": "Drinks",
+          "displayed": [
+            "Drinks item"
+          ],
+          "loading": false,
+          "error": "",
+          "search": "",
+          "stageText": "Drinks item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "held transport displays loading and hides old-category cards",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [],
+          "loading": true,
+          "error": "",
+          "search": "",
+          "stageText": "جار التحميل...",
+          "loadingSpinnerVisible": true
+        },
+        {
+          "label": "same-category background failure retains usable matching rows and visible retry",
+          "active": 1,
+          "highlighted": "Food",
+          "displayed": [
+            "Food item"
+          ],
+          "loading": false,
+          "error": "Unable to load products.",
+          "search": "",
+          "stageText": "تعذر تحميل المنتجات.\n\nإعادة المحاولة\nFood item\n\n2.00 JD",
+          "loadingSpinnerVisible": false
+        },
+        {
+          "label": "recovered visible product can be added normally without changing the existing cart line"
+        }
+      ],
+      "requests": [
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=3&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "network-failure"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "mode": "normal"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1&lightweight=1",
+          "mode": "hold"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1",
+          "mode": "server-error"
+        },
+        {
+          "url": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=1",
+          "mode": "normal"
+        }
+      ],
+      "abortedRequests": [
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "http://127.0.0.1:5173/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2&lightweight=1",
+          "error": "net::ERR_INTERNET_DISCONNECTED"
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

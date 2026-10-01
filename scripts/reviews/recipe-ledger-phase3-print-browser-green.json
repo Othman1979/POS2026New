@@ -1,0 +1,12 @@
+[
+  {
+    "case": "report-print-a4-and-thermal",
+    "status": "passed",
+    "evidence": {
+      "a4_and_thermal_rendered": true,
+      "display_units_and_waste_reason": true,
+      "physical_print": false
+    },
+    "seconds": 1.19
+  }
+]

@@ -1,0 +1,874 @@
+{
+  "sourceRevision": "920ecb12cec2299af792e3b006a5b53417500705",
+  "sourceSha256": {
+    "src/admin/pages/Orders.vue": "6aa402b8f27850fc0828030b48af79cc313175af5ca10e7bb70fe21205550b49",
+    "src/components/OrderNotes.vue": "91694973fa22b3309ffa112c66eb5e4e02a52b518b268da24a1b108b8058d365",
+    "src/components/TableFloorPlan.vue": "0bd9ab86aaf5d6b931c479e0786b8fa9ad519c3f646067785d6460c40415e273",
+    "src/components/TableSplits.vue": "8989b2f324a7d99af43895b88aac20f141ec553b2f19ad7afed38a9622c4908f",
+    "src/components/pos/PosCatalogWorkspace.vue": "2d191abe74a7207800589563a671972dd3d0333106b833bb01201ef257899909",
+    "src/pos/stores/orderSession/tableOrderWorkflow.js": "f50a38af3cae8c69a834a80fa1e7f5411de234d99719c0c81e12082e92d6a411",
+    "src/pos/stores/orderSession/orderSessionApi.js": "5c8bc309dcf5241ee7b7a642258b98791f4dda3c84c6893d79c08eae882c388c",
+    "src/shared/http.js": "f4c760fa19e804d9c5f495dd622b7914f87921ec92bf1f8d68bc9eda06534c18",
+    "src/utils/orderNotesBoard.js": "b1d2608c4afa4d88d144aecd963c54e9f3f38d42d7d63263fa544b7e016660ce",
+    "src/utils/receiptLineTotals.js": "88f32e74bbc41c457a466a76d98332c632d4f5e0d50a1e917a4d93d0bd59a3ae"
+  },
+  "comparison": {
+    "beforeSourceRevision": "7b1f4a14",
+    "afterSourceRevision": "5c40b1a9",
+    "cpuRate": 4,
+    "rows": [
+      {
+        "name": "held-200-cold",
+        "beforeSamples": 3,
+        "afterSamples": 3,
+        "beforeMedianMs": 789.125,
+        "afterMedianMs": 744.6250000000001
+      },
+      {
+        "name": "held-200-refresh",
+        "beforeSamples": 15,
+        "afterSamples": 15,
+        "beforeMedianMs": 82.51500000000011,
+        "afterMedianMs": 53.57900000000004
+      },
+      {
+        "name": "history-200",
+        "beforeSamples": 3,
+        "afterSamples": 3,
+        "beforeMedianMs": 427.79999999999995,
+        "afterMedianMs": 318.6149999999999
+      }
+    ]
+  },
+  "matrix": [
+    {
+      "cpuRate": 1,
+      "language": "en",
+      "width": 1440,
+      "cartPreserved": true,
+      "ordersDetailAcceptance": {
+        "loading": true,
+        "closeDuringRead": true,
+        "failedLoad": true,
+        "retry": true
+      },
+      "adminErrors": [],
+      "expectedFixtureErrors": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+        }
+      ],
+      "staleHeldResponse": {
+        "newerCount": 200,
+        "finalCount": 31
+      },
+      "notesReconnect": {
+        "expectedCount": 32,
+        "actualCount": 32,
+        "requests": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789068710175,
+            "finished": 1789068710183
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068710175,
+            "finished": 1789068710183
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068710431,
+            "finished": 1789068710444
+          }
+        ]
+      },
+      "requests": {
+        "notes-30": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789068698056,
+            "finished": 1789068698057
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068698057,
+            "finished": 1789068698057
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068698057,
+            "finished": 1789068698058
+          }
+        ],
+        "history-200": [
+          {
+            "path": "/api/pos/order_notes?limit=200",
+            "started": 1789068698778,
+            "finished": 1789068698778
+          }
+        ],
+        "notes-event-burst": [
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068699427,
+            "finished": 1789068699427
+          }
+        ],
+        "tables-80": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068700273,
+            "finished": 1789068700285
+          }
+        ],
+        "tables-held-event-burst": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068701048,
+            "finished": 1789068701055
+          }
+        ],
+        "notes-150ms-per-get": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789068711395,
+            "finished": 1789068711555
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068711395,
+            "finished": 1789068711555
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068711395,
+            "finished": 1789068711555
+          }
+        ]
+      }
+    },
+    {
+      "cpuRate": 1,
+      "language": "ar",
+      "width": 1440,
+      "cartPreserved": true,
+      "ordersDetailAcceptance": {
+        "loading": true,
+        "closeDuringRead": true,
+        "failedLoad": true,
+        "retry": true
+      },
+      "adminErrors": [],
+      "expectedFixtureErrors": [],
+      "requests": {
+        "notes-30": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789068719382,
+            "finished": 1789068719385
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068719382,
+            "finished": 1789068719385
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068719382,
+            "finished": 1789068719385
+          }
+        ],
+        "history-200": [
+          {
+            "path": "/api/pos/order_notes?limit=200",
+            "started": 1789068720094,
+            "finished": 1789068720094
+          }
+        ],
+        "notes-event-burst": [
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068720740,
+            "finished": 1789068720752
+          }
+        ],
+        "tables-80": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068721577,
+            "finished": 1789068721585
+          }
+        ],
+        "tables-held-event-burst": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068722345,
+            "finished": 1789068722345
+          }
+        ]
+      }
+    },
+    {
+      "cpuRate": 1,
+      "language": "en",
+      "width": 390,
+      "cartPreserved": true,
+      "ordersDetailAcceptance": {
+        "loading": true,
+        "closeDuringRead": true,
+        "failedLoad": true,
+        "retry": true
+      },
+      "adminErrors": [],
+      "expectedFixtureErrors": [],
+      "requests": {
+        "notes-30": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789068734721,
+            "finished": 1789068734721
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068734721,
+            "finished": 1789068734721
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068734721,
+            "finished": 1789068734721
+          }
+        ],
+        "history-200": [
+          {
+            "path": "/api/pos/order_notes?limit=200",
+            "started": 1789068735422,
+            "finished": 1789068735423
+          }
+        ],
+        "notes-event-burst": [
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068736044,
+            "finished": 1789068736057
+          }
+        ],
+        "tables-80": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068736882,
+            "finished": 1789068736893
+          }
+        ],
+        "tables-held-event-burst": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068737658,
+            "finished": 1789068737667
+          }
+        ]
+      }
+    },
+    {
+      "cpuRate": 1,
+      "language": "ar",
+      "width": 390,
+      "cartPreserved": true,
+      "ordersDetailAcceptance": {
+        "loading": true,
+        "closeDuringRead": true,
+        "failedLoad": true,
+        "retry": true
+      },
+      "adminErrors": [],
+      "expectedFixtureErrors": [],
+      "requests": {
+        "notes-30": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789068749513,
+            "finished": 1789068749515
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068749513,
+            "finished": 1789068749515
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068749513,
+            "finished": 1789068749515
+          }
+        ],
+        "history-200": [
+          {
+            "path": "/api/pos/order_notes?limit=200",
+            "started": 1789068750242,
+            "finished": 1789068750243
+          }
+        ],
+        "notes-event-burst": [
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068750882,
+            "finished": 1789068750895
+          }
+        ],
+        "tables-80": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068751734,
+            "finished": 1789068751745
+          }
+        ],
+        "tables-held-event-burst": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068752491,
+            "finished": 1789068752504
+          }
+        ]
+      }
+    },
+    {
+      "cpuRate": 4,
+      "language": "en",
+      "width": 1440,
+      "cartPreserved": true,
+      "ordersDetailAcceptance": {
+        "loading": true,
+        "closeDuringRead": true,
+        "failedLoad": true,
+        "retry": true
+      },
+      "adminErrors": [],
+      "expectedFixtureErrors": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+        }
+      ],
+      "staleHeldResponse": {
+        "newerCount": 200,
+        "finalCount": 31
+      },
+      "notesReconnect": {
+        "expectedCount": 32,
+        "actualCount": 32,
+        "requests": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789068989614,
+            "finished": 1789068989615
+          },
+          {
+            "path": "/api/system/settings",
+            "started": 1789068989615,
+            "finished": 1789068989617
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068989615,
+            "finished": 1789068989617
+          },
+          {
+            "path": "/api/pos/products?limit=120&offset=0&sales_context=register&category_id=2",
+            "started": 1789068989623,
+            "finished": 1789068989630
+          },
+          {
+            "path": "/api/pos/category-prices/resolve",
+            "method": "POST",
+            "readOnly": true,
+            "started": 1789068989667,
+            "finished": 1789068989667
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068989677,
+            "finished": 1789068989692
+          },
+          {
+            "path": "/api/pos/held_orders/summary",
+            "started": 1789068989698,
+            "finished": 1789068989707
+          },
+          {
+            "path": "/api/pos/get_tables?user_id=1",
+            "started": 1789068989715,
+            "finished": 1789068989723
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068990204,
+            "finished": 1789068990219
+          }
+        ]
+      },
+      "requests": {
+        "notes-30": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789068972022,
+            "finished": 1789068972024
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068972022,
+            "finished": 1789068972025
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068972022,
+            "finished": 1789068972025
+          }
+        ],
+        "history-200": [
+          {
+            "path": "/api/pos/order_notes?limit=200",
+            "started": 1789068972774,
+            "finished": 1789068972775
+          }
+        ],
+        "notes-event-burst": [
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068973666,
+            "finished": 1789068973667
+          }
+        ],
+        "tables-80": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068974465,
+            "finished": 1789068974480
+          }
+        ],
+        "tables-held-event-burst": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789068975517,
+            "finished": 1789068975522
+          }
+        ],
+        "notes-150ms-per-get": [
+          {
+            "path": "/api/pos/category-prices/resolve",
+            "method": "POST",
+            "readOnly": true,
+            "started": 1789068990720,
+            "finished": 1789068990720
+          },
+          {
+            "path": "/api/system/settings",
+            "started": 1789068991087,
+            "finished": 1789068991242
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789068991088,
+            "finished": 1789068991243
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789068991088,
+            "finished": 1789068991243
+          }
+        ]
+      }
+    },
+    {
+      "cpuRate": 4,
+      "language": "ar",
+      "width": 1440,
+      "cartPreserved": true,
+      "ordersDetailAcceptance": {
+        "loading": true,
+        "closeDuringRead": true,
+        "failedLoad": true,
+        "retry": true
+      },
+      "adminErrors": [],
+      "expectedFixtureErrors": [],
+      "requests": {
+        "notes-30": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789069002128,
+            "finished": 1789069002129
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789069002129,
+            "finished": 1789069002130
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789069002129,
+            "finished": 1789069002130
+          }
+        ],
+        "history-200": [
+          {
+            "path": "/api/pos/order_notes?limit=200",
+            "started": 1789069002894,
+            "finished": 1789069002896
+          }
+        ],
+        "notes-event-burst": [
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789069003918,
+            "finished": 1789069003924
+          }
+        ],
+        "tables-80": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789069004661,
+            "finished": 1789069004668
+          }
+        ],
+        "tables-held-event-burst": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789069005558,
+            "finished": 1789069005567
+          }
+        ]
+      }
+    },
+    {
+      "cpuRate": 4,
+      "language": "en",
+      "width": 390,
+      "cartPreserved": true,
+      "ordersDetailAcceptance": {
+        "loading": true,
+        "closeDuringRead": true,
+        "failedLoad": true,
+        "retry": true
+      },
+      "adminErrors": [],
+      "expectedFixtureErrors": [],
+      "requests": {
+        "notes-30": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789069022134,
+            "finished": 1789069022135
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789069022136,
+            "finished": 1789069022138
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789069022136,
+            "finished": 1789069022138
+          }
+        ],
+        "history-200": [
+          {
+            "path": "/api/pos/order_notes?limit=200",
+            "started": 1789069022872,
+            "finished": 1789069022874
+          }
+        ],
+        "notes-event-burst": [
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789069023697,
+            "finished": 1789069023704
+          }
+        ],
+        "tables-80": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789069024431,
+            "finished": 1789069024448
+          }
+        ],
+        "tables-held-event-burst": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789069025374,
+            "finished": 1789069025377
+          }
+        ]
+      }
+    },
+    {
+      "cpuRate": 4,
+      "language": "ar",
+      "width": 390,
+      "cartPreserved": true,
+      "ordersDetailAcceptance": {
+        "loading": true,
+        "closeDuringRead": true,
+        "failedLoad": true,
+        "retry": true
+      },
+      "adminErrors": [],
+      "expectedFixtureErrors": [],
+      "requests": {
+        "notes-30": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789069039988,
+            "finished": 1789069039989
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789069039991,
+            "finished": 1789069039991
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789069039994,
+            "finished": 1789069039995
+          }
+        ],
+        "history-200": [
+          {
+            "path": "/api/pos/order_notes?limit=200",
+            "started": 1789069040711,
+            "finished": 1789069040716
+          }
+        ],
+        "notes-event-burst": [
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789069041440,
+            "finished": 1789069041452
+          }
+        ],
+        "tables-80": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789069042270,
+            "finished": 1789069042274
+          }
+        ],
+        "tables-held-event-burst": [
+          {
+            "path": "/api/pos/table_splits",
+            "started": 1789069043273,
+            "finished": 1789069043282
+          }
+        ]
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "cycles": [
+        {
+          "cycle": 1,
+          "usedSize": 14890892,
+          "totalSize": 15826944,
+          "embedderHeapUsedSize": 17632392,
+          "backingStorageSize": 1004384,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3774
+        },
+        {
+          "cycle": 2,
+          "usedSize": 15066784,
+          "totalSize": 16089088,
+          "embedderHeapUsedSize": 17788368,
+          "backingStorageSize": 1004751,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3776
+        },
+        {
+          "cycle": 3,
+          "usedSize": 14778184,
+          "totalSize": 16089088,
+          "embedderHeapUsedSize": 18294728,
+          "backingStorageSize": 1003638,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3776
+        },
+        {
+          "cycle": 4,
+          "usedSize": 14781648,
+          "totalSize": 16351232,
+          "embedderHeapUsedSize": 18284944,
+          "backingStorageSize": 1003593,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3776
+        },
+        {
+          "cycle": 5,
+          "usedSize": 14750404,
+          "totalSize": 15826944,
+          "embedderHeapUsedSize": 18299016,
+          "backingStorageSize": 1003901,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3776
+        },
+        {
+          "cycle": 6,
+          "usedSize": 14798500,
+          "totalSize": 15826944,
+          "embedderHeapUsedSize": 18637752,
+          "backingStorageSize": 1003506,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3774
+        },
+        {
+          "cycle": 7,
+          "usedSize": 14886772,
+          "totalSize": 16089088,
+          "embedderHeapUsedSize": 18531936,
+          "backingStorageSize": 1003519,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3776
+        },
+        {
+          "cycle": 8,
+          "usedSize": 14910756,
+          "totalSize": 15826944,
+          "embedderHeapUsedSize": 17869088,
+          "backingStorageSize": 1003506,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3774
+        },
+        {
+          "cycle": 9,
+          "usedSize": 14945592,
+          "totalSize": 16089088,
+          "embedderHeapUsedSize": 17748504,
+          "backingStorageSize": 1003509,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3779
+        },
+        {
+          "cycle": 10,
+          "usedSize": 14966600,
+          "totalSize": 16351232,
+          "embedderHeapUsedSize": 18274256,
+          "backingStorageSize": 1003529,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3776
+        },
+        {
+          "cycle": 11,
+          "usedSize": 14984164,
+          "totalSize": 16089088,
+          "embedderHeapUsedSize": 17786896,
+          "backingStorageSize": 1003509,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3776
+        },
+        {
+          "cycle": 12,
+          "usedSize": 14999960,
+          "totalSize": 16089088,
+          "embedderHeapUsedSize": 18323232,
+          "backingStorageSize": 1003519,
+          "documents": 1,
+          "nodes": 22112,
+          "jsEventListeners": 3776
+        }
+      ],
+      "before": {
+        "usedSize": 11491696,
+        "totalSize": 12419072,
+        "embedderHeapUsedSize": 15782336,
+        "backingStorageSize": 1003134,
+        "documents": 1,
+        "nodes": 12813,
+        "jsEventListeners": 2763
+      },
+      "after": {
+        "usedSize": 14998048,
+        "totalSize": 15826944,
+        "embedderHeapUsedSize": 18544968,
+        "backingStorageSize": 1003506,
+        "documents": 1,
+        "nodes": 22112,
+        "jsEventListeners": 3774
+      },
+      "staleHeldResponse": {
+        "newerCount": 200,
+        "finalCount": 31
+      },
+      "reconnect": {
+        "expectedCount": 32,
+        "actualCount": 32,
+        "requests": [
+          {
+            "path": "/api/system/settings",
+            "started": 1789069076240,
+            "finished": 1789069076240
+          },
+          {
+            "path": "/api/pos/order_types",
+            "started": 1789069076240,
+            "finished": 1789069076240
+          },
+          {
+            "path": "/api/pos/held_orders",
+            "started": 1789069076501,
+            "finished": 1789069076513
+          }
+        ]
+      },
+      "heldHttpFailure": {
+        "alert": 1,
+        "cards": 0,
+        "text": "Order Notes\n\nSuspended\n\nSearch invoice, queue...\nSuspended\nHistory\nUnable to load orders.\nRetry\nAll sources\nPhone orders\nOther orders"
+      },
+      "disposedBoard": {
+        "currentPath": "/pos",
+        "requests": [
+          {
+            "path": "/api/pos/held_orders/summary",
+            "started": 1789069082006,
+            "finished": 1789069082019
+          }
+        ]
+      },
+      "ordersBodyTimeoutRecovered": true,
+      "heldBodyTimeoutRecovered": true,
+      "splitsBodyTimeoutRecovered": true,
+      "adminErrors": []
+    }
+  ],
+  "verification": {
+    "frontend": {
+      "files": 113,
+      "tests": 698
+    },
+    "isolatedSelling": {
+      "files": 7,
+      "tests": 224
+    },
+    "productionBuild": "passed",
+    "checkoutBrowser": "passed",
+    "categoryRecoveryBrowser": "four cases passed"
+  },
+  "limits": [
+    "Synthetic loopback fixtures; no customer environment or physical printer.",
+    "CPU throttle does not emulate physical core count or 4 GB RAM.",
+    "CDP accumulated task work is not INP or end-user click latency.",
+    "Three-sample actions remain sensitive to warmup and system noise.",
+    "Performance variants ran without competing test/benchmark workloads."
+  ]
+}

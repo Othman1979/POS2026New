@@ -1,0 +1,2893 @@
+{
+  "database": "posapp_review_recipe_p1_e90754b7336c",
+  "scenarios": [
+    {
+      "label": "disabled / checkout 1 line",
+      "samples": 8,
+      "medianMs": 6.173,
+      "p95Ms": 9.722,
+      "commands": [
+        16
+      ],
+      "leased": 2,
+      "released": 2,
+      "sql": [
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, created_at, user_id, shift_id FROM orders WHERE idempotency_key = ? LIMIT 1",
+          "rows": 0,
+          "ms": 0.238
+        },
+        {
+          "kind": "transaction",
+          "sql": "beginTransaction",
+          "rows": null,
+          "ms": 0.35
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT status, user_id FROM shifts WHERE id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.244
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_key, setting_value FROM settings WHERE setting_key IN (?,?,?,?,?,?,?,?,?,?,?,?)",
+          "rows": 12,
+          "ms": 0.422
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT p.id, p.name, p.price, p.tax_rate, p.jofotara_tax_category, p.stock, p.category_id, p.modifiers, p.is_active AS product_is_active, c.is_active AS category_is_active, c.is_notes AS category_is_notes, p.is_available, CASE WHEN p.is_available = 1 AND (p.is_bundle = 0 OR NOT EXISTS ( SELECT 1 FROM product_bundle_items pbi JOIN products child ON child.id = pbi.product_id WHERE pbi.bundle_id = p.id AND (child.is_active <> 1 OR child.is_available <> 1) )) THEN 1 ELSE 0 END AS can_sell, p.is_bundle, price_list_root.id AS price_list_root_id, price_list_root.name AS price_list_root_name, CASE WHEN price_list_root.id IS NULL THEN p.price ELSE COALESCE(price_override.price, p.price) END AS effective_price, subscription_plan.id AS subscription_plan_id FROM products p LEFT JOIN categories c ON c.id = p.category_id LEFT JOIN categories price_list_root ON price_list_root.id = c.price_list_root_id AND c.is_notes = 0 AND price_list_root.price_list_root_id = price_list_root.id AND price_list_root.parent_id IS NULL AND price_list_root.is_notes = 0 AND price_list_root.is_active = 1 LEFT JOIN product_price_overrides price_override ON price_override.price_list_root_id = price_list_root.id AND price_override.product_id = p.id LEFT JOIN subscription_plans subscription_plan ON subscription_plan.sale_product_id = p.id WHERE p.id IN (?)",
+          "rows": 1,
+          "ms": 0.497
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE shifts SET last_order_seq = LAST_INSERT_ID(last_order_seq + 1) WHERE id = ?",
+          "rows": null,
+          "ms": 0.385
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO orders (user_id, call_center_user_id, shift_id, order_id, order_seq_scope, order_type_id, customer_id, table_id, waiter_id, delivery_date, subtotal, tax, tax_inclusive_at_sale, receipt_tax_inclusive_at_sale, tax_registration_type_at_sale, tax_exempt_at_sale, total, payment_method, payment_due_on, receivable_reason, buyer_name_at_sale, buyer_phone_at_sale, buyer_address_at_sale, amount_tendered, change_due, cash_amount, card_amount, note, discount_type, discount_value, created_at, hash_number, idempotency_key, parent_invoice_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "rows": null,
+          "ms": 0.326
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO order_items (invoice_id, product_id, item_name, quantity, price_at_sale, price_before_tax_exemption, tax_rate, jofotara_tax_category, tax_amount, note, selected_modifiers, modifier_surcharge, modifier_tax_amount, discount_type, discount_value, sort_order, recipe_line_key, parent_item_id) VALUES ?",
+          "rows": null,
+          "ms": 0.385
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_value FROM settings WHERE setting_key='recipe_ledger_enabled' LIMIT 1",
+          "rows": 1,
+          "ms": 0.263
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, payment_method FROM orders WHERE invoice_id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.237
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO invoice_sequences (sequence_name, current_value) VALUES ('global_invoice', LAST_INSERT_ID(1)) ON DUPLICATE KEY UPDATE current_value = LAST_INSERT_ID(current_value + 1)",
+          "rows": null,
+          "ms": 0.246
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE orders SET invoice_number = ?, invoice_issued_at = COALESCE(invoice_issued_at, ?) WHERE invoice_id = ?",
+          "rows": null,
+          "ms": 1.562
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM orders WHERE invoice_id = ?",
+          "rows": 1,
+          "ms": 0.275
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM order_items WHERE invoice_id = ?",
+          "rows": 1,
+          "ms": 0.234
+        },
+        {
+          "kind": "transaction",
+          "sql": "commit",
+          "rows": null,
+          "ms": 0.669
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT o.invoice_id, o.payment_method, o.invoice_number, o.invoice_issued_at, EXISTS (SELECT 1 FROM customer_subscriptions cs WHERE cs.purchase_invoice_id=o.invoice_id) AS subscription_purchase, enabled.setting_value AS jofotara_enabled, auto_submit.setting_value AS jofotara_auto_submit, auto_submit_since.setting_value AS jofotara_auto_submit_since, d.id AS document_id, d.document_kind, d.tax_registration_type, d.document_number, d.document_uuid, d.status AS document_status, d.qr_text, d.last_error FROM orders o LEFT JOIN settings enabled ON enabled.setting_key='jofotara_enabled' LEFT JOIN settings auto_submit ON auto_submit.setting_key='jofotara_auto_submit' LEFT JOIN settings auto_submit_since ON auto_submit_since.setting_key='jofotara_auto_submit_since' LEFT JOIN jofotara_documents d ON d.source_key=CONCAT('invoice:', o.invoice_id) WHERE o.invoice_id=? LIMIT 1",
+          "rows": 1,
+          "ms": 0.283
+        }
+      ],
+      "returnedRows": 19
+    },
+    {
+      "label": "disabled / checkout 10 lines",
+      "samples": 8,
+      "medianMs": 7.552,
+      "p95Ms": 12.502,
+      "commands": [
+        16
+      ],
+      "leased": 2,
+      "released": 2,
+      "sql": [
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, created_at, user_id, shift_id FROM orders WHERE idempotency_key = ? LIMIT 1",
+          "rows": 0,
+          "ms": 0.246
+        },
+        {
+          "kind": "transaction",
+          "sql": "beginTransaction",
+          "rows": null,
+          "ms": 0.124
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT status, user_id FROM shifts WHERE id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.187
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_key, setting_value FROM settings WHERE setting_key IN (?,?,?,?,?,?,?,?,?,?,?,?)",
+          "rows": 12,
+          "ms": 0.215
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT p.id, p.name, p.price, p.tax_rate, p.jofotara_tax_category, p.stock, p.category_id, p.modifiers, p.is_active AS product_is_active, c.is_active AS category_is_active, c.is_notes AS category_is_notes, p.is_available, CASE WHEN p.is_available = 1 AND (p.is_bundle = 0 OR NOT EXISTS ( SELECT 1 FROM product_bundle_items pbi JOIN products child ON child.id = pbi.product_id WHERE pbi.bundle_id = p.id AND (child.is_active <> 1 OR child.is_available <> 1) )) THEN 1 ELSE 0 END AS can_sell, p.is_bundle, price_list_root.id AS price_list_root_id, price_list_root.name AS price_list_root_name, CASE WHEN price_list_root.id IS NULL THEN p.price ELSE COALESCE(price_override.price, p.price) END AS effective_price, subscription_plan.id AS subscription_plan_id FROM products p LEFT JOIN categories c ON c.id = p.category_id LEFT JOIN categories price_list_root ON price_list_root.id = c.price_list_root_id AND c.is_notes = 0 AND price_list_root.price_list_root_id = price_list_root.id AND price_list_root.parent_id IS NULL AND price_list_root.is_notes = 0 AND price_list_root.is_active = 1 LEFT JOIN product_price_overrides price_override ON price_override.price_list_root_id = price_list_root.id AND price_override.product_id = p.id LEFT JOIN subscription_plans subscription_plan ON subscription_plan.sale_product_id = p.id WHERE p.id IN (?)",
+          "rows": 1,
+          "ms": 0.372
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE shifts SET last_order_seq = LAST_INSERT_ID(last_order_seq + 1) WHERE id = ?",
+          "rows": null,
+          "ms": 0.388
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO orders (user_id, call_center_user_id, shift_id, order_id, order_seq_scope, order_type_id, customer_id, table_id, waiter_id, delivery_date, subtotal, tax, tax_inclusive_at_sale, receipt_tax_inclusive_at_sale, tax_registration_type_at_sale, tax_exempt_at_sale, total, payment_method, payment_due_on, receivable_reason, buyer_name_at_sale, buyer_phone_at_sale, buyer_address_at_sale, amount_tendered, change_due, cash_amount, card_amount, note, discount_type, discount_value, created_at, hash_number, idempotency_key, parent_invoice_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "rows": null,
+          "ms": 0.389
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO order_items (invoice_id, product_id, item_name, quantity, price_at_sale, price_before_tax_exemption, tax_rate, jofotara_tax_category, tax_amount, note, selected_modifiers, modifier_surcharge, modifier_tax_amount, discount_type, discount_value, sort_order, recipe_line_key, parent_item_id) VALUES ?",
+          "rows": null,
+          "ms": 0.408
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_value FROM settings WHERE setting_key='recipe_ledger_enabled' LIMIT 1",
+          "rows": 1,
+          "ms": 0.236
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, payment_method FROM orders WHERE invoice_id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.204
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO invoice_sequences (sequence_name, current_value) VALUES ('global_invoice', LAST_INSERT_ID(1)) ON DUPLICATE KEY UPDATE current_value = LAST_INSERT_ID(current_value + 1)",
+          "rows": null,
+          "ms": 0.188
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE orders SET invoice_number = ?, invoice_issued_at = COALESCE(invoice_issued_at, ?) WHERE invoice_id = ?",
+          "rows": null,
+          "ms": 0.214
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM orders WHERE invoice_id = ?",
+          "rows": 1,
+          "ms": 0.277
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM order_items WHERE invoice_id = ?",
+          "rows": 10,
+          "ms": 0.297
+        },
+        {
+          "kind": "transaction",
+          "sql": "commit",
+          "rows": null,
+          "ms": 1.804
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT o.invoice_id, o.payment_method, o.invoice_number, o.invoice_issued_at, EXISTS (SELECT 1 FROM customer_subscriptions cs WHERE cs.purchase_invoice_id=o.invoice_id) AS subscription_purchase, enabled.setting_value AS jofotara_enabled, auto_submit.setting_value AS jofotara_auto_submit, auto_submit_since.setting_value AS jofotara_auto_submit_since, d.id AS document_id, d.document_kind, d.tax_registration_type, d.document_number, d.document_uuid, d.status AS document_status, d.qr_text, d.last_error FROM orders o LEFT JOIN settings enabled ON enabled.setting_key='jofotara_enabled' LEFT JOIN settings auto_submit ON auto_submit.setting_key='jofotara_auto_submit' LEFT JOIN settings auto_submit_since ON auto_submit_since.setting_key='jofotara_auto_submit_since' LEFT JOIN jofotara_documents d ON d.source_key=CONCAT('invoice:', o.invoice_id) WHERE o.invoice_id=? LIMIT 1",
+          "rows": 1,
+          "ms": 0.335
+        }
+      ],
+      "returnedRows": 28
+    },
+    {
+      "label": "enabled, no recipe / checkout 1 line",
+      "samples": 8,
+      "medianMs": 5.582,
+      "p95Ms": 6.929,
+      "commands": [
+        19
+      ],
+      "leased": 2,
+      "released": 2,
+      "sql": [
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, created_at, user_id, shift_id FROM orders WHERE idempotency_key = ? LIMIT 1",
+          "rows": 0,
+          "ms": 0.192
+        },
+        {
+          "kind": "transaction",
+          "sql": "beginTransaction",
+          "rows": null,
+          "ms": 0.092
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT status, user_id FROM shifts WHERE id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.119
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_key, setting_value FROM settings WHERE setting_key IN (?,?,?,?,?,?,?,?,?,?,?,?)",
+          "rows": 12,
+          "ms": 0.207
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT p.id, p.name, p.price, p.tax_rate, p.jofotara_tax_category, p.stock, p.category_id, p.modifiers, p.is_active AS product_is_active, c.is_active AS category_is_active, c.is_notes AS category_is_notes, p.is_available, CASE WHEN p.is_available = 1 AND (p.is_bundle = 0 OR NOT EXISTS ( SELECT 1 FROM product_bundle_items pbi JOIN products child ON child.id = pbi.product_id WHERE pbi.bundle_id = p.id AND (child.is_active <> 1 OR child.is_available <> 1) )) THEN 1 ELSE 0 END AS can_sell, p.is_bundle, price_list_root.id AS price_list_root_id, price_list_root.name AS price_list_root_name, CASE WHEN price_list_root.id IS NULL THEN p.price ELSE COALESCE(price_override.price, p.price) END AS effective_price, subscription_plan.id AS subscription_plan_id FROM products p LEFT JOIN categories c ON c.id = p.category_id LEFT JOIN categories price_list_root ON price_list_root.id = c.price_list_root_id AND c.is_notes = 0 AND price_list_root.price_list_root_id = price_list_root.id AND price_list_root.parent_id IS NULL AND price_list_root.is_notes = 0 AND price_list_root.is_active = 1 LEFT JOIN product_price_overrides price_override ON price_override.price_list_root_id = price_list_root.id AND price_override.product_id = p.id LEFT JOIN subscription_plans subscription_plan ON subscription_plan.sale_product_id = p.id WHERE p.id IN (?)",
+          "rows": 1,
+          "ms": 0.32
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE shifts SET last_order_seq = LAST_INSERT_ID(last_order_seq + 1) WHERE id = ?",
+          "rows": null,
+          "ms": 0.479
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO orders (user_id, call_center_user_id, shift_id, order_id, order_seq_scope, order_type_id, customer_id, table_id, waiter_id, delivery_date, subtotal, tax, tax_inclusive_at_sale, receipt_tax_inclusive_at_sale, tax_registration_type_at_sale, tax_exempt_at_sale, total, payment_method, payment_due_on, receivable_reason, buyer_name_at_sale, buyer_phone_at_sale, buyer_address_at_sale, amount_tendered, change_due, cash_amount, card_amount, note, discount_type, discount_value, created_at, hash_number, idempotency_key, parent_invoice_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "rows": null,
+          "ms": 0.292
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO order_items (invoice_id, product_id, item_name, quantity, price_at_sale, price_before_tax_exemption, tax_rate, jofotara_tax_category, tax_amount, note, selected_modifiers, modifier_surcharge, modifier_tax_amount, discount_type, discount_value, sort_order, recipe_line_key, parent_item_id) VALUES ?",
+          "rows": null,
+          "ms": 0.236
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_value FROM settings WHERE setting_key='recipe_ledger_enabled' LIMIT 1",
+          "rows": 1,
+          "ms": 0.211
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT bundle_id, product_id, qty FROM product_bundle_items WHERE bundle_id IN (?)",
+          "rows": 0,
+          "ms": 0.165
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT product_id, ingredient_id, qty_per_unit FROM product_recipe_lines WHERE product_id IN (?) ORDER BY product_id, sort_order, id",
+          "rows": 0,
+          "ms": 0.151
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT DISTINCT line_key, ingredient_id FROM ingredient_movements WHERE line_key IN (?)",
+          "rows": 0,
+          "ms": 0.154
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, payment_method FROM orders WHERE invoice_id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.18
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO invoice_sequences (sequence_name, current_value) VALUES ('global_invoice', LAST_INSERT_ID(1)) ON DUPLICATE KEY UPDATE current_value = LAST_INSERT_ID(current_value + 1)",
+          "rows": null,
+          "ms": 0.123
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE orders SET invoice_number = ?, invoice_issued_at = COALESCE(invoice_issued_at, ?) WHERE invoice_id = ?",
+          "rows": null,
+          "ms": 0.178
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM orders WHERE invoice_id = ?",
+          "rows": 1,
+          "ms": 0.315
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM order_items WHERE invoice_id = ?",
+          "rows": 1,
+          "ms": 0.255
+        },
+        {
+          "kind": "transaction",
+          "sql": "commit",
+          "rows": null,
+          "ms": 0.924
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT o.invoice_id, o.payment_method, o.invoice_number, o.invoice_issued_at, EXISTS (SELECT 1 FROM customer_subscriptions cs WHERE cs.purchase_invoice_id=o.invoice_id) AS subscription_purchase, enabled.setting_value AS jofotara_enabled, auto_submit.setting_value AS jofotara_auto_submit, auto_submit_since.setting_value AS jofotara_auto_submit_since, d.id AS document_id, d.document_kind, d.tax_registration_type, d.document_number, d.document_uuid, d.status AS document_status, d.qr_text, d.last_error FROM orders o LEFT JOIN settings enabled ON enabled.setting_key='jofotara_enabled' LEFT JOIN settings auto_submit ON auto_submit.setting_key='jofotara_auto_submit' LEFT JOIN settings auto_submit_since ON auto_submit_since.setting_key='jofotara_auto_submit_since' LEFT JOIN jofotara_documents d ON d.source_key=CONCAT('invoice:', o.invoice_id) WHERE o.invoice_id=? LIMIT 1",
+          "rows": 1,
+          "ms": 0.269
+        }
+      ],
+      "returnedRows": 19
+    },
+    {
+      "label": "enabled, no recipe / checkout 10 lines",
+      "samples": 8,
+      "medianMs": 5.504,
+      "p95Ms": 7.722,
+      "commands": [
+        19
+      ],
+      "leased": 2,
+      "released": 2,
+      "sql": [
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, created_at, user_id, shift_id FROM orders WHERE idempotency_key = ? LIMIT 1",
+          "rows": 0,
+          "ms": 0.195
+        },
+        {
+          "kind": "transaction",
+          "sql": "beginTransaction",
+          "rows": null,
+          "ms": 0.091
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT status, user_id FROM shifts WHERE id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.142
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_key, setting_value FROM settings WHERE setting_key IN (?,?,?,?,?,?,?,?,?,?,?,?)",
+          "rows": 12,
+          "ms": 0.151
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT p.id, p.name, p.price, p.tax_rate, p.jofotara_tax_category, p.stock, p.category_id, p.modifiers, p.is_active AS product_is_active, c.is_active AS category_is_active, c.is_notes AS category_is_notes, p.is_available, CASE WHEN p.is_available = 1 AND (p.is_bundle = 0 OR NOT EXISTS ( SELECT 1 FROM product_bundle_items pbi JOIN products child ON child.id = pbi.product_id WHERE pbi.bundle_id = p.id AND (child.is_active <> 1 OR child.is_available <> 1) )) THEN 1 ELSE 0 END AS can_sell, p.is_bundle, price_list_root.id AS price_list_root_id, price_list_root.name AS price_list_root_name, CASE WHEN price_list_root.id IS NULL THEN p.price ELSE COALESCE(price_override.price, p.price) END AS effective_price, subscription_plan.id AS subscription_plan_id FROM products p LEFT JOIN categories c ON c.id = p.category_id LEFT JOIN categories price_list_root ON price_list_root.id = c.price_list_root_id AND c.is_notes = 0 AND price_list_root.price_list_root_id = price_list_root.id AND price_list_root.parent_id IS NULL AND price_list_root.is_notes = 0 AND price_list_root.is_active = 1 LEFT JOIN product_price_overrides price_override ON price_override.price_list_root_id = price_list_root.id AND price_override.product_id = p.id LEFT JOIN subscription_plans subscription_plan ON subscription_plan.sale_product_id = p.id WHERE p.id IN (?)",
+          "rows": 1,
+          "ms": 0.305
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE shifts SET last_order_seq = LAST_INSERT_ID(last_order_seq + 1) WHERE id = ?",
+          "rows": null,
+          "ms": 0.369
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO orders (user_id, call_center_user_id, shift_id, order_id, order_seq_scope, order_type_id, customer_id, table_id, waiter_id, delivery_date, subtotal, tax, tax_inclusive_at_sale, receipt_tax_inclusive_at_sale, tax_registration_type_at_sale, tax_exempt_at_sale, total, payment_method, payment_due_on, receivable_reason, buyer_name_at_sale, buyer_phone_at_sale, buyer_address_at_sale, amount_tendered, change_due, cash_amount, card_amount, note, discount_type, discount_value, created_at, hash_number, idempotency_key, parent_invoice_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "rows": null,
+          "ms": 0.323
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO order_items (invoice_id, product_id, item_name, quantity, price_at_sale, price_before_tax_exemption, tax_rate, jofotara_tax_category, tax_amount, note, selected_modifiers, modifier_surcharge, modifier_tax_amount, discount_type, discount_value, sort_order, recipe_line_key, parent_item_id) VALUES ?",
+          "rows": null,
+          "ms": 0.347
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_value FROM settings WHERE setting_key='recipe_ledger_enabled' LIMIT 1",
+          "rows": 1,
+          "ms": 0.216
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT bundle_id, product_id, qty FROM product_bundle_items WHERE bundle_id IN (?)",
+          "rows": 0,
+          "ms": 0.208
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT product_id, ingredient_id, qty_per_unit FROM product_recipe_lines WHERE product_id IN (?) ORDER BY product_id, sort_order, id",
+          "rows": 0,
+          "ms": 0.231
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT DISTINCT line_key, ingredient_id FROM ingredient_movements WHERE line_key IN (?,?,?,?,?,?,?,?,?,?)",
+          "rows": 0,
+          "ms": 0.185
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, payment_method FROM orders WHERE invoice_id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.461
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO invoice_sequences (sequence_name, current_value) VALUES ('global_invoice', LAST_INSERT_ID(1)) ON DUPLICATE KEY UPDATE current_value = LAST_INSERT_ID(current_value + 1)",
+          "rows": null,
+          "ms": 0.231
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE orders SET invoice_number = ?, invoice_issued_at = COALESCE(invoice_issued_at, ?) WHERE invoice_id = ?",
+          "rows": null,
+          "ms": 0.42
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM orders WHERE invoice_id = ?",
+          "rows": 1,
+          "ms": 0.369
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM order_items WHERE invoice_id = ?",
+          "rows": 10,
+          "ms": 0.311
+        },
+        {
+          "kind": "transaction",
+          "sql": "commit",
+          "rows": null,
+          "ms": 0.72
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT o.invoice_id, o.payment_method, o.invoice_number, o.invoice_issued_at, EXISTS (SELECT 1 FROM customer_subscriptions cs WHERE cs.purchase_invoice_id=o.invoice_id) AS subscription_purchase, enabled.setting_value AS jofotara_enabled, auto_submit.setting_value AS jofotara_auto_submit, auto_submit_since.setting_value AS jofotara_auto_submit_since, d.id AS document_id, d.document_kind, d.tax_registration_type, d.document_number, d.document_uuid, d.status AS document_status, d.qr_text, d.last_error FROM orders o LEFT JOIN settings enabled ON enabled.setting_key='jofotara_enabled' LEFT JOIN settings auto_submit ON auto_submit.setting_key='jofotara_auto_submit' LEFT JOIN settings auto_submit_since ON auto_submit_since.setting_key='jofotara_auto_submit_since' LEFT JOIN jofotara_documents d ON d.source_key=CONCAT('invoice:', o.invoice_id) WHERE o.invoice_id=? LIMIT 1",
+          "rows": 1,
+          "ms": 0.422
+        }
+      ],
+      "returnedRows": 28
+    },
+    {
+      "label": "enabled, recipe / checkout 1 line",
+      "samples": 8,
+      "medianMs": 5.861,
+      "p95Ms": 7.787,
+      "commands": [
+        23
+      ],
+      "leased": 2,
+      "released": 2,
+      "sql": [
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, created_at, user_id, shift_id FROM orders WHERE idempotency_key = ? LIMIT 1",
+          "rows": 0,
+          "ms": 0.209
+        },
+        {
+          "kind": "transaction",
+          "sql": "beginTransaction",
+          "rows": null,
+          "ms": 0.115
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT status, user_id FROM shifts WHERE id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.179
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_key, setting_value FROM settings WHERE setting_key IN (?,?,?,?,?,?,?,?,?,?,?,?)",
+          "rows": 12,
+          "ms": 0.196
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT p.id, p.name, p.price, p.tax_rate, p.jofotara_tax_category, p.stock, p.category_id, p.modifiers, p.is_active AS product_is_active, c.is_active AS category_is_active, c.is_notes AS category_is_notes, p.is_available, CASE WHEN p.is_available = 1 AND (p.is_bundle = 0 OR NOT EXISTS ( SELECT 1 FROM product_bundle_items pbi JOIN products child ON child.id = pbi.product_id WHERE pbi.bundle_id = p.id AND (child.is_active <> 1 OR child.is_available <> 1) )) THEN 1 ELSE 0 END AS can_sell, p.is_bundle, price_list_root.id AS price_list_root_id, price_list_root.name AS price_list_root_name, CASE WHEN price_list_root.id IS NULL THEN p.price ELSE COALESCE(price_override.price, p.price) END AS effective_price, subscription_plan.id AS subscription_plan_id FROM products p LEFT JOIN categories c ON c.id = p.category_id LEFT JOIN categories price_list_root ON price_list_root.id = c.price_list_root_id AND c.is_notes = 0 AND price_list_root.price_list_root_id = price_list_root.id AND price_list_root.parent_id IS NULL AND price_list_root.is_notes = 0 AND price_list_root.is_active = 1 LEFT JOIN product_price_overrides price_override ON price_override.price_list_root_id = price_list_root.id AND price_override.product_id = p.id LEFT JOIN subscription_plans subscription_plan ON subscription_plan.sale_product_id = p.id WHERE p.id IN (?)",
+          "rows": 1,
+          "ms": 0.295
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE shifts SET last_order_seq = LAST_INSERT_ID(last_order_seq + 1) WHERE id = ?",
+          "rows": null,
+          "ms": 0.32
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO orders (user_id, call_center_user_id, shift_id, order_id, order_seq_scope, order_type_id, customer_id, table_id, waiter_id, delivery_date, subtotal, tax, tax_inclusive_at_sale, receipt_tax_inclusive_at_sale, tax_registration_type_at_sale, tax_exempt_at_sale, total, payment_method, payment_due_on, receivable_reason, buyer_name_at_sale, buyer_phone_at_sale, buyer_address_at_sale, amount_tendered, change_due, cash_amount, card_amount, note, discount_type, discount_value, created_at, hash_number, idempotency_key, parent_invoice_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "rows": null,
+          "ms": 0.218
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO order_items (invoice_id, product_id, item_name, quantity, price_at_sale, price_before_tax_exemption, tax_rate, jofotara_tax_category, tax_amount, note, selected_modifiers, modifier_surcharge, modifier_tax_amount, discount_type, discount_value, sort_order, recipe_line_key, parent_item_id) VALUES ?",
+          "rows": null,
+          "ms": 0.146
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_value FROM settings WHERE setting_key='recipe_ledger_enabled' LIMIT 1",
+          "rows": 1,
+          "ms": 0.137
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT bundle_id, product_id, qty FROM product_bundle_items WHERE bundle_id IN (?)",
+          "rows": 0,
+          "ms": 0.091
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT product_id, ingredient_id, qty_per_unit FROM product_recipe_lines WHERE product_id IN (?) ORDER BY product_id, sort_order, id",
+          "rows": 1,
+          "ms": 0.099
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT DISTINCT line_key, ingredient_id FROM ingredient_movements WHERE line_key IN (?)",
+          "rows": 0,
+          "ms": 0.105
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id FROM ingredients WHERE id IN (?) ORDER BY id FOR UPDATE",
+          "rows": 1,
+          "ms": 0.073
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id, unit_cost FROM ingredients WHERE id IN (?) ORDER BY id FOR UPDATE",
+          "rows": 1,
+          "ms": 0.085
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO ingredient_movements ( ingredient_id, kind, qty, unit_cost, reason, expected_qty, period_usage_qty, line_key, unit_qty, product_qty, source_type, source_id, source_label, product_id, product_name, user_id, user_name, business_date, note, client_key, corrects_movement_id ) VALUES ?",
+          "rows": null,
+          "ms": 0.145
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM ingredient_movements WHERE id >= ? AND id < ? ORDER BY id",
+          "rows": 1,
+          "ms": 0.224
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, payment_method FROM orders WHERE invoice_id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.173
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO invoice_sequences (sequence_name, current_value) VALUES ('global_invoice', LAST_INSERT_ID(1)) ON DUPLICATE KEY UPDATE current_value = LAST_INSERT_ID(current_value + 1)",
+          "rows": null,
+          "ms": 0.09
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE orders SET invoice_number = ?, invoice_issued_at = COALESCE(invoice_issued_at, ?) WHERE invoice_id = ?",
+          "rows": null,
+          "ms": 0.114
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM orders WHERE invoice_id = ?",
+          "rows": 1,
+          "ms": 1.585
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM order_items WHERE invoice_id = ?",
+          "rows": 1,
+          "ms": 0.26
+        },
+        {
+          "kind": "transaction",
+          "sql": "commit",
+          "rows": null,
+          "ms": 0.619
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT o.invoice_id, o.payment_method, o.invoice_number, o.invoice_issued_at, EXISTS (SELECT 1 FROM customer_subscriptions cs WHERE cs.purchase_invoice_id=o.invoice_id) AS subscription_purchase, enabled.setting_value AS jofotara_enabled, auto_submit.setting_value AS jofotara_auto_submit, auto_submit_since.setting_value AS jofotara_auto_submit_since, d.id AS document_id, d.document_kind, d.tax_registration_type, d.document_number, d.document_uuid, d.status AS document_status, d.qr_text, d.last_error FROM orders o LEFT JOIN settings enabled ON enabled.setting_key='jofotara_enabled' LEFT JOIN settings auto_submit ON auto_submit.setting_key='jofotara_auto_submit' LEFT JOIN settings auto_submit_since ON auto_submit_since.setting_key='jofotara_auto_submit_since' LEFT JOIN jofotara_documents d ON d.source_key=CONCAT('invoice:', o.invoice_id) WHERE o.invoice_id=? LIMIT 1",
+          "rows": 1,
+          "ms": 0.257
+        }
+      ],
+      "returnedRows": 23
+    },
+    {
+      "label": "enabled, recipe / checkout 10 lines",
+      "samples": 8,
+      "medianMs": 6.029,
+      "p95Ms": 7.157,
+      "commands": [
+        23
+      ],
+      "leased": 2,
+      "released": 2,
+      "sql": [
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, created_at, user_id, shift_id FROM orders WHERE idempotency_key = ? LIMIT 1",
+          "rows": 0,
+          "ms": 0.205
+        },
+        {
+          "kind": "transaction",
+          "sql": "beginTransaction",
+          "rows": null,
+          "ms": 0.096
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT status, user_id FROM shifts WHERE id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.119
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_key, setting_value FROM settings WHERE setting_key IN (?,?,?,?,?,?,?,?,?,?,?,?)",
+          "rows": 12,
+          "ms": 0.141
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT p.id, p.name, p.price, p.tax_rate, p.jofotara_tax_category, p.stock, p.category_id, p.modifiers, p.is_active AS product_is_active, c.is_active AS category_is_active, c.is_notes AS category_is_notes, p.is_available, CASE WHEN p.is_available = 1 AND (p.is_bundle = 0 OR NOT EXISTS ( SELECT 1 FROM product_bundle_items pbi JOIN products child ON child.id = pbi.product_id WHERE pbi.bundle_id = p.id AND (child.is_active <> 1 OR child.is_available <> 1) )) THEN 1 ELSE 0 END AS can_sell, p.is_bundle, price_list_root.id AS price_list_root_id, price_list_root.name AS price_list_root_name, CASE WHEN price_list_root.id IS NULL THEN p.price ELSE COALESCE(price_override.price, p.price) END AS effective_price, subscription_plan.id AS subscription_plan_id FROM products p LEFT JOIN categories c ON c.id = p.category_id LEFT JOIN categories price_list_root ON price_list_root.id = c.price_list_root_id AND c.is_notes = 0 AND price_list_root.price_list_root_id = price_list_root.id AND price_list_root.parent_id IS NULL AND price_list_root.is_notes = 0 AND price_list_root.is_active = 1 LEFT JOIN product_price_overrides price_override ON price_override.price_list_root_id = price_list_root.id AND price_override.product_id = p.id LEFT JOIN subscription_plans subscription_plan ON subscription_plan.sale_product_id = p.id WHERE p.id IN (?)",
+          "rows": 1,
+          "ms": 0.267
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE shifts SET last_order_seq = LAST_INSERT_ID(last_order_seq + 1) WHERE id = ?",
+          "rows": null,
+          "ms": 0.321
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO orders (user_id, call_center_user_id, shift_id, order_id, order_seq_scope, order_type_id, customer_id, table_id, waiter_id, delivery_date, subtotal, tax, tax_inclusive_at_sale, receipt_tax_inclusive_at_sale, tax_registration_type_at_sale, tax_exempt_at_sale, total, payment_method, payment_due_on, receivable_reason, buyer_name_at_sale, buyer_phone_at_sale, buyer_address_at_sale, amount_tendered, change_due, cash_amount, card_amount, note, discount_type, discount_value, created_at, hash_number, idempotency_key, parent_invoice_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "rows": null,
+          "ms": 0.212
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO order_items (invoice_id, product_id, item_name, quantity, price_at_sale, price_before_tax_exemption, tax_rate, jofotara_tax_category, tax_amount, note, selected_modifiers, modifier_surcharge, modifier_tax_amount, discount_type, discount_value, sort_order, recipe_line_key, parent_item_id) VALUES ?",
+          "rows": null,
+          "ms": 0.251
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_value FROM settings WHERE setting_key='recipe_ledger_enabled' LIMIT 1",
+          "rows": 1,
+          "ms": 0.142
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT bundle_id, product_id, qty FROM product_bundle_items WHERE bundle_id IN (?)",
+          "rows": 0,
+          "ms": 0.093
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT product_id, ingredient_id, qty_per_unit FROM product_recipe_lines WHERE product_id IN (?) ORDER BY product_id, sort_order, id",
+          "rows": 1,
+          "ms": 0.114
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT DISTINCT line_key, ingredient_id FROM ingredient_movements WHERE line_key IN (?,?,?,?,?,?,?,?,?,?)",
+          "rows": 0,
+          "ms": 0.129
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id FROM ingredients WHERE id IN (?) ORDER BY id FOR UPDATE",
+          "rows": 1,
+          "ms": 0.09
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id, unit_cost FROM ingredients WHERE id IN (?) ORDER BY id FOR UPDATE",
+          "rows": 1,
+          "ms": 0.073
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO ingredient_movements ( ingredient_id, kind, qty, unit_cost, reason, expected_qty, period_usage_qty, line_key, unit_qty, product_qty, source_type, source_id, source_label, product_id, product_name, user_id, user_name, business_date, note, client_key, corrects_movement_id ) VALUES ?",
+          "rows": null,
+          "ms": 0.203
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM ingredient_movements WHERE id >= ? AND id < ? ORDER BY id",
+          "rows": 10,
+          "ms": 0.164
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, invoice_number, invoice_issued_at, payment_method FROM orders WHERE invoice_id = ? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.13
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO invoice_sequences (sequence_name, current_value) VALUES ('global_invoice', LAST_INSERT_ID(1)) ON DUPLICATE KEY UPDATE current_value = LAST_INSERT_ID(current_value + 1)",
+          "rows": null,
+          "ms": 0.078
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE orders SET invoice_number = ?, invoice_issued_at = COALESCE(invoice_issued_at, ?) WHERE invoice_id = ?",
+          "rows": null,
+          "ms": 0.111
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM orders WHERE invoice_id = ?",
+          "rows": 1,
+          "ms": 0.198
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM order_items WHERE invoice_id = ?",
+          "rows": 10,
+          "ms": 0.19
+        },
+        {
+          "kind": "transaction",
+          "sql": "commit",
+          "rows": null,
+          "ms": 0.675
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT o.invoice_id, o.payment_method, o.invoice_number, o.invoice_issued_at, EXISTS (SELECT 1 FROM customer_subscriptions cs WHERE cs.purchase_invoice_id=o.invoice_id) AS subscription_purchase, enabled.setting_value AS jofotara_enabled, auto_submit.setting_value AS jofotara_auto_submit, auto_submit_since.setting_value AS jofotara_auto_submit_since, d.id AS document_id, d.document_kind, d.tax_registration_type, d.document_number, d.document_uuid, d.status AS document_status, d.qr_text, d.last_error FROM orders o LEFT JOIN settings enabled ON enabled.setting_key='jofotara_enabled' LEFT JOIN settings auto_submit ON auto_submit.setting_key='jofotara_auto_submit' LEFT JOIN settings auto_submit_since ON auto_submit_since.setting_key='jofotara_auto_submit_since' LEFT JOIN jofotara_documents d ON d.source_key=CONCAT('invoice:', o.invoice_id) WHERE o.invoice_id=? LIMIT 1",
+          "rows": 1,
+          "ms": 0.258
+        }
+      ],
+      "returnedRows": 41
+    },
+    {
+      "label": "enabled, recipe / unchanged table save",
+      "samples": 8,
+      "medianMs": 5.181,
+      "p95Ms": 5.52,
+      "commands": [
+        24
+      ],
+      "leased": 1,
+      "released": 1,
+      "sql": [
+        {
+          "kind": "transaction",
+          "sql": "beginTransaction",
+          "rows": null,
+          "ms": 0.088
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id, table_number, status, current_order_id, parent_table_id FROM restaurant_tables WHERE id = ? LIMIT 1",
+          "rows": 1,
+          "ms": 0.114
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id, parent_table_id FROM restaurant_tables WHERE id=? LIMIT 1",
+          "rows": 1,
+          "ms": 0.073
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id, table_number, status, current_order_id, parent_table_id FROM restaurant_tables WHERE id=? OR parent_table_id=? ORDER BY id FOR UPDATE",
+          "rows": 1,
+          "ms": 0.094
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT invoice_id, order_id, shift_id, user_id, waiter_id, table_id, payment_method, subtotal, tax, total, discount_type, discount_value, refund_status, service_charge_snapshot_id, tax_inclusive_at_sale, receipt_tax_inclusive_at_sale, tax_exempt_at_sale, tax_registration_type_at_sale, invoice_number, invoice_issued_at, created_at FROM orders WHERE invoice_id=? FOR UPDATE",
+          "rows": 1,
+          "ms": 0.113
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id, invoice_id, parent_item_id, product_id, item_name, quantity, price_at_sale, price_before_tax_exemption, tax_rate, jofotara_tax_category, tax_amount, note, selected_modifiers, modifier_surcharge, modifier_tax_amount, discount_type, discount_value, sort_order, created_at, recipe_line_key FROM order_items WHERE invoice_id=? ORDER BY sort_order, id FOR UPDATE",
+          "rows": 1,
+          "ms": 0.125
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT parent_invoice_id FROM held_orders WHERE parent_invoice_id IN (?) LIMIT 1",
+          "rows": 0,
+          "ms": 0.121
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_key, setting_value FROM settings WHERE setting_key IN (?,?,?,?,?,?,?,?,?,?,?,?)",
+          "rows": 12,
+          "ms": 0.183
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT p.id, p.name, p.price, p.tax_rate, p.jofotara_tax_category, p.stock, p.category_id, p.modifiers, p.is_active AS product_is_active, c.is_active AS category_is_active, c.is_notes AS category_is_notes, p.is_available, CASE WHEN p.is_available = 1 AND (p.is_bundle = 0 OR NOT EXISTS ( SELECT 1 FROM product_bundle_items pbi JOIN products child ON child.id = pbi.product_id WHERE pbi.bundle_id = p.id AND (child.is_active <> 1 OR child.is_available <> 1) )) THEN 1 ELSE 0 END AS can_sell FROM products p LEFT JOIN categories c ON c.id = p.category_id WHERE p.id IN (?)",
+          "rows": 1,
+          "ms": 0.228
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id, sale_product_id FROM subscription_plans WHERE sale_product_id IN (?)",
+          "rows": 0,
+          "ms": 0.108
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id, is_bundle FROM products WHERE id IN (?)",
+          "rows": 1,
+          "ms": 0.147
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE orders SET subtotal=?, tax=?, tax_inclusive_at_sale=?, receipt_tax_inclusive_at_sale=COALESCE(receipt_tax_inclusive_at_sale, ?), tax_registration_type_at_sale=?, tax_exempt_at_sale=?, total=?, discount_type=?, discount_value=?, user_id=?, shift_id=? WHERE invoice_id=?",
+          "rows": null,
+          "ms": 0.155
+        },
+        {
+          "kind": "connection",
+          "sql": "DELETE FROM order_items WHERE invoice_id=?",
+          "rows": null,
+          "ms": 0.261
+        },
+        {
+          "kind": "connection",
+          "sql": "UPDATE restaurant_tables SET status='occupied', current_order_id=? WHERE id IN (?)",
+          "rows": null,
+          "ms": 0.085
+        },
+        {
+          "kind": "connection",
+          "sql": "INSERT INTO order_items (invoice_id, product_id, item_name, quantity, price_at_sale, price_before_tax_exemption, tax_rate, jofotara_tax_category, tax_amount, note, selected_modifiers, modifier_surcharge, modifier_tax_amount, discount_type, discount_value, sort_order, recipe_line_key, parent_item_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL)",
+          "rows": null,
+          "ms": 0.104
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT setting_value FROM settings WHERE setting_key='recipe_ledger_enabled' LIMIT 1",
+          "rows": 1,
+          "ms": 0.084
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT bundle_id, product_id, qty FROM product_bundle_items WHERE bundle_id IN (?)",
+          "rows": 0,
+          "ms": 0.083
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT product_id, ingredient_id, qty_per_unit FROM product_recipe_lines WHERE product_id IN (?) ORDER BY product_id, sort_order, id",
+          "rows": 1,
+          "ms": 0.093
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT DISTINCT line_key, ingredient_id FROM ingredient_movements WHERE line_key IN (?)",
+          "rows": 1,
+          "ms": 0.101
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id FROM ingredients WHERE id IN (?) ORDER BY id FOR UPDATE",
+          "rows": 1,
+          "ms": 0.068
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT line_key, ingredient_id, unit_qty, unit_cost, -SUM(qty) AS net_qty, SUM(product_qty) AS net_pq FROM ingredient_movements WHERE line_key IN (?) AND kind IN ('usage','reversal') GROUP BY line_key, ingredient_id, unit_qty, unit_cost ORDER BY MAX(CASE WHEN kind='usage' THEN id END) DESC FOR UPDATE",
+          "rows": 1,
+          "ms": 0.14
+        },
+        {
+          "kind": "transaction",
+          "sql": "commit",
+          "rows": null,
+          "ms": 0.514
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT o.invoice_id, o.order_id, o.invoice_number, o.invoice_issued_at, o.created_at, o.payment_method, o.waiter_id, t.table_number FROM orders o LEFT JOIN restaurant_tables t ON o.table_id = t.id WHERE o.invoice_id = ?",
+          "rows": 1,
+          "ms": 0.155
+        },
+        {
+          "kind": "pool",
+          "sql": "SELECT t.id, t.section_id, t.table_number, t.status, t.current_order_id, t.x_pos, t.y_pos, t.qr_code_token, t.parent_table_id, s.name as section_name, o.total as active_order_total, o.created_at as active_order_created_at, o.waiter_id as waiter_id, u.name as active_order_waiter_name, COALESCE(JSON_LENGTH(qd.cart_data), 0) as qr_draft_count, o.order_id, o.invoice_number, o.invoice_issued_at, CASE WHEN o.invoice_number IS NULL THEN NULL ELSE CAST(o.invoice_number AS CHAR) END AS invoice_display_no, CAST(o.order_id AS CHAR) AS order_display_no, CASE WHEN o.invoice_number IS NULL AND o.order_id IS NOT NULL THEN CAST(o.order_id AS CHAR) ELSE NULL END AS ticket_display_no, CASE WHEN o.invoice_number IS NULL AND o.order_id IS NULL AND t.table_number IS NOT NULL THEN CAST(t.table_number AS CHAR) ELSE NULL END AS table_display_no FROM restaurant_tables t JOIN sections s ON t.section_id = s.id LEFT JOIN orders o ON t.current_order_id = o.invoice_id LEFT JOIN users u ON o.waiter_id = u.id LEFT JOIN qr_table_drafts qd ON t.id = qd.table_id WHERE t.id = ?",
+          "rows": 1,
+          "ms": 0.248
+        }
+      ],
+      "returnedRows": 26
+    },
+    {
+      "label": "100 ingredients / 100k movements / daily report",
+      "samples": 3,
+      "medianMs": 307.159,
+      "p95Ms": 313.349,
+      "commands": [
+        28
+      ],
+      "leased": 1,
+      "released": 1,
+      "sql": [
+        {
+          "kind": "connection",
+          "sql": "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ",
+          "rows": null,
+          "ms": 0.139
+        },
+        {
+          "kind": "connection",
+          "sql": "START TRANSACTION READ ONLY",
+          "rows": null,
+          "ms": 0.081
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT i.id, i.name, i.measure, i.display_unit, i.unit_cost, i.par_qty, i.pack_name, i.pack_size, i.is_active, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id AND t.business_date<=? ) END AS closing_expected FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' AND business_date<=? ORDER BY id DESC LIMIT 1 ) ORDER BY i.name,i.id",
+          "rows": 102,
+          "ms": 114.239
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT * FROM ingredient_movements WHERE business_date=? ORDER BY ingredient_id, id",
+          "rows": 100000,
+          "ms": 169.292
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COUNT(o.invoice_id) AS orders, COALESCE(SUM(o.total), 0) AS sales_processed, COALESCE(SUM(o.tax), 0) AS tax, COALESCE(SUM(CASE WHEN o.payment_method='cash' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.cash_amount,0) ELSE 0 END), 0) AS cash, COALESCE(SUM(CASE WHEN o.payment_method='card' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.card_amount,0) ELSE 0 END), 0) AS card ,COALESCE(SUM(CASE WHEN o.payment_method='platform' THEN o.total ELSE 0 END), 0) AS platform FROM orders o WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided')",
+          "rows": 1,
+          "ms": 4.093
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT r.id, r.scope, r.amount_refunded, r.tax_refunded, r.refund_method, o.total AS original_total, o.payment_method AS original_payment_method, o.cash_amount AS original_cash_amount, o.card_amount AS original_card_amount FROM refunds r JOIN orders o ON o.invoice_id=r.invoice_id WHERE r.kind='refund' AND r.created_at >= ? AND r.created_at < ?",
+          "rows": 0,
+          "ms": 0.408
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT r.id, r.kind, r.scope, r.subtotal_refunded, r.tax_refunded, o.original_total, o.total, (SELECT COALESCE(SUM(line_total), 0) FROM refund_items WHERE refund_id = r.id) AS item_total FROM refunds r LEFT JOIN orders o ON o.invoice_id = r.invoice_id WHERE r.kind = 'void' AND r.created_at >= ? AND r.created_at < ?",
+          "rows": 0,
+          "ms": 0.241
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM(line_discount), 0) AS line_discounts_total, COALESCE(SUM(order_discount), 0) AS order_discounts_total, COALESCE(SUM(line_discount + order_discount), 0) AS discounts_total, COALESCE(SUM(CASE WHEN line_discount > 0 OR order_discount > 0 THEN 1 ELSE 0 END), 0) AS discount_count FROM ( SELECT o.invoice_id, ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END ) AS order_discount, COALESCE(line_discounts.line_discount_amount, 0) AS line_discount FROM orders o LEFT JOIN ( SELECT oi.invoice_id, COALESCE(SUM(GREATEST( 0, (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) )), 0) AS line_discount_amount FROM order_items oi WHERE oi.parent_item_id IS NULL GROUP BY oi.invoice_id ) line_discounts ON line_discounts.invoice_id = o.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') GROUP BY o.invoice_id, o.subtotal, o.discount_type, o.discount_value, line_discounts.line_discount_amount ) discounted_orders",
+          "rows": 1,
+          "ms": 0.469
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM( (GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) * ( CASE WHEN COALESCE(o.subtotal, 0) > 0 THEN GREATEST(0, COALESCE(o.subtotal, 0) - ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END )) / COALESCE(o.subtotal, 0) ELSE 1 END )) + COALESCE(oi.tax_amount, 0) ), 0) AS service_charges_sale FROM order_items oi JOIN orders o ON o.invoice_id = oi.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') AND oi.parent_item_id IS NULL AND oi.note = 'Auto-Gratuity'",
+          "rows": 1,
+          "ms": 0.562
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM(ri.line_total), 0) AS service_charges_refund FROM refund_items ri JOIN refunds r ON r.id = ri.refund_id WHERE r.kind = 'refund' AND r.created_at >= ? AND r.created_at < ? AND ri.note = 'Auto-Gratuity'",
+          "rows": 1,
+          "ms": 0.194
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COUNT(o.invoice_id) AS orders, COALESCE(SUM(o.total), 0) AS sales_processed, COALESCE(SUM(o.tax), 0) AS tax, COALESCE(SUM(CASE WHEN o.payment_method='cash' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.cash_amount,0) ELSE 0 END), 0) AS cash, COALESCE(SUM(CASE WHEN o.payment_method='card' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.card_amount,0) ELSE 0 END), 0) AS card ,COALESCE(SUM(CASE WHEN o.payment_method='platform' THEN o.total ELSE 0 END), 0) AS platform FROM orders o WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided')",
+          "rows": 1,
+          "ms": 0.218
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT r.id, r.scope, r.amount_refunded, r.tax_refunded, r.refund_method, o.total AS original_total, o.payment_method AS original_payment_method, o.cash_amount AS original_cash_amount, o.card_amount AS original_card_amount FROM refunds r JOIN orders o ON o.invoice_id=r.invoice_id WHERE r.kind='refund' AND r.created_at >= ? AND r.created_at < ?",
+          "rows": 0,
+          "ms": 0.506
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT r.id, r.kind, r.scope, r.subtotal_refunded, r.tax_refunded, o.original_total, o.total, (SELECT COALESCE(SUM(line_total), 0) FROM refund_items WHERE refund_id = r.id) AS item_total FROM refunds r LEFT JOIN orders o ON o.invoice_id = r.invoice_id WHERE r.kind = 'void' AND r.created_at >= ? AND r.created_at < ?",
+          "rows": 0,
+          "ms": 0.326
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM(line_discount), 0) AS line_discounts_total, COALESCE(SUM(order_discount), 0) AS order_discounts_total, COALESCE(SUM(line_discount + order_discount), 0) AS discounts_total, COALESCE(SUM(CASE WHEN line_discount > 0 OR order_discount > 0 THEN 1 ELSE 0 END), 0) AS discount_count FROM ( SELECT o.invoice_id, ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END ) AS order_discount, COALESCE(line_discounts.line_discount_amount, 0) AS line_discount FROM orders o LEFT JOIN ( SELECT oi.invoice_id, COALESCE(SUM(GREATEST( 0, (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) )), 0) AS line_discount_amount FROM order_items oi WHERE oi.parent_item_id IS NULL GROUP BY oi.invoice_id ) line_discounts ON line_discounts.invoice_id = o.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') GROUP BY o.invoice_id, o.subtotal, o.discount_type, o.discount_value, line_discounts.line_discount_amount ) discounted_orders",
+          "rows": 1,
+          "ms": 0.728
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM( (GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) * ( CASE WHEN COALESCE(o.subtotal, 0) > 0 THEN GREATEST(0, COALESCE(o.subtotal, 0) - ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END )) / COALESCE(o.subtotal, 0) ELSE 1 END )) + COALESCE(oi.tax_amount, 0) ), 0) AS service_charges_sale FROM order_items oi JOIN orders o ON o.invoice_id = oi.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') AND oi.parent_item_id IS NULL AND oi.note = 'Auto-Gratuity'",
+          "rows": 1,
+          "ms": 0.62
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM(ri.line_total), 0) AS service_charges_refund FROM refund_items ri JOIN refunds r ON r.id = ri.refund_id WHERE r.kind = 'refund' AND r.created_at >= ? AND r.created_at < ? AND ri.note = 'Auto-Gratuity'",
+          "rows": 1,
+          "ms": 0.251
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COUNT(*) AS expense_count, COALESCE(SUM(amount), 0) AS expense_total, COALESCE(SUM(CASE WHEN source = 'drawer' THEN amount ELSE 0 END), 0) AS drawer_total, COALESCE(SUM(CASE WHEN source = 'outside' THEN amount ELSE 0 END), 0) AS outside_total FROM expenses WHERE status = 'active' AND created_at >= ? AND created_at < ?",
+          "rows": 1,
+          "ms": 0.183
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM(CASE WHEN sc.kind='reversal' THEN -1 ELSE 1 END * sc.cash_amount),0) AS cash, COALESCE(SUM(CASE WHEN sc.kind='reversal' THEN -1 ELSE 1 END * sc.card_amount),0) AS card, COALESCE(SUM(( CASE WHEN sc.kind='reversal' THEN -1 ELSE 1 END * (COALESCE(sc.cash_amount,0) + COALESCE(sc.card_amount,0)) )),0) AS net, SUM(sc.kind='collection') AS collection_count, SUM(sc.kind='reversal') AS reversal_count FROM subscription_collections sc WHERE sc.business_date >= ? AND sc.business_date <= ?",
+          "rows": 1,
+          "ms": 0.193
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT events.order_type_id, events.name, SUM(events.orders) AS orders, SUM(events.sold_amount) AS sold_amount, SUM(events.returned_amount) AS returned_amount FROM ( SELECT o.order_type_id, COALESCE(ot.name, 'Other') AS name, COUNT(o.invoice_id) AS orders, COALESCE(SUM(o.total), 0) AS sold_amount, 0 AS returned_amount FROM orders o LEFT JOIN order_types ot ON ot.id = o.order_type_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') GROUP BY o.order_type_id, COALESCE(ot.name, 'Other') UNION ALL SELECT o.order_type_id, COALESCE(ot.name, 'Other') AS name, 0 AS orders, 0 AS sold_amount, COALESCE(SUM(r.amount_refunded), 0) AS returned_amount FROM refunds r JOIN orders o ON o.invoice_id = r.invoice_id LEFT JOIN order_types ot ON ot.id = o.order_type_id WHERE r.kind = 'refund' AND r.created_at >= ? AND r.created_at < ? GROUP BY o.order_type_id, COALESCE(ot.name, 'Other') ) events GROUP BY events.order_type_id, events.name ORDER BY (SUM(events.sold_amount) - SUM(events.returned_amount)) DESC, events.name ASC",
+          "rows": 0,
+          "ms": 0.585
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT SUM(CASE WHEN cs.status='active' AND cs.starts_on <= ? AND cs.ends_on >= ? AND (cs.total_credits - COALESCE(usage_totals.used_credits, 0)) > 0 THEN 1 ELSE 0 END ) AS active_subscriptions, SUM(CASE WHEN cs.status='active' AND cs.starts_on <= ? AND cs.ends_on BETWEEN ? AND DATE_ADD(?, INTERVAL 7 DAY) AND (cs.total_credits - COALESCE(usage_totals.used_credits, 0)) > 0 THEN 1 ELSE 0 END ) AS subscriptions_expiring_7_days FROM customer_subscriptions cs LEFT JOIN ( SELECT sr.subscription_id, SUM(sri.quantity) AS used_credits FROM subscription_redemptions sr JOIN subscription_redemption_items sri ON sri.redemption_id=sr.id WHERE sr.status='active' GROUP BY sr.subscription_id ) usage_totals ON usage_totals.subscription_id=cs.id",
+          "rows": 1,
+          "ms": 0.46
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT cs.id, cs.total_credits, o.payment_method, GREATEST(0, o.total - COALESCE(refunds.refunded, 0)) AS net_purchase_value, COALESCE(usage_totals.used_credits, 0) AS used_credits FROM customer_subscriptions cs JOIN orders o ON o.invoice_id=cs.purchase_invoice_id LEFT JOIN ( SELECT invoice_id, SUM(amount_refunded) AS refunded FROM refunds WHERE kind='refund' GROUP BY invoice_id ) refunds ON refunds.invoice_id=o.invoice_id LEFT JOIN ( SELECT sr.subscription_id, SUM(sri.quantity) AS used_credits FROM subscription_redemptions sr JOIN subscription_redemption_items sri ON sri.redemption_id=sr.id WHERE sr.status='active' GROUP BY sr.subscription_id ) usage_totals ON usage_totals.subscription_id=cs.id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided')",
+          "rows": 0,
+          "ms": 2.73
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM(sri.quantity), 0) AS redeemed_credits FROM subscription_redemptions sr JOIN subscription_redemption_items sri ON sri.redemption_id=sr.id WHERE sr.status='active' AND sr.business_date BETWEEN ? AND ?",
+          "rows": 1,
+          "ms": 0.623
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM(GREATEST(0, ROUND(o.total * 100) - ROUND(COALESCE(refunds.refunded_amount, 0) * 100) - ROUND(COALESCE(collections.collected_amount, 0) * 100)) / 100), 0) AS subscription_outstanding, COALESCE(SUM(CASE WHEN o.payment_due_on < ? AND GREATEST(0, ROUND(o.total * 100) - ROUND(COALESCE(refunds.refunded_amount, 0) * 100) - ROUND(COALESCE(collections.collected_amount, 0) * 100)) > 0 THEN 1 ELSE 0 END), 0) AS subscription_overdue_count FROM customer_subscriptions cs JOIN orders o ON o.invoice_id=cs.purchase_invoice_id AND o.payment_method='receivable' LEFT JOIN ( SELECT subscription_id, SUM(CASE WHEN kind='collection' THEN cash_amount + card_amount ELSE -(cash_amount + card_amount) END) AS collected_amount FROM subscription_collections WHERE created_at < ? GROUP BY subscription_id ) collections ON collections.subscription_id=cs.id LEFT JOIN ( SELECT invoice_id, SUM(amount_refunded) AS refunded_amount FROM refunds WHERE kind='refund' GROUP BY invoice_id ) refunds ON refunds.invoice_id=o.invoice_id",
+          "rows": 1,
+          "ms": 0.556
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT COALESCE(SUM(CASE WHEN sc.kind='reversal' THEN -1 ELSE 1 END * sc.cash_amount),0) AS cash, COALESCE(SUM(CASE WHEN sc.kind='reversal' THEN -1 ELSE 1 END * sc.card_amount),0) AS card, COALESCE(SUM(( CASE WHEN sc.kind='reversal' THEN -1 ELSE 1 END * (COALESCE(sc.cash_amount,0) + COALESCE(sc.card_amount,0)) )),0) AS net, SUM(sc.kind='collection') AS collection_count, SUM(sc.kind='reversal') AS reversal_count FROM subscription_collections sc WHERE sc.business_date >= ? AND sc.business_date <= ?",
+          "rows": 1,
+          "ms": 0.306
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT r.id, r.order_type_id, r.provider_name_at_entry, r.kind, r.statement_start_date, r.statement_end_date, r.settled_on, r.reference, r.net_received, r.reverses_remittance_id, r.reason, r.recorded_by, r.idempotency_key, r.created_at, reversal.id AS reversal_id FROM platform_remittances r LEFT JOIN platform_remittances reversal ON reversal.reverses_remittance_id = r.id WHERE r.settled_on >= ? AND r.settled_on <= ? ORDER BY r.settled_on DESC, r.id DESC",
+          "rows": 0,
+          "ms": 0.203
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT HOUR(CONVERT_TZ(COALESCE(o.invoice_issued_at, o.created_at), '+00:00', ?)) AS hour, COUNT(o.invoice_id) AS orders, COALESCE(SUM(o.total), 0) AS sales_processed FROM orders o WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') GROUP BY hour",
+          "rows": 0,
+          "ms": 0.231
+        },
+        {
+          "kind": "connection",
+          "sql": "SELECT id, status, starting_cash, expected_cash, actual_cash, CASE WHEN status='closed' AND closed_at >= ? AND closed_at < ? THEN 1 ELSE 0 END AS closed_in_window FROM shifts WHERE opened_at < ? AND ( opened_at >= ? OR closed_at IS NULL OR closed_at >= ? OR EXISTS ( SELECT 1 FROM orders shift_orders WHERE shift_orders.shift_id = shifts.id AND COALESCE(shift_orders.invoice_issued_at, shift_orders.created_at) >= ? AND COALESCE(shift_orders.invoice_issued_at, shift_orders.created_at) < ? ) OR EXISTS ( SELECT 1 FROM refunds shift_refunds WHERE shift_refunds.shift_id = shifts.id AND shift_refunds.created_at >= ? AND shift_refunds.created_at < ? ) OR EXISTS ( SELECT 1 FROM subscription_collections shift_collections WHERE shift_collections.shift_id = shifts.id AND shift_collections.created_at >= ? AND shift_collections.created_at < ? ) )",
+          "rows": 1,
+          "ms": 0.277
+        },
+        {
+          "kind": "transaction",
+          "sql": "commit",
+          "rows": null,
+          "ms": 0.284
+        }
+      ],
+      "returnedRows": 100117
+    }
+  ],
+  "reads": [
+    {
+      "label": "100 ingredients / 100k movements / stale Counts / summary",
+      "queries": 1,
+      "medianMs": 277.767,
+      "plans": [
+        {
+          "sql": "SELECT i.*, (SELECT COUNT(*) FROM product_recipe_lines r WHERE r.ingredient_id=i.id) AS recipe_product_count, c.id AS count_id, c.qty AS count_qty, c.occurred_at AS count_at, c.expected_qty AS count_expected, c.period_usage_qty AS count_period, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id ) END AS expected_remaining, opening.qty AS opening_qty, COALESCE(d.received,0) AS received, COALESCE(d.used,0) AS used, COALESCE(d.waste,0) AS waste, COALESCE(d.corrections,0) AS corrections, COALESCE(d.used_cost,0) AS used_cost, COALESCE(d.waste_cost,0) AS waste_cost FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' ORDER BY id DESC LIMIT 1 ) LEFT JOIN ( SELECT ingredient_id, MIN(CASE WHEN kind='count' THEN id END) AS opening_id, SUM(CASE WHEN kind='receipt' THEN qty ELSE 0 END) AS received, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty ELSE 0 END) AS used, -SUM(CASE WHEN kind='waste' THEN qty ELSE 0 END) AS waste, SUM(CASE WHEN kind='correction' THEN qty ELSE 0 END) AS corrections, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS used_cost, -SUM(CASE WHEN kind='waste' THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS waste_cost FROM ingredient_movements WHERE business_date=? GROUP BY ingredient_id ) d ON d.ingredient_id=i.id LEFT JOIN ingredient_movements opening ON opening.id=d.opening_id WHERE ?=1 OR i.is_active=1 ORDER BY i.name,i.id",
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using where; Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived5>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "491",
+              "Extra": ""
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "opening",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "d.opening_id",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 5,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient",
+              "key": "idx_im_date_ingredient",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50100",
+              "Extra": "Using where"
+            },
+            {
+              "id": 4,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id,const",
+              "rows": "50100",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_id",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "50100",
+              "Extra": "Using index condition"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_prl_ingredient",
+              "key": "idx_prl_ingredient",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "1",
+              "Extra": "Using index"
+            }
+          ],
+          "analyze": {
+            "query_block": {
+              "select_id": 1,
+              "r_loops": 1,
+              "r_total_time_ms": 305.58,
+              "read_sorted_file": {
+                "r_rows": 102,
+                "filesort": {
+                  "sort_key": "i.`name`, i.`id`",
+                  "r_loops": 1,
+                  "r_total_time_ms": 0.0815,
+                  "r_used_priority_queue": false,
+                  "r_output_rows": 102,
+                  "r_buffer_size": "410Kb",
+                  "table": {
+                    "table_name": "i",
+                    "access_type": "ALL",
+                    "r_loops": 1,
+                    "rows": 102,
+                    "r_rows": 102,
+                    "r_total_time_ms": 0.0361,
+                    "filtered": 100,
+                    "r_filtered": 100,
+                    "attached_condition": "i.is_active = 1"
+                  }
+                }
+              },
+              "table": {
+                "table_name": "opening",
+                "access_type": "eq_ref",
+                "possible_keys": [
+                  "PRIMARY"
+                ],
+                "key": "PRIMARY",
+                "key_length": "8",
+                "used_key_parts": [
+                  "id"
+                ],
+                "ref": [
+                  "d.opening_id"
+                ],
+                "r_loops": 102,
+                "rows": 1,
+                "r_rows": 0,
+                "filtered": 100,
+                "r_filtered": 100,
+                "attached_condition": "trigcond(trigcond(d.opening_id is not null))"
+              },
+              "subqueries": [
+                {
+                  "expression_cache": {
+                    "state": "disabled",
+                    "r_loops": 0,
+                    "query_block": {
+                      "select_id": 4,
+                      "r_loops": 302,
+                      "r_total_time_ms": 1.1512,
+                      "table": {
+                        "table_name": "ingredient_movements",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_kind_id",
+                        "key_length": "5",
+                        "used_key_parts": [
+                          "ingredient_id",
+                          "kind"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id",
+                          "const"
+                        ],
+                        "r_loops": 302,
+                        "rows": 50100,
+                        "r_rows": 0.9934,
+                        "r_total_time_ms": 0.5957,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "attached_condition": "ingredient_movements.ingredient_id <=> i.`id` and ingredient_movements.kind <=> 'count' and ingredient_movements.kind = 'count'",
+                        "using_index": true
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 100,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 3,
+                      "r_loops": 100,
+                      "r_total_time_ms": 123.49,
+                      "table": {
+                        "table_name": "t",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "PRIMARY",
+                          "idx_im_ingredient_id",
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_id",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 100,
+                        "rows": 50100,
+                        "r_rows": 1000,
+                        "r_total_time_ms": 106.4,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "index_condition": "t.`id` > c.`id`"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 102,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 2,
+                      "r_loops": 102,
+                      "r_total_time_ms": 0.2149,
+                      "table": {
+                        "table_name": "r",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_prl_ingredient"
+                        ],
+                        "key": "idx_prl_ingredient",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 102,
+                        "rows": 1,
+                        "r_rows": 0.0098,
+                        "r_total_time_ms": 0.0838,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "using_index": true
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "100 ingredients / 100k movements / portions",
+      "queries": 2,
+      "medianMs": 125.982,
+      "plans": [
+        {
+          "sql": "SELECT i.*, (SELECT COUNT(*) FROM product_recipe_lines r WHERE r.ingredient_id=i.id) AS recipe_product_count, c.id AS count_id, c.qty AS count_qty, c.occurred_at AS count_at, c.expected_qty AS count_expected, c.period_usage_qty AS count_period, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id ) END AS expected_remaining, opening.qty AS opening_qty, COALESCE(d.received,0) AS received, COALESCE(d.used,0) AS used, COALESCE(d.waste,0) AS waste, COALESCE(d.corrections,0) AS corrections, COALESCE(d.used_cost,0) AS used_cost, COALESCE(d.waste_cost,0) AS waste_cost FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' ORDER BY id DESC LIMIT 1 ) LEFT JOIN ( SELECT ingredient_id, MIN(CASE WHEN kind='count' THEN id END) AS opening_id, SUM(CASE WHEN kind='receipt' THEN qty ELSE 0 END) AS received, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty ELSE 0 END) AS used, -SUM(CASE WHEN kind='waste' THEN qty ELSE 0 END) AS waste, SUM(CASE WHEN kind='correction' THEN qty ELSE 0 END) AS corrections, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS used_cost, -SUM(CASE WHEN kind='waste' THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS waste_cost FROM ingredient_movements WHERE business_date=? GROUP BY ingredient_id ) d ON d.ingredient_id=i.id LEFT JOIN ingredient_movements opening ON opening.id=d.opening_id WHERE ?=1 OR i.is_active=1 ORDER BY i.name,i.id",
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived5>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "10",
+              "Extra": ""
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "opening",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "d.opening_id",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 5,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient",
+              "key": "idx_im_date_ingredient",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "100",
+              "Extra": "Using where"
+            },
+            {
+              "id": 4,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id,const",
+              "rows": "50100",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_id",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "50100",
+              "Extra": "Using index condition"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_prl_ingredient",
+              "key": "idx_prl_ingredient",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "1",
+              "Extra": "Using index"
+            }
+          ],
+          "analyze": {
+            "query_block": {
+              "select_id": 1,
+              "r_loops": 1,
+              "r_total_time_ms": 109.5,
+              "const_condition": "1",
+              "read_sorted_file": {
+                "r_rows": 102,
+                "filesort": {
+                  "sort_key": "i.`name`, i.`id`",
+                  "r_loops": 1,
+                  "r_total_time_ms": 0.0466,
+                  "r_used_priority_queue": false,
+                  "r_output_rows": 102,
+                  "r_buffer_size": "410Kb",
+                  "table": {
+                    "table_name": "i",
+                    "access_type": "ALL",
+                    "r_loops": 1,
+                    "rows": 102,
+                    "r_rows": 102,
+                    "r_total_time_ms": 0.0228,
+                    "filtered": 100,
+                    "r_filtered": 100
+                  }
+                }
+              },
+              "table": {
+                "table_name": "opening",
+                "access_type": "eq_ref",
+                "possible_keys": [
+                  "PRIMARY"
+                ],
+                "key": "PRIMARY",
+                "key_length": "8",
+                "used_key_parts": [
+                  "id"
+                ],
+                "ref": [
+                  "d.opening_id"
+                ],
+                "r_loops": 102,
+                "rows": 1,
+                "r_rows": 0,
+                "filtered": 100,
+                "r_filtered": 100,
+                "attached_condition": "trigcond(trigcond(d.opening_id is not null))"
+              },
+              "subqueries": [
+                {
+                  "expression_cache": {
+                    "state": "disabled",
+                    "r_loops": 0,
+                    "query_block": {
+                      "select_id": 4,
+                      "r_loops": 302,
+                      "r_total_time_ms": 0.9301,
+                      "table": {
+                        "table_name": "ingredient_movements",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_kind_id",
+                        "key_length": "5",
+                        "used_key_parts": [
+                          "ingredient_id",
+                          "kind"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id",
+                          "const"
+                        ],
+                        "r_loops": 302,
+                        "rows": 50100,
+                        "r_rows": 0.9934,
+                        "r_total_time_ms": 0.4886,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "attached_condition": "ingredient_movements.ingredient_id <=> i.`id` and ingredient_movements.kind <=> 'count' and ingredient_movements.kind = 'count'",
+                        "using_index": true
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 100,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 3,
+                      "r_loops": 100,
+                      "r_total_time_ms": 107.14,
+                      "table": {
+                        "table_name": "t",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "PRIMARY",
+                          "idx_im_ingredient_id",
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_id",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 100,
+                        "rows": 50100,
+                        "r_rows": 1000,
+                        "r_total_time_ms": 88.56,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "index_condition": "t.`id` > c.`id`"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 102,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 2,
+                      "r_loops": 102,
+                      "r_total_time_ms": 0.1641,
+                      "table": {
+                        "table_name": "r",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_prl_ingredient"
+                        ],
+                        "key": "idx_prl_ingredient",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 102,
+                        "rows": 1,
+                        "r_rows": 0.0098,
+                        "r_total_time_ms": 0.0674,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "using_index": true
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "sql": "SELECT p.id AS product_id, p.name, prl.ingredient_id, prl.qty_per_unit FROM product_recipe_lines prl JOIN products p ON p.id = prl.product_id WHERE p.is_active = 1 ORDER BY p.id, prl.sort_order, prl.id",
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "prl",
+              "type": "ALL",
+              "possible_keys": "uq_product_recipe_lines",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "p",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,idx_products_active_name,idx_products_active_category,idx_products_stock_alert,idx_products_active_id",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.prl.product_id",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ],
+          "analyze": {
+            "query_block": {
+              "select_id": 1,
+              "r_loops": 1,
+              "r_total_time_ms": 0.0239,
+              "read_sorted_file": {
+                "r_rows": 1,
+                "filesort": {
+                  "sort_key": "p.`id`, prl.sort_order, prl.`id`",
+                  "r_loops": 1,
+                  "r_total_time_ms": 0.01,
+                  "r_used_priority_queue": false,
+                  "r_output_rows": 1,
+                  "r_buffer_size": "33Kb",
+                  "table": {
+                    "table_name": "prl",
+                    "access_type": "ALL",
+                    "possible_keys": [
+                      "uq_product_recipe_lines"
+                    ],
+                    "r_loops": 1,
+                    "rows": 1,
+                    "r_rows": 1,
+                    "r_total_time_ms": 0.0041,
+                    "filtered": 100,
+                    "r_filtered": 100
+                  }
+                }
+              },
+              "table": {
+                "table_name": "p",
+                "access_type": "eq_ref",
+                "possible_keys": [
+                  "PRIMARY",
+                  "idx_products_active_name",
+                  "idx_products_active_category",
+                  "idx_products_stock_alert",
+                  "idx_products_active_id"
+                ],
+                "key": "PRIMARY",
+                "key_length": "4",
+                "used_key_parts": [
+                  "id"
+                ],
+                "ref": [
+                  "posapp_review_recipe_p1_e90754b7336c.prl.product_id"
+                ],
+                "r_loops": 1,
+                "rows": 1,
+                "r_rows": 1,
+                "r_total_time_ms": 0.0024,
+                "filtered": 100,
+                "r_filtered": 100,
+                "attached_condition": "p.is_active = 1"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "100 ingredients / 100k history / 1k today / stale Counts / summary",
+      "queries": 1,
+      "medianMs": 124.103,
+      "plans": [
+        {
+          "sql": "SELECT i.*, (SELECT COUNT(*) FROM product_recipe_lines r WHERE r.ingredient_id=i.id) AS recipe_product_count, c.id AS count_id, c.qty AS count_qty, c.occurred_at AS count_at, c.expected_qty AS count_expected, c.period_usage_qty AS count_period, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id ) END AS expected_remaining, opening.qty AS opening_qty, COALESCE(d.received,0) AS received, COALESCE(d.used,0) AS used, COALESCE(d.waste,0) AS waste, COALESCE(d.corrections,0) AS corrections, COALESCE(d.used_cost,0) AS used_cost, COALESCE(d.waste_cost,0) AS waste_cost FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' ORDER BY id DESC LIMIT 1 ) LEFT JOIN ( SELECT ingredient_id, MIN(CASE WHEN kind='count' THEN id END) AS opening_id, SUM(CASE WHEN kind='receipt' THEN qty ELSE 0 END) AS received, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty ELSE 0 END) AS used, -SUM(CASE WHEN kind='waste' THEN qty ELSE 0 END) AS waste, SUM(CASE WHEN kind='correction' THEN qty ELSE 0 END) AS corrections, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS used_cost, -SUM(CASE WHEN kind='waste' THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS waste_cost FROM ingredient_movements WHERE business_date=? GROUP BY ingredient_id ) d ON d.ingredient_id=i.id LEFT JOIN ingredient_movements opening ON opening.id=d.opening_id WHERE ?=1 OR i.is_active=1 ORDER BY i.name,i.id",
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using where; Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived5>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "10",
+              "Extra": ""
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "opening",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "d.opening_id",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 5,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient",
+              "key": "idx_im_date_ingredient",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "1000",
+              "Extra": "Using where"
+            },
+            {
+              "id": 4,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id,const",
+              "rows": "50100",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_id",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "50100",
+              "Extra": "Using index condition"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_prl_ingredient",
+              "key": "idx_prl_ingredient",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "1",
+              "Extra": "Using index"
+            }
+          ],
+          "analyze": {
+            "query_block": {
+              "select_id": 1,
+              "r_loops": 1,
+              "r_total_time_ms": 103.38,
+              "read_sorted_file": {
+                "r_rows": 102,
+                "filesort": {
+                  "sort_key": "i.`name`, i.`id`",
+                  "r_loops": 1,
+                  "r_total_time_ms": 0.272,
+                  "r_used_priority_queue": false,
+                  "r_output_rows": 102,
+                  "r_buffer_size": "410Kb",
+                  "table": {
+                    "table_name": "i",
+                    "access_type": "ALL",
+                    "r_loops": 1,
+                    "rows": 102,
+                    "r_rows": 102,
+                    "r_total_time_ms": 0.242,
+                    "filtered": 100,
+                    "r_filtered": 100,
+                    "attached_condition": "i.is_active = 1"
+                  }
+                }
+              },
+              "table": {
+                "table_name": "opening",
+                "access_type": "eq_ref",
+                "possible_keys": [
+                  "PRIMARY"
+                ],
+                "key": "PRIMARY",
+                "key_length": "8",
+                "used_key_parts": [
+                  "id"
+                ],
+                "ref": [
+                  "d.opening_id"
+                ],
+                "r_loops": 102,
+                "rows": 1,
+                "r_rows": 0,
+                "filtered": 100,
+                "r_filtered": 100,
+                "attached_condition": "trigcond(trigcond(d.opening_id is not null))"
+              },
+              "subqueries": [
+                {
+                  "expression_cache": {
+                    "state": "disabled",
+                    "r_loops": 0,
+                    "query_block": {
+                      "select_id": 4,
+                      "r_loops": 302,
+                      "r_total_time_ms": 6.4391,
+                      "table": {
+                        "table_name": "ingredient_movements",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_kind_id",
+                        "key_length": "5",
+                        "used_key_parts": [
+                          "ingredient_id",
+                          "kind"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id",
+                          "const"
+                        ],
+                        "r_loops": 302,
+                        "rows": 50100,
+                        "r_rows": 0.9934,
+                        "r_total_time_ms": 6.1073,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "attached_condition": "ingredient_movements.ingredient_id <=> i.`id` and ingredient_movements.kind <=> 'count' and ingredient_movements.kind = 'count'",
+                        "using_index": true
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 100,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 3,
+                      "r_loops": 100,
+                      "r_total_time_ms": 88.882,
+                      "table": {
+                        "table_name": "t",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "PRIMARY",
+                          "idx_im_ingredient_id",
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_id",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 100,
+                        "rows": 50100,
+                        "r_rows": 1000,
+                        "r_total_time_ms": 79.719,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "index_condition": "t.`id` > c.`id`"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 102,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 2,
+                      "r_loops": 102,
+                      "r_total_time_ms": 0.1109,
+                      "table": {
+                        "table_name": "r",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_prl_ingredient"
+                        ],
+                        "key": "idx_prl_ingredient",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 102,
+                        "rows": 1,
+                        "r_rows": 0.0098,
+                        "r_total_time_ms": 0.0458,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "using_index": true
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "100 ingredients / 100k history / 1k today / recent Counts / summary",
+      "queries": 1,
+      "medianMs": 8.119,
+      "plans": [
+        {
+          "sql": "SELECT i.*, (SELECT COUNT(*) FROM product_recipe_lines r WHERE r.ingredient_id=i.id) AS recipe_product_count, c.id AS count_id, c.qty AS count_qty, c.occurred_at AS count_at, c.expected_qty AS count_expected, c.period_usage_qty AS count_period, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id ) END AS expected_remaining, opening.qty AS opening_qty, COALESCE(d.received,0) AS received, COALESCE(d.used,0) AS used, COALESCE(d.waste,0) AS waste, COALESCE(d.corrections,0) AS corrections, COALESCE(d.used_cost,0) AS used_cost, COALESCE(d.waste_cost,0) AS waste_cost FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' ORDER BY id DESC LIMIT 1 ) LEFT JOIN ( SELECT ingredient_id, MIN(CASE WHEN kind='count' THEN id END) AS opening_id, SUM(CASE WHEN kind='receipt' THEN qty ELSE 0 END) AS received, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty ELSE 0 END) AS used, -SUM(CASE WHEN kind='waste' THEN qty ELSE 0 END) AS waste, SUM(CASE WHEN kind='correction' THEN qty ELSE 0 END) AS corrections, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS used_cost, -SUM(CASE WHEN kind='waste' THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS waste_cost FROM ingredient_movements WHERE business_date=? GROUP BY ingredient_id ) d ON d.ingredient_id=i.id LEFT JOIN ingredient_movements opening ON opening.id=d.opening_id WHERE ?=1 OR i.is_active=1 ORDER BY i.name,i.id",
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using where; Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived5>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "10",
+              "Extra": ""
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "opening",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "d.opening_id",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 5,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient",
+              "key": "idx_im_date_ingredient",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "1100",
+              "Extra": "Using where"
+            },
+            {
+              "id": 4,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id,const",
+              "rows": "50100",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_id",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "50100",
+              "Extra": "Using index condition"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_prl_ingredient",
+              "key": "idx_prl_ingredient",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "1",
+              "Extra": "Using index"
+            }
+          ],
+          "analyze": {
+            "query_block": {
+              "select_id": 1,
+              "r_loops": 1,
+              "r_total_time_ms": 8.9407,
+              "read_sorted_file": {
+                "r_rows": 102,
+                "filesort": {
+                  "sort_key": "i.`name`, i.`id`",
+                  "r_loops": 1,
+                  "r_total_time_ms": 0.0448,
+                  "r_used_priority_queue": false,
+                  "r_output_rows": 102,
+                  "r_buffer_size": "410Kb",
+                  "table": {
+                    "table_name": "i",
+                    "access_type": "ALL",
+                    "r_loops": 1,
+                    "rows": 102,
+                    "r_rows": 102,
+                    "r_total_time_ms": 0.0209,
+                    "filtered": 100,
+                    "r_filtered": 100,
+                    "attached_condition": "i.is_active = 1"
+                  }
+                }
+              },
+              "table": {
+                "table_name": "opening",
+                "access_type": "eq_ref",
+                "possible_keys": [
+                  "PRIMARY"
+                ],
+                "key": "PRIMARY",
+                "key_length": "8",
+                "used_key_parts": [
+                  "id"
+                ],
+                "ref": [
+                  "d.opening_id"
+                ],
+                "r_loops": 102,
+                "rows": 1,
+                "r_rows": 0.9804,
+                "r_total_time_ms": 0.0652,
+                "filtered": 100,
+                "r_filtered": 100,
+                "attached_condition": "trigcond(trigcond(d.opening_id is not null))"
+              },
+              "subqueries": [
+                {
+                  "expression_cache": {
+                    "state": "disabled",
+                    "r_loops": 0,
+                    "query_block": {
+                      "select_id": 4,
+                      "r_loops": 302,
+                      "r_total_time_ms": 0.826,
+                      "table": {
+                        "table_name": "ingredient_movements",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_kind_id",
+                        "key_length": "5",
+                        "used_key_parts": [
+                          "ingredient_id",
+                          "kind"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id",
+                          "const"
+                        ],
+                        "r_loops": 302,
+                        "rows": 50100,
+                        "r_rows": 0.9934,
+                        "r_total_time_ms": 0.4612,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "attached_condition": "ingredient_movements.ingredient_id <=> i.`id` and ingredient_movements.kind <=> 'count' and ingredient_movements.kind = 'count'",
+                        "using_index": true
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 100,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 3,
+                      "r_loops": 100,
+                      "r_total_time_ms": 6.1595,
+                      "table": {
+                        "table_name": "t",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "PRIMARY",
+                          "idx_im_ingredient_id",
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_id",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 100,
+                        "rows": 50100,
+                        "r_rows": 0,
+                        "r_total_time_ms": 6.0411,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "index_condition": "t.`id` > c.`id`"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 102,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 2,
+                      "r_loops": 102,
+                      "r_total_time_ms": 0.0987,
+                      "table": {
+                        "table_name": "r",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_prl_ingredient"
+                        ],
+                        "key": "idx_prl_ingredient",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 102,
+                        "rows": 1,
+                        "r_rows": 0.0098,
+                        "r_total_time_ms": 0.0461,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "using_index": true
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "100 ingredients / 100k old-day movements / quiet next-day summary",
+      "queries": 1,
+      "medianMs": 6.449,
+      "plans": [
+        {
+          "sql": "SELECT i.*, (SELECT COUNT(*) FROM product_recipe_lines r WHERE r.ingredient_id=i.id) AS recipe_product_count, c.id AS count_id, c.qty AS count_qty, c.occurred_at AS count_at, c.expected_qty AS count_expected, c.period_usage_qty AS count_period, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id ) END AS expected_remaining, opening.qty AS opening_qty, COALESCE(d.received,0) AS received, COALESCE(d.used,0) AS used, COALESCE(d.waste,0) AS waste, COALESCE(d.corrections,0) AS corrections, COALESCE(d.used_cost,0) AS used_cost, COALESCE(d.waste_cost,0) AS waste_cost FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' ORDER BY id DESC LIMIT 1 ) LEFT JOIN ( SELECT ingredient_id, MIN(CASE WHEN kind='count' THEN id END) AS opening_id, SUM(CASE WHEN kind='receipt' THEN qty ELSE 0 END) AS received, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty ELSE 0 END) AS used, -SUM(CASE WHEN kind='waste' THEN qty ELSE 0 END) AS waste, SUM(CASE WHEN kind='correction' THEN qty ELSE 0 END) AS corrections, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS used_cost, -SUM(CASE WHEN kind='waste' THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS waste_cost FROM ingredient_movements WHERE business_date=? GROUP BY ingredient_id ) d ON d.ingredient_id=i.id LEFT JOIN ingredient_movements opening ON opening.id=d.opening_id WHERE ?=1 OR i.is_active=1 ORDER BY i.name,i.id",
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using where; Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived5>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "2",
+              "Extra": ""
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "opening",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "d.opening_id",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 5,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient",
+              "key": "idx_im_date_ingredient",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 4,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id,const",
+              "rows": "50100",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_id",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "50100",
+              "Extra": "Using index condition"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_prl_ingredient",
+              "key": "idx_prl_ingredient",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_e90754b7336c.i.id",
+              "rows": "1",
+              "Extra": "Using index"
+            }
+          ],
+          "analyze": {
+            "query_block": {
+              "select_id": 1,
+              "r_loops": 1,
+              "r_total_time_ms": 5.6842,
+              "read_sorted_file": {
+                "r_rows": 102,
+                "filesort": {
+                  "sort_key": "i.`name`, i.`id`",
+                  "r_loops": 1,
+                  "r_total_time_ms": 0.0473,
+                  "r_used_priority_queue": false,
+                  "r_output_rows": 102,
+                  "r_buffer_size": "410Kb",
+                  "table": {
+                    "table_name": "i",
+                    "access_type": "ALL",
+                    "r_loops": 1,
+                    "rows": 102,
+                    "r_rows": 102,
+                    "r_total_time_ms": 0.0221,
+                    "filtered": 100,
+                    "r_filtered": 100,
+                    "attached_condition": "i.is_active = 1"
+                  }
+                }
+              },
+              "table": {
+                "table_name": "opening",
+                "access_type": "eq_ref",
+                "possible_keys": [
+                  "PRIMARY"
+                ],
+                "key": "PRIMARY",
+                "key_length": "8",
+                "used_key_parts": [
+                  "id"
+                ],
+                "ref": [
+                  "d.opening_id"
+                ],
+                "r_loops": 102,
+                "rows": 1,
+                "r_rows": 0,
+                "filtered": 100,
+                "r_filtered": 100,
+                "attached_condition": "trigcond(trigcond(d.opening_id is not null))"
+              },
+              "subqueries": [
+                {
+                  "expression_cache": {
+                    "state": "disabled",
+                    "r_loops": 0,
+                    "query_block": {
+                      "select_id": 4,
+                      "r_loops": 302,
+                      "r_total_time_ms": 0.3048,
+                      "table": {
+                        "table_name": "ingredient_movements",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_kind_id",
+                        "key_length": "5",
+                        "used_key_parts": [
+                          "ingredient_id",
+                          "kind"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id",
+                          "const"
+                        ],
+                        "r_loops": 302,
+                        "rows": 50100,
+                        "r_rows": 0.9934,
+                        "r_total_time_ms": 0.1766,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "attached_condition": "ingredient_movements.ingredient_id <=> i.`id` and ingredient_movements.kind <=> 'count' and ingredient_movements.kind = 'count'",
+                        "using_index": true
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 100,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 3,
+                      "r_loops": 100,
+                      "r_total_time_ms": 4.9043,
+                      "table": {
+                        "table_name": "t",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "PRIMARY",
+                          "idx_im_ingredient_id",
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_id",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 100,
+                        "rows": 50100,
+                        "r_rows": 0,
+                        "r_total_time_ms": 4.8455,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "index_condition": "t.`id` > c.`id`"
+                      }
+                    }
+                  }
+                },
+                {
+                  "expression_cache": {
+                    "r_loops": 102,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 2,
+                      "r_loops": 102,
+                      "r_total_time_ms": 0.0581,
+                      "table": {
+                        "table_name": "r",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "idx_prl_ingredient"
+                        ],
+                        "key": "idx_prl_ingredient",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "posapp_review_recipe_p1_e90754b7336c.i.id"
+                        ],
+                        "r_loops": 102,
+                        "rows": 1,
+                        "r_rows": 0.0098,
+                        "r_total_time_ms": 0.0331,
+                        "filtered": 100,
+                        "r_filtered": 100,
+                        "using_index": true
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "label": "history 50 rows / 1000 movements",
+      "queries": 3,
+      "medianMs": 2.248,
+      "plans": [
+        {
+          "sql": "SELECT * FROM ingredient_movements WHERE ingredient_id=? ORDER BY id DESC LIMIT ?",
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_id",
+              "key_len": "4",
+              "ref": "const",
+              "rows": "1002",
+              "Extra": "Using where"
+            }
+          ],
+          "analyze": {
+            "query_block": {
+              "select_id": 1,
+              "r_loops": 1,
+              "r_total_time_ms": 0.0432,
+              "table": {
+                "table_name": "ingredient_movements",
+                "access_type": "ref",
+                "possible_keys": [
+                  "idx_im_ingredient_id",
+                  "idx_im_ingredient_kind_id"
+                ],
+                "key": "idx_im_ingredient_id",
+                "key_length": "4",
+                "used_key_parts": [
+                  "ingredient_id"
+                ],
+                "ref": [
+                  "const"
+                ],
+                "r_loops": 1,
+                "rows": 1002,
+                "r_rows": 50,
+                "r_total_time_ms": 0.0361,
+                "filtered": 100,
+                "r_filtered": 100,
+                "attached_condition": "ingredient_movements.ingredient_id <=> 3"
+              }
+            }
+          }
+        },
+        {
+          "sql": "SELECT c.id, c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=? AND t.id>c.id AND t.id<? ) AS balance FROM ingredient_movements c FORCE INDEX (idx_im_ingredient_kind_id) WHERE c.ingredient_id=? AND c.kind='count' AND c.id<? ORDER BY c.id DESC LIMIT 1",
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "range",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "13",
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "4",
+              "ref": "const",
+              "rows": "1002",
+              "Extra": "Using index condition"
+            }
+          ],
+          "analyze": {
+            "query_block": {
+              "select_id": 1,
+              "r_loops": 1,
+              "r_total_time_ms": 0.5358,
+              "table": {
+                "table_name": "c",
+                "access_type": "range",
+                "possible_keys": [
+                  "idx_im_ingredient_kind_id"
+                ],
+                "key": "idx_im_ingredient_kind_id",
+                "key_length": "13",
+                "used_key_parts": [
+                  "ingredient_id",
+                  "kind",
+                  "id"
+                ],
+                "r_loops": 1,
+                "rows": 1,
+                "r_rows": 1,
+                "r_total_time_ms": 0.0029,
+                "filtered": 100,
+                "r_filtered": 100,
+                "attached_condition": "c.ingredient_id = 3 and c.kind = 'count' and c.`id` < 1053"
+              },
+              "subqueries": [
+                {
+                  "expression_cache": {
+                    "r_loops": 1,
+                    "r_hit_ratio": 0,
+                    "query_block": {
+                      "select_id": 2,
+                      "r_loops": 1,
+                      "r_total_time_ms": 0.5173,
+                      "table": {
+                        "table_name": "t",
+                        "access_type": "ref",
+                        "possible_keys": [
+                          "PRIMARY",
+                          "idx_im_ingredient_id",
+                          "idx_im_ingredient_kind_id"
+                        ],
+                        "key": "idx_im_ingredient_kind_id",
+                        "key_length": "4",
+                        "used_key_parts": [
+                          "ingredient_id"
+                        ],
+                        "ref": [
+                          "const"
+                        ],
+                        "r_loops": 1,
+                        "rows": 1002,
+                        "r_rows": 951,
+                        "r_total_time_ms": 0.434,
+                        "filtered": 95.01,
+                        "r_filtered": 100,
+                        "index_condition": "t.`id` > c.`id` and t.`id` < 1053"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "sql": "SELECT id,kind,qty,corrects_movement_id FROM ingredient_movements WHERE ingredient_id=? AND id>=? AND id<=? ORDER BY id",
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "range",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_id",
+              "key_len": "12",
+              "ref": null,
+              "rows": "50",
+              "Extra": "Using index condition"
+            }
+          ],
+          "analyze": {
+            "query_block": {
+              "select_id": 1,
+              "r_loops": 1,
+              "r_total_time_ms": 0.0332,
+              "table": {
+                "table_name": "ingredient_movements",
+                "access_type": "range",
+                "possible_keys": [
+                  "PRIMARY",
+                  "idx_im_ingredient_id",
+                  "idx_im_ingredient_kind_id"
+                ],
+                "key": "idx_im_ingredient_id",
+                "key_length": "12",
+                "used_key_parts": [
+                  "ingredient_id",
+                  "id"
+                ],
+                "r_loops": 1,
+                "rows": 50,
+                "r_rows": 50,
+                "r_total_time_ms": 0.0281,
+                "filtered": 100,
+                "r_filtered": 100,
+                "index_condition": "ingredient_movements.ingredient_id = 3 and ingredient_movements.`id` >= 1053 and ingredient_movements.`id` <= 100201"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "contention": [
+    {
+      "case": "unchanged saved empty recipe blocks an unrelated ingredient",
+      "blocked": true,
+      "waitMs": 2495.39,
+      "sql": [
+        "SELECT setting_value FROM settings WHERE setting_key='recipe_ledger_enabled' LIMIT 1",
+        "SELECT bundle_id, product_id, qty FROM product_bundle_items WHERE bundle_id IN (?)",
+        "SELECT product_id, ingredient_id, qty_per_unit FROM product_recipe_lines WHERE product_id IN (?) ORDER BY product_id, sort_order, id",
+        "SELECT DISTINCT line_key, ingredient_id FROM ingredient_movements WHERE line_key IN (?)",
+        "SELECT id FROM ingredients ORDER BY id FOR UPDATE",
+        "SELECT line_key, ingredient_id, unit_qty, unit_cost, -SUM(qty) AS net_qty, SUM(product_qty) AS net_pq FROM ingredient_movements WHERE line_key IN (?) AND kind IN ('usage','reversal') GROUP BY line_key, ingredient_id, unit_qty, unit_cost ORDER BY MAX(CASE WHEN kind='usage' THEN id END) DESC FOR UPDATE"
+      ]
+    }
+  ],
+  "runtime": {
+    "version": "10.4.32-MariaDB",
+    "isolation_level": "REPEATABLE-READ"
+  },
+  "openingCounts": [
+    {
+      "ingredients": 1,
+      "serviceQueries": 5,
+      "ms": 6.05,
+      "sql": [
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT * FROM ingredient_movements WHERE client_key=? LIMIT 1",
+        "SELECT id, unit_cost FROM ingredients WHERE id IN (?) ORDER BY id FOR UPDATE",
+        "INSERT INTO ingredient_movements ( ingredient_id, kind, qty, unit_cost, reason, expected_qty, period_usage_qty, line_key, unit_qty, product_qty, source_type, source_id, source_label, product_id, product_name, user_id, user_name, business_date, note, client_key, corrects_movement_id ) VALUES ?",
+        "SELECT * FROM ingredient_movements WHERE id >= ? AND id < ? ORDER BY id"
+      ]
+    },
+    {
+      "ingredients": 10,
+      "serviceQueries": 14,
+      "ms": 4.26,
+      "sql": [
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT * FROM ingredient_movements WHERE client_key=? LIMIT 1",
+        "SELECT id, unit_cost FROM ingredients WHERE id IN (?,?,?,?,?,?,?,?,?,?) ORDER BY id FOR UPDATE",
+        "INSERT INTO ingredient_movements ( ingredient_id, kind, qty, unit_cost, reason, expected_qty, period_usage_qty, line_key, unit_qty, product_qty, source_type, source_id, source_label, product_id, product_name, user_id, user_name, business_date, note, client_key, corrects_movement_id ) VALUES ?",
+        "SELECT * FROM ingredient_movements WHERE id >= ? AND id < ? ORDER BY id"
+      ]
+    },
+    {
+      "ingredients": 100,
+      "serviceQueries": 104,
+      "ms": 16.12,
+      "sql": [
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT id, name, measure, display_unit, unit_cost, par_qty, pack_name, pack_size, is_active FROM ingredients WHERE id=? FOR UPDATE",
+        "SELECT * FROM ingredient_movements WHERE client_key=? LIMIT 1",
+        "SELECT id, unit_cost FROM ingredients WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ORDER BY id FOR UPDATE",
+        "INSERT INTO ingredient_movements ( ingredient_id, kind, qty, unit_cost, reason, expected_qty, period_usage_qty, line_key, unit_qty, product_qty, source_type, source_id, source_label, product_id, product_name, user_id, user_name, business_date, note, client_key, corrects_movement_id ) VALUES ?",
+        "SELECT * FROM ingredient_movements WHERE id >= ? AND id < ? ORDER BY id"
+      ]
+    }
+  ]
+}

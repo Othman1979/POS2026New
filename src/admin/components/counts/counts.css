@@ -1,0 +1,224 @@
+/* Stock count: the same ruled ledger book as purchase invoices (purchases.css supplies the
+   paper, desk, margin rule, buttons and ink tokens). Only what a count adds lives here.
+   Flat: hairlines and ink, no shadows. Shortages use the restrained rose, surpluses stay ink. */
+
+.pi-shell.ct-shell { --ct-gap: 12px; }
+@media (pointer: coarse) {
+    .pi-shell.ct-shell { --lg-line: 44px; }
+    .ct-find-input, .ct-add-input { min-height: 44px; }
+    .ct-filters button { min-height: 44px; min-width: 44px; }
+}
+
+/* Toolbar (outside the paper) */
+.ct-tools { border-block-end: 1px solid #e4e4e7; }
+.ct-find {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 220px;
+    flex: 0 1 300px;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #a1a1aa;
+    border-radius: 3px;
+    background: var(--paper);
+    color: var(--muted);
+}
+.ct-find:focus-within { outline: 2px solid var(--ink); outline-offset: 1px; }
+.ct-find-input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-weight: 700;
+    outline: none;
+}
+.ct-filters { height: 40px; border: 1px solid #a1a1aa; border-radius: 3px; background: var(--paper); }
+.ct-filters button { height: 38px; padding: 0 12px; }
+.ct-add { flex-direction: column; align-items: stretch; min-width: 280px; }
+.ct-add-input { width: 100%; }
+.ct-add-msg { margin: 0; padding: 4px 2px; color: var(--muted); font-size: 12.5px; font-weight: 600; }
+.ct-add-msg--error { color: #9f1239; }
+.ct-add-list { max-height: 260px; margin: 0; padding: 0; overflow-y: auto; list-style: none; }
+.ct-add-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 8px;
+    border: 0;
+    border-block-end: 1px solid var(--rule);
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+    text-align: start;
+    cursor: pointer;
+}
+.ct-add-item:hover:not(:disabled) { background: var(--ink-wash); }
+.ct-add-item:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.ct-add-item small { color: var(--muted); font-size: 11.5px; }
+
+/* Paper header */
+.ct-title { margin: 0; min-height: 40px; color: var(--ink); font-size: 24px; font-weight: 800; line-height: 40px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ct-val { display: block; min-height: 32px; color: var(--text); font-size: 15px; font-weight: 800; line-height: 32px; }
+.ct-blind { color: var(--muted); }
+.ct-blind i { margin-inline-end: 8px; font-size: 12px; }
+.ct-empty { justify-content: center; color: var(--muted); }
+
+/* The counting sheet: one ruled line per item */
+.ct-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--lg-margin) minmax(150px, 1fr) 120px 140px 160px;
+    grid-template-areas: "no item qty unit meta";
+    grid-template-rows: var(--lg-line);
+    align-items: center;
+    height: var(--lg-line);
+    border-block-end: 1px solid var(--rule);
+}
+.ct-row--head { color: var(--muted); font-size: 11.5px; font-weight: 700; border-block-end: 1px solid var(--ink); }
+.ct-row--head > span { padding-inline: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ct-row--head .ct-c-qty { text-align: end; }
+.ct-c-no { grid-area: no; color: #a1a1aa; font-size: 11.5px; font-weight: 700; text-align: center; }
+.ct-c-item { grid-area: item; min-width: 0; padding-inline: 8px 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.ct-c-qty { grid-area: qty; }
+.ct-c-unit { grid-area: unit; }
+.ct-c-meta { grid-area: meta; display: flex; align-items: center; justify-content: flex-end; min-width: 0; padding-inline: 8px; }
+.ct-row:not(.ct-row--head):focus-within { outline: 1.5px solid var(--ink); outline-offset: -1px; z-index: 1; }
+.ct-row .lg-cell { scroll-margin-block: 80px 140px; }
+.ct-row.is-hl { background: var(--ink-wash); }
+.ct-row.is-bad { background: rgb(190 18 60 / 0.05); }
+.ct-row.is-bad .ct-c-no { color: var(--rose); }
+.ct-row.is-done .ct-c-item { color: var(--ink); }
+
+/* Group headings are written on the ruling in ink */
+.ct-group {
+    display: grid;
+    grid-template-columns: var(--lg-margin) minmax(0, 1fr);
+    align-items: center;
+    min-height: var(--lg-line);
+    border-block-end: 1px solid var(--ink);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 800;
+}
+/* The heading spans the whole row after the margin, at every width. */
+.ct-group > :first-child { grid-column: 1; }
+.ct-group-text { grid-column: 2 / -1; min-width: 0; padding-inline: 8px; }
+.ct-group-text bdi { margin-inline-start: 8px; color: var(--muted); font-size: 11.5px; font-weight: 700; }
+
+/* Per-line state: a quiet square while saving, a rose mark when it failed, faint text when done */
+.ct-dot { display: inline-block; width: 8px; height: 8px; background: #d4a019; }
+.ct-retry {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 34px;
+    border: 1px solid var(--rose);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--rose);
+    font-size: 13px;
+    cursor: pointer;
+}
+.ct-retry:hover { background: rgb(190 18 60 / 0.06); }
+.ct-retry:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.ct-bad { display: inline-flex; align-items: center; gap: 6px; color: var(--rose); font-size: 12px; font-weight: 700; }
+.ct-by { overflow: hidden; color: #a1a1aa; font-size: 11.5px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.ct-saved { color: var(--muted); font-size: 12.5px; font-weight: 700; }
+
+/* Review and posted paper */
+.ct-rrow {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--lg-margin) minmax(150px, 1fr) 130px 100px 100px 110px;
+    grid-template-areas: "no item counted expected diff value";
+    grid-template-rows: var(--lg-line);
+    align-items: center;
+    height: var(--lg-line);
+    border-block-end: 1px solid var(--rule);
+    font-variant-numeric: tabular-nums;
+}
+.ct-rrow--head { color: var(--muted); font-size: 11.5px; font-weight: 700; border-block-end: 1px solid var(--ink); }
+.ct-rrow--head > span { padding-inline: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ct-rrow--head .ct-r-counted, .ct-rrow--head .ct-r-expected, .ct-rrow--head .ct-r-diff, .ct-rrow--head .ct-r-value { text-align: end; }
+.ct-rrow--faint { color: var(--muted); }
+.ct-r-item { grid-area: item; display: flex; align-items: baseline; gap: 8px; min-width: 0; padding-inline: 8px; overflow: hidden; white-space: nowrap; font-weight: 700; }
+.ct-r-item > span { overflow: hidden; text-overflow: ellipsis; }
+.ct-sub { color: #a1a1aa; font-size: 11px; font-weight: 600; }
+.ct-r-counted { grid-area: counted; }
+.ct-r-expected { grid-area: expected; }
+.ct-r-diff { grid-area: diff; }
+.ct-r-value { grid-area: value; font-weight: 800; }
+.ct-r-counted, .ct-r-expected, .ct-r-diff, .ct-r-value { padding-inline: 8px; text-align: end; white-space: nowrap; }
+.ct-r-counted small { color: var(--muted); font-size: 11px; }
+.ct-neg { color: var(--rose); }
+.ct-zero { color: #a1a1aa; }
+.lg-sum .ct-neg { color: var(--rose); }
+
+/* New count panel: plain form on the desk, no paper */
+.ct-new { display: grid; gap: 14px; max-width: 520px; margin-inline: auto; padding: 16px; border: 1px solid #d4d4d8; background: var(--paper); }
+.ct-field { display: grid; gap: 4px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.ct-check { display: flex; align-items: center; gap: 10px; min-height: 40px; font-weight: 700; cursor: pointer; }
+.ct-check input { width: 18px; height: 18px; accent-color: var(--ink); }
+.ct-check small { margin-inline-start: auto; color: var(--muted); font-size: 12px; }
+.ct-group-list { display: grid; max-height: 320px; margin: 0; padding: 0; overflow-y: auto; list-style: none; border-block-start: 1px solid var(--rule); }
+.ct-group-list li { border-block-end: 1px solid var(--rule); }
+.ct-hint { margin: 0; color: var(--muted); font-size: 12.5px; }
+
+/* Narrow book: two ruled lines per item, like the purchase editor */
+@container ledger (max-width: 740px) {
+    .ct-row--head, .ct-rrow--head { display: none; }
+    .ct-row {
+        grid-template-columns: var(--lg-margin) minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-areas:
+            "no item meta"
+            "no qty unit";
+        grid-template-rows: var(--lg-line) var(--lg-line);
+        height: calc(var(--lg-line) * 2);
+        background: linear-gradient(to bottom, transparent calc(var(--lg-line) - 1px), var(--rule) calc(var(--lg-line) - 1px) var(--lg-line), transparent var(--lg-line));
+    }
+    .ct-row.is-hl { background-color: var(--ink-wash); }
+    .ct-rrow {
+        grid-template-columns: var(--lg-margin) repeat(4, minmax(0, 1fr));
+        grid-template-areas:
+            "no item item item item"
+            "no counted expected diff value";
+        grid-template-rows: var(--lg-line) var(--lg-line);
+        height: calc(var(--lg-line) * 2);
+        background: linear-gradient(to bottom, transparent calc(var(--lg-line) - 1px), var(--rule) calc(var(--lg-line) - 1px) var(--lg-line), transparent var(--lg-line));
+    }
+    .ct-rrow--faint { grid-template-areas: "no item item item item" "no expected expected expected expected"; }
+    .ct-rrow [data-label]::before { content: attr(data-label) " "; color: #a1a1aa; font-size: 10.5px; font-weight: 700; }
+    .ct-r-counted, .ct-r-expected, .ct-r-diff, .ct-r-value { padding-inline: 4px; text-align: start; }
+}
+/* Phone-narrow: review takes three ruled lines so every number keeps a readable width. */
+@container ledger (max-width: 420px) {
+    .ct-rrow {
+        grid-template-columns: var(--lg-margin) repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+            "no item item"
+            "no counted expected"
+            "no diff value";
+        grid-template-rows: repeat(3, var(--lg-line));
+        height: calc(var(--lg-line) * 3);
+        background: repeating-linear-gradient(to bottom, transparent 0 calc(var(--lg-line) - 1px), var(--rule) calc(var(--lg-line) - 1px) var(--lg-line));
+    }
+    .ct-rrow--faint { grid-template-areas: "no item item" "no expected expected"; height: calc(var(--lg-line) * 2); }
+}
+
+@media (max-width: 600px) {
+    .ct-find { flex: 1 1 100%; }
+    .ct-filters { flex: 1 1 auto; }
+    .ct-filters button { flex: 1; }
+    .ct-add { min-width: 0; }
+    .ct-title { font-size: 20px; }
+}

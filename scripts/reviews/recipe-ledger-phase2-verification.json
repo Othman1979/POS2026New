@@ -1,0 +1,354 @@
+{
+  "baseline": "50cebe3f81fb6d33ca213ad38b7e675fd4be102e",
+  "red": {
+    "total": 19,
+    "passed": 7,
+    "failed": 12,
+    "files": [
+      {
+        "path": "backend/tests/integration/recipeLedgerPhase2Regression.test.js",
+        "status": "failed",
+        "tests": 19,
+        "failures": [
+          "refunds at the original usage cost after the ingredient cost changes",
+          "keeps an originally unknown cost unknown on reversal",
+          "unwinds multiple usage cost snapshots exactly and emits once for a multi-row reversal",
+          "fully reverses all three fractional split children",
+          "rejects split allocations that borrow quantity from a different saved line",
+          "does not duplicate a saved recipe key when the same saved item id occurs twice",
+          "rejects ambiguous recipe identities when saved ids are omitted",
+          "serializes reversals of one shared line despite an older caller snapshot",
+          "fully refunds two split children concurrently through HTTP",
+          "sees a frozen composition committed after the caller established its snapshot",
+          "rolls back the settings batch when its recipe-toggle audit cannot be written",
+          "audits one transition for two simultaneous identical setting updates"
+        ]
+      }
+    ],
+    "cases": [
+      {
+        "title": "refunds at the original usage cost after the ingredient cost changes",
+        "status": "failed"
+      },
+      {
+        "title": "keeps an originally unknown cost unknown on reversal",
+        "status": "failed"
+      },
+      {
+        "title": "unwinds multiple usage cost snapshots exactly and emits once for a multi-row reversal",
+        "status": "failed"
+      },
+      {
+        "title": "fully reverses all three fractional split children",
+        "status": "failed"
+      },
+      {
+        "title": "keeps tracked and legacy lines separate through merge, resave, settlement, and refund",
+        "status": "passed"
+      },
+      {
+        "title": "keeps an empty composition empty after a recipe is added and the saved line grows",
+        "status": "passed"
+      },
+      {
+        "title": "rejects split allocations that borrow quantity from a different saved line",
+        "status": "failed"
+      },
+      {
+        "title": "does not duplicate a saved recipe key when the same saved item id occurs twice",
+        "status": "failed"
+      },
+      {
+        "title": "rejects duplicate saved identities during checkout even when aggregate quantity matches",
+        "status": "passed"
+      },
+      {
+        "title": "rejects ambiguous recipe identities when saved ids are omitted",
+        "status": "failed"
+      },
+      {
+        "title": "reverses removed tracked lines while disabled without charging newly added lines",
+        "status": "passed"
+      },
+      {
+        "title": "serializes reversals of one shared line despite an older caller snapshot",
+        "status": "failed"
+      },
+      {
+        "title": "fully refunds two split children concurrently through HTTP",
+        "status": "failed"
+      },
+      {
+        "title": "preserves server-owned recipe identity through a split-board rewrite and all refunds",
+        "status": "passed"
+      },
+      {
+        "title": "sees a frozen composition committed after the caller established its snapshot",
+        "status": "failed"
+      },
+      {
+        "title": "allows independent new recipe writes while another ingredient transaction remains open",
+        "status": "passed"
+      },
+      {
+        "title": "rolls back order, stock, and ledger together when a usage insert fails",
+        "status": "passed"
+      },
+      {
+        "title": "rolls back the settings batch when its recipe-toggle audit cannot be written",
+        "status": "failed"
+      },
+      {
+        "title": "audits one transition for two simultaneous identical setting updates",
+        "status": "failed"
+      }
+    ]
+  },
+  "broad": {
+    "total": 763,
+    "passed": 762,
+    "failed": 1,
+    "files": [
+      {
+        "path": "backend/tests/integration/bundle.checkout.test.js",
+        "status": "passed",
+        "tests": 14,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/bundle.tables.test.js",
+        "status": "passed",
+        "tests": 35,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/categoryCopy.test.js",
+        "status": "passed",
+        "tests": 3,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/checkout.test.js",
+        "status": "passed",
+        "tests": 133,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/checkoutPostCommit.test.js",
+        "status": "passed",
+        "tests": 5,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/maintenanceReset.test.js",
+        "status": "failed",
+        "tests": 10,
+        "failures": [
+          "clears recovery snapshots and print jobs, preserves setup and never reuses queue IDs"
+        ]
+      },
+      {
+        "path": "backend/tests/integration/platformHeldSettlement.test.js",
+        "status": "passed",
+        "tests": 14,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/products.test.js",
+        "status": "passed",
+        "tests": 35,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerAdmin.test.js",
+        "status": "passed",
+        "tests": 2,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerPhase1Regression.test.js",
+        "status": "passed",
+        "tests": 10,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerPhase2Regression.test.js",
+        "status": "passed",
+        "tests": 19,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerReport.test.js",
+        "status": "passed",
+        "tests": 3,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerReversals.test.js",
+        "status": "passed",
+        "tests": 4,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerService.test.js",
+        "status": "passed",
+        "tests": 6,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerSplitsMerges.test.js",
+        "status": "passed",
+        "tests": 3,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerTables.test.js",
+        "status": "passed",
+        "tests": 3,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/refunds.test.js",
+        "status": "passed",
+        "tests": 73,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/reportsRefunds.test.js",
+        "status": "passed",
+        "tests": 9,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/settingsValidation.test.js",
+        "status": "passed",
+        "tests": 25,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/subscriptionCollections.test.js",
+        "status": "passed",
+        "tests": 13,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/subscriptionManagement.test.js",
+        "status": "passed",
+        "tests": 19,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/subscriptionPlans.test.js",
+        "status": "passed",
+        "tests": 6,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/subscriptionPurchase.test.js",
+        "status": "passed",
+        "tests": 15,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/subscriptionRedemptions.test.js",
+        "status": "passed",
+        "tests": 15,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/systemSettingsRole.test.js",
+        "status": "passed",
+        "tests": 2,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/tableOrderPostCommit.test.js",
+        "status": "passed",
+        "tests": 2,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/tables.test.js",
+        "status": "passed",
+        "tests": 199,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/integration/tableSettlementContext.test.js",
+        "status": "passed",
+        "tests": 13,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/unit/inventoryService.test.js",
+        "status": "passed",
+        "tests": 6,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/unit/recipeLedgerPure.test.js",
+        "status": "passed",
+        "tests": 12,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/unit/refundVoidModuleWiring.test.js",
+        "status": "passed",
+        "tests": 4,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/unit/SavedOrderLines.test.js",
+        "status": "passed",
+        "tests": 24,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/unit/splitCheckModuleWiring.test.js",
+        "status": "passed",
+        "tests": 2,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/unit/splitChecks.test.js",
+        "status": "passed",
+        "tests": 18,
+        "failures": []
+      },
+      {
+        "path": "backend/tests/unit/splitMoneyAllocator.test.js",
+        "status": "passed",
+        "tests": 7,
+        "failures": []
+      }
+    ]
+  },
+  "maintenanceAfterAssertionCorrection": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "files": [
+      {
+        "path": "backend/tests/integration/maintenanceReset.test.js",
+        "status": "passed",
+        "tests": 10,
+        "failures": []
+      }
+    ]
+  },
+  "resolution": "All 763 distinct tests verified passing. Broad run: 762 passed and one unordered session-ID assertion failed. Only that assertion changed; maintenance rerun: 10 passed. Application source unchanged between runs.",
+  "isolation": "Fresh randomly named scratch databases using recipe-ledger-phase1-preload.cjs; no business database or existing test database seeded.",
+  "sourceSha256": {
+    "backend/modules/checkout/executeCheckout.js": "772ae888b81f41cc2569e1ab069da94681e5937e4c75f147bef947f4173dfa0e",
+    "backend/modules/orders/SavedOrderLines.js": "1ac910bd89ea1db113bc766f69384820556309f8b804a99ff19a53a10b29e402",
+    "backend/modules/refunds/voidOpenTableOrder.js": "d8efe8d1ef4b183fa5e6fe01ba71c5db8fafc01f2970eb9e8cb5533cfe3a0613",
+    "backend/modules/tables/splitChecks.js": "a96ead8f20a549d9a6c95ccafff826cba17c751ab71cc2e94d5383350abd8c84",
+    "backend/routes/admin/subscriptions.js": "4cd8885b34e45d31e2040825e1ce0db7dedf646de1ae48610192618608746084",
+    "backend/routes/system.js": "bc6b0b734ceef25732c3b7c8c5a540d0bd3573b7fa41664c5ba01fcefc49d931",
+    "backend/services/RecipeLedgerService.js": "4b26101aceeaf59a3ac0a175e379beeba69003597ebc16cac145c413de8d47b5",
+    "backend/services/RefundService.js": "4ec36b5ebc03920f64d42d763e6ec6a4bc6a92fb2c92607328c72e2ad8114b46",
+    "backend/tests/integration/recipeLedgerPhase2Regression.test.js": "eb2a340f3d62fd2be355accae4c23a3aa045fc66d9fb2ff80ef2399bc7c8409f",
+    "backend/tests/integration/recipeLedgerReversals.test.js": "1b85b5adca5555bf3ba2cff38f3352a8882be3d2ffc33f89f4c39da409d1b457",
+    "backend/tests/integration/maintenanceReset.test.js": "3b2780ed781f9673343690ef19a894528317abded137c9dada52a41f7ecccb43"
+  }
+}

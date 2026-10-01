@@ -1,0 +1,461 @@
+{
+  "head": "d6cc1ab2",
+  "database": "posapp_review_recipe_p1_45c59cd40acd",
+  "engine": {
+    "version": "10.4.32-MariaDB",
+    "isolation": "REPEATABLE-READ"
+  },
+  "results": [
+    {
+      "name": "Task 4: uncounted history stays unknown",
+      "status": "FAIL",
+      "evidence": {
+        "summary_expected": null,
+        "history_running_balance": 10
+      },
+      "error": "Expected values to be strictly equal:\n\n10 !== null\n"
+    },
+    {
+      "name": "Task 4: first Count has no invented expected quantity or variance",
+      "status": "FAIL",
+      "evidence": {
+        "stored": {
+          "expected_qty": "10.000000",
+          "period_usage_qty": "0.000000"
+        },
+        "last_count": {
+          "at": "2026-09-05T21:10:42.000Z",
+          "qty": 100,
+          "expected_qty": 10,
+          "variance_qty": 90,
+          "variance_pct": null
+        }
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '10.000000'\n- null\n"
+    },
+    {
+      "name": "Task 4: opening replay rejects changed quantity and does not return false success",
+      "status": "FAIL",
+      "evidence": {
+        "responses": [
+          {
+            "status": 200,
+            "replay": false,
+            "qty": "100.000000"
+          },
+          {
+            "status": 200,
+            "replay": true,
+            "qty": "100.000000"
+          },
+          {
+            "status": 200,
+            "replay": true,
+            "qty": "100.000000"
+          }
+        ],
+        "stored": {
+          "rows_written": 1,
+          "qty": "100.000000"
+        }
+      },
+      "error": "Expected values to be strictly equal:\n\n200 !== 409\n"
+    },
+    {
+      "name": "Task 4: supported 64-character opening key works for multiple ingredients",
+      "status": "FAIL",
+      "evidence": {
+        "response": {
+          "status": 409,
+          "body": {
+            "success": false,
+            "message": "An ingredient with this name already exists."
+          }
+        },
+        "stored": {
+          "rows_written": 0
+        }
+      },
+      "error": "Expected values to be strictly equal:\n\n409 !== 200\n"
+    },
+    {
+      "name": "Task 4: Count observes the receipt committed before its ingredient lock is acquired",
+      "status": "FAIL",
+      "evidence": {
+        "rows": [
+          {
+            "id": 7,
+            "kind": "count",
+            "qty": "100.000000",
+            "expected_qty": "0.000000"
+          },
+          {
+            "id": 8,
+            "kind": "receipt",
+            "qty": "10.000000",
+            "expected_qty": null
+          },
+          {
+            "id": 9,
+            "kind": "count",
+            "qty": "110.000000",
+            "expected_qty": "100.000000"
+          }
+        ],
+        "count_expected": "100.000000",
+        "summary": {
+          "at": "2026-09-05T21:10:42.000Z",
+          "qty": 110,
+          "expected_qty": 100,
+          "variance_qty": 10,
+          "variance_pct": null
+        }
+      },
+      "error": "Expected values to be strictly equal:\n\n100 !== 110\n"
+    },
+    {
+      "name": "Task 4: concurrent identical receipt retry succeeds as replay",
+      "status": "FAIL",
+      "evidence": {
+        "retry": {
+          "error": "ER_DUP_ENTRY"
+        },
+        "stored": {
+          "n": 1,
+          "qty": "10.000000"
+        }
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ undefined\n- true\n"
+    },
+    {
+      "name": "Task 4 HTTP: two simultaneous identical receipt submissions return success/replay",
+      "status": "FAIL",
+      "evidence": {
+        "responses": [
+          {
+            "status": 409,
+            "body": {
+              "success": false,
+              "message": "An ingredient with this name already exists."
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "success": true,
+              "movement": {
+                "id": 12,
+                "ingredient_id": 8,
+                "kind": "receipt",
+                "qty": "10.000000",
+                "unit_cost": null,
+                "reason": null,
+                "expected_qty": null,
+                "period_usage_qty": null,
+                "line_key": null,
+                "unit_qty": null,
+                "product_qty": null,
+                "source_type": "manual",
+                "source_id": null,
+                "source_label": null,
+                "product_id": null,
+                "product_name": null,
+                "user_id": 1,
+                "user_name": "Test Admin",
+                "business_date": "2026-09-05T00:00:00.000Z",
+                "occurred_at": "2026-09-05T21:10:42.000Z",
+                "note": null,
+                "client_key": "6c632cff04e758ba7b7f176a",
+                "corrects_movement_id": null
+              },
+              "replay": false
+            }
+          }
+        ],
+        "stored": {
+          "n": 1,
+          "qty": "10.000000"
+        }
+      },
+      "error": "Identical retry is returned as an HTTP error"
+    },
+    {
+      "name": "Task 4: summary Count and tail belong to one consistent read",
+      "status": "FAIL",
+      "evidence": {
+        "interleaved_remaining": 110,
+        "fresh_remaining": 210,
+        "valid_committed_balances": [
+          100,
+          200,
+          210
+        ]
+      },
+      "error": "Summary returned a balance that never existed"
+    },
+    {
+      "name": "Tasks 3-4: partial refunds restore every ingredient exactly at six-place precision",
+      "status": "FAIL",
+      "evidence": {
+        "net": [
+          {
+            "ingredient_id": 10,
+            "net": "-0.000001",
+            "remaining_product_qty": "1.000000"
+          },
+          {
+            "ingredient_id": 11,
+            "net": "0.000000",
+            "remaining_product_qty": "0.000000"
+          }
+        ]
+      },
+      "error": "Full item quantity refunded but ingredient usage remains"
+    },
+    {
+      "name": "Tasks 3-4 HTTP: checkout then three fractional refunds restores every component",
+      "status": "FAIL",
+      "evidence": {
+        "sale": {
+          "status": 200,
+          "invoice_id": 1
+        },
+        "refunds": [
+          {
+            "qty": 0.333333,
+            "status": 200,
+            "body": {
+              "success": true,
+              "refund_id": 1,
+              "kind": "refund",
+              "scope": "item",
+              "refund_status": "partial",
+              "amount_refunded": 1.94,
+              "stock_enabled": false,
+              "shift_id": null,
+              "ledger_changed_ingredient_ids": [
+                11
+              ],
+              "table_freed": false
+            }
+          },
+          {
+            "qty": 0.333333,
+            "status": 200,
+            "body": {
+              "success": true,
+              "refund_id": 2,
+              "kind": "refund",
+              "scope": "item",
+              "refund_status": "partial",
+              "amount_refunded": 1.94,
+              "stock_enabled": false,
+              "shift_id": null,
+              "ledger_changed_ingredient_ids": [
+                11
+              ],
+              "table_freed": false
+            }
+          },
+          {
+            "qty": 0.333334,
+            "status": 200,
+            "body": {
+              "success": true,
+              "refund_id": 3,
+              "kind": "refund",
+              "scope": "item",
+              "refund_status": "full",
+              "amount_refunded": 1.92,
+              "stock_enabled": false,
+              "shift_id": null,
+              "ledger_changed_ingredient_ids": [
+                11
+              ],
+              "table_freed": false
+            }
+          }
+        ],
+        "net": [
+          {
+            "ingredient_id": 10,
+            "net": "-0.000001",
+            "remaining_product_qty": "1.000000"
+          },
+          {
+            "ingredient_id": 11,
+            "net": "0.000000",
+            "remaining_product_qty": "0.000000"
+          }
+        ],
+        "refunded_quantity": "1.000000",
+        "order": {
+          "refund_status": "full"
+        }
+      },
+      "error": "Paid order fully refunded but ingredient usage remains"
+    },
+    {
+      "name": "Task 3: portions arithmetic does not lose a whole portion to binary rounding",
+      "status": "FAIL",
+      "evidence": {
+        "result": {
+          "portions": 2,
+          "limiting_ingredient_id": 1
+        }
+      },
+      "error": "Expected values to be strictly equal:\n\n2 !== 3\n"
+    },
+    {
+      "name": "Task 3 HTTP: 0.3 g available at 0.1 g per meal yields three portions",
+      "status": "FAIL",
+      "evidence": {
+        "response": {
+          "product_id": 2,
+          "name": "Test Drink",
+          "portions_possible": 2,
+          "limiting_ingredient": {
+            "id": 12,
+            "name": "Review 50a673aeac2d0e122c1165db"
+          }
+        }
+      },
+      "error": "Expected values to be strictly equal:\n\n2 !== 3\n"
+    },
+    {
+      "name": "Task 1 HTTP: duplicate product rows preserve stock through save, re-save and settle",
+      "status": "PASS",
+      "evidence": {
+        "stock": [
+          7,
+          7,
+          7
+        ],
+        "statuses": [
+          200,
+          200,
+          200
+        ]
+      }
+    },
+    {
+      "name": "Task 4: explicit gram/kg form units survive preference edit and Count accepts zero",
+      "status": "PASS",
+      "evidence": {
+        "qty": "2000.000000",
+        "count": "0.000000"
+      }
+    },
+    {
+      "name": "Task 4: correction after a later Count preserves the counted balance",
+      "status": "PASS",
+      "evidence": {
+        "status": 200,
+        "expected": 100
+      }
+    },
+    {
+      "name": "Task 4: filtered history includes earlier usage and resets at a Count",
+      "status": "PASS",
+      "evidence": {
+        "first_page": [
+          198,
+          200
+        ],
+        "second_page": [
+          85
+        ]
+      }
+    },
+    {
+      "name": "Task 4 measurement: history pagination query volume and summary EXPLAIN",
+      "status": "PASS",
+      "evidence": {
+        "page_rows": 2,
+        "query_row_counts": [
+          2,
+          20000
+        ],
+        "elapsed_ms": 20.31,
+        "summary_plans": [
+          [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived2>",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "20035",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "m",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "latest.id",
+              "rows": "1",
+              "Extra": ""
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "index",
+              "possible_keys": null,
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "13",
+              "ref": null,
+              "rows": "20035",
+              "Extra": "Using where; Using index"
+            }
+          ],
+          [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived2>",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "20035",
+              "Extra": "Using temporary; Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "m",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_id",
+              "key_len": "4",
+              "ref": "latest.ingredient_id",
+              "rows": "2",
+              "Extra": "Using index condition"
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "index",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "13",
+              "ref": null,
+              "rows": "20035",
+              "Extra": "Using where; Using index; Using temporary; Using filesort"
+            }
+          ]
+        ]
+      }
+    }
+  ]
+}

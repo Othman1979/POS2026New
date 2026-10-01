@@ -1,0 +1,96 @@
+{
+  "baseline": "d6cc1ab245d08ccb80e971d47a85e103ac7a0466",
+  "broad": {
+    "total": 457,
+    "passed": 456,
+    "failed": 1,
+    "files": [
+      {
+        "path": "backend/tests/integration/checkout.test.js",
+        "status": "passed",
+        "tests": 133
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerAdmin.test.js",
+        "status": "passed",
+        "tests": 2
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerPhase1Regression.test.js",
+        "status": "passed",
+        "tests": 10
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerReport.test.js",
+        "status": "failed",
+        "tests": 3
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerReversals.test.js",
+        "status": "passed",
+        "tests": 4
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerSchema.test.js",
+        "status": "passed",
+        "tests": 2
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerService.test.js",
+        "status": "passed",
+        "tests": 6
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerSplitsMerges.test.js",
+        "status": "passed",
+        "tests": 3
+      },
+      {
+        "path": "backend/tests/integration/recipeLedgerTables.test.js",
+        "status": "passed",
+        "tests": 3
+      },
+      {
+        "path": "backend/tests/integration/refunds.test.js",
+        "status": "passed",
+        "tests": 73
+      },
+      {
+        "path": "backend/tests/integration/tables.test.js",
+        "status": "passed",
+        "tests": 199
+      },
+      {
+        "path": "backend/tests/unit/inventoryService.test.js",
+        "status": "passed",
+        "tests": 6
+      },
+      {
+        "path": "backend/tests/unit/recipeLedgerMigration.test.js",
+        "status": "passed",
+        "tests": 1
+      },
+      {
+        "path": "backend/tests/unit/recipeLedgerPure.test.js",
+        "status": "passed",
+        "tests": 12
+      }
+    ]
+  },
+  "resolution": "The only broad-run failure asserted a known expectation for a first Count. The fixture has no earlier Count. Corrected the test to assert null expected quantity and variance; application code unchanged after the broad run.",
+  "reportRerun": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0
+  },
+  "sourceSHA256": [
+    {
+      "path": "backend/services/RecipeLedgerService.js",
+      "hash": "554D3496B0CDF5EB3C4A748F0D9C7950B0AA6131466D59E01D8B69C67CFD0D74"
+    },
+    {
+      "path": "backend/routes/admin/recipeLedger.js",
+      "hash": "35F1533A8B30A226738908BF14B168952DA9773A743E87F40145DA3A838187D4"
+    }
+  ]
+}

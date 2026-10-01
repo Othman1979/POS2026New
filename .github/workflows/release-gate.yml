@@ -1,0 +1,192 @@
+name: Release gate
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master, codex/catalog-navigation-cache]
+
+concurrency:
+  group: release-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  DB_HOST: 127.0.0.1
+  DB_PORT: 3306
+  DB_NAME: posapp_test
+  DB_USER: root
+  DB_PASSWORD: ""
+
+jobs:
+  application:
+    name: Application
+    runs-on: [self-hosted, windows, x64, posapp-feature-gate]
+    timeout-minutes: 120
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify Windows runner and disposable database
+        run: node scripts/ci/windows-self-hosted-preflight.cjs
+
+      - name: Validate architecture
+        run: npm run architecture:check
+
+      - name: Build production frontend
+        run: npm run build
+
+      - name: Run application, migration, and schema tests
+        run: >-
+          npx vitest run
+          --exclude backend/tests/unit/installerPackageContract.test.js
+          --exclude backend/tests/unit/installerUpdateContract.test.js
+
+      - name: Capture database failure diagnostics
+        if: failure()
+        continue-on-error: true
+        run: node scripts/ci/database-diagnostics.cjs
+
+      - name: Upload database failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: database-application
+          path: scratch/ci-diagnostics/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  browser-workflows:
+    name: Browser workflows (English and Arabic)
+    runs-on: [self-hosted, windows, x64, posapp-feature-gate]
+    timeout-minutes: 35
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+      - name: Use Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Verify Windows runner and disposable database
+        run: node scripts/ci/windows-self-hosted-preflight.cjs
+      - name: Build production frontend
+        run: npm run build
+      - name: Install browser test runtime
+        run: npx playwright install chromium
+      - name: Verify staff, table, payment and recovery workflows
+        run: npm run test:release-browser
+      - name: Verify external order intake through cashier completion
+        env:
+          ORDER_INTAKE_E2E: "1"
+          ORDER_INTAKE_ENABLED: "true"
+          ORDER_INTAKE_CLIENT_ID: release-gate-intake
+          ORDER_INTAKE_API_KEY: release-gate-intake-key-000000000000000000000000
+          ORDER_INTAKE_QUOTE_SECRET: release-gate-quote-secret-000000000000000000000000
+          ORDER_INTAKE_ACTOR_USER_ID: "70"
+        run: npx playwright test --project=call-center-tests --grep "external hold"
+      - name: Capture database failure diagnostics
+        if: failure()
+        continue-on-error: true
+        run: node scripts/ci/database-diagnostics.cjs
+      - name: Upload browser evidence and failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: browser-workflows
+          path: |
+            scratch/permissions-browser/
+            scratch/table-void-revision-browser/
+            scratch/checkout-ui-browser-results.json
+            scratch/release-browser.json
+            scratch/ci-diagnostics/
+          if-no-files-found: error
+          retention-days: 14
+
+  windows-installer:
+    name: Windows installer
+    runs-on: [self-hosted, windows, x64, posapp-feature-gate]
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Windows installer contract tests
+        run: npx vitest run --config vitest.windows.config.mjs
+
+  spooler:
+    name: Spooler
+    runs-on: [self-hosted, windows, x64, posapp-feature-gate]
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            pos-spooler-printer/package-lock.json
+
+      - name: Install application test dependencies
+        run: npm ci
+
+      - name: Install spooler dependencies
+        run: npm ci --prefix pos-spooler-printer
+
+      - name: Stage pinned Typst runtime
+        shell: pwsh
+        run: ./scripts/setup-spooler-typst.ps1
+
+      - name: Run spooler tests
+        run: npm --prefix pos-spooler-printer test
+
+  release-gate:
+    name: Release gate
+    if: always()
+    needs: [application, browser-workflows, windows-installer, spooler]
+    runs-on: [self-hosted, windows, x64, posapp-feature-gate]
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+      - name: Use Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Require every release check
+        env:
+          APPLICATION_RESULT: ${{ needs.application.result }}
+          WINDOWS_INSTALLER_RESULT: ${{ needs.windows-installer.result }}
+          SPOOLER_RESULT: ${{ needs.spooler.result }}
+          BROWSER_RESULT: ${{ needs.browser-workflows.result }}
+        run: node scripts/ci/require-release-checks.cjs

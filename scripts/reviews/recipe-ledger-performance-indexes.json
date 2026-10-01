@@ -1,0 +1,1678 @@
+{
+  "database": "posapp_review_recipe_p1_a0f625960b17",
+  "measurements": [
+    {
+      "label": "before / summary",
+      "medianMs": 294.6216999999999,
+      "queries": [
+        {
+          "sql": "SELECT i.*, (SELECT COUNT(*) FROM product_recipe_lines r WHERE r.ingredient_id=i.id) AS recipe_product_count, c.id AS count_id, c.qty AS count_qty, c.occurred_at AS count_at, c.expected_qty AS count_expected, c.period_usage_qty AS count_period, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id ) END AS expected_remaining, opening.qty AS opening_qty, COALESCE(d.received,0) AS received, COALESCE(d.used,0) AS used, COALESCE(d.waste,0) AS waste, COALESCE(d.corrections,0) AS corrections, COALESCE(d.used_cost,0) AS used_cost, COALESCE(d.waste_cost,0) AS waste_cost FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' ORDER BY id DESC LIMIT 1 ) LEFT JOIN ( SELECT ingredient_id, MIN(CASE WHEN kind='count' THEN id END) AS opening_id, SUM(CASE WHEN kind='receipt' THEN qty ELSE 0 END) AS received, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty ELSE 0 END) AS used, -SUM(CASE WHEN kind='waste' THEN qty ELSE 0 END) AS waste, SUM(CASE WHEN kind='correction' THEN qty ELSE 0 END) AS corrections, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS used_cost, -SUM(CASE WHEN kind='waste' THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS waste_cost FROM ingredient_movements WHERE business_date=? GROUP BY ingredient_id ) d ON d.ingredient_id=i.id LEFT JOIN ingredient_movements opening ON opening.id=d.opening_id WHERE ?=1 OR i.is_active=1 ORDER BY i.name,i.id",
+          "ms": 272.9163,
+          "rows": 102,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using where; Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived5>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "492",
+              "Extra": ""
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "opening",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "d.opening_id",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 5,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient",
+              "key": "idx_im_date_ingredient",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50250",
+              "Extra": "Using where"
+            },
+            {
+              "id": 4,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id,const",
+              "rows": "248",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_id",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "497",
+              "Extra": "Using index condition"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_prl_ingredient",
+              "key": "idx_prl_ingredient",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "1",
+              "Extra": "Using index"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "before / report",
+      "medianMs": 364.7525999999998,
+      "queries": [
+        {
+          "sql": "SELECT i.id, i.name, i.measure, i.display_unit, i.unit_cost, i.par_qty, i.pack_name, i.pack_size, i.is_active, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id AND t.business_date<=? ) END AS closing_expected FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' AND business_date<=? ORDER BY id DESC LIMIT 1 ) ORDER BY i.name,i.id",
+          "ms": 103.25800000000004,
+          "rows": 102,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id,const",
+              "rows": "248",
+              "Extra": "Using where"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient",
+              "key": "idx_im_ingredient_id",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "497",
+              "Extra": "Using index condition; Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT ingredient_id, kind, reason, SUM(qty) AS qty, SUM(qty*COALESCE(unit_cost,0)) AS cost FROM ingredient_movements WHERE business_date=? AND kind<>'count' GROUP BY ingredient_id, kind, reason",
+          "ms": 153.57499999999982,
+          "rows": 101,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_date_ingredient",
+              "key": "idx_im_date_ingredient",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50250",
+              "Extra": "Using where; Using temporary; Using filesort"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT ingredient_id, kind, qty, expected_qty, period_usage_qty, occurred_at FROM ingredient_movements WHERE business_date=? AND kind='count' ORDER BY ingredient_id, id",
+          "ms": 80.85640000000012,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_date_ingredient",
+              "key": "idx_im_date_ingredient",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50250",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COUNT(o.invoice_id) AS orders, COALESCE(SUM(o.total), 0) AS sales_processed, COALESCE(SUM(o.tax), 0) AS tax, COALESCE(SUM(CASE WHEN o.payment_method='cash' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.cash_amount,0) ELSE 0 END), 0) AS cash, COALESCE(SUM(CASE WHEN o.payment_method='card' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.card_amount,0) ELSE 0 END), 0) AS card ,COALESCE(SUM(CASE WHEN o.payment_method='platform' THEN o.total ELSE 0 END), 0) AS platform FROM orders o WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided')",
+          "ms": 1.1532999999999447,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "ALL",
+              "possible_keys": "idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "55",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT r.id, r.scope, r.amount_refunded, r.tax_refunded, r.refund_method, o.total AS original_total, o.payment_method AS original_payment_method, o.cash_amount AS original_cash_amount, o.card_amount AS original_card_amount FROM refunds r JOIN orders o ON o.invoice_id=r.invoice_id WHERE r.kind='refund' AND r.created_at >= ? AND r.created_at < ?",
+          "ms": 1.4506000000001222,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_refunds_invoice,idx_refunds_kind,idx_refunds_created",
+              "key": "idx_refunds_kind",
+              "key_len": "1",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using index condition; Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.r.invoice_id",
+              "rows": "1",
+              "Extra": ""
+            }
+          ]
+        },
+        {
+          "sql": "SELECT r.id, r.kind, r.scope, r.subtotal_refunded, r.tax_refunded, o.original_total, o.total, (SELECT COALESCE(SUM(line_total), 0) FROM refund_items WHERE refund_id = r.id) AS item_total FROM refunds r LEFT JOIN orders o ON o.invoice_id = r.invoice_id WHERE r.kind = 'void' AND r.created_at >= ? AND r.created_at < ?",
+          "ms": 0.5579999999999927,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_refunds_kind,idx_refunds_created",
+              "key": "idx_refunds_kind",
+              "key_len": "1",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using index condition; Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.r.invoice_id",
+              "rows": "1",
+              "Extra": ""
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "refund_items",
+              "type": "ALL",
+              "possible_keys": "idx_refund_items_refund",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM(line_discount), 0) AS line_discounts_total, COALESCE(SUM(order_discount), 0) AS order_discounts_total, COALESCE(SUM(line_discount + order_discount), 0) AS discounts_total, COALESCE(SUM(CASE WHEN line_discount > 0 OR order_discount > 0 THEN 1 ELSE 0 END), 0) AS discount_count FROM ( SELECT o.invoice_id, ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END ) AS order_discount, COALESCE(line_discounts.line_discount_amount, 0) AS line_discount FROM orders o LEFT JOIN ( SELECT oi.invoice_id, COALESCE(SUM(GREATEST( 0, (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) )), 0) AS line_discount_amount FROM order_items oi WHERE oi.parent_item_id IS NULL GROUP BY oi.invoice_id ) line_discounts ON line_discounts.invoice_id = o.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') GROUP BY o.invoice_id, o.subtotal, o.discount_type, o.discount_value, line_discounts.line_discount_amount ) discounted_orders",
+          "ms": 2.1226000000001477,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived2>",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "565",
+              "Extra": ""
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "o",
+              "type": "ALL",
+              "possible_keys": "idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "55",
+              "Extra": "Using where; Using temporary; Using filesort"
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "<derived3>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.o.invoice_id",
+              "rows": "10",
+              "Extra": ""
+            },
+            {
+              "id": 3,
+              "select_type": "DERIVED",
+              "table": "oi",
+              "type": "range",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "5",
+              "ref": null,
+              "rows": "298",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM( (GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) * ( CASE WHEN COALESCE(o.subtotal, 0) > 0 THEN GREATEST(0, COALESCE(o.subtotal, 0) - ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END )) / COALESCE(o.subtotal, 0) ELSE 1 END )) + COALESCE(oi.tax_amount, 0) ), 0) AS service_charges_sale FROM order_items oi JOIN orders o ON o.invoice_id = oi.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') AND oi.parent_item_id IS NULL AND oi.note = 'Auto-Gratuity'",
+          "ms": 0.6356999999998152,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "oi",
+              "type": "ALL",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "298",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.oi.invoice_id",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM(ri.line_total), 0) AS service_charges_refund FROM refund_items ri JOIN refunds r ON r.id = ri.refund_id WHERE r.kind = 'refund' AND r.created_at >= ? AND r.created_at < ? AND ri.note = 'Auto-Gratuity'",
+          "ms": 0.725999999999658,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ri",
+              "type": "ALL",
+              "possible_keys": "idx_refund_items_refund",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "r",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,idx_refunds_kind,idx_refunds_created",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.ri.refund_id",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "covering indexes / summary",
+      "medianMs": 218.02340000000004,
+      "queries": [
+        {
+          "sql": "SELECT i.*, (SELECT COUNT(*) FROM product_recipe_lines r WHERE r.ingredient_id=i.id) AS recipe_product_count, c.id AS count_id, c.qty AS count_qty, c.occurred_at AS count_at, c.expected_qty AS count_expected, c.period_usage_qty AS count_period, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id ) END AS expected_remaining, opening.qty AS opening_qty, COALESCE(d.received,0) AS received, COALESCE(d.used,0) AS used, COALESCE(d.waste,0) AS waste, COALESCE(d.corrections,0) AS corrections, COALESCE(d.used_cost,0) AS used_cost, COALESCE(d.waste_cost,0) AS waste_cost FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' ORDER BY id DESC LIMIT 1 ) LEFT JOIN ( SELECT ingredient_id, MIN(CASE WHEN kind='count' THEN id END) AS opening_id, SUM(CASE WHEN kind='receipt' THEN qty ELSE 0 END) AS received, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty ELSE 0 END) AS used, -SUM(CASE WHEN kind='waste' THEN qty ELSE 0 END) AS waste, SUM(CASE WHEN kind='correction' THEN qty ELSE 0 END) AS corrections, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS used_cost, -SUM(CASE WHEN kind='waste' THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS waste_cost FROM ingredient_movements WHERE business_date=? GROUP BY ingredient_id ) d ON d.ingredient_id=i.id LEFT JOIN ingredient_movements opening ON opening.id=d.opening_id WHERE ?=1 OR i.is_active=1 ORDER BY i.name,i.id",
+          "ms": 241.20539999999983,
+          "rows": 102,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using where; Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived5>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "484",
+              "Extra": ""
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "opening",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "d.opening_id",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 5,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient,idx_im_balance,idx_im_day",
+              "key": "idx_im_day",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "49387",
+              "Extra": "Using where; Using index; Using temporary; Using filesort"
+            },
+            {
+              "id": 4,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id,const",
+              "rows": "244",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_balance",
+              "key": "idx_im_balance",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "488",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_prl_ingredient",
+              "key": "idx_prl_ingredient",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "1",
+              "Extra": "Using index"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "covering indexes / report",
+      "medianMs": 92.3752999999997,
+      "queries": [
+        {
+          "sql": "SELECT i.id, i.name, i.measure, i.display_unit, i.unit_cost, i.par_qty, i.pack_name, i.pack_size, i.is_active, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id AND t.business_date<=? ) END AS closing_expected FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' AND business_date<=? ORDER BY id DESC LIMIT 1 ) ORDER BY i.name,i.id",
+          "ms": 45.22519999999986,
+          "rows": 102,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id,const",
+              "rows": "244",
+              "Extra": "Using where"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient,idx_im_balance,idx_im_day",
+              "key": "idx_im_balance",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "488",
+              "Extra": "Using where; Using index"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT ingredient_id, kind, reason, SUM(qty) AS qty, SUM(qty*COALESCE(unit_cost,0)) AS cost FROM ingredient_movements WHERE business_date=? AND kind<>'count' GROUP BY ingredient_id, kind, reason",
+          "ms": 122.48989999999958,
+          "rows": 101,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_date_ingredient,idx_im_day",
+              "key": "idx_im_day",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "49387",
+              "Extra": "Using where; Using index; Using temporary; Using filesort"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT ingredient_id, kind, qty, expected_qty, period_usage_qty, occurred_at FROM ingredient_movements WHERE business_date=? AND kind='count' ORDER BY ingredient_id, id",
+          "ms": 0.46779999999944266,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_date_ingredient,idx_im_day",
+              "key": "idx_im_day",
+              "key_len": "4",
+              "ref": "const,const",
+              "rows": "1",
+              "Extra": "Using index condition; Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COUNT(o.invoice_id) AS orders, COALESCE(SUM(o.total), 0) AS sales_processed, COALESCE(SUM(o.tax), 0) AS tax, COALESCE(SUM(CASE WHEN o.payment_method='cash' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.cash_amount,0) ELSE 0 END), 0) AS cash, COALESCE(SUM(CASE WHEN o.payment_method='card' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.card_amount,0) ELSE 0 END), 0) AS card ,COALESCE(SUM(CASE WHEN o.payment_method='platform' THEN o.total ELSE 0 END), 0) AS platform FROM orders o WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided')",
+          "ms": 0.8197000000000116,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "ALL",
+              "possible_keys": "idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "55",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT r.id, r.scope, r.amount_refunded, r.tax_refunded, r.refund_method, o.total AS original_total, o.payment_method AS original_payment_method, o.cash_amount AS original_cash_amount, o.card_amount AS original_card_amount FROM refunds r JOIN orders o ON o.invoice_id=r.invoice_id WHERE r.kind='refund' AND r.created_at >= ? AND r.created_at < ?",
+          "ms": 0.9301999999997861,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_refunds_invoice,idx_refunds_kind,idx_refunds_created",
+              "key": "idx_refunds_kind",
+              "key_len": "1",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using index condition; Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.r.invoice_id",
+              "rows": "1",
+              "Extra": ""
+            }
+          ]
+        },
+        {
+          "sql": "SELECT r.id, r.kind, r.scope, r.subtotal_refunded, r.tax_refunded, o.original_total, o.total, (SELECT COALESCE(SUM(line_total), 0) FROM refund_items WHERE refund_id = r.id) AS item_total FROM refunds r LEFT JOIN orders o ON o.invoice_id = r.invoice_id WHERE r.kind = 'void' AND r.created_at >= ? AND r.created_at < ?",
+          "ms": 0.3760000000002037,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_refunds_kind,idx_refunds_created",
+              "key": "idx_refunds_kind",
+              "key_len": "1",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using index condition; Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.r.invoice_id",
+              "rows": "1",
+              "Extra": ""
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "refund_items",
+              "type": "ALL",
+              "possible_keys": "idx_refund_items_refund",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM(line_discount), 0) AS line_discounts_total, COALESCE(SUM(order_discount), 0) AS order_discounts_total, COALESCE(SUM(line_discount + order_discount), 0) AS discounts_total, COALESCE(SUM(CASE WHEN line_discount > 0 OR order_discount > 0 THEN 1 ELSE 0 END), 0) AS discount_count FROM ( SELECT o.invoice_id, ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END ) AS order_discount, COALESCE(line_discounts.line_discount_amount, 0) AS line_discount FROM orders o LEFT JOIN ( SELECT oi.invoice_id, COALESCE(SUM(GREATEST( 0, (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) )), 0) AS line_discount_amount FROM order_items oi WHERE oi.parent_item_id IS NULL GROUP BY oi.invoice_id ) line_discounts ON line_discounts.invoice_id = o.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') GROUP BY o.invoice_id, o.subtotal, o.discount_type, o.discount_value, line_discounts.line_discount_amount ) discounted_orders",
+          "ms": 2.578700000000026,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived2>",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "565",
+              "Extra": ""
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "o",
+              "type": "ALL",
+              "possible_keys": "idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "55",
+              "Extra": "Using where; Using temporary; Using filesort"
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "<derived3>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.o.invoice_id",
+              "rows": "10",
+              "Extra": ""
+            },
+            {
+              "id": 3,
+              "select_type": "DERIVED",
+              "table": "oi",
+              "type": "range",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "5",
+              "ref": null,
+              "rows": "298",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM( (GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) * ( CASE WHEN COALESCE(o.subtotal, 0) > 0 THEN GREATEST(0, COALESCE(o.subtotal, 0) - ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END )) / COALESCE(o.subtotal, 0) ELSE 1 END )) + COALESCE(oi.tax_amount, 0) ), 0) AS service_charges_sale FROM order_items oi JOIN orders o ON o.invoice_id = oi.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') AND oi.parent_item_id IS NULL AND oi.note = 'Auto-Gratuity'",
+          "ms": 0.6075000000000728,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "oi",
+              "type": "ALL",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "298",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.oi.invoice_id",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM(ri.line_total), 0) AS service_charges_refund FROM refund_items ri JOIN refunds r ON r.id = ri.refund_id WHERE r.kind = 'refund' AND r.created_at >= ? AND r.created_at < ? AND ri.note = 'Auto-Gratuity'",
+          "ms": 0.6628000000000611,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ri",
+              "type": "ALL",
+              "possible_keys": "idx_refund_items_refund",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "r",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,idx_refunds_kind,idx_refunds_created",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.ri.refund_id",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "ordered day index / summary",
+      "medianMs": 150.24009999999998,
+      "queries": [
+        {
+          "sql": "SELECT i.*, (SELECT COUNT(*) FROM product_recipe_lines r WHERE r.ingredient_id=i.id) AS recipe_product_count, c.id AS count_id, c.qty AS count_qty, c.occurred_at AS count_at, c.expected_qty AS count_expected, c.period_usage_qty AS count_period, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id ) END AS expected_remaining, opening.qty AS opening_qty, COALESCE(d.received,0) AS received, COALESCE(d.used,0) AS used, COALESCE(d.waste,0) AS waste, COALESCE(d.corrections,0) AS corrections, COALESCE(d.used_cost,0) AS used_cost, COALESCE(d.waste_cost,0) AS waste_cost FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' ORDER BY id DESC LIMIT 1 ) LEFT JOIN ( SELECT ingredient_id, MIN(CASE WHEN kind='count' THEN id END) AS opening_id, SUM(CASE WHEN kind='receipt' THEN qty ELSE 0 END) AS received, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty ELSE 0 END) AS used, -SUM(CASE WHEN kind='waste' THEN qty ELSE 0 END) AS waste, SUM(CASE WHEN kind='correction' THEN qty ELSE 0 END) AS corrections, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS used_cost, -SUM(CASE WHEN kind='waste' THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS waste_cost FROM ingredient_movements WHERE business_date=? GROUP BY ingredient_id ) d ON d.ingredient_id=i.id LEFT JOIN ingredient_movements opening ON opening.id=d.opening_id WHERE ?=1 OR i.is_active=1 ORDER BY i.name,i.id",
+          "ms": 137.21839999999975,
+          "rows": 102,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using where; Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived5>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "492",
+              "Extra": ""
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "opening",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "d.opening_id",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 5,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient,idx_im_balance,idx_im_day",
+              "key": "idx_im_day",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50250",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 4,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id,const",
+              "rows": "248",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_balance",
+              "key": "idx_im_balance",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "497",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_prl_ingredient",
+              "key": "idx_prl_ingredient",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "1",
+              "Extra": "Using index"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "ordered day index / report",
+      "medianMs": 189.8700000000008,
+      "queries": [
+        {
+          "sql": "SELECT i.id, i.name, i.measure, i.display_unit, i.unit_cost, i.par_qty, i.pack_name, i.pack_size, i.is_active, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id AND t.business_date<=? ) END AS closing_expected FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' AND business_date<=? ORDER BY id DESC LIMIT 1 ) ORDER BY i.name,i.id",
+          "ms": 40.92820000000029,
+          "rows": 102,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id,const",
+              "rows": "248",
+              "Extra": "Using where"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient,idx_im_balance,idx_im_day",
+              "key": "idx_im_balance",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "497",
+              "Extra": "Using where; Using index"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT ingredient_id, kind, reason, SUM(qty) AS qty, SUM(qty*COALESCE(unit_cost,0)) AS cost FROM ingredient_movements WHERE business_date=? AND kind<>'count' GROUP BY ingredient_id, kind, reason",
+          "ms": 29.383599999999205,
+          "rows": 101,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_date_ingredient,idx_im_day",
+              "key": "idx_im_day",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50250",
+              "Extra": "Using where; Using index"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT ingredient_id, kind, qty, expected_qty, period_usage_qty, occurred_at FROM ingredient_movements WHERE business_date=? AND kind='count' ORDER BY ingredient_id, id",
+          "ms": 117.6226000000006,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_date_ingredient,idx_im_day",
+              "key": "idx_im_date_ingredient",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50250",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COUNT(o.invoice_id) AS orders, COALESCE(SUM(o.total), 0) AS sales_processed, COALESCE(SUM(o.tax), 0) AS tax, COALESCE(SUM(CASE WHEN o.payment_method='cash' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.cash_amount,0) ELSE 0 END), 0) AS cash, COALESCE(SUM(CASE WHEN o.payment_method='card' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.card_amount,0) ELSE 0 END), 0) AS card ,COALESCE(SUM(CASE WHEN o.payment_method='platform' THEN o.total ELSE 0 END), 0) AS platform FROM orders o WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided')",
+          "ms": 0.8995999999997366,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "ALL",
+              "possible_keys": "idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "55",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT r.id, r.scope, r.amount_refunded, r.tax_refunded, r.refund_method, o.total AS original_total, o.payment_method AS original_payment_method, o.cash_amount AS original_cash_amount, o.card_amount AS original_card_amount FROM refunds r JOIN orders o ON o.invoice_id=r.invoice_id WHERE r.kind='refund' AND r.created_at >= ? AND r.created_at < ?",
+          "ms": 1.33009999999922,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_refunds_invoice,idx_refunds_kind,idx_refunds_created",
+              "key": "idx_refunds_kind",
+              "key_len": "1",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using index condition; Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.r.invoice_id",
+              "rows": "1",
+              "Extra": ""
+            }
+          ]
+        },
+        {
+          "sql": "SELECT r.id, r.kind, r.scope, r.subtotal_refunded, r.tax_refunded, o.original_total, o.total, (SELECT COALESCE(SUM(line_total), 0) FROM refund_items WHERE refund_id = r.id) AS item_total FROM refunds r LEFT JOIN orders o ON o.invoice_id = r.invoice_id WHERE r.kind = 'void' AND r.created_at >= ? AND r.created_at < ?",
+          "ms": 0.5780000000004293,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_refunds_kind,idx_refunds_created",
+              "key": "idx_refunds_kind",
+              "key_len": "1",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using index condition; Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.r.invoice_id",
+              "rows": "1",
+              "Extra": ""
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "refund_items",
+              "type": "ALL",
+              "possible_keys": "idx_refund_items_refund",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM(line_discount), 0) AS line_discounts_total, COALESCE(SUM(order_discount), 0) AS order_discounts_total, COALESCE(SUM(line_discount + order_discount), 0) AS discounts_total, COALESCE(SUM(CASE WHEN line_discount > 0 OR order_discount > 0 THEN 1 ELSE 0 END), 0) AS discount_count FROM ( SELECT o.invoice_id, ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END ) AS order_discount, COALESCE(line_discounts.line_discount_amount, 0) AS line_discount FROM orders o LEFT JOIN ( SELECT oi.invoice_id, COALESCE(SUM(GREATEST( 0, (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) )), 0) AS line_discount_amount FROM order_items oi WHERE oi.parent_item_id IS NULL GROUP BY oi.invoice_id ) line_discounts ON line_discounts.invoice_id = o.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') GROUP BY o.invoice_id, o.subtotal, o.discount_type, o.discount_value, line_discounts.line_discount_amount ) discounted_orders",
+          "ms": 2.023200000000543,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived2>",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "565",
+              "Extra": ""
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "o",
+              "type": "ALL",
+              "possible_keys": "idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "55",
+              "Extra": "Using where; Using temporary; Using filesort"
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "<derived3>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.o.invoice_id",
+              "rows": "10",
+              "Extra": ""
+            },
+            {
+              "id": 3,
+              "select_type": "DERIVED",
+              "table": "oi",
+              "type": "range",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "5",
+              "ref": null,
+              "rows": "298",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM( (GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) * ( CASE WHEN COALESCE(o.subtotal, 0) > 0 THEN GREATEST(0, COALESCE(o.subtotal, 0) - ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END )) / COALESCE(o.subtotal, 0) ELSE 1 END )) + COALESCE(oi.tax_amount, 0) ), 0) AS service_charges_sale FROM order_items oi JOIN orders o ON o.invoice_id = oi.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') AND oi.parent_item_id IS NULL AND oi.note = 'Auto-Gratuity'",
+          "ms": 0.5762999999997191,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "oi",
+              "type": "ALL",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "298",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.oi.invoice_id",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM(ri.line_total), 0) AS service_charges_refund FROM refund_items ri JOIN refunds r ON r.id = ri.refund_id WHERE r.kind = 'refund' AND r.created_at >= ? AND r.created_at < ? AND ri.note = 'Auto-Gratuity'",
+          "ms": 0.6922000000004118,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ri",
+              "type": "ALL",
+              "possible_keys": "idx_refund_items_refund",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "r",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,idx_refunds_kind,idx_refunds_created",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.ri.refund_id",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "replace old indexes / summary",
+      "medianMs": 111.78029999999853,
+      "queries": [
+        {
+          "sql": "SELECT i.*, (SELECT COUNT(*) FROM product_recipe_lines r WHERE r.ingredient_id=i.id) AS recipe_product_count, c.id AS count_id, c.qty AS count_qty, c.occurred_at AS count_at, c.expected_qty AS count_expected, c.period_usage_qty AS count_period, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id ) END AS expected_remaining, opening.qty AS opening_qty, COALESCE(d.received,0) AS received, COALESCE(d.used,0) AS used, COALESCE(d.waste,0) AS waste, COALESCE(d.corrections,0) AS corrections, COALESCE(d.used_cost,0) AS used_cost, COALESCE(d.waste_cost,0) AS waste_cost FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' ORDER BY id DESC LIMIT 1 ) LEFT JOIN ( SELECT ingredient_id, MIN(CASE WHEN kind='count' THEN id END) AS opening_id, SUM(CASE WHEN kind='receipt' THEN qty ELSE 0 END) AS received, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty ELSE 0 END) AS used, -SUM(CASE WHEN kind='waste' THEN qty ELSE 0 END) AS waste, SUM(CASE WHEN kind='correction' THEN qty ELSE 0 END) AS corrections, -SUM(CASE WHEN kind IN ('usage','reversal') THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS used_cost, -SUM(CASE WHEN kind='waste' THEN qty*COALESCE(unit_cost,0) ELSE 0 END) AS waste_cost FROM ingredient_movements WHERE business_date=? GROUP BY ingredient_id ) d ON d.ingredient_id=i.id LEFT JOIN ingredient_movements opening ON opening.id=d.opening_id WHERE ?=1 OR i.is_active=1 ORDER BY i.name,i.id",
+          "ms": 132.5038000000004,
+          "rows": 102,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using where; Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived5>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "492",
+              "Extra": ""
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "opening",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "d.opening_id",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 5,
+              "select_type": "DERIVED",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id,idx_im_balance,idx_im_day",
+              "key": "idx_im_day",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50250",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 4,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id,const",
+              "rows": "248",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_kind_id,idx_im_balance",
+              "key": "idx_im_balance",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "497",
+              "Extra": "Using where; Using index"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_prl_ingredient",
+              "key": "idx_prl_ingredient",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "1",
+              "Extra": "Using index"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "replace old indexes / report",
+      "medianMs": 86.85599999999977,
+      "queries": [
+        {
+          "sql": "SELECT i.id, i.name, i.measure, i.display_unit, i.unit_cost, i.par_qty, i.pack_name, i.pack_size, i.is_active, CASE WHEN c.id IS NULL THEN NULL ELSE c.qty + ( SELECT COALESCE(SUM(CASE WHEN t.kind='count' OR (t.kind='correction' AND t.corrects_movement_id<=c.id) THEN 0 ELSE t.qty END),0) FROM ingredient_movements t WHERE t.ingredient_id=i.id AND t.id>c.id AND t.business_date<=? ) END AS closing_expected FROM ingredients i LEFT JOIN ingredient_movements c ON c.id=( SELECT id FROM ingredient_movements FORCE INDEX (idx_im_ingredient_kind_id) WHERE ingredient_id=i.id AND kind='count' AND business_date<=? ORDER BY id DESC LIMIT 1 ) ORDER BY i.name,i.id",
+          "ms": 27.740999999999985,
+          "rows": 102,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "i",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "102",
+              "Extra": "Using filesort"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "c",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "8",
+              "ref": "func",
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 3,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_ingredient_kind_id",
+              "key": "idx_im_ingredient_kind_id",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id,const",
+              "rows": "248",
+              "Extra": "Using where"
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "t",
+              "type": "ref",
+              "possible_keys": "PRIMARY,idx_im_ingredient_kind_id,idx_im_balance,idx_im_day",
+              "key": "idx_im_balance",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.i.id",
+              "rows": "497",
+              "Extra": "Using where; Using index"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT ingredient_id, kind, reason, SUM(qty) AS qty, SUM(qty*COALESCE(unit_cost,0)) AS cost FROM ingredient_movements WHERE business_date=? AND kind<>'count' GROUP BY ingredient_id, kind, reason",
+          "ms": 27.725099999999657,
+          "rows": 101,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_day",
+              "key": "idx_im_day",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50250",
+              "Extra": "Using where; Using index"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT ingredient_id, kind, qty, expected_qty, period_usage_qty, occurred_at FROM ingredient_movements WHERE business_date=? AND kind='count' ORDER BY ingredient_id, id",
+          "ms": 7.489700000000084,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ingredient_movements",
+              "type": "ref",
+              "possible_keys": "idx_im_day",
+              "key": "idx_im_day",
+              "key_len": "3",
+              "ref": "const",
+              "rows": "50250",
+              "Extra": "Using index condition; Using where; Using filesort"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COUNT(o.invoice_id) AS orders, COALESCE(SUM(o.total), 0) AS sales_processed, COALESCE(SUM(o.tax), 0) AS tax, COALESCE(SUM(CASE WHEN o.payment_method='cash' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.cash_amount,0) ELSE 0 END), 0) AS cash, COALESCE(SUM(CASE WHEN o.payment_method='card' THEN o.total WHEN o.payment_method='split' THEN COALESCE(o.card_amount,0) ELSE 0 END), 0) AS card ,COALESCE(SUM(CASE WHEN o.payment_method='platform' THEN o.total ELSE 0 END), 0) AS platform FROM orders o WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided')",
+          "ms": 1.9559000000008382,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "ALL",
+              "possible_keys": "idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "55",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT r.id, r.scope, r.amount_refunded, r.tax_refunded, r.refund_method, o.total AS original_total, o.payment_method AS original_payment_method, o.cash_amount AS original_cash_amount, o.card_amount AS original_card_amount FROM refunds r JOIN orders o ON o.invoice_id=r.invoice_id WHERE r.kind='refund' AND r.created_at >= ? AND r.created_at < ?",
+          "ms": 1.1040999999986525,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_refunds_invoice,idx_refunds_kind,idx_refunds_created",
+              "key": "idx_refunds_kind",
+              "key_len": "1",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using index condition; Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.r.invoice_id",
+              "rows": "1",
+              "Extra": ""
+            }
+          ]
+        },
+        {
+          "sql": "SELECT r.id, r.kind, r.scope, r.subtotal_refunded, r.tax_refunded, o.original_total, o.total, (SELECT COALESCE(SUM(line_total), 0) FROM refund_items WHERE refund_id = r.id) AS item_total FROM refunds r LEFT JOIN orders o ON o.invoice_id = r.invoice_id WHERE r.kind = 'void' AND r.created_at >= ? AND r.created_at < ?",
+          "ms": 0.41669999999976426,
+          "rows": 0,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "r",
+              "type": "ref",
+              "possible_keys": "idx_refunds_kind,idx_refunds_created",
+              "key": "idx_refunds_kind",
+              "key_len": "1",
+              "ref": "const",
+              "rows": "1",
+              "Extra": "Using index condition; Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.r.invoice_id",
+              "rows": "1",
+              "Extra": ""
+            },
+            {
+              "id": 2,
+              "select_type": "DEPENDENT SUBQUERY",
+              "table": "refund_items",
+              "type": "ALL",
+              "possible_keys": "idx_refund_items_refund",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM(line_discount), 0) AS line_discounts_total, COALESCE(SUM(order_discount), 0) AS order_discounts_total, COALESCE(SUM(line_discount + order_discount), 0) AS discounts_total, COALESCE(SUM(CASE WHEN line_discount > 0 OR order_discount > 0 THEN 1 ELSE 0 END), 0) AS discount_count FROM ( SELECT o.invoice_id, ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END ) AS order_discount, COALESCE(line_discounts.line_discount_amount, 0) AS line_discount FROM orders o LEFT JOIN ( SELECT oi.invoice_id, COALESCE(SUM(GREATEST( 0, (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) )), 0) AS line_discount_amount FROM order_items oi WHERE oi.parent_item_id IS NULL GROUP BY oi.invoice_id ) line_discounts ON line_discounts.invoice_id = o.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') GROUP BY o.invoice_id, o.subtotal, o.discount_type, o.discount_value, line_discounts.line_discount_amount ) discounted_orders",
+          "ms": 2.117599999999584,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "PRIMARY",
+              "table": "<derived2>",
+              "type": "ALL",
+              "possible_keys": null,
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "565",
+              "Extra": ""
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "o",
+              "type": "ALL",
+              "possible_keys": "idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "55",
+              "Extra": "Using where; Using temporary; Using filesort"
+            },
+            {
+              "id": 2,
+              "select_type": "DERIVED",
+              "table": "<derived3>",
+              "type": "ref",
+              "possible_keys": "key0",
+              "key": "key0",
+              "key_len": "5",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.o.invoice_id",
+              "rows": "10",
+              "Extra": ""
+            },
+            {
+              "id": 3,
+              "select_type": "DERIVED",
+              "table": "oi",
+              "type": "range",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": "idx_order_items_parent_invoice",
+              "key_len": "5",
+              "ref": null,
+              "rows": "298",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM( (GREATEST(0, CASE WHEN oi.discount_type = 'fixed' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) - (GREATEST(0, COALESCE(oi.discount_value, 0)) * COALESCE(oi.quantity, 0)) WHEN oi.discount_type = 'percent' THEN (COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0)) * (1 - (LEAST(100, GREATEST(0, COALESCE(oi.discount_value, 0))) / 100)) ELSE COALESCE(oi.price_at_sale, 0) * COALESCE(oi.quantity, 0) END ) * ( CASE WHEN COALESCE(o.subtotal, 0) > 0 THEN GREATEST(0, COALESCE(o.subtotal, 0) - ( CASE WHEN o.discount_type = 'fixed' THEN LEAST(COALESCE(o.subtotal, 0), GREATEST(0, COALESCE(o.discount_value, 0))) WHEN o.discount_type = 'percent' THEN COALESCE(o.subtotal, 0) * (LEAST(100, GREATEST(0, COALESCE(o.discount_value, 0))) / 100) ELSE 0 END )) / COALESCE(o.subtotal, 0) ELSE 1 END )) + COALESCE(oi.tax_amount, 0) ), 0) AS service_charges_sale FROM order_items oi JOIN orders o ON o.invoice_id = oi.invoice_id WHERE COALESCE(o.invoice_issued_at, o.created_at) >= ? AND COALESCE(o.invoice_issued_at, o.created_at) < ? AND o.payment_method NOT IN ('unpaid_table', 'voided') AND oi.parent_item_id IS NULL AND oi.note = 'Auto-Gratuity'",
+          "ms": 0.5653999999994994,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "oi",
+              "type": "ALL",
+              "possible_keys": "idx_order_items_invoice,idx_order_items_parent_invoice",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "298",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "o",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,idx_orders_payment_created,idx_orders_receivable_due,idx_orders_platform_provider",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.oi.invoice_id",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(SUM(ri.line_total), 0) AS service_charges_refund FROM refund_items ri JOIN refunds r ON r.id = ri.refund_id WHERE r.kind = 'refund' AND r.created_at >= ? AND r.created_at < ? AND ri.note = 'Auto-Gratuity'",
+          "ms": 0.5867999999991298,
+          "rows": 1,
+          "explain": [
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "ri",
+              "type": "ALL",
+              "possible_keys": "idx_refund_items_refund",
+              "key": null,
+              "key_len": null,
+              "ref": null,
+              "rows": "1",
+              "Extra": "Using where"
+            },
+            {
+              "id": 1,
+              "select_type": "SIMPLE",
+              "table": "r",
+              "type": "eq_ref",
+              "possible_keys": "PRIMARY,idx_refunds_kind,idx_refunds_created",
+              "key": "PRIMARY",
+              "key_len": "4",
+              "ref": "posapp_review_recipe_p1_a0f625960b17.ri.refund_id",
+              "rows": "1",
+              "Extra": "Using where"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "resultParity": "exact"
+}

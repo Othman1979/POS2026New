@@ -1,0 +1,8 @@
+{
+  "name": "pos-spooler-request-disabled",
+  "version": "1.0.0",
+  "description": "Fail-closed replacement for get-pixels remote URL loading",
+  "main": "index.js",
+  "private": true,
+  "type": "commonjs"
+}

@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "steps": [
+    {
+      "step": "Clear during an in-flight hold, then begin another hold",
+      "evidence": {
+        "holdRequests": 2,
+        "nextHoldEnabledAfterClear": true,
+        "olderCompletionPreservedNextLock": true,
+        "olderCompletionPreservedProduct": 2,
+        "newerCompletionClearedDraft": true
+      }
+    }
+  ],
+  "errors": []
+}

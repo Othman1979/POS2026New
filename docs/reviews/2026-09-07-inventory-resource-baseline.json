@@ -1,0 +1,194 @@
+{
+  "at": "2026-09-07T18:26:29.179Z",
+  "runtime": "v24.16.0",
+  "hardware": {
+    "cpu": "Intel(R) Core(TM) i7-14700KF",
+    "logical_cpus": 28,
+    "memory_gib": 31.841732025146484
+  },
+  "limitations": [
+    "Local shared MySQL server; no server CPU or process memory attribution.",
+    "Service calls exclude HTTP, browser, network, printing and full checkout.",
+    "Warm sequential timings; 12 samples make p95 effectively the maximum. No p99 claim.",
+    "RSS is the benchmark Node process including retained fixture/driver memory; not production incremental memory.",
+    "ID-limited balance query is a read-only prototype using existing indexes; it does not include daily summary fields."
+  ],
+  "workloads": [
+    {
+      "ingredients": 100,
+      "movements": 2100,
+      "invoices": 1000,
+      "results": [
+        {
+          "name": "all ingredient summaries",
+          "samples": 12,
+          "p50_ms": 6.319700000000012,
+          "p95_ms": 6.600400000000036,
+          "mean_ms": 6.340174999999969,
+          "node_cpu_ms_per_call": 2.5833333333333335,
+          "queries_per_call": 1,
+          "response_bytes": 46793,
+          "sampled_node_rss_mib": 88.8125,
+          "sampled_node_heap_mib": 17.152420043945312
+        },
+        {
+          "name": "50 ingredient balances by IDs",
+          "samples": 12,
+          "p50_ms": 1.5217000000000098,
+          "p95_ms": 1.8610999999998512,
+          "mean_ms": 1.5962666666666412,
+          "node_cpu_ms_per_call": 0,
+          "queries_per_call": 1,
+          "response_bytes": 3492,
+          "sampled_node_rss_mib": 89.5625,
+          "sampled_node_heap_mib": 16.716598510742188
+        },
+        {
+          "name": "purchase costs for 20 ingredients",
+          "samples": 12,
+          "p50_ms": 1.2273999999999887,
+          "p95_ms": 1.6787999999999101,
+          "mean_ms": 1.3305833333333605,
+          "node_cpu_ms_per_call": 0,
+          "queries_per_call": 1,
+          "response_bytes": 1152,
+          "sampled_node_rss_mib": 90.17578125,
+          "sampled_node_heap_mib": 17.350204467773438
+        },
+        {
+          "name": "whole-period sales analysis",
+          "samples": 12,
+          "p50_ms": 21.389999999999873,
+          "p95_ms": 56.97600000000011,
+          "mean_ms": 23.916808333333336,
+          "node_cpu_ms_per_call": 16.916666666666668,
+          "queries_per_call": 14,
+          "response_bytes": 39056,
+          "sampled_node_rss_mib": 132.26171875,
+          "sampled_node_heap_mib": 36.78868103027344
+        }
+      ]
+    },
+    {
+      "ingredients": 1000,
+      "movements": 21000,
+      "invoices": 10000,
+      "results": [
+        {
+          "name": "all ingredient summaries",
+          "samples": 12,
+          "p50_ms": 56.56410000000005,
+          "p95_ms": 78.67360000000008,
+          "mean_ms": 60.36176666666662,
+          "node_cpu_ms_per_call": 14.333333333333334,
+          "queries_per_call": 1,
+          "response_bytes": 468894,
+          "sampled_node_rss_mib": 152.58984375,
+          "sampled_node_heap_mib": 44.345985412597656
+        },
+        {
+          "name": "50 ingredient balances by IDs",
+          "samples": 12,
+          "p50_ms": 1.5014000000001033,
+          "p95_ms": 2.0338000000001557,
+          "mean_ms": 1.6186916666666775,
+          "node_cpu_ms_per_call": 1.3333333333333333,
+          "queries_per_call": 1,
+          "response_bytes": 3492,
+          "sampled_node_rss_mib": 148.6640625,
+          "sampled_node_heap_mib": 20.12616729736328
+        },
+        {
+          "name": "purchase costs for 20 ingredients",
+          "samples": 12,
+          "p50_ms": 1.3766000000000531,
+          "p95_ms": 2.477900000000318,
+          "mean_ms": 1.4761333333334126,
+          "node_cpu_ms_per_call": 1.3333333333333333,
+          "queries_per_call": 1,
+          "response_bytes": 1152,
+          "sampled_node_rss_mib": 148.75390625,
+          "sampled_node_heap_mib": 20.706748962402344
+        },
+        {
+          "name": "whole-period sales analysis",
+          "samples": 12,
+          "p50_ms": 329.4351000000006,
+          "p95_ms": 374.04389999999967,
+          "mean_ms": 338.3810916666668,
+          "node_cpu_ms_per_call": 136.75,
+          "queries_per_call": 104,
+          "response_bytes": 388666,
+          "sampled_node_rss_mib": 225.6484375,
+          "sampled_node_heap_mib": 82.8504867553711
+        }
+      ]
+    },
+    {
+      "ingredients": 10000,
+      "movements": 210000,
+      "invoices": 100000,
+      "results": [
+        {
+          "name": "all ingredient summaries",
+          "samples": 12,
+          "p50_ms": 536.9192000000039,
+          "p95_ms": 783.3017,
+          "mean_ms": 575.471075,
+          "node_cpu_ms_per_call": 72.83333333333333,
+          "queries_per_call": 1,
+          "response_bytes": 4698895,
+          "sampled_node_rss_mib": 339.9296875,
+          "sampled_node_heap_mib": 194.8234405517578
+        },
+        {
+          "name": "50 ingredient balances by IDs",
+          "samples": 12,
+          "p50_ms": 1.8760000000038417,
+          "p95_ms": 3.207799999996496,
+          "mean_ms": 2.0005416666681413,
+          "node_cpu_ms_per_call": 1.3333333333333333,
+          "queries_per_call": 1,
+          "response_bytes": 3492,
+          "sampled_node_rss_mib": 342.921875,
+          "sampled_node_heap_mib": 181.5213623046875
+        },
+        {
+          "name": "purchase costs for 20 ingredients",
+          "samples": 12,
+          "p50_ms": 0.6916999999957625,
+          "p95_ms": 0.7788999999975204,
+          "mean_ms": 0.7076583333328017,
+          "node_cpu_ms_per_call": 1.3333333333333333,
+          "queries_per_call": 1,
+          "response_bytes": 1152,
+          "sampled_node_rss_mib": 342.92578125,
+          "sampled_node_heap_mib": 181.66333770751953
+        },
+        {
+          "name": "whole-period sales analysis",
+          "samples": 12,
+          "p50_ms": 7743.4783000000025,
+          "p95_ms": 8217.645199999999,
+          "mean_ms": 7754.884133333334,
+          "node_cpu_ms_per_call": 1259.0833333333333,
+          "queries_per_call": 1004,
+          "response_bytes": 3909706,
+          "sampled_node_rss_mib": 369.234375,
+          "sampled_node_heap_mib": 145.99752807617188
+        }
+      ]
+    }
+  ],
+  "database_version": "10.4.32-MariaDB",
+  "stale_replenishment": {
+    "observed": 15,
+    "correct": 14,
+    "expected": 14,
+    "note": "Existing stock service plus SQL matching product PUT semantics; atomic SQL is a prototype, not a shipped endpoint."
+  },
+  "fixture_storage": {
+    "data_bytes": "51347456",
+    "index_bytes": "95682560"
+  }
+}

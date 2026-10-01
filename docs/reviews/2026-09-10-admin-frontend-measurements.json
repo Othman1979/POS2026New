@@ -1,0 +1,4891 @@
+{
+  "baseline": "61ab4e386fd22f1029f69a0ff57b0a05236a4645",
+  "node": "v24.16.0",
+  "chromium": "148.0.7778.96",
+  "cpu": "Intel(R) Core(TM) i7-14700KF",
+  "harnessSha256": "716e657806159d5df90ac3b13276d9df287d5ef6d45a5491082892827eb287cb",
+  "units": "bytes, milliseconds; decimal kB = bytes/1000; MiB = bytes/1048576",
+  "method": "Synthetic loopback gzip/no-store, authenticated session, three independent browser contexts per locale/CPU rate. English 1440x900; Arabic 390x844. TaskDuration deltas over action/readiness plus 250ms settle; longest observed longtask, not INP. Forced-GC JS heap, not process RAM.",
+  "runs": [
+    {
+      "cpuRate": 1,
+      "lang": "en",
+      "errors": [],
+      "steps": [
+        {
+          "label": "cold-dashboard",
+          "taskMs": [
+            143.97899999999998,
+            142.519,
+            142.383
+          ],
+          "medianTaskMs": 142.519,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 263,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/config/business",
+            "/api/system/settings",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/dashboard",
+            "/api/system/public_preferences",
+            "/api/admin/alerts"
+          ],
+          "requestCount": [
+            6,
+            6,
+            6
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 250962,
+              "decoded": 791657,
+              "transfer": 256062
+            },
+            "css": {
+              "encoded": 53044,
+              "decoded": 259510,
+              "transfer": 54244
+            },
+            "fonts": {
+              "encoded": 162996,
+              "decoded": 162996,
+              "transfer": 163596
+            },
+            "all": {
+              "encoded": 468092,
+              "decoded": 1217610,
+              "transfer": 476792
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/socket.io/socket.io.js",
+              "encoded": 37660,
+              "decoded": 155836,
+              "transfer": 37960
+            },
+            {
+              "name": "/admin-D5taDaIo.js",
+              "encoded": 5422,
+              "decoded": 13377,
+              "transfer": 5722
+            },
+            {
+              "name": "/chunks/faviconInjector-Dz38Drhz.js",
+              "encoded": 3661,
+              "decoded": 9719,
+              "transfer": 3961
+            },
+            {
+              "name": "/chunks/businessDate-WlVJxOqH.js",
+              "encoded": 44417,
+              "decoded": 114119,
+              "transfer": 44717
+            },
+            {
+              "name": "/chunks/browserDeviceClient-CRqi4vUV.js",
+              "encoded": 12897,
+              "decoded": 33807,
+              "transfer": 13197
+            },
+            {
+              "name": "/chunks/App-Bv0WpldC.js",
+              "encoded": 9611,
+              "decoded": 33577,
+              "transfer": 9911
+            },
+            {
+              "name": "/chunks/systemSettings-B_RfmVy0.js",
+              "encoded": 254,
+              "decoded": 338,
+              "transfer": 554
+            },
+            {
+              "name": "/chunks/SidebarIcon-DkpyBM_a.js",
+              "encoded": 1136,
+              "decoded": 2111,
+              "transfer": 1436
+            },
+            {
+              "name": "/chunks/reportPages-DdzdOyLW.js",
+              "encoded": 273,
+              "decoded": 534,
+              "transfer": 573
+            },
+            {
+              "name": "/chunks/_plugin-vue_export-helper-DlAUqK2U.js",
+              "encoded": 102,
+              "decoded": 91,
+              "transfer": 402
+            },
+            {
+              "name": "/chunks/useAdminDialogs-BIIMo-TK.js",
+              "encoded": 418,
+              "decoded": 949,
+              "transfer": 718
+            },
+            {
+              "name": "/chunks/i18n-fHdMMFwT.js",
+              "encoded": 72878,
+              "decoded": 250717,
+              "transfer": 73178
+            },
+            {
+              "name": "/chunks/posSessionStorage-GgobpOUQ.js",
+              "encoded": 256,
+              "decoded": 515,
+              "transfer": 556
+            },
+            {
+              "name": "/chunks/realtime-BPKv65hE.js",
+              "encoded": 601,
+              "decoded": 1175,
+              "transfer": 901
+            },
+            {
+              "name": "/chunks/Dashboard-lXUvrtij.js",
+              "encoded": 6619,
+              "decoded": 19012,
+              "transfer": 6919
+            },
+            {
+              "name": "/chunks/reportFormatting-CFH2eDHL.js",
+              "encoded": 548,
+              "decoded": 1088,
+              "transfer": 848
+            },
+            {
+              "name": "/chunks/vendor-chartjs-DisVn190.js",
+              "encoded": 54209,
+              "decoded": 154692,
+              "transfer": 54509
+            }
+          ]
+        },
+        {
+          "label": "orders-50",
+          "taskMs": [
+            78.245,
+            76.522,
+            78.32900000000001
+          ],
+          "medianTaskMs": 78.245,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 2445,
+          "tableRows": 50,
+          "visibleTableRows": 50,
+          "requestURLs": [
+            "/api/admin/shifts?action=cashiers&all=true",
+            "/api/admin/orders?page=1&limit=50&filter_type=register&start_date=2026-09-10&end_date=2026-09-10",
+            "/api/admin/jofotara/settings"
+          ],
+          "requestCount": [
+            3,
+            3,
+            3
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 40011,
+              "decoded": 154172,
+              "transfer": 41811
+            },
+            "css": {
+              "encoded": 1352,
+              "decoded": 6576,
+              "transfer": 1652
+            },
+            "fonts": {
+              "encoded": 18924,
+              "decoded": 18924,
+              "transfer": 19224
+            },
+            "all": {
+              "encoded": 61069,
+              "decoded": 194092,
+              "transfer": 64369
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Orders-CK8NbTax.js",
+              "encoded": 25229,
+              "decoded": 116882,
+              "transfer": 25529
+            },
+            {
+              "name": "/chunks/receiptPrint-DRK2-Db-.js",
+              "encoded": 925,
+              "decoded": 1928,
+              "transfer": 1225
+            },
+            {
+              "name": "/chunks/receiptPresentation-Dpk_HYl5.js",
+              "encoded": 2614,
+              "decoded": 6881,
+              "transfer": 2914
+            },
+            {
+              "name": "/chunks/orderIdentityDisplay-CC2pz4l_.js",
+              "encoded": 385,
+              "decoded": 1027,
+              "transfer": 685
+            },
+            {
+              "name": "/chunks/receiptLineTotals-DjP7nZKc.js",
+              "encoded": 829,
+              "decoded": 1871,
+              "transfer": 1129
+            },
+            {
+              "name": "/chunks/browser-BqTd-3GH.js",
+              "encoded": 10029,
+              "decoded": 25583,
+              "transfer": 10329
+            }
+          ]
+        },
+        {
+          "label": "inventory-12",
+          "taskMs": [
+            53.282000000000025,
+            54.647,
+            51.99100000000001
+          ],
+          "medianTaskMs": 53.282000000000025,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 1017,
+          "tableRows": 12,
+          "visibleTableRows": 12,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            2,
+            2,
+            2
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 206392,
+              "decoded": 665101,
+              "transfer": 207892
+            },
+            "css": {
+              "encoded": 5306,
+              "decoded": 25618,
+              "transfer": 5906
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 212439,
+              "decoded": 696223,
+              "transfer": 215139
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Inventory-D-ZZXkK-.js",
+              "encoded": 35807,
+              "decoded": 144628,
+              "transfer": 36107
+            },
+            {
+              "name": "/chunks/vendor-xlsx-BLigKl4k.js",
+              "encoded": 160635,
+              "decoded": 492338,
+              "transfer": 160935
+            },
+            {
+              "name": "/chunks/ModalShell-wKz24hMU.js",
+              "encoded": 1384,
+              "decoded": 2866,
+              "transfer": 1684
+            },
+            {
+              "name": "/chunks/ProductRecipeEditor-DEcURL1n.js",
+              "encoded": 8373,
+              "decoded": 25027,
+              "transfer": 8673
+            },
+            {
+              "name": "/chunks/ingredientUnits-C8XExbUP.js",
+              "encoded": 193,
+              "decoded": 242,
+              "transfer": 493
+            }
+          ]
+        },
+        {
+          "label": "inventory-search",
+          "taskMs": [
+            21.060000000000024,
+            16.772999999999982,
+            19.167000000000044
+          ],
+          "medianTaskMs": 19.167000000000044,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 1019,
+          "tableRows": 12,
+          "visibleTableRows": 12,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12&search=Product+1",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            2,
+            2,
+            2
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 735,
+              "decoded": 5563,
+              "transfer": 1335
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inventory-96",
+          "taskMs": [
+            56.29200000000001,
+            58.84,
+            51.591
+          ],
+          "medianTaskMs": 56.29200000000001,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5889,
+          "tableRows": 96,
+          "visibleTableRows": 96,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            4,
+            4,
+            4
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 2688,
+              "decoded": 31617,
+              "transfer": 3888
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "customers-50",
+          "taskMs": [
+            81.91999999999999,
+            79.93699999999998,
+            79.335
+          ],
+          "medianTaskMs": 79.93699999999998,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 2530,
+          "tableRows": 50,
+          "visibleTableRows": 50,
+          "requestURLs": [
+            "/api/admin/customers?page=1&limit=50"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 4430,
+              "decoded": 14661,
+              "transfer": 4730
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 4802,
+              "decoded": 17468,
+              "transfer": 5402
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Customers-CnsaD8Bm.js",
+              "encoded": 4430,
+              "decoded": 14661,
+              "transfer": 4730
+            }
+          ]
+        },
+        {
+          "label": "sales-100",
+          "taskMs": [
+            67.58300000000006,
+            64.529,
+            65.39000000000006
+          ],
+          "medianTaskMs": 65.39000000000006,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 1114,
+          "tableRows": 100,
+          "visibleTableRows": 100,
+          "requestURLs": [
+            "/api/admin/reports/sales-details?start_date=2026-09-10&end_date=2026-09-10"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 9603,
+              "decoded": 24731,
+              "transfer": 11103
+            },
+            "css": {
+              "encoded": 3984,
+              "decoded": 16794,
+              "transfer": 4884
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 15358,
+              "decoded": 66279,
+              "transfer": 18058
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/ReportsSalesDetails-Diuwbh29.js",
+              "encoded": 3421,
+              "decoded": 10726,
+              "transfer": 3721
+            },
+            {
+              "name": "/chunks/useDailyReportPage-1XhWLRiK.js",
+              "encoded": 426,
+              "decoded": 685,
+              "transfer": 726
+            },
+            {
+              "name": "/chunks/dailyReportPayloads-DqCwKOvc.js",
+              "encoded": 832,
+              "decoded": 2117,
+              "transfer": 1132
+            },
+            {
+              "name": "/chunks/ReportsLayout-CUwt8qvH.js",
+              "encoded": 2742,
+              "decoded": 6517,
+              "transfer": 3042
+            },
+            {
+              "name": "/chunks/useBrowserReportPrint-DyIW74xP.js",
+              "encoded": 2182,
+              "decoded": 4686,
+              "transfer": 2482
+            }
+          ]
+        },
+        {
+          "label": "sales-2000",
+          "taskMs": [
+            230.23300000000003,
+            224.00900000000001,
+            225.14600000000007
+          ],
+          "medianTaskMs": 225.14600000000007,
+          "longestTaskMs": [
+            114,
+            119,
+            122
+          ],
+          "liveElements": 16314,
+          "tableRows": 2000,
+          "visibleTableRows": 2000,
+          "requestURLs": [
+            "/api/admin/reports/sales-details?start_date=2026-09-10&end_date=2026-09-10"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 28575,
+              "decoded": 502493,
+              "transfer": 28875
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "sales-filter",
+          "taskMs": [
+            18.101000000000035,
+            18.159999999999954,
+            17.62799999999998
+          ],
+          "medianTaskMs": 18.101000000000035,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 402,
+          "tableRows": 11,
+          "visibleTableRows": 11,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "return-dashboard",
+          "taskMs": [
+            46.53000000000007,
+            47.35099999999992,
+            45.16900000000001
+          ],
+          "medianTaskMs": 46.53000000000007,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 287,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "dashboard-idle-10s",
+          "taskMs": [
+            10.004999999999932
+          ],
+          "medianTaskMs": 10.004999999999932,
+          "longestTaskMs": [
+            0
+          ],
+          "liveElements": 287,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inspect-xlsx-20000x16",
+          "taskMs": [
+            644.5699999999998,
+            635.0189999999998,
+            640.5220000000003
+          ],
+          "medianTaskMs": 640.5220000000003,
+          "longestTaskMs": [
+            581,
+            580,
+            582
+          ],
+          "liveElements": 6028,
+          "tableRows": 96,
+          "visibleTableRows": 96,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inventory-10-events",
+          "taskMs": [
+            20.303999999999878,
+            20.199999999999996,
+            19.838000000000022
+          ],
+          "medianTaskMs": 20.199999999999996,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5898,
+          "tableRows": 96,
+          "visibleTableRows": 96,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            20,
+            20,
+            20
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 19470,
+              "decoded": 261130,
+              "transfer": 25470
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "jofotara-10-events",
+          "taskMs": [
+            3.330999999999751,
+            3.270999999999802,
+            2.8369999999999784
+          ],
+          "medianTaskMs": 3.270999999999802,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5898,
+          "tableRows": 96,
+          "visibleTableRows": 96,
+          "requestURLs": [
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100"
+          ],
+          "requestCount": [
+            10,
+            10,
+            10
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 860,
+              "decoded": 700,
+              "transfer": 3860
+            }
+          },
+          "scriptResources": []
+        }
+      ],
+      "heaps": [
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4423336,
+            "totalSize": 5029888,
+            "embedderHeapUsedSize": 2170632,
+            "backingStorageSize": 736605,
+            "documents": 1,
+            "nodes": 486,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11166368,
+              "totalSize": 12156928,
+              "embedderHeapUsedSize": 7752344,
+              "backingStorageSize": 1795651,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11195040,
+              "totalSize": 11894784,
+              "embedderHeapUsedSize": 7435728,
+              "backingStorageSize": 1795554,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11301928,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7262336,
+              "backingStorageSize": 1795554,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11522188,
+              "totalSize": 13205504,
+              "embedderHeapUsedSize": 6727408,
+              "backingStorageSize": 1795554,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11576844,
+              "totalSize": 13205504,
+              "embedderHeapUsedSize": 7255088,
+              "backingStorageSize": 1795303,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11629556,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 6737240,
+              "backingStorageSize": 1795231,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            }
+          ]
+        },
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4423352,
+            "totalSize": 5029888,
+            "embedderHeapUsedSize": 2168672,
+            "backingStorageSize": 736605,
+            "documents": 1,
+            "nodes": 486,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11166852,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7737528,
+              "backingStorageSize": 1795651,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11223804,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7262664,
+              "backingStorageSize": 1795638,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11306136,
+              "totalSize": 13205504,
+              "embedderHeapUsedSize": 7258384,
+              "backingStorageSize": 1795554,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11519712,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7247768,
+              "backingStorageSize": 1795554,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11595868,
+              "totalSize": 13467648,
+              "embedderHeapUsedSize": 7254640,
+              "backingStorageSize": 1795554,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11670080,
+              "totalSize": 13205504,
+              "embedderHeapUsedSize": 7257248,
+              "backingStorageSize": 1795303,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            }
+          ]
+        },
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4423352,
+            "totalSize": 5292032,
+            "embedderHeapUsedSize": 2170784,
+            "backingStorageSize": 736605,
+            "documents": 1,
+            "nodes": 486,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11167276,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7745432,
+              "backingStorageSize": 1795651,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11224312,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 6722168,
+              "backingStorageSize": 1795638,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11310596,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 6728688,
+              "backingStorageSize": 1795554,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11520100,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7453984,
+              "backingStorageSize": 1795554,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11560668,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7470336,
+              "backingStorageSize": 1795231,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11653800,
+              "totalSize": 13467648,
+              "embedderHeapUsedSize": 6738296,
+              "backingStorageSize": 1795231,
+              "documents": 3,
+              "nodes": 13391,
+              "jsEventListeners": 1322
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cpuRate": 1,
+      "lang": "ar",
+      "errors": [],
+      "steps": [
+        {
+          "label": "cold-dashboard",
+          "taskMs": [
+            126.53500000000001,
+            127.574,
+            129.286
+          ],
+          "medianTaskMs": 127.574,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 263,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/config/business",
+            "/api/system/settings",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/dashboard",
+            "/api/system/public_preferences",
+            "/api/admin/alerts"
+          ],
+          "requestCount": [
+            6,
+            6,
+            6
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 250962,
+              "decoded": 791657,
+              "transfer": 256062
+            },
+            "css": {
+              "encoded": 53044,
+              "decoded": 259510,
+              "transfer": 54244
+            },
+            "fonts": {
+              "encoded": 472076,
+              "decoded": 472076,
+              "transfer": 475076
+            },
+            "all": {
+              "encoded": 777173,
+              "decoded": 1526690,
+              "transfer": 788273
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/socket.io/socket.io.js",
+              "encoded": 37660,
+              "decoded": 155836,
+              "transfer": 37960
+            },
+            {
+              "name": "/admin-D5taDaIo.js",
+              "encoded": 5422,
+              "decoded": 13377,
+              "transfer": 5722
+            },
+            {
+              "name": "/chunks/faviconInjector-Dz38Drhz.js",
+              "encoded": 3661,
+              "decoded": 9719,
+              "transfer": 3961
+            },
+            {
+              "name": "/chunks/businessDate-WlVJxOqH.js",
+              "encoded": 44417,
+              "decoded": 114119,
+              "transfer": 44717
+            },
+            {
+              "name": "/chunks/browserDeviceClient-CRqi4vUV.js",
+              "encoded": 12897,
+              "decoded": 33807,
+              "transfer": 13197
+            },
+            {
+              "name": "/chunks/App-Bv0WpldC.js",
+              "encoded": 9611,
+              "decoded": 33577,
+              "transfer": 9911
+            },
+            {
+              "name": "/chunks/systemSettings-B_RfmVy0.js",
+              "encoded": 254,
+              "decoded": 338,
+              "transfer": 554
+            },
+            {
+              "name": "/chunks/SidebarIcon-DkpyBM_a.js",
+              "encoded": 1136,
+              "decoded": 2111,
+              "transfer": 1436
+            },
+            {
+              "name": "/chunks/reportPages-DdzdOyLW.js",
+              "encoded": 273,
+              "decoded": 534,
+              "transfer": 573
+            },
+            {
+              "name": "/chunks/_plugin-vue_export-helper-DlAUqK2U.js",
+              "encoded": 102,
+              "decoded": 91,
+              "transfer": 402
+            },
+            {
+              "name": "/chunks/useAdminDialogs-BIIMo-TK.js",
+              "encoded": 418,
+              "decoded": 949,
+              "transfer": 718
+            },
+            {
+              "name": "/chunks/i18n-fHdMMFwT.js",
+              "encoded": 72878,
+              "decoded": 250717,
+              "transfer": 73178
+            },
+            {
+              "name": "/chunks/posSessionStorage-GgobpOUQ.js",
+              "encoded": 256,
+              "decoded": 515,
+              "transfer": 556
+            },
+            {
+              "name": "/chunks/realtime-BPKv65hE.js",
+              "encoded": 601,
+              "decoded": 1175,
+              "transfer": 901
+            },
+            {
+              "name": "/chunks/reportFormatting-CFH2eDHL.js",
+              "encoded": 548,
+              "decoded": 1088,
+              "transfer": 848
+            },
+            {
+              "name": "/chunks/Dashboard-lXUvrtij.js",
+              "encoded": 6619,
+              "decoded": 19012,
+              "transfer": 6919
+            },
+            {
+              "name": "/chunks/vendor-chartjs-DisVn190.js",
+              "encoded": 54209,
+              "decoded": 154692,
+              "transfer": 54509
+            }
+          ]
+        },
+        {
+          "label": "orders-50",
+          "taskMs": [
+            66.87200000000001,
+            63.23299999999998,
+            62.800999999999995
+          ],
+          "medianTaskMs": 63.23299999999998,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 2445,
+          "tableRows": 50,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/shifts?action=cashiers&all=true",
+            "/api/admin/orders?page=1&limit=50&filter_type=register&start_date=2026-09-10&end_date=2026-09-10",
+            "/api/admin/jofotara/settings"
+          ],
+          "requestCount": [
+            3,
+            3,
+            3
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 40011,
+              "decoded": 154172,
+              "transfer": 41811
+            },
+            "css": {
+              "encoded": 1352,
+              "decoded": 6576,
+              "transfer": 1652
+            },
+            "fonts": {
+              "encoded": 18924,
+              "decoded": 18924,
+              "transfer": 19224
+            },
+            "all": {
+              "encoded": 61069,
+              "decoded": 194092,
+              "transfer": 64369
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Orders-CK8NbTax.js",
+              "encoded": 25229,
+              "decoded": 116882,
+              "transfer": 25529
+            },
+            {
+              "name": "/chunks/receiptPrint-DRK2-Db-.js",
+              "encoded": 925,
+              "decoded": 1928,
+              "transfer": 1225
+            },
+            {
+              "name": "/chunks/receiptPresentation-Dpk_HYl5.js",
+              "encoded": 2614,
+              "decoded": 6881,
+              "transfer": 2914
+            },
+            {
+              "name": "/chunks/orderIdentityDisplay-CC2pz4l_.js",
+              "encoded": 385,
+              "decoded": 1027,
+              "transfer": 685
+            },
+            {
+              "name": "/chunks/receiptLineTotals-DjP7nZKc.js",
+              "encoded": 829,
+              "decoded": 1871,
+              "transfer": 1129
+            },
+            {
+              "name": "/chunks/browser-BqTd-3GH.js",
+              "encoded": 10029,
+              "decoded": 25583,
+              "transfer": 10329
+            }
+          ]
+        },
+        {
+          "label": "inventory-12",
+          "taskMs": [
+            46.129000000000005,
+            45.33399999999999,
+            46.469999999999985
+          ],
+          "medianTaskMs": 46.129000000000005,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 1017,
+          "tableRows": 12,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            2,
+            2,
+            2
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 206392,
+              "decoded": 665101,
+              "transfer": 207892
+            },
+            "css": {
+              "encoded": 5306,
+              "decoded": 25618,
+              "transfer": 5906
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 212439,
+              "decoded": 696223,
+              "transfer": 215139
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Inventory-D-ZZXkK-.js",
+              "encoded": 35807,
+              "decoded": 144628,
+              "transfer": 36107
+            },
+            {
+              "name": "/chunks/vendor-xlsx-BLigKl4k.js",
+              "encoded": 160635,
+              "decoded": 492338,
+              "transfer": 160935
+            },
+            {
+              "name": "/chunks/ModalShell-wKz24hMU.js",
+              "encoded": 1384,
+              "decoded": 2866,
+              "transfer": 1684
+            },
+            {
+              "name": "/chunks/ProductRecipeEditor-DEcURL1n.js",
+              "encoded": 8373,
+              "decoded": 25027,
+              "transfer": 8673
+            },
+            {
+              "name": "/chunks/ingredientUnits-C8XExbUP.js",
+              "encoded": 193,
+              "decoded": 242,
+              "transfer": 493
+            }
+          ]
+        },
+        {
+          "label": "inventory-search",
+          "taskMs": [
+            14.687000000000005,
+            15.523000000000009,
+            17.532999999999994
+          ],
+          "medianTaskMs": 15.523000000000009,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 1019,
+          "tableRows": 12,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12&search=Product+1",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            2,
+            2,
+            2
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 735,
+              "decoded": 5563,
+              "transfer": 1335
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inventory-96",
+          "taskMs": [
+            54.039,
+            60.20199999999998,
+            61.76799999999999
+          ],
+          "medianTaskMs": 60.20199999999998,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5889,
+          "tableRows": 96,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            4,
+            4,
+            4
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 2688,
+              "decoded": 31617,
+              "transfer": 3888
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "customers-50",
+          "taskMs": [
+            84.822,
+            76.71900000000004,
+            87.70800000000001
+          ],
+          "medianTaskMs": 84.822,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 2530,
+          "tableRows": 50,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/customers?page=1&limit=50"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 4430,
+              "decoded": 14661,
+              "transfer": 4730
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 4802,
+              "decoded": 17468,
+              "transfer": 5402
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Customers-CnsaD8Bm.js",
+              "encoded": 4430,
+              "decoded": 14661,
+              "transfer": 4730
+            }
+          ]
+        },
+        {
+          "label": "sales-100",
+          "taskMs": [
+            52.52000000000001,
+            52.371,
+            52.51
+          ],
+          "medianTaskMs": 52.51,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 1114,
+          "tableRows": 100,
+          "visibleTableRows": 100,
+          "requestURLs": [
+            "/api/admin/reports/sales-details?start_date=2026-09-10&end_date=2026-09-10"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 9603,
+              "decoded": 24731,
+              "transfer": 11103
+            },
+            "css": {
+              "encoded": 3984,
+              "decoded": 16794,
+              "transfer": 4884
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 15358,
+              "decoded": 66279,
+              "transfer": 18058
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/ReportsSalesDetails-Diuwbh29.js",
+              "encoded": 3421,
+              "decoded": 10726,
+              "transfer": 3721
+            },
+            {
+              "name": "/chunks/useDailyReportPage-1XhWLRiK.js",
+              "encoded": 426,
+              "decoded": 685,
+              "transfer": 726
+            },
+            {
+              "name": "/chunks/dailyReportPayloads-DqCwKOvc.js",
+              "encoded": 832,
+              "decoded": 2117,
+              "transfer": 1132
+            },
+            {
+              "name": "/chunks/ReportsLayout-CUwt8qvH.js",
+              "encoded": 2742,
+              "decoded": 6517,
+              "transfer": 3042
+            },
+            {
+              "name": "/chunks/useBrowserReportPrint-DyIW74xP.js",
+              "encoded": 2182,
+              "decoded": 4686,
+              "transfer": 2482
+            }
+          ]
+        },
+        {
+          "label": "sales-2000",
+          "taskMs": [
+            260.215,
+            251.718,
+            252.75300000000001
+          ],
+          "medianTaskMs": 252.75300000000001,
+          "longestTaskMs": [
+            136,
+            136,
+            136
+          ],
+          "liveElements": 16314,
+          "tableRows": 2000,
+          "visibleTableRows": 2000,
+          "requestURLs": [
+            "/api/admin/reports/sales-details?start_date=2026-09-10&end_date=2026-09-10"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 28575,
+              "decoded": 502493,
+              "transfer": 28875
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "sales-filter",
+          "taskMs": [
+            17.927000000000028,
+            18.280000000000072,
+            25.46500000000007
+          ],
+          "medianTaskMs": 18.280000000000072,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 402,
+          "tableRows": 11,
+          "visibleTableRows": 11,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "return-dashboard",
+          "taskMs": [
+            36.676000000000045,
+            36.918000000000006,
+            35.52300000000008
+          ],
+          "medianTaskMs": 36.676000000000045,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 287,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "dashboard-idle-10s",
+          "taskMs": [
+            9.19700000000001
+          ],
+          "medianTaskMs": 9.19700000000001,
+          "longestTaskMs": [
+            0
+          ],
+          "liveElements": 287,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inspect-xlsx-20000x16",
+          "taskMs": [
+            628.9340000000001,
+            632.7120000000002,
+            626.4530000000002
+          ],
+          "medianTaskMs": 628.9340000000001,
+          "longestTaskMs": [
+            584,
+            586,
+            583
+          ],
+          "liveElements": 6028,
+          "tableRows": 96,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inventory-10-events",
+          "taskMs": [
+            15.749000000000013,
+            16.833000000000098,
+            17.34800000000014
+          ],
+          "medianTaskMs": 16.833000000000098,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5898,
+          "tableRows": 96,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            20,
+            20,
+            20
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 19470,
+              "decoded": 261130,
+              "transfer": 25470
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "jofotara-10-events",
+          "taskMs": [
+            3.8009999999997213,
+            3.049999999999997,
+            3.6930000000001684
+          ],
+          "medianTaskMs": 3.6930000000001684,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5898,
+          "tableRows": 96,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100"
+          ],
+          "requestCount": [
+            10,
+            10,
+            10
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 860,
+              "decoded": 700,
+              "transfer": 3860
+            }
+          },
+          "scriptResources": []
+        }
+      ],
+      "heaps": [
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4519696,
+            "totalSize": 5029888,
+            "embedderHeapUsedSize": 2545344,
+            "backingStorageSize": 736489,
+            "documents": 1,
+            "nodes": 487,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11310116,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7940616,
+              "backingStorageSize": 1795227,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11343772,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7340896,
+              "backingStorageSize": 1795067,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11443580,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7593392,
+              "backingStorageSize": 1795067,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11629576,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7356192,
+              "backingStorageSize": 1794744,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11713308,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7359744,
+              "backingStorageSize": 1794751,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11805288,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7360112,
+              "backingStorageSize": 1794751,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            }
+          ]
+        },
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4519788,
+            "totalSize": 5292032,
+            "embedderHeapUsedSize": 2230664,
+            "backingStorageSize": 736489,
+            "documents": 1,
+            "nodes": 487,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11310616,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7934024,
+              "backingStorageSize": 1795227,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11337424,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7601224,
+              "backingStorageSize": 1795067,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11438336,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7393840,
+              "backingStorageSize": 1795067,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11625264,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7400424,
+              "backingStorageSize": 1794744,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11713736,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7364720,
+              "backingStorageSize": 1794744,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11803956,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7368080,
+              "backingStorageSize": 1794744,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            }
+          ]
+        },
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4519696,
+            "totalSize": 5292032,
+            "embedderHeapUsedSize": 2202256,
+            "backingStorageSize": 736489,
+            "documents": 1,
+            "nodes": 487,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11287780,
+              "totalSize": 13205504,
+              "embedderHeapUsedSize": 7845928,
+              "backingStorageSize": 1795227,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11317732,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7324632,
+              "backingStorageSize": 1795067,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11420800,
+              "totalSize": 13729792,
+              "embedderHeapUsedSize": 7337992,
+              "backingStorageSize": 1795067,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11604440,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7331672,
+              "backingStorageSize": 1794744,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11685868,
+              "totalSize": 13205504,
+              "embedderHeapUsedSize": 7364936,
+              "backingStorageSize": 1794744,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11776496,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7342304,
+              "backingStorageSize": 1794744,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cpuRate": 4,
+      "lang": "en",
+      "errors": [],
+      "steps": [
+        {
+          "label": "cold-dashboard",
+          "taskMs": [
+            669.614,
+            651.796,
+            647.004
+          ],
+          "medianTaskMs": 651.796,
+          "longestTaskMs": [
+            220,
+            219,
+            217
+          ],
+          "liveElements": 263,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/config/business",
+            "/api/system/settings",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/dashboard",
+            "/api/system/public_preferences",
+            "/api/admin/alerts"
+          ],
+          "requestCount": [
+            6,
+            6,
+            6
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 250962,
+              "decoded": 791657,
+              "transfer": 256062
+            },
+            "css": {
+              "encoded": 53044,
+              "decoded": 259510,
+              "transfer": 54244
+            },
+            "fonts": {
+              "encoded": 162996,
+              "decoded": 162996,
+              "transfer": 163596
+            },
+            "all": {
+              "encoded": 468092,
+              "decoded": 1217610,
+              "transfer": 476792
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/socket.io/socket.io.js",
+              "encoded": 37660,
+              "decoded": 155836,
+              "transfer": 37960
+            },
+            {
+              "name": "/admin-D5taDaIo.js",
+              "encoded": 5422,
+              "decoded": 13377,
+              "transfer": 5722
+            },
+            {
+              "name": "/chunks/businessDate-WlVJxOqH.js",
+              "encoded": 44417,
+              "decoded": 114119,
+              "transfer": 44717
+            },
+            {
+              "name": "/chunks/faviconInjector-Dz38Drhz.js",
+              "encoded": 3661,
+              "decoded": 9719,
+              "transfer": 3961
+            },
+            {
+              "name": "/chunks/browserDeviceClient-CRqi4vUV.js",
+              "encoded": 12897,
+              "decoded": 33807,
+              "transfer": 13197
+            },
+            {
+              "name": "/chunks/App-Bv0WpldC.js",
+              "encoded": 9611,
+              "decoded": 33577,
+              "transfer": 9911
+            },
+            {
+              "name": "/chunks/systemSettings-B_RfmVy0.js",
+              "encoded": 254,
+              "decoded": 338,
+              "transfer": 554
+            },
+            {
+              "name": "/chunks/SidebarIcon-DkpyBM_a.js",
+              "encoded": 1136,
+              "decoded": 2111,
+              "transfer": 1436
+            },
+            {
+              "name": "/chunks/reportPages-DdzdOyLW.js",
+              "encoded": 273,
+              "decoded": 534,
+              "transfer": 573
+            },
+            {
+              "name": "/chunks/_plugin-vue_export-helper-DlAUqK2U.js",
+              "encoded": 102,
+              "decoded": 91,
+              "transfer": 402
+            },
+            {
+              "name": "/chunks/i18n-fHdMMFwT.js",
+              "encoded": 72878,
+              "decoded": 250717,
+              "transfer": 73178
+            },
+            {
+              "name": "/chunks/useAdminDialogs-BIIMo-TK.js",
+              "encoded": 418,
+              "decoded": 949,
+              "transfer": 718
+            },
+            {
+              "name": "/chunks/posSessionStorage-GgobpOUQ.js",
+              "encoded": 256,
+              "decoded": 515,
+              "transfer": 556
+            },
+            {
+              "name": "/chunks/realtime-BPKv65hE.js",
+              "encoded": 601,
+              "decoded": 1175,
+              "transfer": 901
+            },
+            {
+              "name": "/chunks/Dashboard-lXUvrtij.js",
+              "encoded": 6619,
+              "decoded": 19012,
+              "transfer": 6919
+            },
+            {
+              "name": "/chunks/reportFormatting-CFH2eDHL.js",
+              "encoded": 548,
+              "decoded": 1088,
+              "transfer": 848
+            },
+            {
+              "name": "/chunks/vendor-chartjs-DisVn190.js",
+              "encoded": 54209,
+              "decoded": 154692,
+              "transfer": 54509
+            }
+          ]
+        },
+        {
+          "label": "orders-50",
+          "taskMs": [
+            354.96000000000004,
+            352.353,
+            355.5229999999999
+          ],
+          "medianTaskMs": 354.96000000000004,
+          "longestTaskMs": [
+            98,
+            100,
+            99
+          ],
+          "liveElements": 2445,
+          "tableRows": 50,
+          "visibleTableRows": 50,
+          "requestURLs": [
+            "/api/admin/shifts?action=cashiers&all=true",
+            "/api/admin/orders?page=1&limit=50&filter_type=register&start_date=2026-09-10&end_date=2026-09-10",
+            "/api/admin/jofotara/settings"
+          ],
+          "requestCount": [
+            3,
+            3,
+            3
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 40011,
+              "decoded": 154172,
+              "transfer": 41811
+            },
+            "css": {
+              "encoded": 1352,
+              "decoded": 6576,
+              "transfer": 1652
+            },
+            "fonts": {
+              "encoded": 18924,
+              "decoded": 18924,
+              "transfer": 19224
+            },
+            "all": {
+              "encoded": 61069,
+              "decoded": 194092,
+              "transfer": 64369
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Orders-CK8NbTax.js",
+              "encoded": 25229,
+              "decoded": 116882,
+              "transfer": 25529
+            },
+            {
+              "name": "/chunks/receiptPrint-DRK2-Db-.js",
+              "encoded": 925,
+              "decoded": 1928,
+              "transfer": 1225
+            },
+            {
+              "name": "/chunks/receiptPresentation-Dpk_HYl5.js",
+              "encoded": 2614,
+              "decoded": 6881,
+              "transfer": 2914
+            },
+            {
+              "name": "/chunks/orderIdentityDisplay-CC2pz4l_.js",
+              "encoded": 385,
+              "decoded": 1027,
+              "transfer": 685
+            },
+            {
+              "name": "/chunks/receiptLineTotals-DjP7nZKc.js",
+              "encoded": 829,
+              "decoded": 1871,
+              "transfer": 1129
+            },
+            {
+              "name": "/chunks/browser-BqTd-3GH.js",
+              "encoded": 10029,
+              "decoded": 25583,
+              "transfer": 10329
+            }
+          ]
+        },
+        {
+          "label": "inventory-12",
+          "taskMs": [
+            250.216,
+            233.4369999999999,
+            242.49900000000002
+          ],
+          "medianTaskMs": 242.49900000000002,
+          "longestTaskMs": [
+            63,
+            56,
+            56
+          ],
+          "liveElements": 1017,
+          "tableRows": 12,
+          "visibleTableRows": 12,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            2,
+            2,
+            2
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 206392,
+              "decoded": 665101,
+              "transfer": 207892
+            },
+            "css": {
+              "encoded": 5306,
+              "decoded": 25618,
+              "transfer": 5906
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 212439,
+              "decoded": 696223,
+              "transfer": 215139
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Inventory-D-ZZXkK-.js",
+              "encoded": 35807,
+              "decoded": 144628,
+              "transfer": 36107
+            },
+            {
+              "name": "/chunks/vendor-xlsx-BLigKl4k.js",
+              "encoded": 160635,
+              "decoded": 492338,
+              "transfer": 160935
+            },
+            {
+              "name": "/chunks/ModalShell-wKz24hMU.js",
+              "encoded": 1384,
+              "decoded": 2866,
+              "transfer": 1684
+            },
+            {
+              "name": "/chunks/ProductRecipeEditor-DEcURL1n.js",
+              "encoded": 8373,
+              "decoded": 25027,
+              "transfer": 8673
+            },
+            {
+              "name": "/chunks/ingredientUnits-C8XExbUP.js",
+              "encoded": 193,
+              "decoded": 242,
+              "transfer": 493
+            }
+          ]
+        },
+        {
+          "label": "inventory-search",
+          "taskMs": [
+            62.67700000000009,
+            62.18199999999996,
+            62.243999999999964
+          ],
+          "medianTaskMs": 62.243999999999964,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 1019,
+          "tableRows": 12,
+          "visibleTableRows": 12,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12&search=Product+1",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            2,
+            2,
+            2
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 735,
+              "decoded": 5563,
+              "transfer": 1335
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inventory-96",
+          "taskMs": [
+            226.1599999999999,
+            246.4780000000002,
+            229.9530000000001
+          ],
+          "medianTaskMs": 229.9530000000001,
+          "longestTaskMs": [
+            131,
+            126,
+            134
+          ],
+          "liveElements": 5889,
+          "tableRows": 96,
+          "visibleTableRows": 96,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            4,
+            4,
+            4
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 2688,
+              "decoded": 31617,
+              "transfer": 3888
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "customers-50",
+          "taskMs": [
+            364.4859999999999,
+            350.128,
+            350.49299999999994
+          ],
+          "medianTaskMs": 350.49299999999994,
+          "longestTaskMs": [
+            58,
+            0,
+            0
+          ],
+          "liveElements": 2530,
+          "tableRows": 50,
+          "visibleTableRows": 50,
+          "requestURLs": [
+            "/api/admin/customers?page=1&limit=50"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 4430,
+              "decoded": 14661,
+              "transfer": 4730
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 4802,
+              "decoded": 17468,
+              "transfer": 5402
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Customers-CnsaD8Bm.js",
+              "encoded": 4430,
+              "decoded": 14661,
+              "transfer": 4730
+            }
+          ]
+        },
+        {
+          "label": "sales-100",
+          "taskMs": [
+            300.0940000000001,
+            308.3570000000002,
+            308.53299999999996
+          ],
+          "medianTaskMs": 308.3570000000002,
+          "longestTaskMs": [
+            81,
+            85,
+            79
+          ],
+          "liveElements": 1114,
+          "tableRows": 100,
+          "visibleTableRows": 100,
+          "requestURLs": [
+            "/api/admin/reports/sales-details?start_date=2026-09-10&end_date=2026-09-10"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 9603,
+              "decoded": 24731,
+              "transfer": 11103
+            },
+            "css": {
+              "encoded": 3984,
+              "decoded": 16794,
+              "transfer": 4884
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 15358,
+              "decoded": 66279,
+              "transfer": 18058
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/ReportsSalesDetails-Diuwbh29.js",
+              "encoded": 3421,
+              "decoded": 10726,
+              "transfer": 3721
+            },
+            {
+              "name": "/chunks/useDailyReportPage-1XhWLRiK.js",
+              "encoded": 426,
+              "decoded": 685,
+              "transfer": 726
+            },
+            {
+              "name": "/chunks/dailyReportPayloads-DqCwKOvc.js",
+              "encoded": 832,
+              "decoded": 2117,
+              "transfer": 1132
+            },
+            {
+              "name": "/chunks/ReportsLayout-CUwt8qvH.js",
+              "encoded": 2742,
+              "decoded": 6517,
+              "transfer": 3042
+            },
+            {
+              "name": "/chunks/useBrowserReportPrint-DyIW74xP.js",
+              "encoded": 2182,
+              "decoded": 4686,
+              "transfer": 2482
+            }
+          ]
+        },
+        {
+          "label": "sales-2000",
+          "taskMs": [
+            956.8339999999997,
+            952.2780000000001,
+            972.315
+          ],
+          "medianTaskMs": 956.8339999999997,
+          "longestTaskMs": [
+            533,
+            538,
+            543
+          ],
+          "liveElements": 16314,
+          "tableRows": 2000,
+          "visibleTableRows": 2000,
+          "requestURLs": [
+            "/api/admin/reports/sales-details?start_date=2026-09-10&end_date=2026-09-10"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 28575,
+              "decoded": 502493,
+              "transfer": 28875
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "sales-filter",
+          "taskMs": [
+            76.00700000000016,
+            84.51699999999995,
+            78.17700000000016
+          ],
+          "medianTaskMs": 78.17700000000016,
+          "longestTaskMs": [
+            0,
+            56,
+            51
+          ],
+          "liveElements": 402,
+          "tableRows": 11,
+          "visibleTableRows": 11,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "return-dashboard",
+          "taskMs": [
+            199.0759999999998,
+            194.12099999999998,
+            198.82799999999978
+          ],
+          "medianTaskMs": 198.82799999999978,
+          "longestTaskMs": [
+            83,
+            81,
+            67
+          ],
+          "liveElements": 287,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "dashboard-idle-10s",
+          "taskMs": [
+            14.265999999999668
+          ],
+          "medianTaskMs": 14.265999999999668,
+          "longestTaskMs": [
+            0
+          ],
+          "liveElements": 287,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inspect-xlsx-20000x16",
+          "taskMs": [
+            2988.351999999999,
+            2977.092999999998,
+            2952.4500000000007
+          ],
+          "medianTaskMs": 2977.092999999998,
+          "longestTaskMs": [
+            2779,
+            2778,
+            2756
+          ],
+          "liveElements": 6028,
+          "tableRows": 96,
+          "visibleTableRows": 96,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inventory-10-events",
+          "taskMs": [
+            95.92400000000012,
+            91.05399999999975,
+            83.86700000000147
+          ],
+          "medianTaskMs": 91.05399999999975,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5898,
+          "tableRows": 96,
+          "visibleTableRows": 96,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            20,
+            20,
+            20
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 19470,
+              "decoded": 261130,
+              "transfer": 25470
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "jofotara-10-events",
+          "taskMs": [
+            15.912999999997623,
+            12.687999999997146,
+            13.688999999999396
+          ],
+          "medianTaskMs": 13.688999999999396,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5898,
+          "tableRows": 96,
+          "visibleTableRows": 96,
+          "requestURLs": [
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100"
+          ],
+          "requestCount": [
+            10,
+            10,
+            10
+          ],
+          "direction": "ltr",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 860,
+              "decoded": 700,
+              "transfer": 3860
+            }
+          },
+          "scriptResources": []
+        }
+      ],
+      "heaps": [
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4428092,
+            "totalSize": 5292032,
+            "embedderHeapUsedSize": 2426040,
+            "backingStorageSize": 736605,
+            "documents": 1,
+            "nodes": 486,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11125012,
+              "totalSize": 11894784,
+              "embedderHeapUsedSize": 7563496,
+              "backingStorageSize": 1795657,
+              "documents": 3,
+              "nodes": 13388,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11376772,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7207600,
+              "backingStorageSize": 1795952,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11279676,
+              "totalSize": 12156928,
+              "embedderHeapUsedSize": 7355520,
+              "backingStorageSize": 1795556,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11476564,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7343552,
+              "backingStorageSize": 1795305,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11554424,
+              "totalSize": 12156928,
+              "embedderHeapUsedSize": 7314360,
+              "backingStorageSize": 1795233,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11626280,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 6723640,
+              "backingStorageSize": 1796074,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            }
+          ]
+        },
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4428092,
+            "totalSize": 5029888,
+            "embedderHeapUsedSize": 2391224,
+            "backingStorageSize": 736605,
+            "documents": 1,
+            "nodes": 486,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11125408,
+              "totalSize": 12156928,
+              "embedderHeapUsedSize": 7734720,
+              "backingStorageSize": 1795655,
+              "documents": 3,
+              "nodes": 13388,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11197304,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7361024,
+              "backingStorageSize": 1795638,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11270452,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7391456,
+              "backingStorageSize": 1795554,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11455076,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7381688,
+              "backingStorageSize": 1795231,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11556688,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 6761248,
+              "backingStorageSize": 1796080,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11626760,
+              "totalSize": 12156928,
+              "embedderHeapUsedSize": 6768040,
+              "backingStorageSize": 1796080,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            }
+          ]
+        },
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4428116,
+            "totalSize": 5029888,
+            "embedderHeapUsedSize": 2437736,
+            "backingStorageSize": 736605,
+            "documents": 1,
+            "nodes": 486,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11125164,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7689920,
+              "backingStorageSize": 1795657,
+              "documents": 3,
+              "nodes": 13388,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11195840,
+              "totalSize": 11894784,
+              "embedderHeapUsedSize": 6700760,
+              "backingStorageSize": 1796481,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11274292,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7374296,
+              "backingStorageSize": 1795556,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11451568,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7395192,
+              "backingStorageSize": 1795233,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11546892,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 7393552,
+              "backingStorageSize": 1795233,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11620684,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 6718016,
+              "backingStorageSize": 1796074,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cpuRate": 4,
+      "lang": "ar",
+      "errors": [],
+      "steps": [
+        {
+          "label": "cold-dashboard",
+          "taskMs": [
+            574.323,
+            583.8299999999999,
+            583.644
+          ],
+          "medianTaskMs": 583.644,
+          "longestTaskMs": [
+            164,
+            168,
+            170
+          ],
+          "liveElements": 263,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/config/business",
+            "/api/system/settings",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/dashboard",
+            "/api/system/public_preferences",
+            "/api/admin/alerts"
+          ],
+          "requestCount": [
+            6,
+            6,
+            6
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 250962,
+              "decoded": 791657,
+              "transfer": 256062
+            },
+            "css": {
+              "encoded": 53044,
+              "decoded": 259510,
+              "transfer": 54244
+            },
+            "fonts": {
+              "encoded": 472076,
+              "decoded": 472076,
+              "transfer": 475076
+            },
+            "all": {
+              "encoded": 777173,
+              "decoded": 1526690,
+              "transfer": 788273
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/socket.io/socket.io.js",
+              "encoded": 37660,
+              "decoded": 155836,
+              "transfer": 37960
+            },
+            {
+              "name": "/admin-D5taDaIo.js",
+              "encoded": 5422,
+              "decoded": 13377,
+              "transfer": 5722
+            },
+            {
+              "name": "/chunks/businessDate-WlVJxOqH.js",
+              "encoded": 44417,
+              "decoded": 114119,
+              "transfer": 44717
+            },
+            {
+              "name": "/chunks/faviconInjector-Dz38Drhz.js",
+              "encoded": 3661,
+              "decoded": 9719,
+              "transfer": 3961
+            },
+            {
+              "name": "/chunks/browserDeviceClient-CRqi4vUV.js",
+              "encoded": 12897,
+              "decoded": 33807,
+              "transfer": 13197
+            },
+            {
+              "name": "/chunks/App-Bv0WpldC.js",
+              "encoded": 9611,
+              "decoded": 33577,
+              "transfer": 9911
+            },
+            {
+              "name": "/chunks/systemSettings-B_RfmVy0.js",
+              "encoded": 254,
+              "decoded": 338,
+              "transfer": 554
+            },
+            {
+              "name": "/chunks/SidebarIcon-DkpyBM_a.js",
+              "encoded": 1136,
+              "decoded": 2111,
+              "transfer": 1436
+            },
+            {
+              "name": "/chunks/reportPages-DdzdOyLW.js",
+              "encoded": 273,
+              "decoded": 534,
+              "transfer": 573
+            },
+            {
+              "name": "/chunks/_plugin-vue_export-helper-DlAUqK2U.js",
+              "encoded": 102,
+              "decoded": 91,
+              "transfer": 402
+            },
+            {
+              "name": "/chunks/i18n-fHdMMFwT.js",
+              "encoded": 72878,
+              "decoded": 250717,
+              "transfer": 73178
+            },
+            {
+              "name": "/chunks/useAdminDialogs-BIIMo-TK.js",
+              "encoded": 418,
+              "decoded": 949,
+              "transfer": 718
+            },
+            {
+              "name": "/chunks/posSessionStorage-GgobpOUQ.js",
+              "encoded": 256,
+              "decoded": 515,
+              "transfer": 556
+            },
+            {
+              "name": "/chunks/realtime-BPKv65hE.js",
+              "encoded": 601,
+              "decoded": 1175,
+              "transfer": 901
+            },
+            {
+              "name": "/chunks/Dashboard-lXUvrtij.js",
+              "encoded": 6619,
+              "decoded": 19012,
+              "transfer": 6919
+            },
+            {
+              "name": "/chunks/reportFormatting-CFH2eDHL.js",
+              "encoded": 548,
+              "decoded": 1088,
+              "transfer": 848
+            },
+            {
+              "name": "/chunks/vendor-chartjs-DisVn190.js",
+              "encoded": 54209,
+              "decoded": 154692,
+              "transfer": 54509
+            }
+          ]
+        },
+        {
+          "label": "orders-50",
+          "taskMs": [
+            278.469,
+            276.367,
+            276.189
+          ],
+          "medianTaskMs": 276.367,
+          "longestTaskMs": [
+            67,
+            63,
+            64
+          ],
+          "liveElements": 2445,
+          "tableRows": 50,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/shifts?action=cashiers&all=true",
+            "/api/admin/orders?page=1&limit=50&filter_type=register&start_date=2026-09-10&end_date=2026-09-10",
+            "/api/admin/jofotara/settings"
+          ],
+          "requestCount": [
+            3,
+            3,
+            3
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 40011,
+              "decoded": 154172,
+              "transfer": 41811
+            },
+            "css": {
+              "encoded": 1352,
+              "decoded": 6576,
+              "transfer": 1652
+            },
+            "fonts": {
+              "encoded": 18924,
+              "decoded": 18924,
+              "transfer": 19224
+            },
+            "all": {
+              "encoded": 61069,
+              "decoded": 194092,
+              "transfer": 64369
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Orders-CK8NbTax.js",
+              "encoded": 25229,
+              "decoded": 116882,
+              "transfer": 25529
+            },
+            {
+              "name": "/chunks/receiptPrint-DRK2-Db-.js",
+              "encoded": 925,
+              "decoded": 1928,
+              "transfer": 1225
+            },
+            {
+              "name": "/chunks/receiptPresentation-Dpk_HYl5.js",
+              "encoded": 2614,
+              "decoded": 6881,
+              "transfer": 2914
+            },
+            {
+              "name": "/chunks/orderIdentityDisplay-CC2pz4l_.js",
+              "encoded": 385,
+              "decoded": 1027,
+              "transfer": 685
+            },
+            {
+              "name": "/chunks/receiptLineTotals-DjP7nZKc.js",
+              "encoded": 829,
+              "decoded": 1871,
+              "transfer": 1129
+            },
+            {
+              "name": "/chunks/browser-BqTd-3GH.js",
+              "encoded": 10029,
+              "decoded": 25583,
+              "transfer": 10329
+            }
+          ]
+        },
+        {
+          "label": "inventory-12",
+          "taskMs": [
+            194.82899999999992,
+            190.75299999999996,
+            194.9780000000001
+          ],
+          "medianTaskMs": 194.82899999999992,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 1017,
+          "tableRows": 12,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            2,
+            2,
+            2
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 206392,
+              "decoded": 665101,
+              "transfer": 207892
+            },
+            "css": {
+              "encoded": 5306,
+              "decoded": 25618,
+              "transfer": 5906
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 212439,
+              "decoded": 696223,
+              "transfer": 215139
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Inventory-D-ZZXkK-.js",
+              "encoded": 35807,
+              "decoded": 144628,
+              "transfer": 36107
+            },
+            {
+              "name": "/chunks/vendor-xlsx-BLigKl4k.js",
+              "encoded": 160635,
+              "decoded": 492338,
+              "transfer": 160935
+            },
+            {
+              "name": "/chunks/ModalShell-wKz24hMU.js",
+              "encoded": 1384,
+              "decoded": 2866,
+              "transfer": 1684
+            },
+            {
+              "name": "/chunks/ProductRecipeEditor-DEcURL1n.js",
+              "encoded": 8373,
+              "decoded": 25027,
+              "transfer": 8673
+            },
+            {
+              "name": "/chunks/ingredientUnits-C8XExbUP.js",
+              "encoded": 193,
+              "decoded": 242,
+              "transfer": 493
+            }
+          ]
+        },
+        {
+          "label": "inventory-search",
+          "taskMs": [
+            58.51499999999987,
+            59.13199999999996,
+            56.46599999999991
+          ],
+          "medianTaskMs": 58.51499999999987,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 1019,
+          "tableRows": 12,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12&search=Product+1",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            2,
+            2,
+            2
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 735,
+              "decoded": 5563,
+              "transfer": 1335
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inventory-96",
+          "taskMs": [
+            222.24200000000005,
+            221.3050000000001,
+            228.753
+          ],
+          "medianTaskMs": 222.24200000000005,
+          "longestTaskMs": [
+            126,
+            124,
+            127
+          ],
+          "liveElements": 5889,
+          "tableRows": 96,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=12",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            4,
+            4,
+            4
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 2688,
+              "decoded": 31617,
+              "transfer": 3888
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "customers-50",
+          "taskMs": [
+            347.12199999999996,
+            331.3689999999998,
+            332.23500000000007
+          ],
+          "medianTaskMs": 332.23500000000007,
+          "longestTaskMs": [
+            94,
+            83,
+            78
+          ],
+          "liveElements": 2530,
+          "tableRows": 50,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/customers?page=1&limit=50"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 4430,
+              "decoded": 14661,
+              "transfer": 4730
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 4802,
+              "decoded": 17468,
+              "transfer": 5402
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/Customers-CnsaD8Bm.js",
+              "encoded": 4430,
+              "decoded": 14661,
+              "transfer": 4730
+            }
+          ]
+        },
+        {
+          "label": "sales-100",
+          "taskMs": [
+            220.90199999999993,
+            218.34200000000004,
+            221.51699999999997
+          ],
+          "medianTaskMs": 220.90199999999993,
+          "longestTaskMs": [
+            60,
+            61,
+            62
+          ],
+          "liveElements": 1114,
+          "tableRows": 100,
+          "visibleTableRows": 100,
+          "requestURLs": [
+            "/api/admin/reports/sales-details?start_date=2026-09-10&end_date=2026-09-10"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 9603,
+              "decoded": 24731,
+              "transfer": 11103
+            },
+            "css": {
+              "encoded": 3984,
+              "decoded": 16794,
+              "transfer": 4884
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 15358,
+              "decoded": 66279,
+              "transfer": 18058
+            }
+          },
+          "scriptResources": [
+            {
+              "name": "/chunks/ReportsSalesDetails-Diuwbh29.js",
+              "encoded": 3421,
+              "decoded": 10726,
+              "transfer": 3721
+            },
+            {
+              "name": "/chunks/useDailyReportPage-1XhWLRiK.js",
+              "encoded": 426,
+              "decoded": 685,
+              "transfer": 726
+            },
+            {
+              "name": "/chunks/dailyReportPayloads-DqCwKOvc.js",
+              "encoded": 832,
+              "decoded": 2117,
+              "transfer": 1132
+            },
+            {
+              "name": "/chunks/ReportsLayout-CUwt8qvH.js",
+              "encoded": 2742,
+              "decoded": 6517,
+              "transfer": 3042
+            },
+            {
+              "name": "/chunks/useBrowserReportPrint-DyIW74xP.js",
+              "encoded": 2182,
+              "decoded": 4686,
+              "transfer": 2482
+            }
+          ]
+        },
+        {
+          "label": "sales-2000",
+          "taskMs": [
+            1046.786,
+            1058.5570000000005,
+            1068.32
+          ],
+          "medianTaskMs": 1058.5570000000005,
+          "longestTaskMs": [
+            634,
+            643,
+            648
+          ],
+          "liveElements": 16314,
+          "tableRows": 2000,
+          "visibleTableRows": 2000,
+          "requestURLs": [
+            "/api/admin/reports/sales-details?start_date=2026-09-10&end_date=2026-09-10"
+          ],
+          "requestCount": [
+            1,
+            1,
+            1
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 28575,
+              "decoded": 502493,
+              "transfer": 28875
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "sales-filter",
+          "taskMs": [
+            83.41399999999987,
+            83.20299999999969,
+            85.83300000000006
+          ],
+          "medianTaskMs": 83.41399999999987,
+          "longestTaskMs": [
+            51,
+            53,
+            52
+          ],
+          "liveElements": 402,
+          "tableRows": 11,
+          "visibleTableRows": 11,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "return-dashboard",
+          "taskMs": [
+            134.01400000000007,
+            130.75100000000006,
+            130.12299999999976
+          ],
+          "medianTaskMs": 130.75100000000006,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 287,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "dashboard-idle-10s",
+          "taskMs": [
+            17.224000000000128
+          ],
+          "medianTaskMs": 17.224000000000128,
+          "longestTaskMs": [
+            0
+          ],
+          "liveElements": 287,
+          "tableRows": 0,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inspect-xlsx-20000x16",
+          "taskMs": [
+            2874.8580000000015,
+            2936.249000000002,
+            2872.2250000000004
+          ],
+          "medianTaskMs": 2874.8580000000015,
+          "longestTaskMs": [
+            2738,
+            2797,
+            2732
+          ],
+          "liveElements": 6028,
+          "tableRows": 96,
+          "visibleTableRows": 0,
+          "requestURLs": [],
+          "requestCount": [
+            0,
+            0,
+            0
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "inventory-10-events",
+          "taskMs": [
+            81.92800000000133,
+            81.8790000000007,
+            75.57900000000117
+          ],
+          "medianTaskMs": 81.8790000000007,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5898,
+          "tableRows": 96,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories",
+            "/api/admin/products?page=1&limit=96",
+            "/api/admin/categories"
+          ],
+          "requestCount": [
+            20,
+            20,
+            20
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 19470,
+              "decoded": 261130,
+              "transfer": 25470
+            }
+          },
+          "scriptResources": []
+        },
+        {
+          "label": "jofotara-10-events",
+          "taskMs": [
+            12.00099999999793,
+            11.5949999999998,
+            13.315999999999661
+          ],
+          "medianTaskMs": 12.00099999999793,
+          "longestTaskMs": [
+            0,
+            0,
+            0
+          ],
+          "liveElements": 5898,
+          "tableRows": 96,
+          "visibleTableRows": 0,
+          "requestURLs": [
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100",
+            "/api/admin/jofotara/operations?limit=100"
+          ],
+          "requestCount": [
+            10,
+            10,
+            10
+          ],
+          "direction": "rtl",
+          "documentOverflow": [
+            false,
+            false,
+            false
+          ],
+          "resourceBytes": {
+            "js": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "css": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "fonts": {
+              "encoded": 0,
+              "decoded": 0,
+              "transfer": 0
+            },
+            "all": {
+              "encoded": 860,
+              "decoded": 700,
+              "transfer": 3860
+            }
+          },
+          "scriptResources": []
+        }
+      ],
+      "heaps": [
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4523456,
+            "totalSize": 5292032,
+            "embedderHeapUsedSize": 2627896,
+            "backingStorageSize": 736489,
+            "documents": 1,
+            "nodes": 487,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11259460,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7850272,
+              "backingStorageSize": 1795233,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11336304,
+              "totalSize": 12419072,
+              "embedderHeapUsedSize": 6954272,
+              "backingStorageSize": 1795153,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11397512,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 6942120,
+              "backingStorageSize": 1795076,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11585944,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 6991072,
+              "backingStorageSize": 1794753,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11673836,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7530320,
+              "backingStorageSize": 1794753,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11779324,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7527096,
+              "backingStorageSize": 1794753,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            }
+          ]
+        },
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4523456,
+            "totalSize": 5029888,
+            "embedderHeapUsedSize": 2639496,
+            "backingStorageSize": 736489,
+            "documents": 1,
+            "nodes": 487,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11272180,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7907272,
+              "backingStorageSize": 1795233,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11341288,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7468432,
+              "backingStorageSize": 1795153,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11412228,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 6956352,
+              "backingStorageSize": 1795069,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11591492,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7022176,
+              "backingStorageSize": 1794746,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11681056,
+              "totalSize": 13205504,
+              "embedderHeapUsedSize": 7011152,
+              "backingStorageSize": 1794746,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11787088,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7508304,
+              "backingStorageSize": 1794746,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            }
+          ]
+        },
+        {
+          "cold": {
+            "label": "cold-dashboard",
+            "usedSize": 4523444,
+            "totalSize": 5029888,
+            "embedderHeapUsedSize": 2632664,
+            "backingStorageSize": 736489,
+            "documents": 1,
+            "nodes": 487,
+            "jsEventListeners": 73
+          },
+          "cycles": [
+            {
+              "label": "warm",
+              "usedSize": 11253296,
+              "totalSize": 13205504,
+              "embedderHeapUsedSize": 7837168,
+              "backingStorageSize": 1795233,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-1",
+              "usedSize": 11320756,
+              "totalSize": 13205504,
+              "embedderHeapUsedSize": 6940184,
+              "backingStorageSize": 1795153,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-2",
+              "usedSize": 11390400,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 6953216,
+              "backingStorageSize": 1795069,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-3",
+              "usedSize": 11568020,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 6969048,
+              "backingStorageSize": 1794746,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-4",
+              "usedSize": 11656864,
+              "totalSize": 12943360,
+              "embedderHeapUsedSize": 7495600,
+              "backingStorageSize": 1794753,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            },
+            {
+              "label": "cycle-5",
+              "usedSize": 11762572,
+              "totalSize": 12681216,
+              "embedderHeapUsedSize": 7496264,
+              "backingStorageSize": 1794753,
+              "documents": 3,
+              "nodes": 13392,
+              "jsEventListeners": 1322
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

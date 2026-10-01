@@ -1,0 +1,236 @@
+[
+  {
+    "prefix": "scratch/spooler-audit/blank-prod-before",
+    "jobs": 432,
+    "cpu_s": 19.625,
+    "wall_s": 28.252,
+    "peak_commit_mib": 243.65234375,
+    "peak_ws_mib": 389.6171875,
+    "event_loop": {
+      "p99": 30.801919,
+      "max": 237.764607
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 67.23319999999876,
+        "first_byte_p95": 114.51490000000013,
+        "transport_median": 1.1913999999997031,
+        "transport_p95": 1.5522999999999456
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 65.51339999999982,
+        "first_byte_p95": 91.45309999999972,
+        "transport_median": 1.166799999999057,
+        "transport_p95": 1.5135000000000218
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 67.48890000000029,
+        "first_byte_p95": 100.89639999999963,
+        "transport_median": 1.1591999999982363,
+        "transport_p95": 1.5504000000000815
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.9322000000011,
+        "first_byte_p95": 100.70730000000003,
+        "transport_median": 1.1836000000002969,
+        "transport_p95": 1.8963000000001102
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 66.83189999999922,
+        "first_byte_p95": 97.85049999999956,
+        "transport_median": 1.1000999999996566,
+        "transport_p95": 1.3263999999999214
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 66.54629999999815,
+        "first_byte_p95": 97.50790000000052,
+        "transport_median": 1.0725000000002183,
+        "transport_p95": 1.344000000000051
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 50.543900000000576,
+        "first_byte_p95": 92.74549999999999,
+        "transport_median": 0.9671999999991385,
+        "transport_p95": 1.2973000000001775
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 51.52609999999913,
+        "first_byte_p95": 82.16640000000189,
+        "transport_median": 0.9920000000001892,
+        "transport_p95": 1.3835999999996602
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 52.798399999999674,
+        "first_byte_p95": 97.31940000000031,
+        "transport_median": 0.9569000000010419,
+        "transport_p95": 1.3932999999997264
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/blank-prod-after",
+    "jobs": 432,
+    "cpu_s": 19.953125,
+    "wall_s": 28.139,
+    "peak_commit_mib": 226.84375,
+    "peak_ws_mib": 352.75390625,
+    "event_loop": {
+      "p99": 30.719999,
+      "max": 223.346687
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.2856999999999,
+        "first_byte_p95": 115.59179999999833,
+        "transport_median": 1.195400000000518,
+        "transport_p95": 1.5604000000002998
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 66.14240000000063,
+        "first_byte_p95": 92.71570000000065,
+        "transport_median": 1.2404000000005908,
+        "transport_p95": 1.7138000000004467
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 66.47780000000012,
+        "first_byte_p95": 117.25420000000008,
+        "transport_median": 1.2105000000010477,
+        "transport_p95": 1.5264999999999418
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.0630000000001,
+        "first_byte_p95": 98.6911,
+        "transport_median": 1.1906999999991967,
+        "transport_p95": 1.6711999999997715
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 66.05160000000069,
+        "first_byte_p95": 98.44420000000014,
+        "transport_median": 1.1226999999998952,
+        "transport_p95": 1.3683000000000902
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 66.03999999999996,
+        "first_byte_p95": 99.42929999999978,
+        "transport_median": 1.1314999999995052,
+        "transport_p95": 1.49149999999986
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 51.43769999999995,
+        "first_byte_p95": 94.58740000000034,
+        "transport_median": 1.0149000000001251,
+        "transport_p95": 1.3256000000001222
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 50.42790000000059,
+        "first_byte_p95": 97.24789999999848,
+        "transport_median": 1.015100000000075,
+        "transport_p95": 1.3926000000001295
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 53.4246000000021,
+        "first_byte_p95": 96.97110000000066,
+        "transport_median": 1.0455000000001746,
+        "transport_p95": 1.2093000000004395
+      }
+    ]
+  },
+  {
+    "prefix": "scratch/spooler-audit/blank-prod-repeat",
+    "jobs": 432,
+    "cpu_s": 19.703125,
+    "wall_s": 28.245,
+    "peak_commit_mib": 226.48046875,
+    "peak_ws_mib": 346.21484375,
+    "event_loop": {
+      "p99": 29.933567,
+      "max": 235.405311
+    },
+    "all_bytes_match": true,
+    "workloads": [
+      {
+        "name": "receipt",
+        "first_byte_median": 66.64669999999751,
+        "first_byte_p95": 115.6130000000012,
+        "transport_median": 1.1758000000008906,
+        "transport_p95": 1.6899999999999409
+      },
+      {
+        "name": "kitchen",
+        "first_byte_median": 65.09249999999884,
+        "first_byte_p95": 91.4936000000007,
+        "transport_median": 1.2027999999991152,
+        "transport_p95": 1.517199999998411
+      },
+      {
+        "name": "compiled_receipt-basic",
+        "first_byte_median": 66.65840000000026,
+        "first_byte_p95": 100.9561000000001,
+        "transport_median": 1.1526000000012573,
+        "transport_p95": 1.5691999999980908
+      },
+      {
+        "name": "compiled_receipt-bundle",
+        "first_byte_median": 66.56170000000202,
+        "first_byte_p95": 101.33559999999852,
+        "transport_median": 1.210799999997107,
+        "transport_p95": 1.5332999999991443
+      },
+      {
+        "name": "compiled_receipt-accepted-jofotara",
+        "first_byte_median": 65.74440000000004,
+        "first_byte_p95": 98.65300000000025,
+        "transport_median": 1.1177999999999884,
+        "transport_p95": 1.3659999999999854
+      },
+      {
+        "name": "compiled_kitchen-normal",
+        "first_byte_median": 65.8673000000017,
+        "first_byte_p95": 99.28610000000026,
+        "transport_median": 1.1031999999977415,
+        "transport_p95": 1.4791000000000167
+      },
+      {
+        "name": "compiled_kitchen-void",
+        "first_byte_median": 52.048500000000786,
+        "first_byte_p95": 94.50689999999986,
+        "transport_median": 0.9742000000005646,
+        "transport_p95": 1.3271999999997206
+      },
+      {
+        "name": "compiled_kitchen-subscription",
+        "first_byte_median": 50.74239999999918,
+        "first_byte_p95": 99.17540000000008,
+        "transport_median": 0.9981999999981781,
+        "transport_p95": 1.3742000000002008
+      },
+      {
+        "name": "compiled_kitchen-subscription-void",
+        "first_byte_median": 52.402100000000246,
+        "first_byte_p95": 95.7436000000016,
+        "transport_median": 0.9828999999990629,
+        "transport_p95": 1.2216000000007625
+      }
+    ]
+  }
+]

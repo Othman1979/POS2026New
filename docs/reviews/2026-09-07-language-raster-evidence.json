@@ -1,0 +1,231 @@
+{
+  "scope": "RGBA to ESC/POS raster only; no browser, PNG decode, journal or printer",
+  "iterations_per_process": 1000,
+  "rounds": 3,
+  "summary": [
+    {
+      "language": "node",
+      "fixture": "receipt",
+      "cpu_ms_per_ticket": 1.15625,
+      "elapsed_ms_per_ticket": 1.1949484,
+      "sampled_peak_mib": 69.80078125
+    },
+    {
+      "language": "node",
+      "fixture": "kitchen",
+      "cpu_ms_per_ticket": 0.984375,
+      "elapsed_ms_per_ticket": 0.9766881000000001,
+      "sampled_peak_mib": 69.2109375
+    },
+    {
+      "language": "rust",
+      "fixture": "receipt",
+      "cpu_ms_per_ticket": 0.65625,
+      "elapsed_ms_per_ticket": 0.6766753,
+      "sampled_peak_mib": 5.88671875
+    },
+    {
+      "language": "rust",
+      "fixture": "kitchen",
+      "cpu_ms_per_ticket": 0.53125,
+      "elapsed_ms_per_ticket": 0.5507527,
+      "sampled_peak_mib": 5.51171875
+    },
+    {
+      "language": "csharp",
+      "fixture": "receipt",
+      "cpu_ms_per_ticket": 0.90625,
+      "elapsed_ms_per_ticket": 0.9077029,
+      "sampled_peak_mib": 21.4375
+    },
+    {
+      "language": "csharp",
+      "fixture": "kitchen",
+      "cpu_ms_per_ticket": 0.734375,
+      "elapsed_ms_per_ticket": 0.7503981,
+      "sampled_peak_mib": 21.078125
+    }
+  ],
+  "runs": [
+    {
+      "language": "node",
+      "fixture": "receipt",
+      "round": 0,
+      "iterations": 1000,
+      "wall_ms": 1203.8234,
+      "cpu_ms": 1156.25,
+      "sampled_peak_working_set_bytes": 73277440,
+      "hash": "A560D1D5A9250B5BCB2CE790BDB1A09D4B0CB50A06D285BE3757379EFE5A5F5E"
+    },
+    {
+      "language": "rust",
+      "fixture": "receipt",
+      "round": 0,
+      "iterations": 1000,
+      "wall_ms": 698.0260000000001,
+      "cpu_ms": 671.875,
+      "sampled_peak_working_set_bytes": 6676480,
+      "hash": "A560D1D5A9250B5BCB2CE790BDB1A09D4B0CB50A06D285BE3757379EFE5A5F5E"
+    },
+    {
+      "language": "csharp",
+      "fixture": "receipt",
+      "round": 0,
+      "iterations": 1000,
+      "wall_ms": 934.1334,
+      "cpu_ms": 921.875,
+      "sampled_peak_working_set_bytes": 22822912,
+      "hash": "A560D1D5A9250B5BCB2CE790BDB1A09D4B0CB50A06D285BE3757379EFE5A5F5E"
+    },
+    {
+      "language": "node",
+      "fixture": "kitchen",
+      "round": 0,
+      "iterations": 1000,
+      "wall_ms": 999.2845000000001,
+      "cpu_ms": 968.75,
+      "sampled_peak_working_set_bytes": 72396800,
+      "hash": "BFCFCB8E3A4180B76435C13438D4F2E81BCD2C10D0A8A4EFC13B4EA5FBEB686D"
+    },
+    {
+      "language": "rust",
+      "fixture": "kitchen",
+      "round": 0,
+      "iterations": 1000,
+      "wall_ms": 556.6342000000001,
+      "cpu_ms": 531.25,
+      "sampled_peak_working_set_bytes": 5779456,
+      "hash": "BFCFCB8E3A4180B76435C13438D4F2E81BCD2C10D0A8A4EFC13B4EA5FBEB686D"
+    },
+    {
+      "language": "csharp",
+      "fixture": "kitchen",
+      "round": 0,
+      "iterations": 1000,
+      "wall_ms": 751.1715,
+      "cpu_ms": 718.75,
+      "sampled_peak_working_set_bytes": 22102016,
+      "hash": "BFCFCB8E3A4180B76435C13438D4F2E81BCD2C10D0A8A4EFC13B4EA5FBEB686D"
+    },
+    {
+      "language": "csharp",
+      "fixture": "receipt",
+      "round": 1,
+      "iterations": 1000,
+      "wall_ms": 907.7029,
+      "cpu_ms": 890.625,
+      "sampled_peak_working_set_bytes": 22478848,
+      "hash": "A560D1D5A9250B5BCB2CE790BDB1A09D4B0CB50A06D285BE3757379EFE5A5F5E"
+    },
+    {
+      "language": "rust",
+      "fixture": "receipt",
+      "round": 1,
+      "iterations": 1000,
+      "wall_ms": 676.6753,
+      "cpu_ms": 625,
+      "sampled_peak_working_set_bytes": 6172672,
+      "hash": "A560D1D5A9250B5BCB2CE790BDB1A09D4B0CB50A06D285BE3757379EFE5A5F5E"
+    },
+    {
+      "language": "node",
+      "fixture": "receipt",
+      "round": 1,
+      "iterations": 1000,
+      "wall_ms": 1187.5562,
+      "cpu_ms": 1171.875,
+      "sampled_peak_working_set_bytes": 72892416,
+      "hash": "A560D1D5A9250B5BCB2CE790BDB1A09D4B0CB50A06D285BE3757379EFE5A5F5E"
+    },
+    {
+      "language": "csharp",
+      "fixture": "kitchen",
+      "round": 1,
+      "iterations": 1000,
+      "wall_ms": 750.3981,
+      "cpu_ms": 734.375,
+      "sampled_peak_working_set_bytes": 22118400,
+      "hash": "BFCFCB8E3A4180B76435C13438D4F2E81BCD2C10D0A8A4EFC13B4EA5FBEB686D"
+    },
+    {
+      "language": "rust",
+      "fixture": "kitchen",
+      "round": 1,
+      "iterations": 1000,
+      "wall_ms": 550.7527,
+      "cpu_ms": 515.625,
+      "sampled_peak_working_set_bytes": 5779456,
+      "hash": "BFCFCB8E3A4180B76435C13438D4F2E81BCD2C10D0A8A4EFC13B4EA5FBEB686D"
+    },
+    {
+      "language": "node",
+      "fixture": "kitchen",
+      "round": 1,
+      "iterations": 1000,
+      "wall_ms": 975.4898000000001,
+      "cpu_ms": 984.375,
+      "sampled_peak_working_set_bytes": 72572928,
+      "hash": "BFCFCB8E3A4180B76435C13438D4F2E81BCD2C10D0A8A4EFC13B4EA5FBEB686D"
+    },
+    {
+      "language": "node",
+      "fixture": "receipt",
+      "round": 2,
+      "iterations": 1000,
+      "wall_ms": 1194.9484,
+      "cpu_ms": 1156.25,
+      "sampled_peak_working_set_bytes": 73191424,
+      "hash": "A560D1D5A9250B5BCB2CE790BDB1A09D4B0CB50A06D285BE3757379EFE5A5F5E"
+    },
+    {
+      "language": "rust",
+      "fixture": "receipt",
+      "round": 2,
+      "iterations": 1000,
+      "wall_ms": 676.0659,
+      "cpu_ms": 656.25,
+      "sampled_peak_working_set_bytes": 6168576,
+      "hash": "A560D1D5A9250B5BCB2CE790BDB1A09D4B0CB50A06D285BE3757379EFE5A5F5E"
+    },
+    {
+      "language": "csharp",
+      "fixture": "receipt",
+      "round": 2,
+      "iterations": 1000,
+      "wall_ms": 896.2846000000001,
+      "cpu_ms": 906.25,
+      "sampled_peak_working_set_bytes": 22478848,
+      "hash": "A560D1D5A9250B5BCB2CE790BDB1A09D4B0CB50A06D285BE3757379EFE5A5F5E"
+    },
+    {
+      "language": "node",
+      "fixture": "kitchen",
+      "round": 2,
+      "iterations": 1000,
+      "wall_ms": 976.6881000000001,
+      "cpu_ms": 984.375,
+      "sampled_peak_working_set_bytes": 72691712,
+      "hash": "BFCFCB8E3A4180B76435C13438D4F2E81BCD2C10D0A8A4EFC13B4EA5FBEB686D"
+    },
+    {
+      "language": "rust",
+      "fixture": "kitchen",
+      "round": 2,
+      "iterations": 1000,
+      "wall_ms": 550.5931,
+      "cpu_ms": 531.25,
+      "sampled_peak_working_set_bytes": 5783552,
+      "hash": "BFCFCB8E3A4180B76435C13438D4F2E81BCD2C10D0A8A4EFC13B4EA5FBEB686D"
+    },
+    {
+      "language": "csharp",
+      "fixture": "kitchen",
+      "round": 2,
+      "iterations": 1000,
+      "wall_ms": 738.337,
+      "cpu_ms": 734.375,
+      "sampled_peak_working_set_bytes": 22097920,
+      "hash": "BFCFCB8E3A4180B76435C13438D4F2E81BCD2C10D0A8A4EFC13B4EA5FBEB686D"
+    }
+  ]
+}

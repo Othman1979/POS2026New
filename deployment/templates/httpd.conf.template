@@ -1,0 +1,21 @@
+ServerRoot "{{APACHE_ROOT}}"
+Listen 127.0.0.1:{{PHPMYADMIN_PORT}}
+ServerName 127.0.0.1:{{PHPMYADMIN_PORT}}
+LoadModule authn_core_module modules/mod_authn_core.so
+LoadModule authz_core_module modules/mod_authz_core.so
+LoadModule authz_host_module modules/mod_authz_host.so
+LoadModule dir_module modules/mod_dir.so
+LoadModule log_config_module modules/mod_log_config.so
+LoadModule mime_module modules/mod_mime.so
+LoadModule php_module "{{PHP_ROOT}}/php8apache2_4.dll"
+PHPIniDir "{{PHP_ROOT}}"
+AddHandler application/x-httpd-php .php
+DocumentRoot "{{PHPMYADMIN_ROOT}}"
+<Directory "{{PHPMYADMIN_ROOT}}">
+    AllowOverride None
+    Require local
+    Options -Indexes
+</Directory>
+DirectoryIndex index.php
+ErrorLog "{{LOG_DIR}}/apache-error.log"
+CustomLog "{{LOG_DIR}}/apache-access.log" common

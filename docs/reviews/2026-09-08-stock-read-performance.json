@@ -1,0 +1,1000 @@
+{
+  "stages": [
+    {
+      "stage": "before",
+      "at": "2026-09-08T09:24:08.378Z",
+      "runtime": "v24.16.0",
+      "cpu": "Intel(R) Core(TM) i7-14700KF",
+      "items": 10000,
+      "balances": 10000,
+      "limitations": [
+        "Service queries, not HTTP/authentication.",
+        "No movement history is read or seeded in this workload.",
+        "Workstation measurements do not certify the 2-CPU/4-GiB deployment gate.",
+        "Node CPU excludes DB cost. RSS endpoints include fixture retention; not peak or incremental memory.",
+        "Current schema lacks dedicated active/source/attention projection indexes; EXPLAIN plans document current scan limits."
+      ],
+      "results": [
+        {
+          "query": {},
+          "samples": 1000,
+          "p50_ms": 3.8251000000000204,
+          "p95_ms": 6.210099999999784,
+          "p99_ms": 7.199099999999817,
+          "response_bytes": 10498,
+          "node_cpu_ms_per_call": 0.453,
+          "node_rss_before_mib": 84.7109375,
+          "node_rss_after_mib": 134.703125,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ALL",
+                "possible_keys": null,
+                "key": null,
+                "key_len": null,
+                "ref": null,
+                "rows": "10000",
+                "Extra": "Using where; Using filesort"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "q": "Stock 080"
+          },
+          "samples": 1000,
+          "p50_ms": 0.4558999999999287,
+          "p95_ms": 0.8724000000001979,
+          "p99_ms": 1.5270000000000437,
+          "response_bytes": 10610,
+          "node_cpu_ms_per_call": 0.172,
+          "node_rss_before_mib": 134.77734375,
+          "node_rss_after_mib": 181.42578125,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "range",
+                "possible_keys": "idx_stock_item_name",
+                "key": "idx_stock_item_name",
+                "key_len": "402",
+                "ref": null,
+                "rows": "100",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "q": "Stock 080",
+            "cursor": "eyJ2IjoxLCJmaWx0ZXIiOiJmOWM3Yjc1N2Q0OGUyYTRiZWFmNjBmYTRlMWJhNmZmNjE1OGQ2MWUwNmZhZGM4OTU2ODMyOTE3YTYxZWExOWQ1IiwibmFtZSI6IlN0b2NrIDA4MDQ5IiwiaWQiOiI4MDUwIn0"
+          },
+          "samples": 1000,
+          "p50_ms": 0.4816000000000713,
+          "p95_ms": 0.8635999999996784,
+          "p99_ms": 1.2811000000001513,
+          "response_bytes": 10458,
+          "node_cpu_ms_per_call": 0.234,
+          "node_rss_before_mib": 183.7890625,
+          "node_rss_after_mib": 212.546875,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "range",
+                "possible_keys": "PRIMARY,idx_stock_item_name",
+                "key": "idx_stock_item_name",
+                "key_len": "410",
+                "ref": null,
+                "rows": "51",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "status": "inactive"
+          },
+          "samples": 1000,
+          "p50_ms": 1.950299999998606,
+          "p95_ms": 2.9809000000004744,
+          "p99_ms": 3.8429999999989377,
+          "response_bytes": 10660,
+          "node_cpu_ms_per_call": 0.328,
+          "node_rss_before_mib": 212.84375,
+          "node_rss_after_mib": 206.2578125,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ALL",
+                "possible_keys": null,
+                "key": null,
+                "key_len": null,
+                "ref": null,
+                "rows": "10000",
+                "Extra": "Using where; Using filesort"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "location_id": "1"
+          },
+          "samples": 1000,
+          "p50_ms": 2.9949999999989814,
+          "p95_ms": 4.738999999999578,
+          "p99_ms": 5.585500000001048,
+          "response_bytes": 10498,
+          "node_cpu_ms_per_call": 0.203,
+          "node_rss_before_mib": 206.2578125,
+          "node_rss_after_mib": 207.3203125,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "PRIMARY",
+                "table": "s",
+                "type": "index",
+                "possible_keys": "PRIMARY",
+                "key": "idx_stock_item_name",
+                "key_len": "410",
+                "ref": null,
+                "rows": "1",
+                "Extra": "Using where"
+              },
+              {
+                "id": 1,
+                "select_type": "PRIMARY",
+                "table": "<subquery2>",
+                "type": "eq_ref",
+                "possible_keys": "distinct_key",
+                "key": "distinct_key",
+                "key_len": "8",
+                "ref": "func",
+                "rows": "1",
+                "Extra": ""
+              },
+              {
+                "id": 2,
+                "select_type": "MATERIALIZED",
+                "table": "b",
+                "type": "ref",
+                "possible_keys": "PRIMARY,idx_stock_balance_location",
+                "key": "idx_stock_balance_location",
+                "key_len": "8",
+                "ref": "const",
+                "rows": "5000",
+                "Extra": "Using index"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "ref",
+                "possible_keys": "PRIMARY,idx_stock_balance_location",
+                "key": "idx_stock_balance_location",
+                "key_len": "8",
+                "ref": "const",
+                "rows": "50",
+                "Extra": "Using index condition; Using where"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "index-only",
+      "at": "2026-09-08T09:32:08.884Z",
+      "runtime": "v24.16.0",
+      "cpu": "Intel(R) Core(TM) i7-14700KF",
+      "items": 10000,
+      "balances": 10000,
+      "limitations": [
+        "Service queries, not HTTP/authentication.",
+        "No movement history is read or seeded in this workload.",
+        "Workstation measurements do not certify the 2-CPU/4-GiB deployment gate.",
+        "Node CPU excludes DB cost. RSS endpoints include fixture retention; not peak or incremental memory.",
+        "Current schema lacks dedicated active/source/attention projection indexes; EXPLAIN plans document current scan limits."
+      ],
+      "results": [
+        {
+          "query": {},
+          "samples": 1000,
+          "p50_ms": 0.7064000000000306,
+          "p95_ms": 0.9901999999999589,
+          "p99_ms": 1.5645999999999276,
+          "response_bytes": 10498,
+          "node_cpu_ms_per_call": 0.156,
+          "node_rss_before_mib": 85.13671875,
+          "node_rss_after_mib": 136.984375,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "5000",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "q": "Stock 080"
+          },
+          "samples": 1000,
+          "p50_ms": 3.819999999999709,
+          "p95_ms": 4.438100000000304,
+          "p99_ms": 5.082700000000386,
+          "response_bytes": 10610,
+          "node_cpu_ms_per_call": 0.64,
+          "node_rss_before_mib": 142.92578125,
+          "node_rss_after_mib": 197.93359375,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "idx_stock_item_name,idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "100",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "q": "Stock 080",
+            "cursor": "eyJ2IjoxLCJmaWx0ZXIiOiJmOWM3Yjc1N2Q0OGUyYTRiZWFmNjBmYTRlMWJhNmZmNjE1OGQ2MWUwNmZhZGM4OTU2ODMyOTE3YTYxZWExOWQ1IiwibmFtZSI6IlN0b2NrIDA4MDQ5IiwiaWQiOiI4MDUwIn0"
+          },
+          "samples": 1000,
+          "p50_ms": 4.277199999999539,
+          "p95_ms": 4.973500000000058,
+          "p99_ms": 5.856800000001385,
+          "response_bytes": 10458,
+          "node_cpu_ms_per_call": 0.578,
+          "node_rss_before_mib": 198,
+          "node_rss_after_mib": 196.48046875,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "PRIMARY,idx_stock_item_name,idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "51",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "status": "inactive"
+          },
+          "samples": 1000,
+          "p50_ms": 0.9346000000005006,
+          "p95_ms": 1.1678000000010798,
+          "p99_ms": 1.3641000000006898,
+          "response_bytes": 10660,
+          "node_cpu_ms_per_call": 0.516,
+          "node_rss_before_mib": 196.56640625,
+          "node_rss_after_mib": 201.97265625,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "1000",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "location_id": "1"
+          },
+          "samples": 1000,
+          "p50_ms": 4.8123000000014144,
+          "p95_ms": 5.752999999998792,
+          "p99_ms": 6.455900000000838,
+          "response_bytes": 10498,
+          "node_cpu_ms_per_call": 0.453,
+          "node_rss_before_mib": 207.32421875,
+          "node_rss_after_mib": 209.17578125,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "PRIMARY",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "PRIMARY,idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "5000",
+                "Extra": "Using index condition; Using where"
+              },
+              {
+                "id": 1,
+                "select_type": "PRIMARY",
+                "table": "<subquery2>",
+                "type": "eq_ref",
+                "possible_keys": "distinct_key",
+                "key": "distinct_key",
+                "key_len": "8",
+                "ref": "func",
+                "rows": "1",
+                "Extra": ""
+              },
+              {
+                "id": 2,
+                "select_type": "MATERIALIZED",
+                "table": "b",
+                "type": "ref",
+                "possible_keys": "PRIMARY,idx_stock_balance_location",
+                "key": "idx_stock_balance_location",
+                "key_len": "8",
+                "ref": "const",
+                "rows": "5000",
+                "Extra": "Using index"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "ref",
+                "possible_keys": "PRIMARY,idx_stock_balance_location",
+                "key": "idx_stock_balance_location",
+                "key_len": "8",
+                "ref": "const",
+                "rows": "50",
+                "Extra": "Using index condition; Using where"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "before-hydration",
+      "at": "2026-09-08T09:33:38.558Z",
+      "runtime": "v24.16.0",
+      "cpu": "Intel(R) Core(TM) i7-14700KF",
+      "items": 10000,
+      "balances": 10000,
+      "limitations": [
+        "Service queries, not HTTP/authentication.",
+        "No movement history is read or seeded in this workload.",
+        "Workstation measurements do not certify the 2-CPU/4-GiB deployment gate.",
+        "Node CPU excludes DB cost. RSS endpoints include fixture retention; not peak or incremental memory.",
+        "Current schema lacks dedicated active/source/attention projection indexes; EXPLAIN plans document current scan limits."
+      ],
+      "results": [
+        {
+          "query": {},
+          "samples": 1000,
+          "p50_ms": 0.44029999999997926,
+          "p95_ms": 0.9086999999999534,
+          "p99_ms": 1.1979999999998654,
+          "response_bytes": 10498,
+          "node_cpu_ms_per_call": 0.141,
+          "node_rss_before_mib": 85.0703125,
+          "node_rss_after_mib": 137.04296875,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "5000",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "q": "Stock 080"
+          },
+          "samples": 1000,
+          "p50_ms": 0.4388000000001284,
+          "p95_ms": 0.9742999999998574,
+          "p99_ms": 1.4239999999999782,
+          "response_bytes": 10610,
+          "node_cpu_ms_per_call": 0.11,
+          "node_rss_before_mib": 143.21484375,
+          "node_rss_after_mib": 201.61328125,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "range",
+                "possible_keys": "idx_stock_item_name",
+                "key": "idx_stock_item_name",
+                "key_len": "402",
+                "ref": null,
+                "rows": "100",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "q": "Stock 080",
+            "cursor": "eyJ2IjoxLCJmaWx0ZXIiOiJmOWM3Yjc1N2Q0OGUyYTRiZWFmNjBmYTRlMWJhNmZmNjE1OGQ2MWUwNmZhZGM4OTU2ODMyOTE3YTYxZWExOWQ1IiwibmFtZSI6IlN0b2NrIDA4MDQ5IiwiaWQiOiI4MDUwIn0"
+          },
+          "samples": 1000,
+          "p50_ms": 0.4873999999999796,
+          "p95_ms": 1.1173000000003412,
+          "p99_ms": 1.8733000000001994,
+          "response_bytes": 10458,
+          "node_cpu_ms_per_call": 0.234,
+          "node_rss_before_mib": 201.66015625,
+          "node_rss_after_mib": 212.86328125,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "range",
+                "possible_keys": "idx_stock_item_name",
+                "key": "idx_stock_item_name",
+                "key_len": "410",
+                "ref": null,
+                "rows": "51",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "status": "inactive"
+          },
+          "samples": 1000,
+          "p50_ms": 0.8937000000000808,
+          "p95_ms": 1.1585999999997512,
+          "p99_ms": 1.655999999999949,
+          "response_bytes": 10660,
+          "node_cpu_ms_per_call": 0.468,
+          "node_rss_before_mib": 212.88671875,
+          "node_rss_after_mib": 213.70703125,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "1000",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "location_id": "1"
+          },
+          "samples": 1000,
+          "p50_ms": 2.2773999999999432,
+          "p95_ms": 2.686700000000201,
+          "p99_ms": 3.5223000000005413,
+          "response_bytes": 10498,
+          "node_cpu_ms_per_call": 0.344,
+          "node_rss_before_mib": 213.74609375,
+          "node_rss_after_mib": 211.859375,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "PRIMARY",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "5000",
+                "Extra": "Using index condition; Using where"
+              },
+              {
+                "id": 2,
+                "select_type": "DEPENDENT SUBQUERY",
+                "table": "b",
+                "type": "ref",
+                "possible_keys": "PRIMARY,idx_stock_balance_location",
+                "key": "PRIMARY",
+                "key_len": "16",
+                "ref": "posapp_review_recipe_p1_f661a26fbbe2.s.id,const",
+                "rows": "1",
+                "Extra": "Using index"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "ref",
+                "possible_keys": "PRIMARY,idx_stock_balance_location",
+                "key": "idx_stock_balance_location",
+                "key_len": "8",
+                "ref": "const",
+                "rows": "50",
+                "Extra": "Using index condition; Using where"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "final",
+      "at": "2026-09-08T09:40:07.118Z",
+      "runtime": "v24.16.0",
+      "cpu": "Intel(R) Core(TM) i7-14700KF",
+      "items": 10000,
+      "balances": 10000,
+      "limitations": [
+        "Service queries, not HTTP/authentication.",
+        "No movement history is read or seeded in this workload.",
+        "Workstation measurements do not certify the 2-CPU/4-GiB deployment gate.",
+        "Node CPU excludes DB cost. RSS endpoints include fixture retention; not peak or incremental memory.",
+        "Source/attention projections and sparse-location/high-lot workloads remain unverified; EXPLAIN plans document this workload only."
+      ],
+      "results": [
+        {
+          "query": {},
+          "samples": 1000,
+          "p50_ms": 0.7131000000001677,
+          "p95_ms": 1.008100000000013,
+          "p99_ms": 1.239799999999832,
+          "response_bytes": 10498,
+          "node_cpu_ms_per_call": 0.187,
+          "node_rss_before_mib": 85.77734375,
+          "node_rss_after_mib": 137.90234375,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "5000",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "q": "Stock 080"
+          },
+          "samples": 1000,
+          "p50_ms": 0.7651000000000749,
+          "p95_ms": 1.0295999999998457,
+          "p99_ms": 1.1790999999998348,
+          "response_bytes": 10610,
+          "node_cpu_ms_per_call": 0.281,
+          "node_rss_before_mib": 143.32421875,
+          "node_rss_after_mib": 202.3828125,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "range",
+                "possible_keys": "idx_stock_item_name",
+                "key": "idx_stock_item_name",
+                "key_len": "402",
+                "ref": null,
+                "rows": "100",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "q": "Stock 080",
+            "cursor": "eyJ2IjoxLCJmaWx0ZXIiOiJmOWM3Yjc1N2Q0OGUyYTRiZWFmNjBmYTRlMWJhNmZmNjE1OGQ2MWUwNmZhZGM4OTU2ODMyOTE3YTYxZWExOWQ1IiwibmFtZSI6IlN0b2NrIDA4MDQ5IiwiaWQiOiI4MDUwIn0"
+          },
+          "samples": 1000,
+          "p50_ms": 0.9675000000002001,
+          "p95_ms": 1.2608000000000175,
+          "p99_ms": 1.3814000000002125,
+          "response_bytes": 10458,
+          "node_cpu_ms_per_call": 0.5,
+          "node_rss_before_mib": 202.453125,
+          "node_rss_after_mib": 214.27734375,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "range",
+                "possible_keys": "idx_stock_item_name",
+                "key": "idx_stock_item_name",
+                "key_len": "410",
+                "ref": null,
+                "rows": "51",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "status": "inactive"
+          },
+          "samples": 1000,
+          "p50_ms": 0.954000000000633,
+          "p95_ms": 1.2561000000005151,
+          "p99_ms": 1.4873000000006869,
+          "response_bytes": 10660,
+          "node_cpu_ms_per_call": 0.422,
+          "node_rss_before_mib": 214.2890625,
+          "node_rss_after_mib": 214.859375,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "1000",
+                "Extra": "Using index condition; Using where"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "8",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        },
+        {
+          "query": {
+            "location_id": "1"
+          },
+          "samples": 1000,
+          "p50_ms": 1.1276000000007116,
+          "p95_ms": 1.415299999999661,
+          "p99_ms": 1.5856000000003405,
+          "response_bytes": 10498,
+          "node_cpu_ms_per_call": 0.516,
+          "node_rss_before_mib": 214.88671875,
+          "node_rss_after_mib": 212.05859375,
+          "plans": [
+            [
+              {
+                "id": 1,
+                "select_type": "PRIMARY",
+                "table": "s",
+                "type": "ref",
+                "possible_keys": "idx_stock_item_active_name",
+                "key": "idx_stock_item_active_name",
+                "key_len": "67",
+                "ref": "const,const",
+                "rows": "5000",
+                "Extra": "Using index condition; Using where"
+              },
+              {
+                "id": 2,
+                "select_type": "DEPENDENT SUBQUERY",
+                "table": "b",
+                "type": "ref",
+                "possible_keys": "PRIMARY,idx_stock_balance_location",
+                "key": "PRIMARY",
+                "key_len": "16",
+                "ref": "posapp_review_recipe_p1_1759cbcc46c8.s.id,const",
+                "rows": "1",
+                "Extra": "Using index"
+              }
+            ],
+            [
+              {
+                "id": 1,
+                "select_type": "SIMPLE",
+                "table": "stock_balances",
+                "type": "range",
+                "possible_keys": "PRIMARY",
+                "key": "PRIMARY",
+                "key_len": "16",
+                "ref": null,
+                "rows": "50",
+                "Extra": "Using where"
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

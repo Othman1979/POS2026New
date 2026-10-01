@@ -1,0 +1,8 @@
+[
+  {
+    "case": "report-date-error-cannot-print-old-day",
+    "status": "failed",
+    "error": "Locator expected to be disabled\nActual value: enabled \nCall log:\n  - Expect \"to_be_disabled\" with timeout 5000ms\n  - waiting for get_by_role(\"button\", name=\"Print\", exact=True)\n    14 × locator resolved to <button type=\"button\" data-v-78a28a08=\"\" aria-haspopup=\"menu\" aria-expanded=\"false\" class=\"report-print-menu__trigger report-action-button--primary\">…</button>\n       - unexpected value \"enabled\"\n",
+    "seconds": 5.98
+  }
+]

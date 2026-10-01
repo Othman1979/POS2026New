@@ -1,0 +1,399 @@
+{
+  "date": "2026-09-07",
+  "baseline": "68dbc3de",
+  "node": "v22.23.0",
+  "methodology": "Sequential baseline and candidate runs on local development hardware. Rendering: one warmup plus three measured samples per workload. Queue: three report-overlap samples using four independent loopback TCP sinks. No physical printing or production traffic.",
+  "render": [
+    {
+      "workload": "receipt",
+      "median_before_ms": 219.2,
+      "median_after_ms": 103.4,
+      "screenshots_before": 4,
+      "screenshots_after": 1,
+      "height": 818,
+      "bytes": 58939,
+      "identical_sha256": "52a4e3f7c7446e4f5feffb5e08229c3b20fd3a176e31cf3c133ae912a479d70a",
+      "median_raster_after_ms": 5.3
+    },
+    {
+      "workload": "kitchen",
+      "median_before_ms": 229.2,
+      "median_after_ms": 96.1,
+      "screenshots_before": 4,
+      "screenshots_after": 1,
+      "height": 919,
+      "bytes": 66210,
+      "identical_sha256": "f3b349afe3f2f9adc1bdd70eadcd1487322e5d3cf1874c012477eb3d7a1eabad",
+      "median_raster_after_ms": 5.3
+    },
+    {
+      "workload": "report_200_rows",
+      "median_before_ms": 1509.2,
+      "median_after_ms": 498.5,
+      "screenshots_before": 30,
+      "screenshots_after": 8,
+      "height": 7430,
+      "bytes": 535206,
+      "identical_sha256": "5316f86d7e10756d22f5d90c774a9fe588ae0329f964dd51cc5ea9df9f810231",
+      "median_raster_after_ms": 59.6
+    },
+    {
+      "workload": "compiled_receipt-basic",
+      "median_before_ms": 228.9,
+      "median_after_ms": 116,
+      "screenshots_before": 4,
+      "screenshots_after": 1,
+      "height": 911,
+      "bytes": 65635,
+      "identical_sha256": "8aa313ddcbc2c958bae62d871d4c6de065f7e3bde632dc5ccefb3f34f06f271c",
+      "median_raster_after_ms": 9.5
+    },
+    {
+      "workload": "compiled_receipt-bundle",
+      "median_before_ms": 230.7,
+      "median_after_ms": 112.9,
+      "screenshots_before": 4,
+      "screenshots_after": 1,
+      "height": 944,
+      "bytes": 68011,
+      "identical_sha256": "a774fe4bc339fb2a545f3b65661b7591271dab1eaed135959923b99103423710",
+      "median_raster_after_ms": 10.2
+    },
+    {
+      "workload": "compiled_receipt-accepted-jofotara",
+      "median_before_ms": 230.4,
+      "median_after_ms": 101.1,
+      "screenshots_before": 4,
+      "screenshots_after": 1,
+      "height": 897,
+      "bytes": 64627,
+      "identical_sha256": "5801fd882538897cd48638e8ee2886f383fee52bff385c1ab18aec1b0f64aea7",
+      "median_raster_after_ms": 7.5
+    },
+    {
+      "workload": "compiled_kitchen-normal",
+      "median_before_ms": 179.9,
+      "median_after_ms": 96.5,
+      "screenshots_before": 3,
+      "screenshots_after": 1,
+      "height": 751,
+      "bytes": 54106,
+      "identical_sha256": "2319dce61d44c516faf8c1a876cb978f5ea34b6c8b14c00a4ed8aff4d9909a88",
+      "median_raster_after_ms": 8.2
+    },
+    {
+      "workload": "compiled_kitchen-void",
+      "median_before_ms": 130.1,
+      "median_after_ms": 98,
+      "screenshots_before": 2,
+      "screenshots_after": 1,
+      "height": 430,
+      "bytes": 30986,
+      "identical_sha256": "40ece1ee961f5e1ee63ea865cf3c7dd5c62b353e1243242705f26668b48e557e",
+      "median_raster_after_ms": 5
+    },
+    {
+      "workload": "compiled_kitchen-subscription",
+      "median_before_ms": 129.7,
+      "median_after_ms": 95.6,
+      "screenshots_before": 2,
+      "screenshots_after": 1,
+      "height": 448,
+      "bytes": 32282,
+      "identical_sha256": "152bd0e6f02190cfb6e9110c1390ab63e56ef764c33933dfbb410d307de93910",
+      "median_raster_after_ms": 4.9
+    },
+    {
+      "workload": "compiled_kitchen-subscription-void",
+      "median_before_ms": 129.6,
+      "median_after_ms": 94.6,
+      "screenshots_before": 2,
+      "screenshots_after": 1,
+      "height": 465,
+      "bytes": 33506,
+      "identical_sha256": "f9efdd951b3956e8e4e293efd1bb205cedc82e9bccd8cb0136dd832981fe8e03",
+      "median_raster_after_ms": 5.2
+    }
+  ],
+  "queue": [
+    {
+      "workload": "report",
+      "median_first_byte_before_ms": 1526.3,
+      "median_first_byte_after_ms": 507.7,
+      "received_sha256": "5316f86d7e10756d22f5d90c774a9fe588ae0329f964dd51cc5ea9df9f810231"
+    },
+    {
+      "workload": "new_kitchen",
+      "median_first_byte_before_ms": 1547.4,
+      "median_first_byte_after_ms": 532.1,
+      "received_sha256": "dd2e2b9127710abcf30400437302d46dc7cd21c5ad88d59a2ddd6d0cd0794340"
+    },
+    {
+      "workload": "new_receipt",
+      "median_first_byte_before_ms": 1726.2,
+      "median_first_byte_after_ms": 617.7,
+      "received_sha256": "fa9015d7835964fb559356bc7a7a033b8c6b4ed29bf31d3883f8b5bc7833ef63"
+    },
+    {
+      "workload": "ready_artifact",
+      "median_first_byte_before_ms": 1724.3,
+      "median_first_byte_after_ms": 7.9,
+      "received_sha256": "fa9015d7835964fb559356bc7a7a033b8c6b4ed29bf31d3883f8b5bc7833ef63"
+    }
+  ],
+  "acceptance_batch": {
+    "jobs": 25,
+    "query_calls_before": 55,
+    "query_calls_after": 31,
+    "station_updates_before": 25,
+    "station_updates_after": 1
+  },
+  "verification": {
+    "backend_files": 38,
+    "backend_passed": 486,
+    "backend": [
+      {
+        "file": "backend/tests/integration/bundle.print.test.js",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/print.authz.test.js",
+        "passed": 21,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/printersValidation.test.js",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/printPayloadSecrets.test.js",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/printQueueCancellation.test.js",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/printQueueHealthApi.test.js",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/printQueuePurge.test.js",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/printReprint.test.js",
+        "passed": 11,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/printShiftReport.test.js",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/printTemplates.test.js",
+        "passed": 15,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/spoolerV2Health.test.js",
+        "passed": 7,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/integration/spoolerV2Sync.test.js",
+        "passed": 51,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/kitchenPrintRouting.test.js",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/print.unit.test.js",
+        "passed": 16,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printDispatchOwnership.test.js",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printDocumentCompiler.test.js",
+        "passed": 29,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printDocumentModel.test.js",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printGoldens.test.js",
+        "passed": 24,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printJobIdentity.test.js",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printQueueEventOrdering.test.js",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printQueuePurge.test.js",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printQueueWatchdog.test.js",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printQueueWatchdogRunner.test.js",
+        "passed": 9,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printTemplateEngine.test.js",
+        "passed": 39,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printTemplateManager.test.js",
+        "passed": 12,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printTemplateParity.test.js",
+        "passed": 30,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/printText.test.js",
+        "passed": 2,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/spoolerAgentAuth.test.js",
+        "passed": 3,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/spoolerLongPollOrchestration.test.js",
+        "passed": 10,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/spoolerPackageContract.test.js",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/spoolerReceiptDisplay.test.js",
+        "passed": 24,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/spoolerServiceBootstrap.test.js",
+        "passed": 10,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/spoolerSyncCadence.test.js",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/spoolerSyncWake.test.js",
+        "passed": 10,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/spoolerV2OnlyContract.test.js",
+        "passed": 11,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/spoolerWakeCommitBoundaries.test.js",
+        "passed": 8,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/dailyReportPrintContract.test.js",
+        "passed": 19,
+        "failed": 0
+      },
+      {
+        "file": "backend/tests/unit/receiptPrint.test.js",
+        "passed": 14,
+        "failed": 0
+      }
+    ],
+    "spooler_scripts": 29,
+    "new_behavioral_regressions": 6,
+    "details": "Full spooler suite passed, then affected sync/client/regression files passed after envelope validation. Backend union uses the latest whole-file result; initial badge timing assertion was corrected to await its independent event."
+  },
+  "journal": {
+    "runtime": "v22.23.0",
+    "archivedCount": 14000,
+    "activeCount": 10,
+    "iterations": 500,
+    "openMs": 1134,
+    "hotSampleMs": [
+      1.407,
+      1.34,
+      0.816
+    ]
+  },
+  "dependency": {
+    "advisory": "GHSA-jmr9-qjv8-65gv",
+    "affected_package": "extract-zip",
+    "npm_high_entries": 4,
+    "status": "Unresolved: upstream has no patched extract-zip release; suggested Puppeteer 25 upgrade drops Node 20. User explicitly requires Node 20 compatibility."
+  },
+  "source_sha256": {
+    "backend/routes/spoolerV2.js": "8683cda111d29d6a08a00236ade49f99b93579b58e79585cd3943f6967dc797f",
+    "backend/services/spoolerSync.js": "bd8b12f95925f69211a455bf4f9ecf0486fcbda1478cda680ab1aaa4cd41268f",
+    "pos-spooler-printer/v2/artifact-renderer.js": "3830bef815f4e680e8ff651bb6a4f6fcc89c201b4a09cf1bfde46596c4673b20",
+    "pos-spooler-printer/v2/printer-workers.js": "8769a6d248523cfbc41712b971101b6e1239579ddaba2017a87246c1a3273e59",
+    "pos-spooler-printer/v2/printer-transports.js": "f0b641f8a3a3bc405344b2e488f35fce3d18fb5eb8389704639cd632c8ad265d",
+    "pos-spooler-printer/v2/platform-helper.js": "2cbce154f74117c7c6db0e06897d40d495975bc7da0e849138f24b00de35a324",
+    "pos-spooler-printer/v2/sync-client.js": "23a66a2f5a6532085e951ee598a987aaaf45bfe2870a97b991c4b43cd186eb26",
+    "pos-spooler-printer/v2/agent-runtime.js": "d2c7873d59adb2d9821db3146c5a950f3b18131564ee83d2e83981d2b9af0014",
+    "pos-spooler-printer/v2/job-store.js": "b18961573b49dce1427dc2b7441cef449d6aeebcf969443d9c8f998241b0321a",
+    "pos-spooler-printer/v2/status-monitor.js": "1df5a712e68d7dc22fe6d0ff925aa76d687de2ae65c318bf12e862e936633497"
+  },
+  "local_raw_evidence_sha256": {
+    "scratch/spooler-audit/render-final-before.json": "7301f2fb8c279b0e8b71c26c6c7d5a823c1b88ec1d613f049e7249023e686872",
+    "scratch/spooler-audit/render-final-after.json": "eb9e72fc292fa07aa89ff7c99aea62044f3d2d78b3ff11a9e0be7fe16cbc3a64",
+    "scratch/spooler-audit/queue-final-before.json": "dbc9a0c860bf697d3fcbc4e8fc38a3bff889bf99fb08d058db7a61344db92b1c",
+    "scratch/spooler-audit/queue-final-after.json": "5e183e96394a93b4eac9b5bda9202fe62afc1b061a52e76e63068e8faea240d8",
+    "scratch/spooler-audit/backend-final.json": "76adcbc2e3c7ea3f1331afcdedcf61626cbe09cf774391156a7683f8303f3738",
+    "scratch/spooler-audit/backend-followup.json": "d392739a79cba4d4502b3c141b75e6f1bec3d89da9dec3a0a5bf8cffe52ebfe8",
+    "scratch/spooler-audit/spooler-final.log": "36fde762f3c049bfeb99f1db68f60719bc3767db0613f01cdd470adcb2e7f070",
+    "scratch/spooler-audit/audit-regressions-final.log": "babb5adede2411d251e5d488658a72c33368eb810cfccbbf1d553133bc99289c",
+    "scratch/spooler-audit/dependency-audit.json": "52e4ab5264212a58e6e4cbc1684a9f2149b37a5b37e45e0a4f2b86cc62278a3f",
+    "scratch/spooler-audit/journal-final.json": "5b0efa6f20daf705aa591e632fd5fbcbe9d1dba11bbe96e9269d1b524f931b8f",
+    "scratch/spooler-audit/drain-red.log": "954bf3ce353fbdc85899cac9e809a9afadaaed6be006d22f94ab9fa3bd73294f",
+    "scratch/spooler-audit/startup-red.log": "4a9c7331219941239aa98face5e57e98e8b6b3f46be2ca035a5bc705babc4bf1",
+    "scratch/spooler-audit/ready-lane-red.log": "8e563f6cbff638b1c99c7588ff647efbe90f9fca00ebcb008f345cd3518a3808",
+    "scratch/spooler-audit/short-write-red.log": "95146dec0599893b75587855a52d7885c8bd38f671a95a4eba87c40945d84af1",
+    "scratch/spooler-audit/malformed-response-red.log": "bb361152a8b3d97dfa660afaa623eda227b49c31d34f1be123a097c41828b849",
+    "scratch/spooler-audit/accept-batch-red.log": "4bfe1da37765fd593257550fd98aca9ae7bbe7fb4d688769deddd65fa7c12e76",
+    "scratch/spooler-audit/sync-latency-red.log": "4774aabcb7822edb18ddf98f2ea53f33d6d385d0fc3d321a18568eed3c9d9456"
+  }
+}

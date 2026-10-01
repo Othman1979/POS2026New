@@ -1,0 +1,8 @@
+id,category_id,name,price,is_active
+1,1,"Classic Cheeseburger",8.99,1
+2,1,"Double Bacon Burger",12.99,1
+3,2,Cola,2.49,1
+4,2,Lemonade,2.99,1
+5,3,"French Fries",3.99,1
+6,3,"Onion Rings",4.49,1
+7,4,"Vanilla Ice Cream",3.50,1

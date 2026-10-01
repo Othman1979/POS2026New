@@ -1,0 +1,10 @@
+[
+  {
+    "case": "recipe-loading-cannot-clear-lines",
+    "status": "passed",
+    "evidence": {
+      "save_disabled_until_recipe_loaded": true
+    },
+    "seconds": 0.95
+  }
+]

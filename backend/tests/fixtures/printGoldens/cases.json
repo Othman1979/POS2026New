@@ -1,0 +1,202 @@
+[
+  {
+    "id": "receipt-exclusive",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}", "tax_inclusive_pricing": "0" },
+      "invoice_display_no": "INV-100", "order_id": "900", "date": "2026-07-25T14:05:06+03:00", "cashier": "Maya", "order_type_name": "Dine In", "table_number": "T1",
+      "items": [{ "name": "Burger", "qty": 1, "price": 10, "tax_rate": 16 }], "subtotal": 10, "tax": 1.6, "total": 11.6,
+      "payment_method": "cash", "amount_tendered": 20, "change_due": 8.4
+    }
+  },
+  {
+    "id": "receipt-inclusive",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}", "tax_inclusive_pricing": "1" },
+      "invoice_display_no": "INV-101", "order_id": "901", "date": "2026-07-25T14:06:06+03:00", "cashier": "Maya", "order_type_name": "Takeaway",
+      "items": [{ "name": "Tax Included Tea", "qty": 1, "price": 11.6, "tax_rate": 16 }], "subtotal": 11.6, "tax": 1.6, "total": 11.6,
+      "payment_method": "cash", "amount_tendered": 11.6, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-tax-exempt",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-100E", "order_id": "900E", "date": "2026-07-25T14:05:06+03:00", "cashier": "Maya", "order_type_name": "Dine In", "table_number": "T1",
+      "items": [],
+      "receipt_display_v1": {
+        "version": 1, "currency": "JD", "decimals": 2, "taxMode": "exclusive", "taxExempt": true, "status": "original",
+        "rows": [{ "key": "exempt-meal", "kind": "item", "name": "Exempt Meal", "note": "", "qty": 1, "unitPrice": 17, "extendedPrice": 17, "lineDiscountAmount": 0, "lineDiscountLabel": null, "netAmount": 17 }],
+        "summary": { "subtotal": 17, "orderDiscountAmount": 0, "orderDiscountLabel": null, "taxAmount": 0, "taxLabel": "(معفي من الضريبة)", "roundingAdjustment": 0, "total": 17 }
+      },
+      "payment_method": "cash", "amount_tendered": 17, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-item-discount",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-102", "order_id": "902", "date": "2026-07-25T14:07:06+03:00", "cashier": "Maya", "order_type_name": "Dine In",
+      "items": [], "receipt_display_v1": { "version": 1, "currency": "JD", "decimals": 2, "taxMode": "exclusive", "status": "original", "rows": [{ "key": "line-discount", "kind": "item", "name": "Discounted Burger", "note": "", "qty": 2, "unitPrice": 10, "extendedPrice": 20, "lineDiscountAmount": 4, "lineDiscountLabel": "2.00 x 2", "netAmount": 16 }], "summary": { "subtotal": 16, "orderDiscountAmount": 0, "orderDiscountLabel": null, "taxAmount": 0, "taxLabel": null, "roundingAdjustment": 0, "total": 16 } },
+      "payment_method": "cash", "amount_tendered": 16, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-order-discount",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-103", "order_id": "903", "date": "2026-07-25T14:08:06+03:00", "cashier": "Maya", "order_type_name": "Dine In",
+      "items": [], "receipt_display_v1": { "version": 1, "currency": "JD", "decimals": 2, "taxMode": "exclusive", "status": "original", "rows": [{ "key": "order-discount", "kind": "item", "name": "Order Discount Meal", "note": "", "qty": 1, "unitPrice": 20, "extendedPrice": 20, "lineDiscountAmount": 0, "lineDiscountLabel": null, "netAmount": 20 }], "summary": { "subtotal": 20, "orderDiscountAmount": 2, "orderDiscountLabel": "10%", "taxAmount": 2.88, "taxLabel": null, "roundingAdjustment": 0, "total": 20.88 } },
+      "payment_method": "cash", "amount_tendered": 20.88, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-bundle-service-charge",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-104", "order_id": "904", "date": "2026-07-25T14:09:06+03:00", "cashier": "Maya", "order_type_name": "Dine In", "table_number": "T4",
+      "items": [], "receipt_display_v1": { "version": 1, "currency": "JD", "decimals": 2, "taxMode": "exclusive", "status": "original", "rows": [{ "key": "bundle", "kind": "item", "name": "Family Combo", "note": "", "qty": 1, "unitPrice": 12, "extendedPrice": 12, "lineDiscountAmount": 0, "lineDiscountLabel": null, "netAmount": 12 }, { "key": "bundle-child", "kind": "bundle_child", "name": "Fries", "note": "No salt", "qty": 1, "unitPrice": 0, "extendedPrice": 0, "lineDiscountAmount": 0, "lineDiscountLabel": null, "netAmount": 0 }, { "key": "service-charge", "kind": "item", "name": "5% Service Charge", "note": "Auto-Gratuity", "qty": 1, "unitPrice": 0.8, "extendedPrice": 0.8, "lineDiscountAmount": 0, "lineDiscountLabel": null, "netAmount": 0.8 }], "summary": { "subtotal": 12.8, "orderDiscountAmount": 0, "orderDiscountLabel": null, "taxAmount": 2.05, "taxLabel": null, "roundingAdjustment": 0, "total": 14.85 } },
+      "payment_method": "cash", "amount_tendered": 14.85, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-cash",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-105", "order_id": "905", "date": "2026-07-25T14:10:06+03:00", "cashier": "Maya", "order_type_name": "Counter",
+      "items": [{ "name": "Cash Juice", "qty": 1, "price": 3, "tax_rate": 0 }], "subtotal": 3, "tax": 0, "total": 3,
+      "payment_method": "cash", "amount_tendered": 5, "change_due": 2
+    }
+  },
+  {
+    "id": "receipt-card",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-106", "order_id": "906", "date": "2026-07-25T14:11:06+03:00", "cashier": "Maya", "order_type_name": "Counter",
+      "items": [{ "name": "Card Coffee", "qty": 1, "price": 4, "tax_rate": 0 }], "subtotal": 4, "tax": 0, "total": 4,
+      "payment_method": "card", "amount_tendered": 4, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-split",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-107", "order_id": "907", "date": "2026-07-25T14:12:06+03:00", "cashier": "Maya", "order_type_name": "Dine In",
+      "items": [{ "name": "Split Lunch", "qty": 1, "price": 10, "tax_rate": 0 }], "subtotal": 10, "tax": 0, "total": 10,
+      "payment_method": "split", "cash_amount": 4, "card_amount": 6, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-guest-check",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_id": "GUEST CHECK", "provisional": true, "date": "2026-07-25T14:13:06+03:00", "cashier": "Maya", "order_type_name": "Dine In", "table_number": "T8",
+      "items": [{ "name": "Guest Check Meal", "qty": 1, "price": 7, "tax_rate": 0 }], "subtotal": 7, "tax": 0, "total": 7,
+      "payment_method": "cash", "amount_tendered": 0, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-arabic-multiline-notes",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "مقهى جولدن", "store_address": "عمّان", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-108", "order_id": "908", "date": "2026-07-25T14:14:06+03:00", "cashier": "ليان", "order_type_name": "سفري", "order_note": "بدون بصل\nاتصل قبل التسليم",
+      "items": [{ "name": "شاورما", "qty": 1, "price": 3.5, "tax_rate": 0, "note": "صلصة حارة\nخبز إضافي" }], "subtotal": 3.5, "tax": 0, "total": 3.5,
+      "payment_method": "cash", "amount_tendered": 5, "change_due": 1.5
+    }
+  },
+  {
+    "id": "receipt-zero-items",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-109", "order_id": "909", "date": "2026-07-25T14:15:06+03:00", "cashier": "Maya", "order_type_name": "Counter",
+      "items": [], "subtotal": 0, "tax": 0, "total": 0, "payment_method": "cash", "amount_tendered": 0, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-fifty-items",
+    "document": "receipt",
+    "repeatItems": { "count": 50, "prefix": "Menu Item ", "item": { "qty": 1, "price": 1, "tax_rate": 0 } },
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-110", "order_id": "910", "date": "2026-07-25T14:16:06+03:00", "cashier": "Maya", "order_type_name": "Counter",
+      "items": [], "subtotal": 0, "tax": 0, "total": 0, "payment_method": "cash", "amount_tendered": 50, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-long-name",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-111", "order_id": "911", "date": "2026-07-25T14:17:06+03:00", "cashier": "Maya", "order_type_name": "Delivery",
+      "items": [{ "name": "Extraordinary slow-roasted lamb wrap with caramelized onions, tahini, pickles, and house-made chili sauce", "qty": 1, "price": 9, "tax_rate": 0 }], "subtotal": 9, "tax": 0, "total": 9,
+      "payment_method": "card", "amount_tendered": 9, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-custom-layout-safe",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{\"layout\":[\"header\",\"meta\",\"items\",\"totals\",\"payment\",\"footer\"],\"customHeaderText\":\"Fresh coffee\",\"customFooterText\":\"Come again\"}" },
+      "invoice_display_no": "INV-112", "order_id": "912", "date": "2026-07-25T14:18:06+03:00", "cashier": "Maya", "order_type_name": "Counter",
+      "items": [{ "name": "Custom Layout Coffee", "qty": 1, "price": 2, "tax_rate": 0 }], "subtotal": 2, "tax": 0, "total": 2,
+      "payment_method": "cash", "amount_tendered": 2, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-custom-layout-required-omitted",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{\"layout\":[\"header\",\"items\",\"footer\"],\"customFooterText\":\"Layout controls receipt blocks\"}" },
+      "invoice_display_no": "INV-113", "order_id": "913", "date": "2026-07-25T14:19:06+03:00", "cashier": "Maya", "order_type_name": "Counter",
+      "items": [{ "name": "Omitted Blocks Coffee", "qty": 1, "price": 2, "tax_rate": 0 }], "subtotal": 2, "tax": 0, "total": 2,
+      "payment_method": "cash", "amount_tendered": 2, "change_due": 0
+    }
+  },
+  {
+    "id": "receipt-jofotara-accepted-before-qr",
+    "document": "receipt",
+    "input": {
+      "storeInfo": { "store_name": "Golden Cafe", "store_address": "Amman", "store_phone": "0790000000", "receipt_config": "{}" },
+      "invoice_display_no": "INV-114", "order_id": "914", "date": "2026-07-25T14:20:06+03:00", "cashier": "Maya", "order_type_name": "Counter",
+      "jofotara_status": "accepted", "jofotara_qr_text": "JO-FOTARA-QR-BASELINE-DO-NOT-RENDER-YET",
+      "items": [{ "name": "Accepted Invoice Coffee", "qty": 1, "price": 5, "tax_rate": 0 }], "subtotal": 5, "tax": 0, "total": 5,
+      "payment_method": "card", "amount_tendered": 5, "change_due": 0
+    }
+  },
+  {
+    "id": "kitchen-normal",
+    "document": "kitchen",
+    "input": {
+      "order_type_name": "Dine In", "order_display_no": "915", "order_id": "915", "date": "2026-07-25T14:21:06+03:00", "table_number": "T9",
+      "items": [{ "name": "Burger", "qty": 1, "note": "No onion" }]
+    }
+  },
+  {
+    "id": "kitchen-void",
+    "document": "kitchen",
+    "now": "2026-07-25T14:22:00+03:00",
+    "input": {
+      "void_ticket": true, "table_number": "T10", "order_taken_at": "2026-07-25T14:00:00+03:00", "date": "2026-07-25T14:22:06+03:00",
+      "items": [{ "name": "Voided Burger", "qty": 1, "note": "Kitchen cancel" }]
+    }
+  },
+  {
+    "id": "kitchen-primary-other",
+    "document": "kitchen",
+    "input": {
+      "order_type_name": "Dine In", "order_display_no": "916", "order_id": "916", "date": "2026-07-25T14:25:06+03:00", "table_number": "T11",
+      "items": [{ "name": "Kitchen Primary", "qty": 2, "_bundleLabel": "Combo", "note": "Fresh only" }, { "name": "Also On Order", "qty": 1, "_isOther": true }]
+    }
+  }
+]

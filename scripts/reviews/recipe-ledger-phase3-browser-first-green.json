@@ -1,0 +1,76 @@
+[
+  {
+    "case": "ingredient-controls",
+    "status": "passed",
+    "evidence": {
+      "button_height": 44
+    },
+    "seconds": 0.94
+  },
+  {
+    "case": "display-unit-preserves-values",
+    "status": "passed",
+    "evidence": {
+      "unit_cost": 0.0045,
+      "par_qty": 5000,
+      "pack_size": 10000
+    },
+    "seconds": 0.84
+  },
+  {
+    "case": "blank-count-is-not-zero",
+    "status": "passed",
+    "evidence": {
+      "expected_remaining": null
+    },
+    "seconds": 2.78
+  },
+  {
+    "case": "opening-lost-response-retry",
+    "status": "passed",
+    "evidence": {
+      "same_key": true,
+      "expected_remaining": 11000
+    },
+    "seconds": 1.03
+  },
+  {
+    "case": "shopping-loose-quantity",
+    "status": "passed",
+    "evidence": {
+      "item": "Review 21c7bd38\n1 kg"
+    },
+    "seconds": 0.8
+  },
+  {
+    "case": "history-readable-units",
+    "status": "passed",
+    "evidence": {
+      "quantity": "10 kg",
+      "escape_closes": true
+    },
+    "seconds": 0.81
+  },
+  {
+    "case": "ingredient-load-error",
+    "status": "failed",
+    "error": "Locator expected to be visible\nActual value: - complementary:\n  - text: PS POS Admin\n  - button \"Collapse menu\"\n  - navigation \"Menu\":\n    - text: Daily work\n    - link \"Dashboard\":\n      - /url: \"#\"\n    - link \"Order History\":\n      - /url: \"#\"\n    - link \"Daily Reports\":\n      - /url: \"#\"\n    - link \"Shifts\":\n      - /url: \"#\"\n    - text: Management\n    - link \"Customers\":\n      - /url: \"#\"\n    - link \"Subscriptions\":\n      - /url: \"#\"\n    - link \"Platform Payouts\":\n      - /url: \"#\"\n    - link \"JoFotara Operations\":\n      - /url: \"#\"\n    - link \"Print Templates\":\n      - /url: \"#\"\n    - link \"Inventory\":\n      - /url: \"#\"\n    - link \"Ingredients\":\n      - /url: \"#\"\n    - link \"Table Editor\":\n      - /url: \"#\"\n    - link \"User Security\":\n      - /url: \"#\"\n    - link \"Settings\":\n      - /url: \"#\"\n  - link \"Launch POS POS\":\n    - /url: /pos\n- banner:\n  - heading \"Ingredients\" [level=2]\n  - text: 02:19 AM Sun, Sep 6\n  - button \"System\"\n  - button \"Stock alerts\"\n  - button \"Account\": Test Admin admin T\n- main:\n  - heading \"Ingredients\" [level=2]\n  - button \"Set today's opening\" [disabled]\n  - button \"Shopping list\"\n  - button \"Portions\"\n  - button \"Add ingredient\"\n  - checkbox \"Show inactive\"\n  - text: Show inactive\n  - alert:\n    - text: Review ingredient load failed\n    - button \"Retry\"\n  - table:\n    - rowgroup:\n      - row \"Name Unit Opening Received Used Waste Expected Variance\":\n        - columnheader \"Name\"\n        - columnheader \"Unit\"\n        - columnheader \"Opening\"\n        - columnheader \"Received\"\n        - columnheader \"Used\"\n        - columnheader \"Waste\"\n        - columnheader \"Expected\"\n        - columnheader \"Variance\"\n        - columnheader\n    - rowgroup:\n      - row \"No ingredients. Add an ingredient to start recording recipes and counts.\":\n        - c",
+    "seconds": 5.91
+  },
+  {
+    "case": "recipe-loading-cannot-clear-lines",
+    "status": "passed",
+    "evidence": {
+      "save_disabled_until_recipe_loaded": true
+    },
+    "seconds": 0.98
+  },
+  {
+    "case": "recipe-draft-hides-stale-cost",
+    "status": "passed",
+    "evidence": {
+      "stale_cost_hidden_for_draft": true
+    },
+    "seconds": 0.95
+  }
+]

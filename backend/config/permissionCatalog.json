@@ -1,0 +1,516 @@
+[
+  {
+    "perm_key": "pos.checkout",
+    "label": "Checkout Orders",
+    "label_ar": "إتمام الطلبات",
+    "description": "Finalize an order and take payment.",
+    "description_ar": "إنهاء الطلب واستلام الدفع.",
+    "category": "pos",
+    "sort_order": 10,
+    "implemented": 1,
+    "default_cashier": 1,
+    "overridable": 0,
+    "group": "sales",
+    "example": "Example: press Pay and complete a cash or card sale, including a saved table order.",
+    "example_ar": "مثال: الضغط على دفع وإتمام البيع نقداً أو بالبطاقة، بما في ذلك طلب طاولة محفوظ.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0,
+    "action": "checkout"
+  },
+  {
+    "perm_key": "pos.hold_orders",
+    "label": "Hold Orders",
+    "label_ar": "تعليق الطلبات",
+    "description": "Park an order to retrieve and finish later.",
+    "description_ar": "تعليق الطلب لاسترجاعه لاحقاً.",
+    "category": "pos",
+    "sort_order": 20,
+    "implemented": 1,
+    "default_cashier": 1,
+    "overridable": 0,
+    "group": "sales",
+    "example": "Example: park a counter order and recall it later. This does not save a table order.",
+    "example_ar": "مثال: تعليق طلب كاونتر واسترجاعه لاحقاً. هذه الصلاحية لا تحفظ طلب الطاولة.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "pos.split_checks",
+    "label": "Split Checks",
+    "label_ar": "تقسيم الفاتورة",
+    "description": "Split one bill into multiple checks.",
+    "description_ar": "تقسيم الفاتورة إلى عدة شيكات.",
+    "category": "pos",
+    "sort_order": 30,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "tables",
+    "example": "Example: divide one table bill into separately payable checks.",
+    "example_ar": "مثال: تقسيم فاتورة طاولة واحدة إلى فواتير يمكن دفعها بشكل منفصل.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0,
+    "action": "table.split"
+  },
+  {
+    "perm_key": "pos.discount",
+    "label": "Discount Button",
+    "label_ar": "زر الخصم",
+    "description": "Apply a percent or value discount.",
+    "description_ar": "تطبيق خصم نسبة أو قيمة.",
+    "category": "pos",
+    "sort_order": 40,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 1,
+    "group": "changes",
+    "example": "Example: apply a 10% discount to an item or bill.",
+    "example_ar": "مثال: تطبيق خصم 10% على صنف أو فاتورة.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "pos.price_override",
+    "label": "Price Override Button",
+    "label_ar": "تعديل السعر",
+    "description": "Manually override an item price.",
+    "description_ar": "تعديل سعر الصنف يدوياً.",
+    "category": "pos",
+    "sort_order": 50,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 1,
+    "group": "changes",
+    "example": "Example: change an item’s selling price for this order.",
+    "example_ar": "مثال: تغيير سعر بيع صنف في هذا الطلب.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "pos.void_item",
+    "label": "Cancel saved table items",
+    "label_ar": "إلغاء أصناف الطاولة المحفوظة",
+    "description": "Cancel saved items or clear an unpaid table. After the guest bill is printed, also enable Cancel after bill print.",
+    "description_ar": "إلغاء أصناف محفوظة أو مسح طلب طاولة غير مدفوع. بعد طباعة الحساب، يلزم أيضاً تفعيل صلاحية الإلغاء بعد طباعة الحساب.",
+    "category": "pos",
+    "sort_order": 60,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 1,
+    "group": "changes",
+    "example": "Example: cancel a saved dish before printing the guest bill. Removing an unsaved cart item needs no cancellation permission.",
+    "example_ar": "مثال: إلغاء طبق محفوظ قبل طباعة حساب الطاولة. حذف صنف لم يُحفظ بعد لا يحتاج صلاحية إلغاء.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0,
+    "action": "table.void"
+  },
+  {
+    "perm_key": "pos.void_printed_item",
+    "label": "Cancel after bill print",
+    "label_ar": "إلغاء بعد طباعة الحساب",
+    "description": "Cancel saved table items after the guest bill is printed. Also requires Cancel saved table items.",
+    "description_ar": "إلغاء أصناف الطاولة المحفوظة بعد طباعة الحساب. يتطلب أيضاً صلاحية إلغاء أصناف الطاولة المحفوظة.",
+    "category": "pos",
+    "sort_order": 70,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 1,
+    "group": "changes",
+    "example": "Example: cancel a dish after printing the guest bill. Sending a kitchen ticket alone does not trigger this extra permission.",
+    "example_ar": "مثال: إلغاء طبق بعد طباعة حساب الطاولة. إرسال تذكرة المطبخ وحده لا يفعّل هذا الشرط الإضافي.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0,
+    "action": "table.void",
+    "action_context": {
+      "printed": true
+    }
+  },
+  {
+    "perm_key": "pos.service_charge",
+    "label": "Apply Service Charge",
+    "label_ar": "تطبيق رسوم الخدمة",
+    "description": "Add the auto-gratuity service charge to an order.",
+    "description_ar": "إضافة رسوم الخدمة إلى الطلب.",
+    "category": "pos",
+    "sort_order": 85,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "changes",
+    "example": "Example: add the configured service charge to an order.",
+    "example_ar": "مثال: إضافة رسوم الخدمة المحددة في الإعدادات إلى الطلب.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "pos.reprint_receipt",
+    "label": "Reprint Receipt",
+    "label_ar": "إعادة طباعة الإيصال",
+    "description": "Reprint the last or a selected receipt.",
+    "description_ar": "إعادة طباعة آخر إيصال أو إيصال محدد.",
+    "category": "pos",
+    "sort_order": 90,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 1,
+    "group": "sales",
+    "example": "Example: print another copy of a completed sale’s receipt.",
+    "example_ar": "مثال: طباعة نسخة أخرى من إيصال عملية بيع مكتملة.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "pos.expenses",
+    "label": "Record Expenses",
+    "label_ar": "تسجيل المصروفات",
+    "description": "Record an expense from the user's open cash shift.",
+    "description_ar": "تسجيل مصروف من وردية الصندوق المفتوحة للمستخدم.",
+    "category": "pos",
+    "sort_order": 95,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "cash",
+    "example": "Example: record a purchase paid from the employee’s open till.",
+    "example_ar": "مثال: تسجيل مشتريات دُفعت من صندوق وردية الموظف المفتوحة.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "pos.product_availability",
+    "label": "Manage Product Availability",
+    "label_ar": "إدارة توفر الأصناف",
+    "description": "Mark products as sold out or return them to sale.",
+    "description_ar": "إيقاف بيع الأصناف النافدة أو إعادتها للبيع.",
+    "category": "pos",
+    "sort_order": 97,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "products",
+    "example": "Example: mark a sold-out dish unavailable, then put it back on sale.",
+    "example_ar": "مثال: إيقاف بيع طبق نافد ثم إتاحته للبيع مجدداً.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "pos.tax_exempt",
+    "label": "Tax Exempt",
+    "label_ar": "إعفاء ضريبي",
+    "description": "Apply tax exemption to the current unpaid check.",
+    "description_ar": "تطبيق الإعفاء الضريبي على الفاتورة غير المدفوعة الحالية.",
+    "category": "pos",
+    "sort_order": 100,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "changes",
+    "example": "Example: exempt the current unpaid check from tax when the store’s tax setup permits it.",
+    "example_ar": "مثال: إعفاء الفاتورة الحالية غير المدفوعة من الضريبة عندما تسمح إعدادات ضريبة المتجر بذلك.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "orders.view",
+    "label": "POS Order History",
+    "label_ar": "سجل طلبات نقطة البيع",
+    "description": "View recent orders, totals, and receipts in the POS Order Notes history. Does not grant Admin Orders access.",
+    "description_ar": "عرض الطلبات الأخيرة والإجماليات والإيصالات في سجل ملاحظات الطلبات بنقطة البيع. لا يمنح الوصول إلى طلبات لوحة الإدارة.",
+    "category": "orders",
+    "sort_order": 100,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "sales",
+    "example": "Example: find a previous sale in POS Order Notes. This does not open Admin Order History.",
+    "example_ar": "مثال: العثور على عملية بيع سابقة في ملاحظات طلبات نقطة البيع. لا تتيح هذه الصلاحية سجل طلبات لوحة الإدارة.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "shift.open",
+    "label": "Open Register",
+    "label_ar": "فتح الوردية",
+    "description": "Open a register shift with a starting float.",
+    "description_ar": "فتح وردية الصندوق برصيد ابتدائي.",
+    "category": "shift",
+    "sort_order": 110,
+    "implemented": 1,
+    "default_cashier": 1,
+    "overridable": 0,
+    "group": "cash",
+    "example": "Example: start a shift with 50 JD in the till.",
+    "example_ar": "مثال: بدء وردية برصيد 50 ديناراً في الصندوق.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "shift.close",
+    "label": "Close Own Shift (Z)",
+    "label_ar": "إغلاق الوردية",
+    "description": "Close own shift and submit the cash count.",
+    "description_ar": "إغلاق الوردية وإدخال عدّ النقد.",
+    "category": "shift",
+    "sort_order": 120,
+    "implemented": 1,
+    "default_cashier": 1,
+    "overridable": 0,
+    "group": "cash",
+    "example": "Example: count the cash and close this employee’s own shift.",
+    "example_ar": "مثال: عدّ النقد وإغلاق وردية هذا الموظف نفسه.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "tables.access",
+    "label": "Enter tables",
+    "label_ar": "دخول الطاولات",
+    "description": "Open the floor plan and view table orders in assigned sections. Saving and payment use separate permissions.",
+    "description_ar": "فتح مخطط الطاولات وعرض طلباتها ضمن الأقسام المسموحة. الحفظ والدفع لهما صلاحيات منفصلة.",
+    "category": "tables",
+    "sort_order": 130,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "tables",
+    "example": "Example: open Table 4 and see its current order.",
+    "example_ar": "مثال: فتح الطاولة 4 والاطلاع على طلبها الحالي.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "pos.refund",
+    "label": "Refund paid orders",
+    "label_ar": "إرجاع طلبات مدفوعة",
+    "description": "Return items or money from a paid order. Unpaid table cancellations use the item-void permissions.",
+    "description_ar": "إرجاع أصناف أو مبالغ من طلب مدفوع. إلغاء أصناف الطاولات غير المدفوعة يستخدم صلاحيات إلغاء الأصناف.",
+    "category": "pos",
+    "sort_order": 140,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "changes",
+    "example": "Example: return money for a paid meal. This is separate from cancelling an unpaid table.",
+    "example_ar": "مثال: إرجاع مبلغ وجبة مدفوعة. هذا إجراء منفصل عن إلغاء طلب طاولة غير مدفوع.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "waiter.edit_locked",
+    "label": "Edit saved table orders",
+    "label_ar": "تعديل طلبات الطاولات المحفوظة",
+    "description": "Add or change saved table items. Waiters also need this permission for their first save. Cancellations use separate permissions.",
+    "description_ar": "إضافة أصناف أو تعديلها في طلب طاولة محفوظ. يحتاج النادل هذه الصلاحية أيضاً للحفظ الأول. الإلغاء يحتاج صلاحيات منفصلة.",
+    "category": "waiter",
+    "sort_order": 200,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "tables",
+    "example": "Example: add two drinks after the table order has already been saved or printed. Removing saved items still needs void permission.",
+    "example_ar": "مثال: إضافة مشروبين بعد حفظ طلب الطاولة أو طباعته. حذف الأصناف المحفوظة يبقى بحاجة لصلاحية الإلغاء.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 1,
+    "action": "table.edit"
+  },
+  {
+    "perm_key": "waiter.override_tables",
+    "label": "Handle other employees’ tables",
+    "label_ar": "التعامل مع طاولات موظفين آخرين",
+    "description": "Load or edit another employee’s table order, move its items, or create its split checks. Each action still requires its own permission.",
+    "description_ar": "فتح طلب طاولة موظف آخر أو تعديله أو نقل أصنافه أو تقسيم حسابه. تبقى صلاحية كل إجراء مطلوبة بشكل منفصل.",
+    "category": "waiter",
+    "sort_order": 210,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "tables",
+    "example": "Example: continue an order started by a different employee.",
+    "example_ar": "مثال: متابعة طلب بدأه موظف آخر.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0
+  },
+  {
+    "perm_key": "waiter.checkout",
+    "label": "Take table payments as a waiter",
+    "label_ar": "استلام دفعات الطاولات كنادل",
+    "description": "Let a waiter settle saved table orders and their split checks. Counter sales require Checkout Orders.",
+    "description_ar": "السماح للنادل بتحصيل طلبات الطاولات المحفوظة وحساباتها المقسمة. مبيعات الكاونتر تحتاج صلاحية إتمام الطلبات.",
+    "category": "waiter",
+    "sort_order": 220,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "tables",
+    "example": "Example: a waiter collects payment without changing their role to cashier.",
+    "example_ar": "مثال: النادل يستلم الدفع دون تغيير دوره إلى كاشير.",
+    "roles": [
+      "waiter"
+    ],
+    "default_waiter": 0,
+    "action": "checkout",
+    "action_context": {
+      "tablePayment": true
+    }
+  },
+  {
+    "perm_key": "waiter.transfer_table",
+    "label": "Move tables or items",
+    "label_ar": "نقل الطاولات أو الأصناف",
+    "description": "Move a whole order to another table. Moving selected items also requires Edit saved table orders and access to the source order.",
+    "description_ar": "نقل الطلب كاملاً إلى طاولة أخرى. نقل أصناف محددة يتطلب أيضاً صلاحية تعديل طلبات الطاولات المحفوظة والوصول إلى الطلب الأصلي.",
+    "category": "waiter",
+    "sort_order": 230,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "tables",
+    "example": "Example: move a family’s order to Table 8, or move selected items to a different bill.",
+    "example_ar": "مثال: نقل طلب عائلة إلى الطاولة 8 أو نقل أصناف محددة إلى فاتورة أخرى.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0,
+    "action": "table.transfer"
+  },
+  {
+    "perm_key": "waiter.merge_tables",
+    "label": "Join seating / merge bills",
+    "label_ar": "ضم الجلسات أو دمج الفواتير",
+    "description": "Join tables into one seating group, separate them again, or combine unpaid bills. Joining seating keeps bills separate.",
+    "description_ar": "ضم الطاولات في جلسة واحدة أو فصلها، أو جمع الفواتير غير المدفوعة. ضم الجلسات يبقي الفواتير منفصلة.",
+    "category": "waiter",
+    "sort_order": 240,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "tables",
+    "example": "Example: seat one group across two tables, keeping their bills separate unless you choose to merge them.",
+    "example_ar": "مثال: توزيع جلسة واحدة على طاولتين مع بقاء الفاتورتين منفصلتين ما لم تختر دمجهما.",
+    "roles": [
+      "cashier",
+      "waiter",
+      "table_manager"
+    ],
+    "default_waiter": 0,
+    "action": "table.merge"
+  },
+  {
+    "perm_key": "tables.save",
+    "label": "Save table orders",
+    "label_ar": "حفظ طلبات الطاولات",
+    "description": "Let a cashier save a table order and send its items to the kitchen. Requires Enter tables.",
+    "description_ar": "السماح للكاشير بحفظ طلب الطاولة وإرسال أصنافه إلى المطبخ. يتطلب صلاحية دخول الطاولات.",
+    "category": "tables",
+    "sort_order": 135,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "tables",
+    "example": "Example: take a new order at Table 4 and press Save Table once. Later changes need Edit saved orders.",
+    "example_ar": "مثال: أخذ طلب جديد للطاولة 4 والضغط على حفظ الطاولة لأول مرة. التعديلات اللاحقة تتطلب صلاحية تعديل الطلبات المحفوظة.",
+    "roles": [
+      "cashier"
+    ],
+    "default_waiter": 0,
+    "action": "table.create"
+  },
+  {
+    "perm_key": "auth.multi_terminal",
+    "label": "Stay signed in on several terminals",
+    "label_ar": "البقاء مسجلاً على أكثر من جهاز",
+    "description": "Signing in on another terminal does not sign this employee out of the first one. Both terminals sell into the same shift.",
+    "description_ar": "تسجيل الدخول من جهاز آخر لا يُخرج الموظف من الجهاز الأول. يبيع الجهازان ضمن الوردية نفسها.",
+    "category": "auth",
+    "sort_order": 300,
+    "implemented": 1,
+    "default_cashier": 0,
+    "overridable": 0,
+    "group": "other",
+    "example": "Example: a cashier works on the front register and the drive-through register at once. Signing in on the second one keeps the first one open.",
+    "example_ar": "مثال: كاشير يعمل على صندوق الصالة وصندوق السيارات في الوقت نفسه. تسجيل الدخول على الثاني يُبقي الأول مفتوحاً.",
+    "roles": [
+      "cashier",
+      "waiter"
+    ],
+    "default_waiter": 0
+  }
+]

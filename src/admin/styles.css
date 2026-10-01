@@ -1,0 +1,2064 @@
+@import "tailwindcss";
+@import "../ink-ramp.css";
+
+@theme {
+  /* Three roles: a serif for titles, the original Inter for interface text,
+     a monospace for every figure. Arabic titles take Amiri, a Naskh revival
+     that does for Arabic what a serif does for Latin. */
+  --font-display: "Sitka Heading", "Constantia", "Palatino Linotype", Georgia, serif;
+  --font-headline: "Sitka Heading", "Constantia", "Palatino Linotype", Georgia, serif;
+  --font-body: "Inter", "IBM Plex Sans Arabic", sans-serif;
+  --font-sans: "Inter", "IBM Plex Sans Arabic", sans-serif;
+  --font-mono: "Cascadia Mono", "Consolas", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-background: #fafafa;
+  --color-foreground: #09090b;
+  --color-card: #ffffff;
+  --color-card-foreground: #09090b;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #09090b;
+  --color-primary: #24405e;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f4f4f5;
+  --color-secondary-foreground: #18181b;
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-accent: #f4f4f5;
+  --color-accent-foreground: #18181b;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #f9fafb;
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+  --color-ring: #24405e;
+  --color-on-background: #09090b;
+  --color-primary-container: #dce4ee;
+  --color-on-primary-container: #1d3450;
+
+  /* --- BRAND: the blue-black of ledger ink, replacing teal --- */
+  --color-brand-50:  #eef2f7;
+  --color-brand-100: #dce4ee;
+  --color-brand-300: #8fa6c4;
+  --color-brand-400: #5c7ca3;
+  --color-brand-500: #3a5c85;
+  --color-brand-600: #2c4b6e;
+  --color-brand-700: #24405e;
+  --color-brand-800: #1d3450;
+
+  /* Existing teal-* markup resolves to the same ink (see ink-ramp.css). */
+  --color-primary-fixed: #f4f4f5;
+  --color-primary-fixed-dim: #e4e4e7;
+  --color-outline: #a1a1aa;
+  --color-outline-variant: #e4e4e7;
+  --color-on-secondary: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-bright: #fafafa;
+  --color-surface-dim: #f4f4f5;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fafafa;
+  --color-surface-container: #f4f4f5;
+  --color-surface-container-high: #e4e4e7;
+  --color-surface-container-highest: #d4d4d8;
+  --color-on-surface: #09090b;
+  --color-on-surface-variant: #71717a;
+  --color-secondary-container: #f4f4f5;
+  --color-on-secondary-container: #18181b;
+  --color-secondary-fixed: #f4f4f5;
+  --color-tertiary: #71717a;
+  --color-tertiary-container: #f4f4f5;
+  --color-tertiary-fixed: #f4f4f5;
+  --color-error: #ef4444;
+  --color-error-container: #fee2e2;
+  --color-on-error-container: #991b1b;
+
+  --radius-DEFAULT: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+}
+
+html[dir="rtl"] {
+  --font-sans: "IBM Plex Sans Arabic", "Cairo", "Inter", sans-serif;
+  --font-body: "IBM Plex Sans Arabic", "Cairo", "Inter", sans-serif;
+  /* The display role must be overridden on the TOKEN, not only on the
+     .font-display class: anything styling itself with var(--font-display) —
+     the page title, for one — would otherwise render Arabic through a Latin
+     serif and fall back glyph by glyph. */
+  --font-display: "Amiri", "IBM Plex Sans Arabic", "Cairo", serif;
+  --font-headline: "Amiri", "IBM Plex Sans Arabic", "Cairo", serif;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+.premium-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.premium-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.premium-scroll::-webkit-scrollbar-thumb {
+    background: #c7c4d7;
+    border-radius: 10px;
+}
+
+.premium-scroll:hover::-webkit-scrollbar-thumb {
+    background: #767586;
+}
+
+.action-gradient {
+    background: linear-gradient(135deg, #24405e 0%, #3a5c85 100%);
+}
+
+/* Shared operational data-grid language.
+   Deliberately plain: compact controls, ledger-like rows, and one quiet accent. */
+.admin-data-page {
+    gap: 10px;
+    padding-bottom: 20px;
+}
+
+.admin-grid-page-bar,
+.admin-grid-page-context,
+.admin-grid-page-actions,
+.admin-grid-command-row,
+.admin-grid-filter-row,
+.admin-grid-pagination,
+.admin-grid-pagination-summary,
+.admin-grid-pagination-controls,
+.admin-grid-row-actions {
+    display: flex;
+    align-items: center;
+}
+
+.admin-grid-page-bar {
+    min-height: 38px;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.admin-grid-page-context {
+    align-items: baseline;
+    gap: 9px;
+    min-width: 0;
+}
+
+.admin-grid-page-context h2 {
+    color: #171b1f;
+    font-size: 15px;
+    font-weight: 750;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
+html[dir="rtl"] .admin-grid-page-context h2 {
+    letter-spacing: 0;
+}
+
+.admin-grid-record-count {
+    color: #6e757d;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.admin-grid-page-actions,
+.admin-grid-filter-row,
+.admin-grid-row-actions {
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.admin-grid-button,
+.admin-grid-icon-button {
+    height: 36px;
+    border: 1px solid #cfd3d7;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: #343a40;
+    background: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.admin-grid-button {
+    padding-inline: 12px;
+}
+
+.admin-grid-icon-button {
+    flex: 0 0 36px;
+    width: 36px;
+}
+
+.admin-grid-button:hover,
+.admin-grid-icon-button:hover {
+    border-color: #aeb4b9;
+    background: #eceeef;
+}
+
+.admin-grid-button--primary {
+    color: #ffffff;
+    border-color: #24405e;
+    background: #24405e;
+    padding-inline: 15px;
+}
+
+.admin-grid-button--primary:hover {
+    color: #ffffff;
+    border-color: #1d3450;
+    background: #1d3450;
+}
+
+.admin-grid-button--soft {
+    color: #24405e;
+    border-color: rgba(36, 64, 94, 0.42);
+    background: #dce4ee;
+}
+
+.admin-grid-button--soft:hover {
+    color: #1d3450;
+    border-color: #24405e;
+    background: #bcc9dc;
+}
+
+.admin-grid-button--dark {
+    color: #ffffff;
+    border-color: #30363b;
+    background: #30363b;
+}
+
+.admin-grid-button--dark:hover {
+    color: #ffffff;
+    border-color: #20262b;
+    background: #20262b;
+}
+
+.admin-grid-button:disabled,
+.admin-grid-icon-button:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+}
+
+.admin-grid-command-bar {
+    padding: 7px;
+    border: 1px solid #d7dade;
+    border-radius: 7px;
+    background: #f6f7f7;
+}
+
+.admin-grid-command-row {
+    gap: 7px;
+    min-width: 0;
+}
+
+.admin-grid-command-row + .admin-grid-command-row {
+    margin-top: 7px;
+    padding-top: 7px;
+    border-top: 1px solid #dfe2e4;
+}
+
+.admin-grid-search {
+    position: relative;
+    flex: 1 1 240px;
+    min-width: 180px;
+}
+
+.admin-grid-search > i {
+    position: absolute;
+    inset-inline-start: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6e757d;
+    font-size: 11px;
+    pointer-events: none;
+}
+
+.admin-grid-input,
+.admin-grid-select,
+.admin-grid-search input {
+    height: 36px;
+    border: 1px solid #cfd3d7;
+    border-radius: 5px;
+    color: #343a40;
+    background: #ffffff;
+    font-size: 11px;
+    font-weight: 650;
+    outline: none;
+}
+
+.admin-grid-input,
+.admin-grid-select {
+    padding-inline: 9px;
+}
+
+.admin-grid-search input {
+    width: 100%;
+    padding-inline-start: 31px;
+    padding-inline-end: 10px;
+    font-size: 12px;
+    font-weight: 550;
+}
+
+.admin-grid-input:hover,
+.admin-grid-select:hover,
+.admin-grid-search input:hover {
+    border-color: #aeb4b9;
+}
+
+.admin-grid-input:focus,
+.admin-grid-select:focus,
+.admin-grid-search input:focus {
+    border-color: #5c7ca3;
+    box-shadow: 0 0 0 2px rgba(36, 64, 94, 0.1);
+}
+
+.admin-grid-filter-row {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.admin-grid-segmented {
+    height: 36px;
+    padding: 3px;
+    border: 1px solid #d4d8db;
+    border-radius: 6px;
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(max-content, 1fr);
+    gap: 2px;
+    background: #eceeef;
+}
+
+.admin-grid-segmented button {
+    min-width: 62px;
+    padding-inline: 9px;
+    border-radius: 4px;
+    color: #606970;
+    font-size: 10.5px;
+    font-weight: 700;
+}
+
+.admin-grid-segmented button:hover {
+    color: #242a2f;
+    background: rgba(255, 255, 255, 0.65);
+}
+
+.admin-grid-segmented button.is-active {
+    color: #1d3450;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgba(17, 24, 39, 0.1);
+}
+
+.admin-grid-popover {
+    position: absolute;
+    top: calc(100% + 6px);
+    z-index: 50;
+    padding: 8px;
+    border: 1px solid #cfd3d7;
+    border-radius: 6px;
+    color: #30373d;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(17, 24, 39, 0.12);
+}
+
+.admin-grid-popover button {
+    border-radius: 4px;
+}
+
+.admin-grid-popover button:hover {
+    background: #eef1f1;
+}
+
+.admin-grid-filter-note {
+    min-height: 30px;
+    padding-inline: 9px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #596168;
+    background: #eceeef;
+    font-size: 10.5px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.admin-grid-filter-note button {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.admin-grid-filter-note button:hover {
+    color: #8c3b3b;
+    background: #faeeee;
+}
+
+.admin-grid-shell {
+    border: 1px solid #d4d8db;
+    border-radius: 7px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: none;
+}
+
+.admin-grid-scroll {
+    scrollbar-color: #b9bec3 #eef0f1;
+    scrollbar-width: thin;
+}
+
+.admin-grid-scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.admin-grid-scroll::-webkit-scrollbar-track {
+    background: #eef0f1;
+}
+
+.admin-grid-scroll::-webkit-scrollbar-thumb {
+    border: 2px solid #eef0f1;
+    border-radius: 4px;
+    background: #b9bec3;
+}
+
+.admin-data-grid {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    text-align: start;
+}
+
+.admin-data-grid thead {
+    background: #eef0f1;
+    box-shadow: inset 0 -1px 0 #cfd3d7;
+}
+
+.admin-data-grid th {
+    height: 38px;
+    padding-inline: 14px;
+    color: #596168;
+    font-size: 10.5px;
+    font-weight: 750;
+    letter-spacing: 0.01em;
+    text-align: start;
+    white-space: nowrap;
+}
+
+.admin-data-grid td {
+    height: 53px;
+    padding: 6px 14px;
+    border-bottom: 1px solid #e5e7e9;
+    color: #171b1f;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.admin-data-grid tbody tr:nth-child(even) {
+    background: #fbfcfc;
+}
+
+.admin-data-grid tbody tr:hover {
+    background: #eef2f7;
+}
+
+.admin-data-grid tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.admin-data-grid th:last-child,
+.admin-data-grid td:last-child {
+    position: sticky;
+    inset-inline-end: 0;
+    z-index: 2;
+    border-inline-start: 1px solid #e1e4e6;
+    background: #ffffff;
+}
+
+.admin-data-grid th:last-child {
+    z-index: 12;
+    background: #eef0f1;
+}
+
+.admin-data-grid td.order-row-menu-open {
+    z-index: 20;
+}
+
+.admin-data-grid tbody tr:nth-child(even) td:last-child {
+    background: #fbfcfc;
+}
+
+.admin-data-grid tbody tr:hover td:last-child {
+    background: #eef2f7;
+}
+
+.admin-grid-primary-text {
+    overflow: hidden;
+    color: #171b1f;
+    font-size: 12.5px;
+    font-weight: 720;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-grid-secondary-text {
+    overflow: hidden;
+    margin-top: 3px;
+    color: #6e767d;
+    font-size: 9.5px;
+    font-weight: 550;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-grid-money {
+    color: #171b1f;
+    font-size: 12.5px;
+    font-weight: 760;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    white-space: nowrap;
+}
+
+.admin-grid-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #697178;
+    font-size: 10.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.admin-grid-status::before {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    content: "";
+    background: #a9afb4;
+}
+
+.admin-grid-status.is-active,
+.admin-grid-status.is-success {
+    color: #176b4d;
+}
+
+.admin-grid-status.is-active::before,
+.admin-grid-status.is-success::before {
+    background: #2d9b6c;
+}
+
+.admin-grid-status.is-warning {
+    color: #8b5a0a;
+}
+
+.admin-grid-status.is-warning::before {
+    background: #c98820;
+}
+
+.admin-grid-status.is-danger {
+    color: #9a3c3c;
+}
+
+.admin-grid-status.is-danger::before {
+    background: #bc5555;
+}
+
+.admin-grid-row-actions button {
+    min-width: 30px;
+    height: 30px;
+    padding-inline: 8px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #626a71;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.admin-grid-row-actions button:hover {
+    color: #20262b;
+    border-color: #d5d9dc;
+    background: #f4f5f5;
+}
+
+.admin-grid-row-actions button.is-danger:hover {
+    color: #a53b3b;
+    border-color: #efcccc;
+    background: #faeeee;
+}
+
+.admin-grid-mobile-list {
+    background: #f5f6f6;
+}
+
+.admin-grid-mobile-card {
+    padding: 14px;
+    border-bottom: 1px solid #dfe2e4;
+    background: #ffffff;
+}
+
+.admin-grid-mobile-card:last-child {
+    border-bottom: 0;
+}
+
+.admin-grid-mobile-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    padding-top: 10px;
+}
+
+.admin-grid-mobile-action {
+    min-width: 42px;
+    min-height: 42px;
+    border: 1px solid #d3d7da;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #40474e;
+    background: #f7f8f8;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.admin-grid-mobile-action:hover {
+    background: #eef0f1;
+}
+
+.admin-grid-mobile-action.is-danger {
+    color: #a53b3b;
+}
+
+.admin-grid-pagination {
+    min-height: 46px;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 12px;
+    border-top: 1px solid #d5d8db;
+    background: #f4f5f5;
+}
+
+.admin-grid-pagination-summary,
+.admin-grid-pagination-controls {
+    gap: 10px;
+    color: #626a71;
+    font-size: 10.5px;
+    font-weight: 600;
+}
+
+.admin-grid-pagination-summary strong,
+.admin-grid-pagination-controls strong {
+    color: #252b30;
+    font-weight: 750;
+}
+
+.admin-grid-pagination-controls button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #cfd3d7;
+    border-radius: 5px;
+    color: #41494f;
+    background: #ffffff;
+    font-size: 10px;
+}
+
+.admin-grid-pagination-controls button:hover:not(:disabled) {
+    border-color: #aeb4b9;
+    background: #e9ebec;
+}
+
+.admin-grid-pagination-controls button:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+}
+
+.admin-grid-button:focus-visible,
+.admin-grid-icon-button:focus-visible,
+.admin-grid-row-actions button:focus-visible,
+.admin-grid-mobile-action:focus-visible,
+.admin-grid-pagination button:focus-visible {
+    outline: 2px solid rgba(36, 64, 94, 0.28);
+    outline-offset: 1px;
+}
+
+@media (max-width: 767px) {
+    .admin-data-page {
+        padding-bottom: 12px;
+    }
+
+    .admin-grid-page-bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-grid-page-context {
+        min-height: 30px;
+    }
+
+    .admin-grid-page-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+    }
+
+    .admin-grid-page-actions > * {
+        width: 100%;
+    }
+
+    .admin-grid-button,
+    .admin-grid-icon-button,
+    .admin-grid-input,
+    .admin-grid-select,
+    .admin-grid-search input {
+        min-height: 42px;
+    }
+
+    .admin-grid-command-row {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-grid-search {
+        flex: none;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .admin-grid-filter-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+    }
+
+    .admin-grid-filter-row > * {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .admin-grid-segmented {
+        height: 42px;
+    }
+
+    .admin-grid-pagination {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-grid-pagination-summary,
+    .admin-grid-pagination-controls {
+        justify-content: space-between;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-data-page * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}
+
+body,
+#admin-app,
+.font-body,
+.font-sans {
+    font-family: "Inter", "IBM Plex Sans Arabic", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+.font-arabic {
+    font-family: "IBM Plex Sans Arabic", sans-serif !important;
+}
+
+/* Titles take the serif. `.font-headline` now matches its name instead of
+   resolving to the body face as it did before. */
+.font-display,
+.font-headline {
+    font-family: var(--font-display);
+    letter-spacing: -0.012em;
+}
+
+/* Amiri is a Naskh revival built for reading at title sizes: it gives Arabic
+   the same contrast against the body sans that the serif gives Latin. It is a
+   book face, so it is used for titles only, never for UI labels. */
+html[dir="rtl"] .font-display,
+html[dir="rtl"] .font-headline {
+    font-family: "Amiri", "IBM Plex Sans Arabic", "Cairo", serif;
+    letter-spacing: 0;
+    line-height: 1.55;
+}
+
+/* Every figure is monospaced so money forms a column that adds up by eye. */
+.tabular-nums {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums !important;
+    font-feature-settings: "tnum" 1 !important;
+    letter-spacing: -0.01em;
+}
+
+html[dir="rtl"] body,
+html[dir="rtl"] #admin-app,
+html[dir="rtl"] .font-body,
+html[dir="rtl"] .font-sans {
+    font-family: "IBM Plex Sans Arabic", "Cairo", "Inter", sans-serif;
+}
+
+/* Money in Arabic: "17.83 د.أ." is a mixed-script string. A Latin monospace
+   has no Arabic, so forcing it here gives every Arabic glyph a fixed Latin
+   advance and the currency renders stretched — د . أ instead of د.أ. Columns
+   still line up because Plex Arabic carries tabular figures, which is what
+   actually does the aligning; the monospace face was never the point. */
+html[dir="rtl"] .font-mono,
+html[dir="rtl"] .tabular-nums {
+    font-family: "IBM Plex Sans Arabic", "Cairo", sans-serif;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+
+/* A figure is a bidi island. "45.38 د.أ." mixes a Latin number with an Arabic
+   abbreviation that ends in a full stop, and a full stop is a neutral: the
+   algorithm may resolve it against the surrounding paragraph and fling it to
+   the far side of the string. Isolating each figure keeps the amount and its
+   currency together and stops them reordering against neighbouring text. */
+.tabular-nums,
+.admin-grid-money {
+    unicode-bidi: isolate;
+}
+
+html[dir="rtl"] aside {
+    left: auto !important;
+    right: 0 !important;
+    border-right-width: 0 !important;
+    border-left-width: 1px !important;
+}
+
+@media (max-width: 1023.98px) {
+    html[dir="rtl"] aside.-translate-x-full {
+        --tw-translate-x: 100% !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    html[dir="rtl"] aside.lg\:translate-x-0 {
+        --tw-translate-x: 0px !important;
+    }
+}
+
+.logical-inline-end {
+    inset-inline-end: 0;
+    inset-inline-start: auto;
+}
+
+.logical-inline-start {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+}
+
+/* Header dropdowns (System / Stock alerts / User menu).
+   On desktop they hang under their trigger via Tailwind `absolute logical-inline-end`.
+   On phones the trigger sits mid-cluster, so a button-anchored panel would spill
+   past a viewport edge — pin it under the header and inset both sides instead. */
+.header-dropdown {
+    z-index: 9999 !important;
+}
+@media (max-width: 640px) {
+    .header-dropdown {
+        position: fixed !important;
+        top: 60px !important;
+        inset-inline-start: 0.75rem !important;
+        inset-inline-end: 0.75rem !important;
+        width: auto !important;
+        max-width: none !important;
+    }
+}
+
+.logical-inline-end-1 {
+    inset-inline-end: 0.25rem;
+    inset-inline-start: auto;
+}
+
+.logical-inline-end-1\.5 {
+    inset-inline-end: 0.375rem;
+    inset-inline-start: auto;
+}
+
+.logical-inline-end-2\.5 {
+    inset-inline-end: 0.625rem;
+    inset-inline-start: auto;
+}
+
+.logical-start-4 {
+    inset-inline-start: 1rem !important;
+    inset-inline-end: auto !important;
+}
+
+.logical-start-2 {
+    inset-inline-start: 0.5rem !important;
+    inset-inline-end: auto !important;
+}
+
+.logical-start-2\.5 {
+    inset-inline-start: 0.625rem !important;
+    inset-inline-end: auto !important;
+}
+
+.logical-start-3 {
+    inset-inline-start: 0.75rem !important;
+    inset-inline-end: auto !important;
+}
+
+.logical-ps-2 {
+    padding-inline-start: 0.5rem !important;
+}
+
+.logical-ps-3 {
+    padding-inline-start: 0.75rem !important;
+}
+
+.logical-pe-2 {
+    padding-inline-end: 0.5rem !important;
+}
+
+.logical-ps-7 {
+    padding-inline-start: 1.75rem !important;
+}
+
+.logical-ps-9 {
+    padding-inline-start: 2.25rem !important;
+}
+
+.logical-pe-3 {
+    padding-inline-end: 0.75rem !important;
+}
+
+.logical-ps-10 {
+    padding-inline-start: 2.5rem !important;
+}
+
+.logical-ps-8 {
+    padding-inline-start: 2rem !important;
+}
+
+.logical-pe-4 {
+    padding-inline-end: 1rem !important;
+}
+
+.logical-pe-8 {
+    padding-inline-end: 2rem !important;
+}
+
+.logical-text-start {
+    text-align: start !important;
+}
+
+.logical-text-end {
+    text-align: end !important;
+}
+
+#admin-app table {
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: start !important;
+}
+
+#admin-app table th,
+#admin-app table td {
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+#admin-app table th {
+    white-space: nowrap;
+}
+
+#admin-app table th:not(.text-center):not(.text-right):not(.logical-text-end),
+#admin-app table td:not(.text-center):not(.text-right):not(.logical-text-end) {
+    text-align: start !important;
+}
+
+#admin-app table th.text-left,
+#admin-app table td.text-left {
+    text-align: start !important;
+}
+
+#admin-app table th.text-center,
+#admin-app table td.text-center {
+    text-align: center !important;
+}
+
+#admin-app table th.text-right,
+#admin-app table td.text-right {
+    text-align: right !important;
+}
+
+#admin-app table th.logical-text-end,
+#admin-app table td.logical-text-end {
+    text-align: end !important;
+}
+
+.inventory-table {
+    text-align: start !important;
+    table-layout: fixed;
+}
+
+.logical-border-start-2 {
+    border-inline-start-width: 2px !important;
+}
+
+.admin-popover {
+    max-width: calc(100vw - 1.5rem);
+}
+
+.stock-alert-popover {
+    width: min(20rem, calc(100vw - 1.5rem));
+    transform-origin: top right;
+}
+
+html[dir="rtl"] .stock-alert-popover {
+    transform-origin: top left;
+}
+
+@media (max-width: 639.98px) {
+    .stock-alert-popover {
+        position: fixed !important;
+        top: 4rem !important;
+        inset-inline: 0.75rem !important;
+        width: auto;
+    }
+}
+
+html[dir="rtl"] .border-l {
+    border-left-width: 0 !important;
+    border-right-width: 1px !important;
+}
+
+html[dir="rtl"] .border-r {
+    border-right-width: 0 !important;
+    border-left-width: 1px !important;
+}
+
+html[dir="rtl"] .pl-4 {
+    padding-left: 0 !important;
+    padding-right: 1rem !important;
+}
+
+html[dir="rtl"] .pr-4 {
+    padding-right: 0 !important;
+    padding-left: 1rem !important;
+}
+
+html[dir="rtl"] .mr-1,
+html[dir="rtl"] .mr-1\.5,
+html[dir="rtl"] .mr-2 {
+    margin-right: 0 !important;
+}
+
+html[dir="rtl"] .mr-1 {
+    margin-left: 0.25rem !important;
+}
+
+html[dir="rtl"] .mr-1\.5 {
+    margin-left: 0.375rem !important;
+}
+
+html[dir="rtl"] .mr-2 {
+    margin-left: 0.5rem !important;
+}
+
+html[dir="rtl"] .ml-2 {
+    margin-left: 0 !important;
+    margin-right: 0.5rem !important;
+}
+
+html[dir="rtl"] .fa-arrow-right-to-bracket {
+    transform: rotate(180deg);
+}
+
+.admin-page-enter-active {
+    transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1),
+                transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-page-enter-from {
+    opacity: 0;
+    transform: translateY(3px);
+}
+
+.admin-page-leave-active {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-page-enter-active { transition-duration: 0.01ms; }
+}
+
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.toast-enter-active,
+.toast-leave-active {
+    transition: all 0.2s ease-out;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+    opacity: 0;
+    transform: translateY(-10px) translateX(-50%);
+}
+
+/* ─── Collapsible Sidebar & Tooltips ────────────────────────────────────────── */
+
+/* Tooltip design using CSS logical properties for native LTR/RTL support */
+.sidebar-tooltip {
+    position: absolute;
+    top: 50%;
+    inset-inline-start: 100%;
+    margin-inline-start: 1rem;
+    /* translateY centres it on the icon; X nudge plays the dock-in slide so
+       the vertical centre never shifts (we animate margin, not transform). */
+    transform: translateY(-50%);
+    padding: 0.4rem 0.625rem;
+    background-color: #18181b; /* Soft Zinc-900 */
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 0.375rem;
+    border: 1px solid #27272a; /* Zinc-800 */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+    z-index: 50;
+    white-space: nowrap;
+    pointer-events: none;
+    line-height: 1.2;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+                margin-inline-start 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.18s;
+    will-change: opacity, margin-inline-start;
+}
+
+/* Hover reveal — docks a touch closer to the rail */
+.group:hover .sidebar-tooltip {
+    opacity: 1;
+    visibility: visible;
+    margin-inline-start: 0.625rem;
+}
+
+/* RTL toggle button icon flip in sidebar */
+html[dir="rtl"] .collapse-toggle-btn i {
+    transform: scaleX(-1);
+}
+
+/* ════════════════════════════════════════════════════════════════════════ */
+/*  SIDEBAR — Premium Deep Black theme with Teal Accent                    */
+/*  Collapse transitions smoothly with a fade/crossfade effect             */
+/* ════════════════════════════════════════════════════════════════════════ */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 246px;
+    background-color: #0d0f10;
+    color: #6c757e;
+    border-inline-end: 1px solid #222527;
+    transition: width 0.19s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.19s cubic-bezier(0.22, 1, 0.36, 1);
+    height: 100%;
+}
+@media (min-width: 1024px) {
+    .sidebar.collapsed { width: 70px; }
+}
+
+/* Header — 60px, matches the navbar */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 14px;
+    border-bottom: 1px solid #222527;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+}
+.workspace-info {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    flex: 1;
+    gap: 10px;
+    transition: opacity 0.16s ease;
+}
+.workspace-logo-slot {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    background-color: #eef2f7;
+    color: #1d3450;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+.workspace-title {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #f4f5f5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-close {
+    margin-inline-start: auto;
+    width: 36px;
+    height: 36px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #607490;
+    cursor: pointer;
+    transition: color 0.16s ease;
+}
+@media (max-width: 1023.98px) {
+    .sidebar-close { display: flex; }
+}
+.sidebar-close:hover { color: #f1f5f9; }
+
+/* Integrated Header Toggle Button */
+.collapse-toggle-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: #6d747b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+    flex-shrink: 0;
+}
+.collapse-toggle-btn:hover {
+    background-color: #1b1e20;
+    color: #f4f5f5;
+    border-color: #2e2e2e;
+}
+.collapse-toggle-btn i {
+    font-size: 0.9rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Nav */
+.sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 4px; }
+.sidebar-nav::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.15); }
+
+/* Navigation Links - Slightly Bigger Touch Targets & Font */
+.nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.nav-group-label {
+    padding-inline: 10px;
+    color: #70777d;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+.nav-group-list {
+    display: grid;
+    gap: 3px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 8px 10px;
+    border-radius: 7px;
+    color: #6c757e;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.14s ease, color 0.14s ease;
+}
+.nav-link:hover {
+    background-color: #171a1c;
+    color: #f1f3f3;
+}
+.nav-link.active {
+    background-color: #121f30;
+    color: #eef2f7;
+    font-weight: 700;
+}
+.nav-link.active::before {
+    display: none;
+}
+
+/* Icon lane — fixed 44px so the glyph is centered when collapsed AND never shifts */
+.nav-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    position: relative;
+}
+.nav-link.active .nav-icon {
+    background-color: #1d3450;
+    color: #5577a2;
+}
+.nav-label {
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.08s; /* Delayed fade-in prevents text-wrap during expand */
+}
+.nav-badge {
+    margin-inline-start: auto;
+    margin-inline-end: 2px;
+    background-color: #2b1b1d;
+    border: 0;
+    color: #ea0000;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 5px;
+    line-height: 1;
+    flex-shrink: 0;
+    opacity: 1;
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.08s;
+}
+/* Low-stock dot on the Inventory icon — only visible when collapsed */
+.nav-dot {
+    display: none;
+    position: absolute;
+    top: 1px;
+    inset-inline-end: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #ef4444;
+    box-shadow: 0 0 0 2px #0d0f10;
+}
+
+/* Footer / Launch POS */
+.sidebar-footer {
+    padding: 12px;
+    border-top: 1px solid #222527;
+    flex-shrink: 0;
+    transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pos-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    width: 100%;
+    border-radius: 7px;
+    background-color: #dce4ee;
+    border: 0;
+    color: #182b42;
+    font-size: 0.875rem;
+    font-weight: 750;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: background-color 0.14s ease, width 0.19s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pos-btn:hover {
+    background-color: #ffffff;
+    color: #182b42;
+}
+.pos-btn-full {
+    opacity: 1;
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.08s;
+}
+.pos-btn-short {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    font-weight: 700;
+    transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tooltip — collapsed only */
+.nav-tooltip {
+    position: absolute;
+    inset-inline-start: 78px;
+    top: 50%;
+    transform: translateY(-50%) translateX(-10px);
+    background-color: #161926;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    pointer-events: none;
+    opacity: 0;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+html[dir="rtl"] .nav-tooltip {
+    inset-inline-start: auto;
+    inset-inline-end: 78px;
+    transform: translateY(-50%) translateX(10px);
+}
+.sidebar:not(.collapsed) .nav-tooltip { display: none; }
+
+/* ── Collapsed state (desktop only): smooth crossfade of text elements ── */
+@media (min-width: 1024px) {
+    .sidebar.collapsed .workspace-info {
+        opacity: 0;
+        width: 0;
+        pointer-events: none;
+        display: none;
+    }
+    .sidebar.collapsed .collapse-toggle-btn {
+        margin: 0 auto;
+        display: flex;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        justify-content: center;
+        align-items: center;
+    }
+    .sidebar.collapsed .collapse-toggle-btn:hover {
+        background-color: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Hide text labels & badges when collapsed to center icons perfectly */
+    .sidebar.collapsed .nav-label,
+    .sidebar.collapsed .nav-badge,
+    .sidebar.collapsed .nav-group-label {
+        opacity: 0;
+        display: none !important;
+        pointer-events: none;
+    }
+    
+    /* Center active link background in collapsed state */
+    .sidebar.collapsed .nav-link {
+        justify-content: center;
+        width: 44px;
+        padding: 0;
+        margin: 0 auto;
+    }
+    .sidebar.collapsed .nav-icon {
+        width: 28px;
+        height: 28px;
+    }
+    .sidebar.collapsed .nav-link.active::before {
+        display: none;
+    }
+    .sidebar.collapsed .nav-dot {
+        display: block;
+    }
+
+    /* Collapse footer and pos button */
+    .sidebar.collapsed .sidebar-footer {
+        padding: 12px 13px;
+    }
+    .sidebar.collapsed .pos-btn {
+        width: 44px;
+        margin: 0 auto;
+    }
+    .sidebar.collapsed .pos-btn-full {
+        opacity: 0;
+        display: none !important;
+        pointer-events: none;
+    }
+    .sidebar.collapsed .pos-btn-short {
+        opacity: 1;
+        transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.08s;
+    }
+
+    .sidebar.collapsed .nav-link:hover .nav-tooltip {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+    html[dir="rtl"] .sidebar.collapsed .nav-link:hover .nav-tooltip {
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════════════ */
+/*  CONSOLE NAVBAR (top bar) + dropdowns                                     */
+/* ════════════════════════════════════════════════════════════════════════ */
+.admin-topbar {
+    height: 60px;
+    flex-shrink: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-inline: 20px;
+    background-color: #ffffff;
+    color: #111827;
+    border-bottom: 1px solid #e2e5e9;
+}
+.admin-topbar-page {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.admin-topbar-title {
+    margin: 0;
+    color: #111827;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+}
+.admin-topbar-menu {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #667085;
+    cursor: pointer;
+}
+.admin-topbar-menu:hover {
+    background-color: #f4f5f6;
+    color: #1d2939;
+}
+.admin-topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.admin-topbar-clock {
+    height: 44px;
+    align-items: center;
+    gap: 9px;
+    padding-inline: 6px;
+    color: #475467;
+    font-size: 0.75rem;
+    font-weight: 650;
+    user-select: none;
+}
+.admin-topbar-clock-divider {
+    width: 1px;
+    height: 14px;
+    background-color: #e4e7ec;
+}
+.admin-topbar-date {
+    color: #697386;
+    font-size: 0.6875rem;
+    font-weight: 600;
+}
+.admin-topbar-slot {
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+.admin-system-trigger,
+.admin-alert-trigger,
+.admin-user-trigger {
+    min-height: 44px;
+    border-radius: 7px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+}
+.admin-system-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-inline: 11px;
+    background-color: #eef2f7;
+    border: 1px solid #dce4ee;
+    color: #1d3450;
+    font-size: 0.75rem;
+    font-weight: 700;
+    user-select: none;
+}
+.admin-system-trigger:hover {
+    background-color: #eef2f7;
+    border-color: #dce4ee;
+}
+.admin-alert-trigger {
+    position: relative;
+    width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f8fa;
+    border: 1px solid #e4e7ec;
+    color: #475467;
+}
+.admin-alert-trigger:hover {
+    background-color: #f1f3f5;
+    border-color: #d5dae1;
+    color: #1d2939;
+}
+.admin-user-slot {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    margin-inline-start: 3px;
+    padding-inline-start: 12px;
+    border-inline-start: 1px solid #e4e7ec;
+}
+.admin-user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+.admin-user-trigger:hover .admin-avatar {
+    background-color: #1d3450;
+}
+.admin-user-copy {
+    text-align: end;
+    line-height: 1.1;
+}
+.admin-user-name {
+    color: #1d2939;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+.admin-user-role {
+    margin-top: 3px;
+    color: #697386;
+    font-size: 0.625rem;
+    font-weight: 650;
+}
+.admin-avatar {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background-color: #24405e;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    transition: background-color 0.14s ease;
+}
+.admin-system-trigger:focus-visible,
+.admin-alert-trigger:focus-visible,
+.admin-user-trigger:focus-visible,
+.admin-topbar-menu:focus-visible {
+    outline: 2px solid #24405e;
+    outline-offset: 2px;
+}
+
+@media (max-width: 1100px) {
+    .admin-topbar-date,
+    .admin-topbar-clock-divider {
+        display: none;
+    }
+}
+@media (max-width: 1023.98px) {
+    .admin-topbar {
+        padding-inline: 12px;
+    }
+}
+@media (max-width: 640px) {
+    .admin-topbar {
+        gap: 6px;
+    }
+    .admin-topbar-actions {
+        gap: 4px;
+    }
+    .admin-user-slot {
+        padding-inline-start: 8px;
+    }
+}
+
+.console-bar {
+    background-color: #111315;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Dark chips: system-status + bell. 6px radius, hairline border. */
+.console-chip {
+    background-color: #181b1d;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #747474;
+    border-radius: 6px;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+.console-chip:hover {
+    background-color: #202326;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #f4f5f5;
+}
+/* Icon-only console button (bell / account trigger wrapper) */
+.console-icon-btn {
+    background-color: #181b1d;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #747474;
+    border-radius: 6px;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+.console-icon-btn:hover {
+    background-color: #202326;
+    border-color: rgba(255, 255, 255, 0.14);
+    color: #f4f5f5;
+}
+
+/* Dark popover/dropdown panel — 8px radius for floating surfaces. */
+.console-popover {
+    background-color: #181b1d;
+    color: #f4f5f5;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+.console-popover-divider {
+    border-color: rgba(255, 255, 255, 0.07) !important;
+}
+.console-popover-tint {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+.console-popover-hover:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+.console-popover-text {
+    color: #6e7774;
+}
+.console-popover-text-strong {
+    color: #f4f5f5;
+}
+.console-popover-divider-x > * + * {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Console avatar tile */
+.console-avatar {
+    background-color: #24405e;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+}
+
+/* ── Live status dot (motivated motion: pulses only when actually live) ── */
+.console-dot {
+    border-radius: 9999px;
+    display: inline-block;
+}
+.console-dot-ok    { background-color: #5c7ca3; }
+.console-dot-warn  { background-color: #f59e0b; }
+.console-dot-down  { background-color: #ef4444; }
+.console-dot-pulse {
+    position: relative;
+}
+.console-dot-pulse::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: inherit;
+    animation: console-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes console-ping {
+    0%   { transform: scale(1);   opacity: 0.5; }
+    70%  { transform: scale(2.4); opacity: 0; }
+    100% { transform: scale(2.4); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .console-dot-pulse::after { animation: none; }
+    .sidebar, .nav-label, .nav-badge,
+    .pos-btn, .pos-btn-full, .pos-btn-short,
+    .sidebar-footer, .collapse-toggle-btn i { transition: none !important; }
+}
+
+
+/* ============================================================================
+   SIDEBAR & NAVBAR — refactor
+   The sidebar is the spine of the product: a dark ruled column where the only
+   bright thing is where you are. The navbar is a quiet rail that names the page
+   and reports the machine's health without competing with it.
+   Everything below uses logical properties so it mirrors correctly in Arabic.
+   ========================================================================= */
+
+/* ---------- sidebar shell ---------- */
+.sidebar {
+    background-color: #0b0d0e;
+    border-inline-end: 1px solid #1e2224;
+}
+
+/* Brand: a square ink mark, the name in the serif, a mono line of context. */
+.sidebar-header {
+    height: 60px;
+    padding-inline: 16px;
+    border-bottom: 1px solid #1e2224;
+}
+.workspace-logo-slot {
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    background: #24405e;
+    color: #eef2f7;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.workspace-title {
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    font-weight: 600;
+    letter-spacing: -0.012em;
+    color: #eef0f1;
+}
+
+/* ---------- nav ---------- */
+.sidebar-nav {
+    padding-block: 14px 8px;
+    /* Rows run to the column edge so the active rule sits flush against it. */
+    padding-inline: 0;
+}
+.nav-group + .nav-group { margin-top: 18px; }
+
+/* A ruled eyebrow: the label sits on a hairline that runs to the column edge,
+   so the groups read as sections of one ledger rather than floating captions. */
+.nav-group-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-inline: 16px;
+    margin-bottom: 6px;
+    color: #6f7a80;
+    font-size: 0.58rem;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 0.17em;
+}
+.nav-group-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #1e2224;
+}
+.nav-group-list { gap: 1px; }
+
+/* Rows are full-bleed and square. Position is marked by a rule on the leading
+   edge plus a lift in the surface — never by a floating pill. */
+.nav-link {
+    height: 38px;
+    padding-inline: 16px;
+    border-radius: 0;
+    border-inline-start: 2px solid transparent;
+    color: #9aa4aa;
+    font-size: 0.83rem;
+    font-weight: 500;
+    gap: 11px;
+    transition: background-color .14s ease, color .14s ease, border-color .14s ease;
+}
+.nav-link:hover {
+    background-color: #14181a;
+    color: #e6eaec;
+}
+.nav-link.active {
+    background-color: #141b24;
+    border-inline-start-color: #4a7fb5;
+    color: #f2f5f7;
+    font-weight: 620;
+}
+
+/* The icon lane is fixed so glyphs never shift when the column collapses. */
+.nav-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 0.8rem;
+    opacity: 0.75;
+}
+.nav-link.active .nav-icon {
+    background: transparent;
+    color: #6f9fd0;
+    opacity: 1;
+}
+.nav-label { font-size: 0.83rem; }
+
+/* Counts are data, so they are set in the data face. */
+.nav-badge {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.62rem;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 2px;
+    background-color: #7a1c18;
+    color: #f7eceb;
+    letter-spacing: 0;
+}
+
+.sidebar-footer { border-top: 1px solid #1e2224; padding: 12px 16px; }
+.pos-btn {
+    height: 38px;
+    border-radius: 2px;
+    background-color: #24405e;
+    color: #eef2f7;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 0;
+}
+.pos-btn:hover { background-color: #2c4b6e; color: #ffffff; }
+
+/* ---------- navbar ---------- */
+.admin-topbar {
+    height: 60px;
+    padding-inline: 22px;
+    border-bottom: 1px solid #e2e5e9;
+    gap: 16px;
+}
+/* The page name carries the serif, at a size that reads as a title rather than
+   a label. It is the only large type in the rail. */
+.admin-topbar-title {
+    font-family: var(--font-display);
+    font-size: 1.24rem;
+    font-weight: 600;
+    letter-spacing: -0.014em;
+    color: #14181b;
+}
+.admin-topbar-actions { gap: 8px; }
+
+/* Clock: the one place the rail shows a live figure, so it is monospaced and
+   sits behind a hairline instead of a border box. */
+.admin-topbar-clock {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.74rem;
+    color: #4a5157;
+    gap: 8px;
+    padding-inline-end: 12px;
+}
+.admin-topbar-clock-divider {
+    width: 1px;
+    height: 12px;
+    background: #d7dbde;
+}
+.admin-topbar-date { color: #6e767c; font-size: 0.7rem; }
+
+/* Status and alert triggers are quiet outlined squares; they only speak when
+   something is wrong, which the dot colour carries. */
+.admin-system-trigger,
+.admin-alert-trigger {
+    height: 30px;
+    border: 1px solid #dcdfe2;
+    border-radius: 2px;
+    background: #ffffff;
+    color: #4a5157;
+    font-size: 0.72rem;
+    font-weight: 550;
+    padding-inline: 9px;
+    transition: border-color .13s ease, color .13s ease;
+}
+.admin-system-trigger:hover,
+.admin-alert-trigger:hover { border-color: #24405e; color: #24405e; }
+
+.admin-user-trigger {
+    gap: 9px;
+    padding-inline-start: 10px;
+    border-inline-start: 1px solid #e2e5e9;
+}
+.admin-user-name { font-size: 0.78rem; font-weight: 620; color: #14181b; line-height: 1.2; }
+.admin-user-role {
+    font-size: 0.58rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #6e767c;
+    margin-top: 2px;
+}
+.admin-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    background-color: #24405e;
+    color: #eef2f7;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ---------- collapsed sidebar ----------
+   The 44px centred row was built for the old pill: a floating box wants to be
+   centred. A ruled row does not — its rule marks the column edge, so collapsing
+   must keep the row full-bleed and simply centre the glyph inside it. */
+@media (min-width: 1024px) {
+    .sidebar.collapsed .nav-link {
+        justify-content: center;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* With the group eyebrows hidden there is nothing left to separate the
+       sections, so the rule they sat on becomes the divider itself. */
+    .sidebar.collapsed .nav-group + .nav-group {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #1e2224;
+    }
+}

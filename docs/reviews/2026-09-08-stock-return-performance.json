@@ -1,0 +1,85 @@
+{
+  "at": "2026-09-07T22:36:53.446Z",
+  "runtime": "v24.16.0",
+  "cpu": "Intel(R) Core(TM) i7-14700KF",
+  "lines": 10,
+  "limitations": [
+    "Stock-return transaction only, not full refund HTTP latency.",
+    "Shared workstation; database CPU/RAM and low-end hardware unmeasured.",
+    "RSS endpoints include retained fixtures and are not peak or incremental memory."
+  ],
+  "results": [
+    {
+      "round": 1,
+      "phase": "before",
+      "samples": 1000,
+      "p50_ms": 1.4205999999999221,
+      "p95_ms": 2.6096000000000004,
+      "p99_ms": 4.387500000000273,
+      "stock_queries_per_operation": 10,
+      "node_cpu_ms_per_operation_including_warmup": 0.6253658536585366,
+      "rss_before_mib": 89.59375,
+      "rss_after_mib": 97.34765625
+    },
+    {
+      "round": 1,
+      "phase": "after",
+      "samples": 1000,
+      "p50_ms": 0.8328999999998814,
+      "p95_ms": 1.3211999999998625,
+      "p99_ms": 2.580199999999877,
+      "stock_queries_per_operation": 1,
+      "node_cpu_ms_per_operation_including_warmup": 0.21365853658536585,
+      "rss_before_mib": 97.34765625,
+      "rss_after_mib": 97.76953125
+    },
+    {
+      "round": 2,
+      "phase": "after",
+      "samples": 1000,
+      "p50_ms": 0.7741000000000895,
+      "p95_ms": 1.1583000000000538,
+      "p99_ms": 2.2106000000003405,
+      "stock_queries_per_operation": 1,
+      "node_cpu_ms_per_operation_including_warmup": 0.09073170731707317,
+      "rss_before_mib": 97.76953125,
+      "rss_after_mib": 97.51171875
+    },
+    {
+      "round": 2,
+      "phase": "before",
+      "samples": 1000,
+      "p50_ms": 1.3582000000005792,
+      "p95_ms": 2.80199999999968,
+      "p99_ms": 4.065200000000004,
+      "stock_queries_per_operation": 10,
+      "node_cpu_ms_per_operation_including_warmup": 0.5492682926829269,
+      "rss_before_mib": 97.515625,
+      "rss_after_mib": 97.984375
+    },
+    {
+      "round": 3,
+      "phase": "before",
+      "samples": 1000,
+      "p50_ms": 1.457300000000032,
+      "p95_ms": 2.5882999999994354,
+      "p99_ms": 4.043899999999667,
+      "stock_queries_per_operation": 10,
+      "node_cpu_ms_per_operation_including_warmup": 0.24390243902439024,
+      "rss_before_mib": 97.984375,
+      "rss_after_mib": 97.921875
+    },
+    {
+      "round": 3,
+      "phase": "after",
+      "samples": 1000,
+      "p50_ms": 0.7615000000005239,
+      "p95_ms": 1.264100000000326,
+      "p99_ms": 2.788100000000668,
+      "stock_queries_per_operation": 1,
+      "node_cpu_ms_per_operation_including_warmup": 0.09073170731707317,
+      "rss_before_mib": 97.921875,
+      "rss_after_mib": 96.51953125
+    }
+  ]
+}

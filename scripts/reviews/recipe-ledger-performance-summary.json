@@ -1,0 +1,292 @@
+{
+  "application_commit": "dfb5262d0650b0ee0bb3d2f8a39c955db873de81",
+  "pre_ledger_commit": "74820d4b",
+  "source_revalidated_utc": "2026-09-06T09:51:23Z",
+  "runtime": {
+    "version": "10.4.32-MariaDB",
+    "isolation_level": "REPEATABLE-READ"
+  },
+  "scenarios": [
+    {
+      "label": "disabled / checkout 1 line",
+      "samples": 8,
+      "medianMs": 6.173,
+      "p95Ms": 9.722,
+      "commands": [
+        16
+      ],
+      "leased": 2,
+      "released": 2,
+      "returnedRows": 19
+    },
+    {
+      "label": "disabled / checkout 10 lines",
+      "samples": 8,
+      "medianMs": 7.552,
+      "p95Ms": 12.502,
+      "commands": [
+        16
+      ],
+      "leased": 2,
+      "released": 2,
+      "returnedRows": 28
+    },
+    {
+      "label": "enabled, no recipe / checkout 1 line",
+      "samples": 8,
+      "medianMs": 5.582,
+      "p95Ms": 6.929,
+      "commands": [
+        19
+      ],
+      "leased": 2,
+      "released": 2,
+      "returnedRows": 19
+    },
+    {
+      "label": "enabled, no recipe / checkout 10 lines",
+      "samples": 8,
+      "medianMs": 5.504,
+      "p95Ms": 7.722,
+      "commands": [
+        19
+      ],
+      "leased": 2,
+      "released": 2,
+      "returnedRows": 28
+    },
+    {
+      "label": "enabled, recipe / checkout 1 line",
+      "samples": 8,
+      "medianMs": 5.861,
+      "p95Ms": 7.787,
+      "commands": [
+        23
+      ],
+      "leased": 2,
+      "released": 2,
+      "returnedRows": 23
+    },
+    {
+      "label": "enabled, recipe / checkout 10 lines",
+      "samples": 8,
+      "medianMs": 6.029,
+      "p95Ms": 7.157,
+      "commands": [
+        23
+      ],
+      "leased": 2,
+      "released": 2,
+      "returnedRows": 41
+    },
+    {
+      "label": "enabled, recipe / unchanged table save",
+      "samples": 8,
+      "medianMs": 5.181,
+      "p95Ms": 5.52,
+      "commands": [
+        24
+      ],
+      "leased": 1,
+      "released": 1,
+      "returnedRows": 26
+    },
+    {
+      "label": "100 ingredients / 100k movements / daily report",
+      "samples": 3,
+      "medianMs": 307.159,
+      "p95Ms": 313.349,
+      "commands": [
+        28
+      ],
+      "leased": 1,
+      "released": 1,
+      "returnedRows": 100117
+    }
+  ],
+  "read_profiles": [
+    {
+      "label": "100 ingredients / 100k movements / stale Counts / summary",
+      "queries": 1,
+      "medianMs": 277.767
+    },
+    {
+      "label": "100 ingredients / 100k movements / portions",
+      "queries": 2,
+      "medianMs": 125.982
+    },
+    {
+      "label": "100 ingredients / 100k history / 1k today / stale Counts / summary",
+      "queries": 1,
+      "medianMs": 124.103
+    },
+    {
+      "label": "100 ingredients / 100k history / 1k today / recent Counts / summary",
+      "queries": 1,
+      "medianMs": 8.119
+    },
+    {
+      "label": "100 ingredients / 100k old-day movements / quiet next-day summary",
+      "queries": 1,
+      "medianMs": 6.449
+    },
+    {
+      "label": "history 50 rows / 1000 movements",
+      "queries": 3,
+      "medianMs": 2.248
+    }
+  ],
+  "contention": [
+    {
+      "case": "unchanged saved empty recipe blocks an unrelated ingredient",
+      "blocked": true,
+      "waitMs": 2495.39,
+      "sql": [
+        "SELECT setting_value FROM settings WHERE setting_key='recipe_ledger_enabled' LIMIT 1",
+        "SELECT bundle_id, product_id, qty FROM product_bundle_items WHERE bundle_id IN (?)",
+        "SELECT product_id, ingredient_id, qty_per_unit FROM product_recipe_lines WHERE product_id IN (?) ORDER BY product_id, sort_order, id",
+        "SELECT DISTINCT line_key, ingredient_id FROM ingredient_movements WHERE line_key IN (?)",
+        "SELECT id FROM ingredients ORDER BY id FOR UPDATE",
+        "SELECT line_key, ingredient_id, unit_qty, unit_cost, -SUM(qty) AS net_qty, SUM(product_qty) AS net_pq FROM ingredient_movements WHERE line_key IN (?) AND kind IN ('usage','reversal') GROUP BY line_key, ingredient_id, unit_qty, unit_cost ORDER BY MAX(CASE WHEN kind='usage' THEN id END) DESC FOR UPDATE"
+      ]
+    }
+  ],
+  "opening_counts": [
+    {
+      "ingredients": 1,
+      "serviceQueries": 5,
+      "ms": 6.05
+    },
+    {
+      "ingredients": 10,
+      "serviceQueries": 14,
+      "ms": 4.26
+    },
+    {
+      "ingredients": 100,
+      "serviceQueries": 104,
+      "ms": 16.12
+    }
+  ],
+  "browser": {
+    "save_causes_list_gets": 2,
+    "receipt_events": 10,
+    "list_gets_while_previous_get_held": 10,
+    "held_requests": 10
+  },
+  "contract": {
+    "before": {
+      "passed": 8,
+      "failed": 0,
+      "cases": [
+        {
+          "name": "checkout command baseline captures the current checkout command graph without leaking wrappers into the pool",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline persists ten independent parent lines through one batch without changing totals",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline rolls back every checkout mutation when the multi-row parent insert fails",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline keeps the stock lock separate from the checkout catalog context",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline persists a six-decimal stock deduction for an amount-derived quantity",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline checks out a photographed scale label as one normal fractional product line",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline splits 51 independent parent lines at the fixed 50-row boundary",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline keeps escaped-note and modifier batches below one MiB while crossing the byte boundary",
+          "status": "passed",
+          "failures": []
+        }
+      ]
+    },
+    "current": {
+      "passed": 5,
+      "failed": 3,
+      "cases": [
+        {
+          "name": "checkout command baseline captures the current checkout command graph without leaking wrappers into the pool",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected [ …(13) ] to have a length of 12 but got 13\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1389:20)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/xampp/htdocs/posapp/node_modules/chai/index.js:1700:25)\n    at C:/xampp/htdocs/posapp/backend/tests/integration/checkoutPerformanceContract.test.js:148:21\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+          ]
+        },
+        {
+          "name": "checkout command baseline persists ten independent parent lines through one batch without changing totals",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected [ { type: 'query', …(2) }, …(12) ] to have a length of 12 but got 13\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1389:20)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/xampp/htdocs/posapp/node_modules/chai/index.js:1700:25)\n    at C:/xampp/htdocs/posapp/backend/tests/integration/checkoutPerformanceContract.test.js:172:76\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+          ]
+        },
+        {
+          "name": "checkout command baseline rolls back every checkout mutation when the multi-row parent insert fails",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline keeps the stock lock separate from the checkout catalog context",
+          "status": "failed",
+          "failures": [
+            "AssertionError: expected [ …(15) ] to have a length of 14 but got 15\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1389:20)\n    at Proxy.<anonymous> (file:///C:/xampp/htdocs/posapp/node_modules/@vitest/expect/dist/index.js:1156:15)\n    at Proxy.methodWrapper (file:///C:/xampp/htdocs/posapp/node_modules/chai/index.js:1700:25)\n    at C:/xampp/htdocs/posapp/backend/tests/integration/checkoutPerformanceContract.test.js:239:21\n    at processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at file:///C:/xampp/htdocs/posapp/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+          ]
+        },
+        {
+          "name": "checkout command baseline persists a six-decimal stock deduction for an amount-derived quantity",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline checks out a photographed scale label as one normal fractional product line",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline splits 51 independent parent lines at the fixed 50-row boundary",
+          "status": "passed",
+          "failures": []
+        },
+        {
+          "name": "checkout command baseline keeps escaped-note and modifier batches below one MiB while crossing the byte boundary",
+          "status": "passed",
+          "failures": []
+        }
+      ]
+    }
+  },
+  "source_sha256": {
+    "backend/services/RecipeLedgerService.js": "83fa880e7553d0627f6676248e43a4a046bd96624d2c62f42ed4f2dcb0a91866",
+    "backend/services/OrderPricing.js": "9a86cb4e18cf710f1fbda698a2420555700422940ddc04b46aac95ee2485e12b",
+    "backend/modules/checkout/executeCheckout.js": "772ae888b81f41cc2569e1ab069da94681e5937e4c75f147bef947f4173dfa0e",
+    "backend/routes/admin/reports.js": "c610889b19ea8a770b86bc98a3dbeecdb09523c06743efa9dc9a7eb8797e85e8",
+    "src/admin/pages/Ingredients.vue": "f8eaebf88bc93711081ec9a198310e2c41048940eb30bc54917cfaf67ebd8287",
+    "src/admin/components/ProductRecipeEditor.vue": "43e24db20eff9b91858eea3113ef3583de141a07ca226ae33fea2573e66ca457"
+  },
+  "limits": [
+    "Local scratch DB only; no production latency or capacity claim",
+    "Eight warm checkout samples; five read samples; three report samples",
+    "Opening query counts exclude caller transaction and audit commands",
+    "100k movements on one day is a stress profile; 100k history with 1k today is separately measured",
+    "Source unchanged on resumption; measurements were not needlessly rerun"
+  ]
+}

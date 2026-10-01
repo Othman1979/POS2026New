@@ -1,0 +1,9 @@
+{
+  "mode": {
+    "sql_mode": "IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION"
+  },
+  "longKey": {
+    "code": "ER_DUP_ENTRY",
+    "message": "Duplicate entry 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb' for key 'uq_im_client_key'"
+  }
+}

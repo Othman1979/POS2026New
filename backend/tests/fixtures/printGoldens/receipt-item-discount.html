@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><style>
+            /* 576 dots is the printable width of the supported 80 mm / 203 dpi receipt target. */
+            @page { size: 80mm auto; margin: 0; }
+            * { box-sizing: border-box; margin: 0; padding: 0; }
+            body {
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                background: white; color: black; width: 576px;
+                padding: 5px 10px 60px 10px; line-height: 1.2;
+            }
+            .text-center { text-align: center; } .text-right { text-align: right; }
+            .font-black { font-weight: 800; letter-spacing: 0.02em; }
+            .font-bold { font-weight: 600; letter-spacing: 0.01em; }
+            .font-normal { font-weight: 400; }
+            .italic { font-style: italic; } .uppercase { text-transform: uppercase; }
+            .tracking-widest { letter-spacing: 0.06em; }
+            .mt-1 { margin-top: 4px; } .mt-2 { margin-top: 8px; } .mt-4 { margin-top: 16px; }
+            .mb-1 { margin-bottom: 4px; } .mb-2 { margin-bottom: 8px; }
+            .flex { display: flex; } .justify-between { justify-content: space-between; } .items-start { align-items: flex-start; }
+            .dashed-line { border-bottom: 2px dashed #000; margin: 10px 0; width: 100%; }
+            .solid-line { border-bottom: 3px solid #000; margin: 10px 0; width: 100%; }
+            .text-sm { font-size: 22px; } .text-base { font-size: 26px; } .text-lg { font-size: 30px; } .text-xl { font-size: 36px; } .text-2xl { font-size: 44px; }
+            .item-header { display: flex; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px; margin-bottom: 6px;}
+            .item-row { display: flex; font-size: 25px; margin-bottom: 4px; align-items: flex-start; font-weight: 600; }
+            .col-qty { width: 65px; flex-shrink: 0; text-align: left; }
+            .col-name { flex: 1; padding-right: 15px; text-align: left; }
+            .col-total { flex-shrink: 0; text-align: right; }
+            .item-note { font-size: 24px; font-style: normal; margin-left: 65px; margin-bottom: 6px; font-weight: 600; color: #000; text-align: left; white-space: pre-wrap; }
+            .kitchen-item-qty { flex: 0 0 auto; min-width: 75px; padding-right: 12px; white-space: nowrap; }
+            .kitchen-item-name { flex: 1 1 auto; min-width: 0; text-align: left; }
+            .text-lr { display: flex; justify-content: space-between; font-size: 25px; margin-bottom: 4px; }
+            .total-box { color: black; padding: 12px; display: flex; justify-content: space-between; font-weight: 800; font-size: 34px; margin: 12px 0; border-radius: 4px; width: 100%; }
+            .kitchen-header { color: black; padding: 10px; text-align: center; font-weight: 800; font-size: 48px; margin-bottom: 12px; border-radius: 4px; }
+        </style></head><body id="receipt-body"><div class="text-center"><h1 class="font-black text-2xl uppercase tracking-widest" style="line-height: 1;">Golden Cafe</h1><p class="font-bold text-base mt-2">Amman</p><p class="font-bold text-base mt-1">0790000000</p></div><div class="dashed-line"></div><div class="text-lr font-black text-xl mb-1"><span>Invoice: INV-102</span></div><div class="text-lr font-black text-xl mb-1"><span>Order: #902</span><span class="font-bold text-base">2026-07-25 02:07:06 PM</span></div><div class="text-lr font-bold"><span class="font-normal">Cashier: Maya</span><span class="font-normal">Dine In</span></div><div class="item-header"><div class="col-qty">Qty</div><div class="col-name">Item</div><div class="col-total">Total</div></div><div class="solid-line"></div><div class="item-row"><div class="col-qty">2x</div><div class="col-name">Discounted Burger</div><div class="col-total">16.00 JD</div></div><div class="item-note">2.00 x 2 Off (-4.00 JD)</div><div class="dashed-line"></div><div class="text-lr font-bold"><span class="font-normal">Subtotal</span><span>16.00 JD</span></div><div class="text-lr font-bold"><span class="font-normal">Tax</span><span>0.00 JD</span></div><div class="total-box"><span class="tracking-widest uppercase">Total</span><span>16.00 JD</span></div><div class="text-lr font-bold"><span class="font-normal">Payment</span><span class="uppercase">cash</span></div><div class="text-lr font-bold"><span class="font-normal">Tendered</span><span class="font-normal">16.00 JD</span></div><div class="text-lr font-bold"><span class="font-normal">Change</span><span class="font-normal">0.00 JD</span></div><div class="dashed-line"></div><div class="text-center font-bold text-sm mt-4 whitespace-pre-line">Thank you!</div></body></html>

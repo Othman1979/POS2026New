@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "baseline": {
+    "id": "posapp-fresh-baseline-v1",
+    "file": "baseline.sql",
+    "sha256": "d3261b7e0b5789b5aaacec1e54b44828fdee66da314f2c00f22abf73ffa28cd1"
+  },
+  "migrations": []
+}

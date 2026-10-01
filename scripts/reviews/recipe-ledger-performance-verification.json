@@ -1,0 +1,579 @@
+{
+  "date": "2026-09-06",
+  "baseCommit": "dfb5262d",
+  "before": {
+    "database": "posapp_review_recipe_p1_e90754b7336c",
+    "runtime": {
+      "version": "10.4.32-MariaDB",
+      "isolation_level": "REPEATABLE-READ"
+    },
+    "scenarios": [
+      {
+        "label": "disabled / checkout 1 line",
+        "samples": 8,
+        "medianMs": 6.173,
+        "p95Ms": 9.722,
+        "commands": [
+          16
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 19
+      },
+      {
+        "label": "disabled / checkout 10 lines",
+        "samples": 8,
+        "medianMs": 7.552,
+        "p95Ms": 12.502,
+        "commands": [
+          16
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 28
+      },
+      {
+        "label": "enabled, no recipe / checkout 1 line",
+        "samples": 8,
+        "medianMs": 5.582,
+        "p95Ms": 6.929,
+        "commands": [
+          19
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 19
+      },
+      {
+        "label": "enabled, no recipe / checkout 10 lines",
+        "samples": 8,
+        "medianMs": 5.504,
+        "p95Ms": 7.722,
+        "commands": [
+          19
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 28
+      },
+      {
+        "label": "enabled, recipe / checkout 1 line",
+        "samples": 8,
+        "medianMs": 5.861,
+        "p95Ms": 7.787,
+        "commands": [
+          23
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 23
+      },
+      {
+        "label": "enabled, recipe / checkout 10 lines",
+        "samples": 8,
+        "medianMs": 6.029,
+        "p95Ms": 7.157,
+        "commands": [
+          23
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 41
+      },
+      {
+        "label": "enabled, recipe / unchanged table save",
+        "samples": 8,
+        "medianMs": 5.181,
+        "p95Ms": 5.52,
+        "commands": [
+          24
+        ],
+        "leased": 1,
+        "released": 1,
+        "returnedRows": 26
+      },
+      {
+        "label": "100 ingredients / 100k movements / daily report",
+        "samples": 3,
+        "medianMs": 307.159,
+        "p95Ms": 313.349,
+        "commands": [
+          28
+        ],
+        "leased": 1,
+        "released": 1,
+        "returnedRows": 100117
+      }
+    ],
+    "reads": [
+      {
+        "label": "100 ingredients / 100k movements / stale Counts / summary",
+        "queries": 1,
+        "medianMs": 277.767
+      },
+      {
+        "label": "100 ingredients / 100k movements / portions",
+        "queries": 2,
+        "medianMs": 125.982
+      },
+      {
+        "label": "100 ingredients / 100k history / 1k today / stale Counts / summary",
+        "queries": 1,
+        "medianMs": 124.103
+      },
+      {
+        "label": "100 ingredients / 100k history / 1k today / recent Counts / summary",
+        "queries": 1,
+        "medianMs": 8.119
+      },
+      {
+        "label": "100 ingredients / 100k old-day movements / quiet next-day summary",
+        "queries": 1,
+        "medianMs": 6.449
+      },
+      {
+        "label": "history 50 rows / 1000 movements",
+        "queries": 3,
+        "medianMs": 2.248
+      }
+    ],
+    "openingCounts": [
+      {
+        "ingredients": 1,
+        "serviceQueries": 5,
+        "ms": 6.05
+      },
+      {
+        "ingredients": 10,
+        "serviceQueries": 14,
+        "ms": 4.26
+      },
+      {
+        "ingredients": 100,
+        "serviceQueries": 104,
+        "ms": 16.12
+      }
+    ],
+    "contention": [
+      {
+        "case": "unchanged saved empty recipe blocks an unrelated ingredient",
+        "blocked": true,
+        "waitMs": 2495.39
+      }
+    ]
+  },
+  "after": {
+    "database": "posapp_review_recipe_p1_60db2fae713c",
+    "runtime": {
+      "version": "10.4.32-MariaDB",
+      "isolation_level": "REPEATABLE-READ"
+    },
+    "scenarios": [
+      {
+        "label": "disabled / checkout 1 line",
+        "samples": 8,
+        "medianMs": 4.905,
+        "p95Ms": 7.634,
+        "commands": [
+          15
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 18
+      },
+      {
+        "label": "disabled / checkout 10 lines",
+        "samples": 8,
+        "medianMs": 4.981,
+        "p95Ms": 6.176,
+        "commands": [
+          15
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 27
+      },
+      {
+        "label": "enabled, no recipe / checkout 1 line",
+        "samples": 8,
+        "medianMs": 5.142,
+        "p95Ms": 6.327,
+        "commands": [
+          18
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 18
+      },
+      {
+        "label": "enabled, no recipe / checkout 10 lines",
+        "samples": 8,
+        "medianMs": 5.146,
+        "p95Ms": 5.967,
+        "commands": [
+          18
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 27
+      },
+      {
+        "label": "enabled, recipe / checkout 1 line",
+        "samples": 8,
+        "medianMs": 4.931,
+        "p95Ms": 6.705,
+        "commands": [
+          20
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 20
+      },
+      {
+        "label": "enabled, recipe / checkout 10 lines",
+        "samples": 8,
+        "medianMs": 5.441,
+        "p95Ms": 6.533,
+        "commands": [
+          20
+        ],
+        "leased": 2,
+        "released": 2,
+        "returnedRows": 29
+      },
+      {
+        "label": "enabled, recipe / unchanged table save",
+        "samples": 8,
+        "medianMs": 4.4,
+        "p95Ms": 5.117,
+        "commands": [
+          21
+        ],
+        "leased": 1,
+        "released": 1,
+        "returnedRows": 24
+      },
+      {
+        "label": "100 ingredients / 100k movements / recipe picker options",
+        "samples": 3,
+        "medianMs": 1.582,
+        "p95Ms": 2.192,
+        "commands": [
+          1
+        ],
+        "leased": 0,
+        "released": 0,
+        "returnedRows": 102
+      },
+      {
+        "label": "100 ingredients / 100k movements / daily report",
+        "samples": 3,
+        "medianMs": 98.533,
+        "p95Ms": 103.277,
+        "commands": [
+          12
+        ],
+        "leased": 1,
+        "released": 1,
+        "returnedRows": 207
+      }
+    ],
+    "reads": [
+      {
+        "label": "100 ingredients / 100k movements / stale Counts / summary",
+        "queries": 1,
+        "medianMs": 137.432
+      },
+      {
+        "label": "100 ingredients / 100k movements / portions",
+        "queries": 2,
+        "medianMs": 0.47
+      },
+      {
+        "label": "100 ingredients / 100k movements / one product portions",
+        "queries": 2,
+        "medianMs": 0.404
+      },
+      {
+        "label": "100 ingredients / 100k history / 1k today / stale Counts / summary",
+        "queries": 1,
+        "medianMs": 52.478
+      },
+      {
+        "label": "100 ingredients / 100k history / 1k today / recent Counts / summary",
+        "queries": 1,
+        "medianMs": 2.136
+      },
+      {
+        "label": "100 ingredients / 100k old-day movements / quiet next-day summary",
+        "queries": 1,
+        "medianMs": 1.397
+      },
+      {
+        "label": "history 50 rows / 1000 movements",
+        "queries": 3,
+        "medianMs": 0.909
+      }
+    ],
+    "openingCounts": [
+      {
+        "ingredients": 1,
+        "serviceQueries": 4,
+        "ms": 4.46
+      },
+      {
+        "ingredients": 10,
+        "serviceQueries": 4,
+        "ms": 1.75
+      },
+      {
+        "ingredients": 100,
+        "serviceQueries": 4,
+        "ms": 6.26
+      }
+    ],
+    "contention": [
+      {
+        "case": "unchanged saved empty recipe blocks an unrelated ingredient",
+        "blocked": false,
+        "waitMs": 0.16
+      }
+    ]
+  },
+  "tests": {
+    "uniquePassed": 158,
+    "failed": 0,
+    "byFile": {
+      "backend/tests/integration/automaticMigrations.test.js": 12,
+      "backend/tests/integration/checkoutPerformanceContract.test.js": 12,
+      "backend/tests/integration/recipeLedgerAdmin.test.js": 2,
+      "backend/tests/integration/recipeLedgerPerformance.test.js": 6,
+      "backend/tests/integration/recipeLedgerPhase1Regression.test.js": 10,
+      "backend/tests/integration/recipeLedgerPhase2Regression.test.js": 19,
+      "backend/tests/integration/recipeLedgerPhase3Regression.test.js": 12,
+      "backend/tests/integration/recipeLedgerReport.test.js": 3,
+      "backend/tests/integration/recipeLedgerReversals.test.js": 4,
+      "backend/tests/integration/recipeLedgerSchema.test.js": 2,
+      "backend/tests/integration/recipeLedgerService.test.js": 6,
+      "backend/tests/integration/recipeLedgerSplitsMerges.test.js": 3,
+      "backend/tests/integration/recipeLedgerTables.test.js": 3,
+      "backend/tests/unit/automaticMigrations.test.js": 43,
+      "backend/tests/unit/recipeLedgerMigration.test.js": 1,
+      "backend/tests/unit/recipeLedgerPure.test.js": 12,
+      "src/admin/components/__tests__/productRecipeEditor.spec.js": 1,
+      "src/admin/pages/__tests__/ingredientsPage.spec.js": 4,
+      "src/admin/pages/__tests__/reportsIngredients.spec.js": 3
+    },
+    "runs": [
+      "recipe-ledger-performance-regressions.json",
+      "recipe-ledger-performance-migration-tests.json",
+      "recipe-ledger-performance-migration-rerun.json",
+      "recipe-ledger-performance-read-final-tests.json",
+      "recipe-ledger-performance-budgets.json"
+    ]
+  },
+  "browser": {
+    "passed": 14,
+    "cases": [
+      {
+        "case": "ingredient-controls",
+        "status": "passed",
+        "evidence": {
+          "button_height": 44
+        },
+        "seconds": 0.75
+      },
+      {
+        "case": "display-unit-preserves-values",
+        "status": "passed",
+        "evidence": {
+          "unit_cost": 0.0045,
+          "par_qty": 5000,
+          "pack_size": 10000
+        },
+        "seconds": 0.81
+      },
+      {
+        "case": "blank-count-is-not-zero",
+        "status": "passed",
+        "evidence": {
+          "expected_remaining": null
+        },
+        "seconds": 2.75
+      },
+      {
+        "case": "opening-lost-response-retry",
+        "status": "passed",
+        "evidence": {
+          "same_key": true,
+          "expected_remaining": 11000
+        },
+        "seconds": 0.91
+      },
+      {
+        "case": "shopping-loose-quantity",
+        "status": "passed",
+        "evidence": {
+          "item": "Review c47fa658\n1 kg"
+        },
+        "seconds": 0.78
+      },
+      {
+        "case": "history-readable-units",
+        "status": "passed",
+        "evidence": {
+          "quantity": "10 kg",
+          "escape_closes": true
+        },
+        "seconds": 0.77
+      },
+      {
+        "case": "ingredient-load-error",
+        "status": "passed",
+        "evidence": {
+          "error_visible": true
+        },
+        "seconds": 0.7
+      },
+      {
+        "case": "recipe-loading-cannot-clear-lines",
+        "status": "passed",
+        "evidence": {
+          "save_disabled_until_recipe_loaded": true
+        },
+        "seconds": 0.95
+      },
+      {
+        "case": "recipe-draft-hides-stale-cost",
+        "status": "passed",
+        "evidence": {
+          "stale_cost_hidden_for_draft": true
+        },
+        "seconds": 0.89
+      },
+      {
+        "case": "report-date-error-cannot-print-old-day",
+        "status": "passed",
+        "evidence": {
+          "old_day_print_disabled": true,
+          "date_picker_still_available": true
+        },
+        "seconds": 0.75
+      },
+      {
+        "case": "ingredient-report-is-one-day",
+        "status": "passed",
+        "evidence": {
+          "report_and_header_use_one_business_day": true
+        },
+        "seconds": 0.73
+      },
+      {
+        "case": "history-pagination-and-late-response",
+        "status": "passed",
+        "evidence": {
+          "paginated_rows": 52,
+          "old_request_cannot_replace_new_ingredient": true
+        },
+        "seconds": 1.74
+      },
+      {
+        "case": "report-print-a4-and-thermal",
+        "status": "passed",
+        "evidence": {
+          "a4_and_thermal_rendered": true,
+          "display_units_and_waste_reason": true,
+          "physical_print": false
+        },
+        "seconds": 1.09
+      },
+      {
+        "case": "arabic-mobile-ingredient-flow",
+        "status": "passed",
+        "evidence": {
+          "rtl": true,
+          "mobile_width": 390,
+          "create_saved": true,
+          "blank_count_error_arabic": true
+        },
+        "seconds": 0.99
+      }
+    ],
+    "requestsBefore": {
+      "save_causes_list_gets": 2,
+      "receipt_events": 10,
+      "list_gets_while_previous_get_held": 10,
+      "held_requests": 10
+    },
+    "requestsAfter": {
+      "save_causes_list_gets": 1,
+      "receipt_events": 10,
+      "list_gets_while_previous_get_held": 1,
+      "held_requests": 1,
+      "burst_total_gets_after_followup": 2,
+      "latest_receipt_total_visible": 10,
+      "filter_during_refresh_uses_latest_state": true
+    }
+  },
+  "migration": {
+    "database": "posapp_review_recipe_p1_92d616942a43",
+    "predecessorCommit": "dfb5262d",
+    "runtime": {
+      "version": "10.4.32-MariaDB"
+    },
+    "upgrade": {
+      "applied": [
+        "2026-09-06-recipe-ledger-performance-v1"
+      ]
+    },
+    "backfill": {
+      "frozenEmpty": true,
+      "composed": true,
+      "fullyReversed": true,
+      "removedLine": true,
+      "wideComposition": 500,
+      "movementRowsUnchanged": 503
+    },
+    "noop": {
+      "applied": []
+    },
+    "directRepeat": "unchanged",
+    "fallbackParity": "exact",
+    "failClosed": [
+      "missing predecessor",
+      "conflicting checksum"
+    ],
+    "upgradedLineOperations": "empty edit and full refund passed",
+    "status": "PASS"
+  },
+  "build": "npm run build:admin passed",
+  "architecture": "232 nodes / 65 flows / 493 steps / 173 referenced files; generation and check passed",
+  "sourceSha256": {
+    "backend/services/RecipeLedgerService.js": "c7c984320aa178f9be9e9eefe7b7ce6ce15f34ebaeb82ea212d306199b770ac7",
+    "backend/routes/admin/recipeLedger.js": "9f809639b44c2fa73ef7455a048c4c774430395063227b3e239a0c562b96001d",
+    "backend/modules/checkout/executeCheckout.js": "ed0433bff885e8189cdcb88842092444016707a84ccffd252ca42507f0be313f",
+    "backend/modules/tables/saveTableOrder.js": "daa77daf1361c771fb0a0fed23d62845f20e40e1b9a19f1146a6e0f7fd946958",
+    "backend/routes/pos/subscriptions.js": "625f0d352c92d9466a15eed6e7a3c83a0347ee2ab6f122c857bf2f92e5659761",
+    "backend/tests/fixtures/seed.js": "cf5e80aa783582d5113014b2196bbd493c5aaade5c9bc210949df1f3706d5dbc",
+    "backend/tests/integration/recipeLedgerPerformance.test.js": "34de68e2ec0684360e957b1dd904415415c5a8de2d4a6c4c9e3115c483509e23",
+    "backend/tests/integration/checkoutPerformanceContract.test.js": "4fb7651f767fbbdfd0f3b473718e03c435c5912b800a0812923c86108702db99",
+    "backend/migrations/2026-09-06-recipe-ledger-performance-v1.auto.sql": "44098e8aca6bbc1a087b26f1c180bfaa0d604be13ca3309fd025e06e3445aa7b",
+    "backend/migrations/auto-manifest.json": "13285653104167a563cf9932699546719a1b39e7e1f5f17f8fb57ad1fccae652",
+    "src/shared/ingredientUnits.js": "a900d193c1ee2bd376381379012a6dd1bef2f155b5c74ca5ec3a4b2a136b4d94",
+    "src/admin/pages/Ingredients.vue": "7a939b544a15cfbd74f76c0126fd74766f23be76c6bed082dbbf28e439a768d2",
+    "src/admin/pages/ReportsIngredients.vue": "54db5941b32a28c11779e3346bf1e17838ef21027db77a9945176220e8269e7f",
+    "src/admin/components/ProductRecipeEditor.vue": "1e439ff21bdd903460583b89e52a1f1c0d17bcc71e8d6e85c336bdea61fd1cd4",
+    "src/admin/components/IngredientFormModal.vue": "899e2a272ab257d13196376500002d9bcfa87b70e7462c25bdebbb5a3ec64a59",
+    "src/admin/components/IngredientOpeningModal.vue": "b4c4ea0d28c2f11ed19cb0602f3080db9ce0ee17fa40d5f37e4e5b4ec3a25f5c",
+    "src/admin/components/IngredientMovementModal.vue": "1d48890081ff9535bbf4d074ba6b130997f2a77bee5895bfb5fb983f07d8a22b",
+    "src/admin/components/IngredientHistoryDrawer.vue": "2228c50ace6e48325724a96f28b2890b72d841d919690cd053494c762a0aa778",
+    "src/print/ingredientReportPresentation.js": "6e7c9fbdec63fda145ce3434a9fb47e9905f154be917a292b8cb87f505ed541b"
+  },
+  "limits": [
+    "Loopback MariaDB 10.4.32; local medians are not a production p95 or concurrency guarantee.",
+    "Eight warmed checkout samples, five summary samples, three report samples. Opening query counts are single transaction samples.",
+    "The historical portions timing used a different current business date and is not a like-for-like latency comparison.",
+    "No production deployment or business data migration was performed.",
+    "Balances remain history-derived; covering indexes do not make arbitrary movement histories constant-time."
+  ]
+}

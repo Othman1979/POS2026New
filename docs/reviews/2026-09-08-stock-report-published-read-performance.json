@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-08T14:48:12.980Z",
+  "runtime": "v24.16.0",
+  "cpu": "Intel(R) Core(TM) i7-14700KF",
+  "invoices": 1000,
+  "coverage": {
+    "inserted": 32,
+    "days": [
+      "2026-09-08"
+    ]
+  },
+  "rebuilt_scopes": 33,
+  "live_net_revenue": 5000,
+  "samples": 100,
+  "p50_ms": 12.184699999999793,
+  "p95_ms": 13.240300000000389,
+  "p99_ms": 14.812299999999595,
+  "response_bytes": 1047,
+  "meals": 1,
+  "meals_has_more": false,
+  "node_cpu_ms_per_call": 2.65,
+  "limitations": [
+    "Service read of already-published facts, not HTTP/authentication.",
+    "1,000 one-line invoices on this workstation; not 100,000-invoice or 2-CPU/4-GiB certification.",
+    "Node CPU excludes database CPU. RSS is not recorded here.",
+    "Live getAnalysis is a one-shot reconciliation check, not the timed path."
+  ]
+}

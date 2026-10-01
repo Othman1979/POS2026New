@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="POS app icon">
+  <rect width="512" height="512" rx="96" fill="#0f172a"/>
+  <rect x="96" y="88" width="320" height="360" rx="34" fill="#f8fafc"/>
+  <rect x="128" y="124" width="256" height="86" rx="18" fill="#14b8a6"/>
+  <rect x="144" y="238" width="64" height="48" rx="12" fill="#cbd5e1"/>
+  <rect x="224" y="238" width="64" height="48" rx="12" fill="#cbd5e1"/>
+  <rect x="304" y="238" width="64" height="48" rx="12" fill="#cbd5e1"/>
+  <rect x="144" y="306" width="64" height="48" rx="12" fill="#cbd5e1"/>
+  <rect x="224" y="306" width="64" height="48" rx="12" fill="#cbd5e1"/>
+  <rect x="304" y="306" width="64" height="48" rx="12" fill="#0f172a"/>
+  <rect x="144" y="386" width="224" height="22" rx="11" fill="#14b8a6"/>
+</svg>

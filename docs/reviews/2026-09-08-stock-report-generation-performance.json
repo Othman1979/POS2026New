@@ -1,0 +1,316 @@
+{
+  "before": {
+    "at": "2026-09-08T09:52:36.813Z",
+    "runtime": "v24.16.0",
+    "cpu": "Intel(R) Core(TM) i7-14700KF",
+    "limitations": [
+      "Synthetic operation INSERT/COMMIT plus optional dirty marker, not actual checkout.",
+      "Latency begins after pool acquisition.",
+      "No facts or report worker workload.",
+      "Node CPU excludes database resources; no memory saving claim.",
+      "Workstation, not 2-CPU/4-GiB certification."
+    ],
+    "results": [
+      {
+        "round": 1,
+        "concurrency": 1,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 0.6106000000002041,
+        "p95_ms": 0.9226999999998498,
+        "p99_ms": 1.625,
+        "transactions_per_second": 1446.322767752672,
+        "node_cpu_ms_per_transaction": 0.157
+      },
+      {
+        "round": 1,
+        "concurrency": 1,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 0.7495000000003529,
+        "p95_ms": 1.1356999999998152,
+        "p99_ms": 1.5861999999999625,
+        "transactions_per_second": 1245.9664949641776,
+        "node_cpu_ms_per_transaction": 0.218
+      },
+      {
+        "round": 1,
+        "concurrency": 10,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 1.3987999999999374,
+        "p95_ms": 2.12920000000031,
+        "p99_ms": 4.684499999999844,
+        "transactions_per_second": 6545.869196514203,
+        "node_cpu_ms_per_transaction": 0.141
+      },
+      {
+        "round": 1,
+        "concurrency": 10,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 1.701100000000224,
+        "p95_ms": 2.165899999999965,
+        "p99_ms": 3.469100000000253,
+        "transactions_per_second": 5830.387044413563,
+        "node_cpu_ms_per_transaction": 0.125
+      },
+      {
+        "round": 2,
+        "concurrency": 1,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 0.7420999999999367,
+        "p95_ms": 1.2741000000000895,
+        "p99_ms": 1.7813999999998487,
+        "transactions_per_second": 1165.6118850450243,
+        "node_cpu_ms_per_transaction": 0.188
+      },
+      {
+        "round": 2,
+        "concurrency": 1,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 0.6529000000000451,
+        "p95_ms": 1.0257000000001426,
+        "p99_ms": 1.3078999999997905,
+        "transactions_per_second": 1355.087731089886,
+        "node_cpu_ms_per_transaction": 0.266
+      },
+      {
+        "round": 2,
+        "concurrency": 10,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 3.0826999999999316,
+        "p95_ms": 4.79320000000007,
+        "p99_ms": 6.049199999999473,
+        "transactions_per_second": 2993.8461492402357,
+        "node_cpu_ms_per_transaction": 0.281
+      },
+      {
+        "round": 2,
+        "concurrency": 10,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 2.138699999999517,
+        "p95_ms": 2.7547999999997046,
+        "p99_ms": 3.1953999999996086,
+        "transactions_per_second": 4579.131979741928,
+        "node_cpu_ms_per_transaction": 0.203
+      },
+      {
+        "round": 3,
+        "concurrency": 1,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 0.6509999999998399,
+        "p95_ms": 1.1031000000002678,
+        "p99_ms": 1.4937999999992826,
+        "transactions_per_second": 1326.4277734875195,
+        "node_cpu_ms_per_transaction": 0.203
+      },
+      {
+        "round": 3,
+        "concurrency": 1,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 0.773099999999431,
+        "p95_ms": 1.352100000000064,
+        "p99_ms": 1.8009000000001834,
+        "transactions_per_second": 1128.2240129393747,
+        "node_cpu_ms_per_transaction": 0.327
+      },
+      {
+        "round": 3,
+        "concurrency": 10,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 1.8105999999997948,
+        "p95_ms": 2.7016999999996187,
+        "p99_ms": 3.2635999999993146,
+        "transactions_per_second": 5206.746902636433,
+        "node_cpu_ms_per_transaction": 0.173
+      },
+      {
+        "round": 3,
+        "concurrency": 10,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 3.8101999999998952,
+        "p95_ms": 5.453499999999622,
+        "p99_ms": 5.954799999999523,
+        "transactions_per_second": 2552.252260529826,
+        "node_cpu_ms_per_transaction": 0.296
+      },
+      {
+        "round": "hot-partition",
+        "concurrency": 10,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 3.7582000000002154,
+        "p95_ms": 5.359699999999975,
+        "p99_ms": 7.943599999999606,
+        "transactions_per_second": 2612.8175422479508,
+        "node_cpu_ms_per_transaction": 0.281
+      }
+    ]
+  },
+  "after": {
+    "at": "2026-09-08T09:55:18.779Z",
+    "runtime": "v24.16.0",
+    "cpu": "Intel(R) Core(TM) i7-14700KF",
+    "limitations": [
+      "Synthetic operation INSERT/COMMIT plus optional dirty marker, not actual checkout.",
+      "Latency begins after pool acquisition.",
+      "No facts or report worker workload.",
+      "Node CPU excludes database resources; no memory saving claim.",
+      "Workstation, not 2-CPU/4-GiB certification."
+    ],
+    "results": [
+      {
+        "round": 1,
+        "concurrency": 1,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 0.6224000000001979,
+        "p95_ms": 0.9682000000000244,
+        "p99_ms": 1.6572000000001026,
+        "transactions_per_second": 1458.767286209996,
+        "node_cpu_ms_per_transaction": 0.187
+      },
+      {
+        "round": 1,
+        "concurrency": 1,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 0.6984000000002197,
+        "p95_ms": 1.2280000000000655,
+        "p99_ms": 2.2882999999999356,
+        "transactions_per_second": 1251.5740107652884,
+        "node_cpu_ms_per_transaction": 0.203
+      },
+      {
+        "round": 1,
+        "concurrency": 10,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 1.4673999999999978,
+        "p95_ms": 1.9990999999999985,
+        "p99_ms": 2.4393999999997504,
+        "transactions_per_second": 6644.001761989266,
+        "node_cpu_ms_per_transaction": 0.156
+      },
+      {
+        "round": 1,
+        "concurrency": 10,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 1.703599999999824,
+        "p95_ms": 2.1750999999999294,
+        "p99_ms": 3.424199999999928,
+        "transactions_per_second": 5874.909085781896,
+        "node_cpu_ms_per_transaction": 0.126
+      },
+      {
+        "round": 2,
+        "concurrency": 1,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 0.7380000000002838,
+        "p95_ms": 1.3273000000003776,
+        "p99_ms": 1.7501000000002023,
+        "transactions_per_second": 1156.9552039671532,
+        "node_cpu_ms_per_transaction": 0.265
+      },
+      {
+        "round": 2,
+        "concurrency": 1,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 0.6410999999998239,
+        "p95_ms": 1.0492999999996755,
+        "p99_ms": 1.4468000000006214,
+        "transactions_per_second": 1369.5283234891642,
+        "node_cpu_ms_per_transaction": 0.157
+      },
+      {
+        "round": 2,
+        "concurrency": 10,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 2.5723000000007232,
+        "p95_ms": 3.773099999999431,
+        "p99_ms": 4.918499999999767,
+        "transactions_per_second": 3665.0886016843942,
+        "node_cpu_ms_per_transaction": 0.25
+      },
+      {
+        "round": 2,
+        "concurrency": 10,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 1.8515999999999622,
+        "p95_ms": 3.21770000000015,
+        "p99_ms": 5.598099999999249,
+        "transactions_per_second": 4827.671440268175,
+        "node_cpu_ms_per_transaction": 0.187
+      },
+      {
+        "round": 3,
+        "concurrency": 1,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 0.6189999999996871,
+        "p95_ms": 1.034099999999853,
+        "p99_ms": 1.2371000000002823,
+        "transactions_per_second": 1419.6207199322546,
+        "node_cpu_ms_per_transaction": 0.187
+      },
+      {
+        "round": 3,
+        "concurrency": 1,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 0.7403999999996813,
+        "p95_ms": 1.269100000000435,
+        "p99_ms": 1.7188000000005559,
+        "transactions_per_second": 1163.8565737645322,
+        "node_cpu_ms_per_transaction": 0.235
+      },
+      {
+        "round": 3,
+        "concurrency": 10,
+        "mark": false,
+        "samples": 1000,
+        "p50_ms": 1.7665999999999258,
+        "p95_ms": 2.7187000000003536,
+        "p99_ms": 3.290899999999965,
+        "transactions_per_second": 5237.4804576510505,
+        "node_cpu_ms_per_transaction": 0.219
+      },
+      {
+        "round": 3,
+        "concurrency": 10,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 2.6445000000003347,
+        "p95_ms": 4.640700000000834,
+        "p99_ms": 7.00630000000001,
+        "transactions_per_second": 3333.3333333333335,
+        "node_cpu_ms_per_transaction": 0.25
+      },
+      {
+        "round": "hot-partition",
+        "concurrency": 10,
+        "mark": true,
+        "samples": 1000,
+        "p50_ms": 2.445600000000013,
+        "p95_ms": 3.2388999999993757,
+        "p99_ms": 3.963300000000345,
+        "transactions_per_second": 3950.2208963525172,
+        "node_cpu_ms_per_transaction": 0.235
+      }
+    ]
+  }
+}

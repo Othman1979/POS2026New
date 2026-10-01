@@ -1,0 +1,75 @@
+{
+  "success": true,
+  "steps": [
+    {
+      "step": "Order History quick date",
+      "evidence": {
+        "ordersGetRequests": 1
+      }
+    },
+    {
+      "step": "Remote table setting",
+      "evidence": {
+        "hiddenTableFilterResetTo": "register",
+        "page": 1
+      }
+    },
+    {
+      "step": "Remote stock setting with low filter",
+      "evidence": {
+        "beforeProducts": 1,
+        "afterProducts": 135,
+        "stockFilterPresent": false,
+        "recipeNavigationHidden": true
+      }
+    },
+    {
+      "step": "Remote stock setting in replenishment",
+      "evidence": {
+        "resultingView": "products",
+        "products": 135
+      }
+    },
+    {
+      "step": "Remote language setting",
+      "evidence": {
+        "language": "ar",
+        "direction": "rtl",
+        "screenshot": "scratch/system-frontend-arabic-inventory.png"
+      }
+    },
+    {
+      "step": "Catalog rapid Load More",
+      "evidence": {
+        "initialProducts": 120,
+        "loadedProducts": 135,
+        "appendRequestsForThreeClicks": 1
+      }
+    },
+    {
+      "step": "Floor plan startup",
+      "evidence": {
+        "tableSnapshotRequests": 1
+      }
+    },
+    {
+      "step": "Return to floor plan",
+      "evidence": {
+        "tableSnapshotRequests": 1
+      }
+    },
+    {
+      "step": "Socket reconnect after missed setting",
+      "evidence": {
+        "tableSnapshotRequests": 1,
+        "currentMode": "dynamic"
+      }
+    },
+    {
+      "step": "Browser errors",
+      "evidence": {
+        "uncaught": 0
+      }
+    }
+  ]
+}

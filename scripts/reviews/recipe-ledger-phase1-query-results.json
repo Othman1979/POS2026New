@@ -1,0 +1,269 @@
+{
+  "sourceHead": "d6cc1ab245d08ccb80e971d47a85e103ac7a0466",
+  "database": "posapp_review_recipe_p1_0f03b42ce93c",
+  "history": {
+    "queryRows": [
+      2,
+      1,
+      2
+    ],
+    "totalFetched": 5,
+    "elapsedMs": 22.6
+  },
+  "summaryExpected": 110,
+  "explain": [
+    {
+      "id": 1,
+      "select_type": "PRIMARY",
+      "table": "i",
+      "type": "ALL",
+      "possible_keys": null,
+      "key": null,
+      "key_len": null,
+      "ref": null,
+      "rows": "1",
+      "Extra": "Using where; Using filesort"
+    },
+    {
+      "id": 1,
+      "select_type": "PRIMARY",
+      "table": "c",
+      "type": "eq_ref",
+      "possible_keys": "PRIMARY",
+      "key": "PRIMARY",
+      "key_len": "8",
+      "ref": "func",
+      "rows": "1",
+      "Extra": "Using where"
+    },
+    {
+      "id": 1,
+      "select_type": "PRIMARY",
+      "table": "<derived5>",
+      "type": "ref",
+      "possible_keys": "key0",
+      "key": "key0",
+      "key_len": "5",
+      "ref": "posapp_review_recipe_p1_0f03b42ce93c.i.id",
+      "rows": "2",
+      "Extra": ""
+    },
+    {
+      "id": 1,
+      "select_type": "PRIMARY",
+      "table": "opening",
+      "type": "eq_ref",
+      "possible_keys": "PRIMARY",
+      "key": "PRIMARY",
+      "key_len": "8",
+      "ref": "d.opening_id",
+      "rows": "1",
+      "Extra": "Using where"
+    },
+    {
+      "id": 5,
+      "select_type": "DERIVED",
+      "table": "ingredient_movements",
+      "type": "ref",
+      "possible_keys": "idx_im_ingredient_id,idx_im_ingredient_kind_id,idx_im_date_ingredient",
+      "key": "idx_im_date_ingredient",
+      "key_len": "3",
+      "ref": "const",
+      "rows": "2",
+      "Extra": "Using where"
+    },
+    {
+      "id": 4,
+      "select_type": "DEPENDENT SUBQUERY",
+      "table": "ingredient_movements",
+      "type": "ref",
+      "possible_keys": "idx_im_ingredient_kind_id",
+      "key": "idx_im_ingredient_kind_id",
+      "key_len": "5",
+      "ref": "posapp_review_recipe_p1_0f03b42ce93c.i.id,const",
+      "rows": "10001",
+      "Extra": "Using where; Using index"
+    },
+    {
+      "id": 3,
+      "select_type": "DEPENDENT SUBQUERY",
+      "table": "t",
+      "type": "ref",
+      "possible_keys": "PRIMARY,idx_im_ingredient_id,idx_im_ingredient_kind_id",
+      "key": "idx_im_ingredient_id",
+      "key_len": "4",
+      "ref": "posapp_review_recipe_p1_0f03b42ce93c.i.id",
+      "rows": "10001",
+      "Extra": "Using index condition"
+    },
+    {
+      "id": 2,
+      "select_type": "DEPENDENT SUBQUERY",
+      "table": "r",
+      "type": "ref",
+      "possible_keys": "idx_prl_ingredient",
+      "key": "idx_prl_ingredient",
+      "key_len": "4",
+      "ref": "posapp_review_recipe_p1_0f03b42ce93c.i.id",
+      "rows": "1",
+      "Extra": "Using index"
+    }
+  ],
+  "analyze": {
+    "query_block": {
+      "select_id": 1,
+      "r_loops": 1,
+      "r_total_time_ms": 1.4557,
+      "read_sorted_file": {
+        "r_rows": 1,
+        "filesort": {
+          "sort_key": "i.`name`, i.`id`",
+          "r_loops": 1,
+          "r_total_time_ms": 0.0149,
+          "r_used_priority_queue": false,
+          "r_output_rows": 1,
+          "r_buffer_size": "410Kb",
+          "table": {
+            "table_name": "i",
+            "access_type": "ALL",
+            "r_loops": 1,
+            "rows": 1,
+            "r_rows": 1,
+            "r_total_time_ms": 0.0066,
+            "filtered": 100,
+            "r_filtered": 100,
+            "attached_condition": "i.is_active = 1"
+          }
+        }
+      },
+      "table": {
+        "table_name": "opening",
+        "access_type": "eq_ref",
+        "possible_keys": [
+          "PRIMARY"
+        ],
+        "key": "PRIMARY",
+        "key_length": "8",
+        "used_key_parts": [
+          "id"
+        ],
+        "ref": [
+          "d.opening_id"
+        ],
+        "r_loops": 1,
+        "rows": 1,
+        "r_rows": 1,
+        "r_total_time_ms": 0.0017,
+        "filtered": 100,
+        "r_filtered": 100,
+        "attached_condition": "trigcond(trigcond(d.opening_id is not null))"
+      },
+      "subqueries": [
+        {
+          "expression_cache": {
+            "state": "disabled",
+            "r_loops": 0,
+            "query_block": {
+              "select_id": 4,
+              "r_loops": 3,
+              "r_total_time_ms": 0.0126,
+              "table": {
+                "table_name": "ingredient_movements",
+                "access_type": "ref",
+                "possible_keys": [
+                  "idx_im_ingredient_kind_id"
+                ],
+                "key": "idx_im_ingredient_kind_id",
+                "key_length": "5",
+                "used_key_parts": [
+                  "ingredient_id",
+                  "kind"
+                ],
+                "ref": [
+                  "posapp_review_recipe_p1_0f03b42ce93c.i.id",
+                  "const"
+                ],
+                "r_loops": 3,
+                "rows": 10001,
+                "r_rows": 1,
+                "r_total_time_ms": 0.0067,
+                "filtered": 100,
+                "r_filtered": 100,
+                "attached_condition": "ingredient_movements.ingredient_id <=> i.`id` and ingredient_movements.kind <=> 'count' and ingredient_movements.kind = 'count'",
+                "using_index": true
+              }
+            }
+          }
+        },
+        {
+          "expression_cache": {
+            "r_loops": 1,
+            "r_hit_ratio": 0,
+            "query_block": {
+              "select_id": 3,
+              "r_loops": 1,
+              "r_total_time_ms": 1.354,
+              "table": {
+                "table_name": "t",
+                "access_type": "ref",
+                "possible_keys": [
+                  "PRIMARY",
+                  "idx_im_ingredient_id",
+                  "idx_im_ingredient_kind_id"
+                ],
+                "key": "idx_im_ingredient_id",
+                "key_length": "4",
+                "used_key_parts": [
+                  "ingredient_id"
+                ],
+                "ref": [
+                  "posapp_review_recipe_p1_0f03b42ce93c.i.id"
+                ],
+                "r_loops": 1,
+                "rows": 10001,
+                "r_rows": 1,
+                "r_total_time_ms": 1.3489,
+                "filtered": 100,
+                "r_filtered": 100,
+                "index_condition": "t.`id` > c.`id`"
+              }
+            }
+          }
+        },
+        {
+          "expression_cache": {
+            "r_loops": 1,
+            "r_hit_ratio": 0,
+            "query_block": {
+              "select_id": 2,
+              "r_loops": 1,
+              "r_total_time_ms": 0.003,
+              "table": {
+                "table_name": "r",
+                "access_type": "ref",
+                "possible_keys": [
+                  "idx_prl_ingredient"
+                ],
+                "key": "idx_prl_ingredient",
+                "key_length": "4",
+                "used_key_parts": [
+                  "ingredient_id"
+                ],
+                "ref": [
+                  "posapp_review_recipe_p1_0f03b42ce93c.i.id"
+                ],
+                "r_loops": 1,
+                "rows": 1,
+                "r_rows": 0,
+                "r_total_time_ms": 0.0013,
+                "filtered": 100,
+                "r_filtered": 100,
+                "using_index": true
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

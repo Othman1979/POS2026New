@@ -1,0 +1,13 @@
+display_errors=Off
+log_errors=On
+error_log="{{LOG_DIR}}/php-error.log"
+session.save_path="{{SESSION_DIR}}"
+upload_tmp_dir="{{SESSION_DIR}}"
+upload_max_filesize=64M
+post_max_size=64M
+extension_dir="{{PHP_ROOT}}/ext"
+extension=mysqli
+extension=mbstring
+extension=openssl
+extension=zip
+extension=gd

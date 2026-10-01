@@ -1,0 +1,41 @@
+CREATE TABLE IF NOT EXISTS jofotara_documents (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  source_key VARCHAR(96) NOT NULL,
+  order_invoice_id INT NOT NULL,
+  refund_id INT NULL,
+  original_document_id BIGINT UNSIGNED NULL,
+  document_kind ENUM('invoice','credit_note') NOT NULL,
+  document_number VARCHAR(96) NOT NULL,
+  document_uuid CHAR(36) NOT NULL,
+  status ENUM('pending','submitting','accepted','rejected','unknown') NOT NULL DEFAULT 'pending',
+  legal_snapshot_json LONGTEXT NULL,
+  request_xml LONGTEXT NULL,
+  qr_text LONGTEXT NULL,
+  response_body LONGTEXT NULL,
+  http_status SMALLINT UNSIGNED NULL,
+  attempt_count INT UNSIGNED NOT NULL DEFAULT 0,
+  last_error TEXT NULL,
+  submitted_by_user_id INT NULL,
+  last_attempt_at DATETIME NULL,
+  accepted_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_jofotara_source (source_key),
+  UNIQUE KEY uq_jofotara_uuid (document_uuid),
+  UNIQUE KEY uq_jofotara_number (document_number),
+  KEY idx_jofotara_order (order_invoice_id, status),
+  CONSTRAINT fk_jofotara_order FOREIGN KEY (order_invoice_id) REFERENCES orders(invoice_id),
+  CONSTRAINT fk_jofotara_refund FOREIGN KEY (refund_id) REFERENCES refunds(id),
+  CONSTRAINT fk_jofotara_original FOREIGN KEY (original_document_id) REFERENCES jofotara_documents(id),
+  CONSTRAINT fk_jofotara_user FOREIGN KEY (submitted_by_user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO settings (setting_key, setting_value) VALUES
+('jofotara_enabled', '0'),
+('jofotara_client_id', ''),
+('jofotara_secret_key', ''),
+('jofotara_income_source_sequence', ''),
+('jofotara_seller_tax_number', ''),
+('jofotara_seller_registered_name', '')
+ON DUPLICATE KEY UPDATE setting_key = VALUES(setting_key);
