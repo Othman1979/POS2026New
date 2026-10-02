@@ -33,7 +33,7 @@ describe('Fresh stock schema through the real installer', () => {
             }};
             await bootstrapDatabase({ database, executor, appPassword:'fixture-only', maintenancePassword:'fixture-only', adminPassword:'fixture-only', programmerUserNumber:'876543219876' });
             const [[counts]] = await conn.query("SELECT (SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE()) tables_count,(SELECT COUNT(*) FROM orders) orders_count,(SELECT COUNT(*) FROM users) users_count");
-            expect(counts).toEqual({ tables_count:74,orders_count:0,users_count:2 });
+            expect(counts).toEqual({ tables_count:75,orders_count:0,users_count:2 });
         } finally { conn.release(); }
         for (let attempt=0;attempt<2;attempt++) {
             expect((await runPendingMigrations(pool)).applied).toEqual([]);
