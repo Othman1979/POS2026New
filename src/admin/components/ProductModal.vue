@@ -131,6 +131,9 @@
                         <StockActivationPanel v-if="show && stockSetupOpen" :product-id="productForm.id" :stock-dirty="stockDirty" @state="onStockState" @activated="onStockActivated" @busy="stockActivationBusy = $event" @open-stock="emitOpenStock" />
                     </div>
 
+                    <ProductPacksPanel v-if="show && stockEnabled && productForm.id && !productForm.is_bundle && !packOfProductId" :product-id="productForm.id" @busy="stockActivationBusy = $event" @saved="onPacksSaved" />
+                    <p v-else-if="packOfProductId" class="text-[10px] text-muted-foreground">{{ $t('This is the sale entry of a pack. Its stock comes from the base product; edit the pack there.') }}</p>
+
                     <div class="border-t border-zinc-200 pt-4">
                         <label class="flex items-center gap-2 cursor-pointer select-none">
                             <input type="checkbox" v-model="productForm.price_override_locked" :true-value="1" :false-value="0" class="w-4 h-4 accent-primary">
@@ -239,6 +242,7 @@ import { t } from '@/shared/i18n.js';
 import ModalShell from './ModalShell.vue';
 import ProductRecipeEditor from './ProductRecipeEditor.vue';
 import StockActivationPanel from './StockActivationPanel.vue';
+import ProductPacksPanel from './ProductPacksPanel.vue';
 
 const MAX_EXTRA_BARCODES = 20;
 const MAX_BARCODE_LENGTH = 50;
@@ -248,7 +252,7 @@ const sameList = (a = [], b = []) => a.length === b.length && a.every((code, ind
 
 export default {
     name: 'ProductModal',
-    components: { ModalShell, ProductRecipeEditor, StockActivationPanel },
+    components: { ModalShell, ProductRecipeEditor, StockActivationPanel, ProductPacksPanel },
     props: {
         show: { type: Boolean, default: false },
         product: { type: Object, default: null },
@@ -257,7 +261,7 @@ export default {
         recipeLedgerEnabled: { type: Boolean, default: false },
         initialTab: { type: String, default: 'general' }
     },
-    emits: ['close', 'saved', 'stock-activated', 'open-stock'],
+    emits: ['close', 'saved', 'stock-activated', 'open-stock', 'packs-saved'],
     setup(props, { emit }) {
         const productForm = ref({
             id: null, name: '', category_id: '', price: '', tax_rate: 0, jofotara_tax_category: 'O', barcode: '', extra_barcodes: [],
@@ -285,6 +289,12 @@ export default {
         };
         const onStockActivated = (state) => emit('stock-activated', state);
         const emitOpenStock = () => { if (!stockActivationBusy.value) emit('open-stock', productForm.value.id); };
+        const packOfProductId = computed(() => (props.product?.pack_of_product_id ? Number(props.product.pack_of_product_id) : null));
+        // Selling a pack enables this product's stock movements, so its stock field becomes read-only.
+        const onPacksSaved = (packs) => {
+            if (packs.some(pack => pack.sale_product_id)) stockTracked.value = true;
+            emit('packs-saved', productForm.value.id);
+        };
 
         // Bundle state
         const bundleItems = ref([]);
@@ -563,6 +573,7 @@ export default {
             productForm, barcodeInput, extraBarcodeField, extraBarcodeInput, extraBarcodeMessage, barcodeError,
             MAX_EXTRA_BARCODES, addExtraBarcode, onExtraBarcodeEnter, removeExtraBarcode,
             stockSetupOpen, stockActivationBusy, stockTracked, stockDirty, onStockState, onStockActivated, emitOpenStock,
+            packOfProductId, onPacksSaved,
             productModalTab,
             recipeEditor,
             selectTab,

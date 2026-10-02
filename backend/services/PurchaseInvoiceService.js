@@ -120,8 +120,11 @@ function normalizeLines(input) {
             fail(400, code, `${at}: tax rate must be 0, 4 or 16.`);
         }
         const unitLabel = text(raw.unit_label, 40, { code, label: `${at} unit`, required: true });
+        // Free goods on the line, in base units: received with it without changing what was paid.
+        const bonus = raw.bonus_qty == null || String(raw.bonus_qty).trim() === ''
+            ? 0n : parseDecimal(raw.bonus_qty, 3, { code, label: `${at} bonus`, max: 9999999 });
         if (baseQuantity(qty, factor) <= 0n) fail(400, code, `${at}: quantity is too small for its unit.`);
-        if (baseQuantity(qty, factor) > 9999999999999999n) fail(400, code, `${at}: quantity is too large.`);
+        if (baseQuantity(qty, factor) + bonus * 1000n > 9999999999999999n) fail(400, code, `${at}: quantity is too large.`);
         const subtotal = lineSubtotal(qty, price);
         const tax = lineTax(subtotal, rate);
         return {
@@ -130,6 +133,7 @@ function normalizeLines(input) {
             product_id: item.kind === 'product' ? item.id : null,
             ingredient_id: item.kind === 'ingredient' ? item.id : null,
             qty: format(qty, 3),
+            bonus_qty: format(bonus, 3),
             unit_label: unitLabel,
             unit_factor: format(factor, 6),
             unit_price: format(price, 4),
@@ -184,6 +188,7 @@ function shapeLine(row, lastBefore) {
         name: row.name,
         base_unit: row.base_unit,
         qty: Number(row.qty),
+        bonus_qty: Number(row.bonus_qty || 0),
         unit_label: row.unit_label,
         unit_factor: Number(row.unit_factor),
         unit_price: Number(row.unit_price),
@@ -407,7 +412,7 @@ async function itemInsights(pool, { kind, itemKeys, supplierId }) {
         latest(false),
         supplierId ? latest(true) : new Map(),
         pool.query(
-            `SELECT ${itemKeySql('l')} AS item_key, SUM(l.line_subtotal) AS amount, SUM(l.qty * l.unit_factor) AS base_qty
+            `SELECT ${itemKeySql('l')} AS item_key, SUM(l.line_subtotal) AS amount, SUM(l.qty * l.unit_factor + l.bonus_qty) AS base_qty
                FROM stock_document_lines l
                JOIN stock_documents d ON d.id = l.document_id
               WHERE ${filter.sql} AND d.doc_type = 'purchase' AND d.status = 'posted' AND l.unit_price IS NOT NULL AND l.qty > 0
@@ -541,8 +546,8 @@ async function checkReferences(pool, { supplierId, lines, kind, currentSupplierI
 
 const insertLines = (conn, invoiceId, lines) => conn.query(
     `INSERT INTO stock_document_lines
-        (document_id, line_no, product_id, ingredient_id, qty, unit_label, unit_factor, unit_price, tax_rate, line_subtotal, line_tax, line_total) VALUES ?`,
-    [lines.map((line) => [invoiceId, line.line_no, line.product_id, line.ingredient_id, line.qty, line.unit_label, line.unit_factor,
+        (document_id, line_no, product_id, ingredient_id, qty, bonus_qty, unit_label, unit_factor, unit_price, tax_rate, line_subtotal, line_tax, line_total) VALUES ?`,
+    [lines.map((line) => [invoiceId, line.line_no, line.product_id, line.ingredient_id, line.qty, line.bonus_qty, line.unit_label, line.unit_factor,
         line.unit_price, line.tax_rate, line.line_subtotal, line.line_tax, line.line_total])]);
 
 function duplicateInvoice() {
@@ -671,17 +676,18 @@ async function readPostingSource(pool, id) {
     const [[header]] = await pool.query(`${HEADER_SELECT} WHERE d.id = ? AND d.doc_type = 'purchase'`, [id]);
     if (!header) fail(404, 'PURCHASE_INVOICE_NOT_FOUND', 'Purchase invoice not found.');
     const [lines] = await pool.query(
-        `SELECT l.line_no, ${itemKeySql('l')} AS item_key, l.qty, l.unit_factor, l.line_subtotal, l.line_total
+        `SELECT l.line_no, ${itemKeySql('l')} AS item_key, l.qty, CAST(l.bonus_qty AS CHAR) AS bonus_qty, l.unit_factor, l.line_subtotal, l.line_total
            FROM stock_document_lines l WHERE l.document_id = ? ORDER BY l.line_no`, [id]);
     return { header, lines };
 }
 
-// Base quantities and cost per base unit for each line, exactly.
+// Base quantities (bought plus bonus) and cost per base unit for each line, exactly.
 function planLines(lines, costIncludesTax) {
     return lines.map((line) => {
         const qty = parseDecimal(line.qty, 3, { code: 'PURCHASE_INVOICE_LINES_INVALID', label: 'Quantity', max: 9999999, positive: true });
         const factor = parseDecimal(line.unit_factor, 6, { code: 'PURCHASE_INVOICE_LINES_INVALID', label: 'Unit factor', max: 9999999, positive: true });
-        const base = baseQuantity(qty, factor);
+        const bonus = parseDecimal(line.bonus_qty ?? '0', 6, { code: 'PURCHASE_INVOICE_LINES_INVALID', label: 'Bonus', max: 9999999999 });
+        const base = baseQuantity(qty, factor) + bonus;
         const amount = parseDecimal(costIncludesTax ? line.line_total : line.line_subtotal, 3, { code: 'PURCHASE_INVOICE_LINES_INVALID', label: 'Amount', max: 99999999999 });
         // Zero-priced goods carry no price: they must not drag the purchase-average estimate to zero.
         const cost = amount === 0n ? null : format(divRound(amount * 1000n * pow10(8), base), 8);

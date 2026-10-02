@@ -130,6 +130,23 @@ export function sortByAbsValue(lines) {
     });
 }
 
+// A count written in several units ("3 packs + 7 pieces"), totalled in the base unit. Each part is
+// { qty, factor }; blank parts are skipped and any invalid part makes the whole total invalid.
+export function mixedBaseQty(parts) {
+    let total = 0n;
+    let counted = false;
+    for (const part of parts || []) {
+        const typed = parseQty(part.qty);
+        if (typed.state === 'invalid') return { state: 'invalid', value: null };
+        if (typed.state === 'empty') continue;
+        const base = toBaseQty(typed.value, part.factor);
+        if (base === null) return { state: 'invalid', value: null };
+        total += toThousandths(base);
+        counted = true;
+    }
+    return counted ? { state: 'ok', value: formatThousandths(total) } : { state: 'empty', value: null };
+}
+
 // Stored quantity for display without trailing zeros: "3.000" -> "3", "2.500" -> "2.5".
 export const trimQty = (stored) => {
     const canon = canonQty(stored);

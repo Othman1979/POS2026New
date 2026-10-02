@@ -11,7 +11,7 @@
 //   product, simple stock   no product_stock_links row; a count needs products.stock to be a number
 //                           (NULL means "unlimited", so it is not tracked), a purchase accepts NULL too
 //   product, linked stock   exactly one link, qty_per_sale 1, to an active stock item that no other
-//                           product shares and that is not an ingredient's own item
+//                           product shares (its own pack sale products aside) and that is not an ingredient's own item
 //   ingredient              active, whether or not it was ever activated in the stock ledger
 // Bundles, products with recipe lines, note categories, composite and shared links are never eligible.
 // Products need settings.stock_enabled = '1'; ingredients need settings.recipe_ledger_enabled = '1'.
@@ -52,14 +52,17 @@ const INGREDIENT_BASE_UNIT_SQL = "CASE i.measure WHEN 'weight' THEN 'g' WHEN 'vo
 const BASE_UNIT = { weight: 'g', volume: 'ml', count: 'unit' };
 
 // Products table aliased p, categories aliased c (LEFT JOIN).
+// A pack sale product (product_packs.sale_product_id) moves its base product's stock item; it is never an item itself.
 const PRODUCT_BASE = `p.is_active = 1 AND p.is_bundle = 0 AND COALESCE(c.is_notes, 0) = 0
-    AND NOT EXISTS (SELECT 1 FROM product_recipe_lines r WHERE r.product_id = p.id)`;
+    AND NOT EXISTS (SELECT 1 FROM product_recipe_lines r WHERE r.product_id = p.id)
+    AND NOT EXISTS (SELECT 1 FROM product_packs sp WHERE sp.sale_product_id = p.id)`;
 const NO_STOCK_LINK = 'NOT EXISTS (SELECT 1 FROM product_stock_links l WHERE l.product_id = p.id)';
 const ONE_TO_ONE_LINK = `(1 = (SELECT COUNT(*) FROM product_stock_links l WHERE l.product_id = p.id)
           AND EXISTS (SELECT 1 FROM product_stock_links l JOIN stock_items si ON si.id = l.stock_item_id
                        WHERE l.product_id = p.id AND l.qty_per_sale = 1 AND si.is_active = 1
                          AND si.tracking_state = 'active' AND si.legacy_ingredient_id IS NULL
-                         AND NOT EXISTS (SELECT 1 FROM product_stock_links o WHERE o.stock_item_id = l.stock_item_id AND o.product_id <> p.id)))`;
+                         AND NOT EXISTS (SELECT 1 FROM product_stock_links o WHERE o.stock_item_id = l.stock_item_id AND o.product_id <> p.id
+                                          AND NOT EXISTS (SELECT 1 FROM product_packs op WHERE op.product_id = p.id AND op.sale_product_id = o.product_id))))`;
 // Tracked products: what counts and the Stock levels page work on.
 const PRODUCT_ELIGIBLE = `${PRODUCT_BASE}
     AND ((p.stock IS NOT NULL AND ${NO_STOCK_LINK}) OR ${ONE_TO_ONE_LINK})`;
@@ -251,12 +254,25 @@ function itemFilter(alias, itemKeys) {
     };
 }
 
-// Recent buying units per item: lines from the latest 500 posted invoices only, three per item, cut in
-// SQL, so an autocomplete never grows with the whole purchase history (no calendar dependence).
-// Returns Map item_key -> [{ label, factor }], most recent first.
+// Buying and counting units per item: a product's own packs (product_packs) first, then recent units from
+// the latest 500 posted invoices only, three per item, cut in SQL, so an autocomplete never grows with the
+// whole purchase history (no calendar dependence).
+// Returns Map item_key -> [{ label, factor }], own packs in their order, then most recent first.
 async function recentPacks(db, itemKeys) {
     const recent = new Map();
     if (!itemKeys.length) return recent;
+    const { productIds } = splitKeys(itemKeys);
+    const own = new Map();
+    if (productIds.length) {
+        const [packRows] = await db.query(
+            'SELECT product_id, label, CAST(factor AS CHAR) AS factor FROM product_packs WHERE product_id IN (?) ORDER BY product_id, sort_order, id',
+            [productIds]);
+        for (const row of packRows) {
+            const key = formatKey('product', row.product_id);
+            if (!own.has(key)) own.set(key, []);
+            own.get(key).push({ label: row.label, factor: Number(row.factor) });
+        }
+    }
     const filter = itemFilter('l', itemKeys);
     const [unitRows] = await db.query(
         `SELECT item_key, unit_label, unit_factor FROM (
@@ -271,6 +287,11 @@ async function recentPacks(db, itemKeys) {
     for (const row of unitRows) {
         if (!recent.has(row.item_key)) recent.set(row.item_key, []);
         if (recent.get(row.item_key).length < 3) recent.get(row.item_key).push({ label: row.unit_label, factor: Number(row.unit_factor) });
+    }
+    for (const [key, packs] of own) {
+        const history = (recent.get(key) || []).filter((unit) => !packs.some((pack) =>
+            pack.label.toLowerCase() === String(unit.label).toLowerCase() && pack.factor === unit.factor));
+        recent.set(key, [...packs, ...history]);
     }
     return recent;
 }
@@ -414,7 +435,9 @@ async function resolveForUpdate(conn, itemKeys, { reversal = false, use = 'count
         const linkedItemIds = [...new Set(links.map((link) => link.stock_item_id))];
         if (linkedItemIds.length) {
             const [shared] = await conn.query(
-                'SELECT stock_item_id FROM product_stock_links WHERE stock_item_id IN (?) GROUP BY stock_item_id HAVING COUNT(*) > 1', [linkedItemIds]);
+                `SELECT l.stock_item_id FROM product_stock_links l WHERE l.stock_item_id IN (?)
+                    AND NOT EXISTS (SELECT 1 FROM product_packs sp WHERE sp.sale_product_id = l.product_id)
+                  GROUP BY l.stock_item_id HAVING COUNT(*) > 1`, [linkedItemIds]);
             if (shared.length) fail(409, 'PURCHASE_ITEM_UNSUPPORTED', 'An item on this document is shared by several products. Adjust its physical items instead.');
         }
         const [rows] = await conn.query(

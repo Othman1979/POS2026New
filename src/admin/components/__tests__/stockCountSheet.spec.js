@@ -250,3 +250,29 @@ describe('stock count sheet: add item', () => {
         expect(sheet.highlightId.value).toBe(9);
     });
 });
+
+describe('stock count sheet: several units', () => {
+    it('saves 3 boxes + 7 g as one base-unit count and starts from what was typed', async () => {
+        const [line] = await open([serverLine(1)]);
+        type(line, '2');
+        sheet.onUnitChange(line, unitKey({ label: 'box', factor: '500' }));
+        sheet.toggleMix(line);
+        expect(line.mix[unitKey({ label: 'box', factor: '500' })]).toBe('2');
+        line.mix[unitKey({ label: 'box', factor: '500' })] = '3';
+        line.mix[unitKey({ label: 'g', factor: '1' })] = '7';
+        sheet.onMixInput(line);
+        expect(line).toMatchObject({ qty: '1507', unit_label: 'g', unit_factor: '1' });
+        await vi.advanceTimersByTimeAsync(700);
+        expect(countsApi.saveLines.mock.calls.at(-1)[1]).toEqual([{ id: 1, qty: '1507.000', unit_label: 'g', unit_factor: '1' }]);
+    });
+
+    it('does not save while a part is not a number', async () => {
+        const [line] = await open([serverLine(1)]);
+        sheet.toggleMix(line);
+        line.mix[unitKey({ label: 'box', factor: '500' })] = 'abc';
+        sheet.onMixInput(line);
+        await vi.advanceTimersByTimeAsync(700);
+        expect(countsApi.saveLines).not.toHaveBeenCalled();
+        expect(sheet.marker(line)).toBe('invalid');
+    });
+});

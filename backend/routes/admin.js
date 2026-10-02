@@ -55,6 +55,7 @@ router.use('/', require('./admin/dashboard'));
 router.use('/', require('./admin/products'));
 router.use('/', require('./admin/categoryPriceLists'));
 router.use('/', require('./admin/bundle-items'));
+router.use('/', require('./admin/product-packs'));
 router.use('/', require('./admin/orders'));
 router.use('/', require('./admin/users'));
 router.use('/', require('./admin/customers'));

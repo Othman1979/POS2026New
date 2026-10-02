@@ -762,6 +762,16 @@
         "name": "2026-10-02-purchase-item-kind-v1",
         "checksum": "ac2755e860ecdcc5119234c0422729b602d5f51f9e1d8bb4a8f8bb844da40e3e"
       }
+    },
+    {
+      "name": "2026-10-04-packaging-units-v1",
+      "checksum": "bac6fdbf2e9f5b3d8321c0d61c0bfdf58670dd8659e18a1e5673cc8ccaecdae6",
+      "file": "2026-10-04-packaging-units-v1.auto.sql",
+      "sha256": "7ab2221f9c22a0bb9d326497c9d42bb0c8fd49c4e85dd25f11ed51a762046fab",
+      "requires": {
+        "name": "2026-10-03-product-barcodes-v1",
+        "checksum": "d7070c1443d96cfae4feb758650aed5e464ee1f3b39de0f457635529c893a61e"
+      }
     }
   ]
 }

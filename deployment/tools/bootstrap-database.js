@@ -127,6 +127,7 @@ async function bootstrapDatabase(options = {}) {
             ('2026-10-01-stock-documents-v1','81f157ded498bf0f84f3083ebdf00aad3cb3f03a33c186264e7a9ac7b9bf94a0'),
             ('2026-10-02-purchase-item-kind-v1','ac2755e860ecdcc5119234c0422729b602d5f51f9e1d8bb4a8f8bb844da40e3e'),
             ('2026-10-03-product-barcodes-v1','d7070c1443d96cfae4feb758650aed5e464ee1f3b39de0f457635529c893a61e'),
+            ('2026-10-04-packaging-units-v1','bac6fdbf2e9f5b3d8321c0d61c0bfdf58670dd8659e18a1e5673cc8ccaecdae6'),
             ('2026-09-12-ingredient-state-v1','2cc330a0d1e14cd68ee38aa92bfb142371926b6752dd3f928c6c1aa53a42f30e'),
             ('2026-09-12-unified-stock-movements-v1','91cba75ab3e889134d546233f79ccaa6e2dc8a7d0f9cabf4dd855154736add99'),
             ('2026-09-12-stock-item-identity-v1','045d0475fd16715e4eafb913a6f7fe839ed7fb7920e2a8d478b86878172de24b'),

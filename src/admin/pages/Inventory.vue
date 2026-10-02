@@ -500,6 +500,7 @@
                 @close="showProductModal = false"
                 @saved="onProductSaved"
                 @stock-activated="onStockActivated"
+                @packs-saved="fetchInventory"
                 @open-stock="openProductStock"
             />
 

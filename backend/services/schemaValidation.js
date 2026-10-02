@@ -1,7 +1,7 @@
 const { catalog } = require('../config/permissionCatalog');
 const { querySchemaChecks } = require('./schemaMetadata');
-const MIGRATION_NAME = '2026-10-03-product-barcodes-v1';
-const MIGRATION_CHECKSUM = 'd7070c1443d96cfae4feb758650aed5e464ee1f3b39de0f457635529c893a61e';
+const MIGRATION_NAME = '2026-10-04-packaging-units-v1';
+const MIGRATION_CHECKSUM = 'bac6fdbf2e9f5b3d8321c0d61c0bfdf58670dd8659e18a1e5673cc8ccaecdae6';
 
 const REQUIRED_COUNTS = Object.freeze({
     table_access_scope_column: 1,
@@ -172,6 +172,9 @@ const REQUIRED_COUNTS = Object.freeze({
     ,product_barcode_table: 1
     ,product_barcode_columns: 4
     ,product_barcode_unique_keys: 1
+    ,packaging_unit_columns: 2
+    ,product_pack_columns: 6
+    ,product_pack_unique_keys: 2
 });
 
 function migrationError(details) {
@@ -1198,6 +1201,13 @@ async function validateRequiredSchema(db) {
         AND COLUMN_NAME IN ('id','product_id','barcode','created_at')) AS product_barcode_columns
     ,(SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='product_barcodes'
         AND INDEX_NAME='uq_product_barcode' AND COLUMN_NAME='barcode' AND NON_UNIQUE=0) AS product_barcode_unique_keys
+    ,(SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND (
+        (TABLE_NAME='categories' AND COLUMN_NAME='hide_in_pos') OR (TABLE_NAME='stock_document_lines' AND COLUMN_NAME='bonus_qty'))) AS packaging_unit_columns
+    ,(SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='product_packs'
+        AND COLUMN_NAME IN ('id','product_id','label','factor','sort_order','sale_product_id')) AS product_pack_columns
+    ,(SELECT COUNT(*) FROM (SELECT INDEX_NAME FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='product_packs'
+        AND INDEX_NAME IN ('uq_product_pack_label','uq_product_pack_sale_product') AND NON_UNIQUE=0 GROUP BY INDEX_NAME
+        HAVING GROUP_CONCAT(COLUMN_NAME ORDER BY SEQ_IN_INDEX)=IF(INDEX_NAME='uq_product_pack_label','product_id,label','sale_product_id')) pack_keys) AS product_pack_unique_keys
     `);
 
     const missing = Object.entries(REQUIRED_COUNTS)

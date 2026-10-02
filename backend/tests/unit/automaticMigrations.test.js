@@ -214,6 +214,7 @@ describe('automatic database migrations', () => {
             '2026-10-01-stock-documents-v1',
             '2026-10-02-purchase-item-kind-v1',
             '2026-10-03-product-barcodes-v1',
+            '2026-10-04-packaging-units-v1',
         ]);
         expect(manifest.migrations[0].requires).toEqual({
             name: '2026-07-29-subscription-receivables-v1',
@@ -451,8 +452,8 @@ describe('automatic database migrations', () => {
         const target = manifest.migrations[index];
         const read = file => fs.readFileSync(path.join(directory, file), 'utf8').replace(/\r\n/g, '\n');
         const sql = read(target.file);
-        // The tail of the manifest, right after the purchase item kind migration it builds on.
-        expect(index).toBe(manifest.migrations.length - 1);
+        // Right after the purchase item kind migration it builds on, and required by the packaging units migration.
+        expect(manifest.migrations[index + 1].requires).toEqual({ name, checksum });
         expect(target.requires).toEqual({ name: manifest.migrations[index - 1].name, checksum: manifest.migrations[index - 1].checksum });
         expect(target).toMatchObject({ name, checksum, requires: { name: '2026-10-02-purchase-item-kind-v1' } });
         expect(crypto.createHash('sha256').update(sql).digest('hex')).toBe(target.sha256);
@@ -468,6 +469,35 @@ describe('automatic database migrations', () => {
         expect(table).toContain('UNIQUE KEY uq_product_barcode (barcode)');
         expect(table).toContain('CONSTRAINT fk_product_barcodes_product FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE');
         expect(table).toContain('COLLATE=utf8mb4_general_ci');
+        const bootstrap = fs.readFileSync(path.resolve(__dirname, '../../../deployment/tools/bootstrap-database.js'), 'utf8');
+        expect(bootstrap).toContain(`('${name}','${checksum}')`);
+    });
+
+    it('ships the packaging units migration with exact hashes, ordering, fallback parity and the baseline shape', () => {
+        const name = '2026-10-04-packaging-units-v1';
+        const checksum = crypto.createHash('sha256').update(name).digest('hex');
+        const directory = path.resolve(__dirname, '../../migrations');
+        const manifest = JSON.parse(fs.readFileSync(path.join(directory, 'auto-manifest.json'), 'utf8'));
+        const index = manifest.migrations.findIndex(row => row.name === name);
+        const target = manifest.migrations[index];
+        const read = file => fs.readFileSync(path.join(directory, file), 'utf8').replace(/\r\n/g, '\n');
+        const sql = read(target.file);
+        expect(index).toBe(manifest.migrations.length - 1);
+        expect(target.requires).toEqual({ name: manifest.migrations[index - 1].name, checksum: manifest.migrations[index - 1].checksum });
+        expect(target).toMatchObject({ name, checksum, requires: { name: '2026-10-03-product-barcodes-v1' } });
+        expect(crypto.createHash('sha256').update(sql).digest('hex')).toBe(target.sha256);
+        expect(read(`${name}.sql`)).toBe(sql);
+        const fallback = fs.readFileSync(path.resolve(__dirname, '../../../deployment/database/hostinger-manual-migrations.sql'), 'utf8').replace(/\r\n/g, '\n');
+        const begin = `-- BEGIN AUTO MIGRATION: ${name} | ${checksum}\n`;
+        const end = `-- END AUTO MIGRATION: ${name} | ${checksum}`;
+        expect(fallback.split(begin)).toHaveLength(2);
+        expect(fallback.split(begin)[1].split(end)[0]).toBe(sql);
+        const baseline = fs.readFileSync(path.resolve(__dirname, '../../../deployment/database/baseline.sql'), 'utf8').replace(/\r\n/g, '\n');
+        const table = baseline.split('CREATE TABLE IF NOT EXISTS product_packs (')[1];
+        expect(table).toContain('UNIQUE KEY uq_product_pack_label (product_id, label)');
+        expect(table).toContain('CONSTRAINT fk_product_packs_product FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE');
+        expect(baseline).toContain('hide_in_pos tinyint(1) NOT NULL DEFAULT 0');
+        expect(baseline).toContain('bonus_qty DECIMAL(16,6) NOT NULL DEFAULT 0');
         const bootstrap = fs.readFileSync(path.resolve(__dirname, '../../../deployment/tools/bootstrap-database.js'), 'utf8');
         expect(bootstrap).toContain(`('${name}','${checksum}')`);
     });

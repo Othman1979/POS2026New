@@ -5,10 +5,11 @@ const roundCost = (value) => Number(Number(value || 0).toFixed(4));
 const roundQty = (value) => Number(Number(value || 0).toFixed(3));
 
 // Net of tax: purchase costs are compared with revenue before sales tax.
+// A pack sale counts as its factor of base units of the product it packs.
 async function getProductNetSales(executor, range) {
     const [rows] = await executor.query(`
-        SELECT e.product_id, p.name AS item_name, p.category_id, c.name AS category_name,
-               SUM(e.sold_qty) AS sold_qty, SUM(e.returned_qty) AS returned_qty,
+        SELECT p.id AS product_id, p.name AS item_name, p.category_id, c.name AS category_name,
+               SUM(e.sold_qty * COALESCE(pk.factor, 1)) AS sold_qty, SUM(e.returned_qty * COALESCE(pk.factor, 1)) AS returned_qty,
                SUM(e.sold_amount) AS sold_amount, SUM(e.returned_amount) AS returned_amount
         FROM (
             SELECT oi.product_id, SUM(oi.quantity) AS sold_qty, 0 AS returned_qty,
@@ -28,9 +29,10 @@ async function getProductNetSales(executor, range) {
               AND COALESCE(ri.product_id, source_oi.product_id) IS NOT NULL
             GROUP BY COALESCE(ri.product_id, source_oi.product_id)
         ) e
-        JOIN products p ON p.id=e.product_id
+        LEFT JOIN product_packs pk ON pk.sale_product_id=e.product_id
+        JOIN products p ON p.id=COALESCE(pk.product_id, e.product_id)
         LEFT JOIN categories c ON c.id=p.category_id
-        GROUP BY e.product_id, p.name, p.category_id, c.name
+        GROUP BY p.id, p.name, p.category_id, c.name
     `, [range.start, range.end, range.start, range.end, range.start, range.end]);
     return rows;
 }
@@ -40,7 +42,7 @@ async function getWeightedPurchaseCosts(executor, endDate, productIds) {
     if (!productIds.length) return new Map();
     const [rows] = await executor.query(`
         SELECT l.product_id,
-               SUM(l.qty * l.unit_factor) AS purchased_qty,
+               SUM(l.qty * l.unit_factor + l.bonus_qty) AS purchased_qty,
                SUM(CASE WHEN d.cost_includes_tax=1 THEN l.line_total ELSE l.line_subtotal END) AS purchased_amount,
                COUNT(DISTINCT d.id) AS invoice_count
         FROM stock_document_lines l

@@ -1129,6 +1129,30 @@
         "id"
       ],
       "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_product_packs_product",
+      "table": "product_packs",
+      "columns": [
+        "product_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE CASCADE"
+    },
+    {
+      "name": "fk_product_packs_sale_product",
+      "table": "product_packs",
+      "columns": [
+        "sale_product_id"
+      ],
+      "references": "products",
+      "referencedColumns": [
+        "id"
+      ],
+      "actions": "ON DELETE SET NULL"
     }
   ],
   "checks": [
@@ -1393,6 +1417,11 @@
       "expression": "unit_factor > 0"
     },
     {
+      "name": "ck_stock_document_line_bonus",
+      "table": "stock_document_lines",
+      "expression": "bonus_qty >= 0"
+    },
+    {
       "name": "ck_stock_document_line_price",
       "table": "stock_document_lines",
       "expression": "unit_price IS NULL OR unit_price >= 0"
@@ -1401,6 +1430,11 @@
       "name": "ck_stock_document_line_tax",
       "table": "stock_document_lines",
       "expression": "tax_rate IN (0,4,16)"
+    },
+    {
+      "name": "ck_product_pack_factor",
+      "table": "product_packs",
+      "expression": "factor > 0"
     }
   ]
 }

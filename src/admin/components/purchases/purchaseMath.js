@@ -82,6 +82,7 @@ export function newRow(seed = {}) {
         key: `r${rowCounter}`,
         item: null,
         qty: '',
+        bonus_qty: '',
         unit_label: '',
         unit_factor: 1,
         unit_price: '',
@@ -188,6 +189,17 @@ export function purchaseInsight(row, insight) {
     };
 }
 
+// What a line with bonus goods puts into stock, in base units, and what each base unit really costs:
+// the paid amount (before tax) spread over the bought and the free units. Null without a bonus.
+export function bonusReceipt(row) {
+    const bonus = toNumber(row?.bonus_qty);
+    const qty = toNumber(row?.qty);
+    const factor = Number(row?.unit_factor);
+    if (!row?.item || bonus === null || bonus <= 0 || qty === null || qty <= 0 || !(factor > 0)) return null;
+    const base = Number((qty * factor + bonus).toFixed(6));
+    return { base, cost: Number((lineAmounts(row).subtotal / base).toFixed(6)) };
+}
+
 // Enter walks item -> qty -> unit -> price -> tax, then opens a new row. A row
 // without an item cannot be left by Enter.
 export function nextCell(rows, rowIndex, cell) {
@@ -210,7 +222,8 @@ export function buildLines(rows) {
         const qty = toNumber(row.qty);
         if (qty === null || qty === 0) continue;
         const price = toNumber(row.unit_price);
-        if (qty < 0) problems.push({ key: row.key, reason: 'qty' });
+        const bonus = toNumber(row.bonus_qty);
+        if (qty < 0 || (bonus !== null && bonus < 0)) problems.push({ key: row.key, reason: 'qty' });
         else if (price === null || price < 0) problems.push({ key: row.key, reason: 'price' });
         else if (!(Number(row.unit_factor) > 0) || !row.unit_label) problems.push({ key: row.key, reason: 'unit' });
         else lines.push({
@@ -220,6 +233,7 @@ export function buildLines(rows) {
             unit_factor: Number(row.unit_factor),
             unit_price: price,
             tax_rate: Number(row.tax_rate) || 0,
+            ...(bonus ? { bonus_qty: bonus } : {}),
         });
     }
     return { lines, problems };
@@ -237,6 +251,7 @@ export function rowFromLine(line, { keepQty = true, repeated = false } = {}) {
     return newRow({
         item: { item_key: line.item_key, name: line.name, base_unit: line.base_unit, packs, last: null, starts_tracking: Boolean(line.starts_tracking) },
         qty: keepQty ? Number(line.qty) : '',
+        bonus_qty: keepQty && Number(line.bonus_qty) > 0 ? Number(line.bonus_qty) : '',
         unit_label: line.unit_label,
         unit_factor: Number(line.unit_factor),
         unit_price: Number(line.unit_price),
@@ -276,7 +291,7 @@ export function sameDraft(server, body) {
 }
 
 export function sameLines(serverLines, lines) {
-    const norm = (l) => [String(l.item_key), Number(l.qty), String(l.unit_label), Number(l.unit_factor), Number(l.unit_price), Number(l.tax_rate)].join('|');
+    const norm = (l) => [String(l.item_key), Number(l.qty), Number(l.bonus_qty || 0), String(l.unit_label), Number(l.unit_factor), Number(l.unit_price), Number(l.tax_rate)].join('|');
     const a = (serverLines || []).map(norm);
     const b = (lines || []).map(norm);
     return a.length === b.length && a.every((value, index) => value === b[index]);

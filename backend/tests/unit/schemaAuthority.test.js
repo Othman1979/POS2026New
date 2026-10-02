@@ -3,8 +3,8 @@ import fs from 'fs';
 import path from 'path';
 
 const ROOT = path.resolve(__dirname, '../../..');
-const MIGRATION_NAME = '2026-10-03-product-barcodes-v1';
-const MIGRATION_CHECKSUM = 'd7070c1443d96cfae4feb758650aed5e464ee1f3b39de0f457635529c893a61e';
+const MIGRATION_NAME = '2026-10-04-packaging-units-v1';
+const MIGRATION_CHECKSUM = 'bac6fdbf2e9f5b3d8321c0d61c0bfdf58670dd8659e18a1e5673cc8ccaecdae6';
 
 function loadSchemaValidation() {
     try {
@@ -181,6 +181,9 @@ function createDb({ summary = {}, ledger = { migration_name: MIGRATION_NAME, che
                 product_barcode_table: 1,
                 product_barcode_columns: 4,
                 product_barcode_unique_keys: 1,
+                packaging_unit_columns: 2,
+                product_pack_columns: 6,
+                product_pack_unique_keys: 2,
                 print_template_seed_rows: 2,
                 order_type_sequence_columns: 4,
                 order_type_sequence_keys: 2,
@@ -231,6 +234,13 @@ describe('database schema authority', () => {
     });
 
     it.each(['product_barcode_table', 'product_barcode_columns', 'product_barcode_unique_keys'])('requires the product barcodes table shape (%s)', async (requirement) => {
+        const validation = loadSchemaValidation();
+        const db = createDb({ summary: { [requirement]: 0 } });
+
+        await expect(validation.validateRequiredSchema(db)).rejects.toThrow(requirement);
+    });
+
+    it.each(['packaging_unit_columns', 'product_pack_columns', 'product_pack_unique_keys'])('requires the packaging units shape (%s)', async (requirement) => {
         const validation = loadSchemaValidation();
         const db = createDb({ summary: { [requirement]: 0 } });
 

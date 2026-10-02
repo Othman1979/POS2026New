@@ -80,6 +80,7 @@
                     <span class="lg-c-item" role="columnheader">{{ $t('Item') }}</span>
                     <span class="lg-c-qty" role="columnheader">{{ $t('Qty') }}</span>
                     <span class="lg-c-unit" role="columnheader">{{ $t('Unit') }}</span>
+                    <span class="lg-c-bonus" role="columnheader" :title="$t('Free units received, in the base unit')">{{ $t('Bonus') }}</span>
                     <span class="lg-c-price" role="columnheader">{{ $t('Unit price') }}</span>
                     <span class="lg-c-tax" role="columnheader">{{ $t('Tax %') }}</span>
                     <span class="lg-c-total" role="columnheader">{{ $t('Line total') }}</span>
@@ -115,6 +116,9 @@
                             <option v-for="pack in row.item?.packs || []" :key="packKey(pack)" :value="packKey(pack)" data-no-i18n>{{ unitText(pack, row.item) }}</option>
                         </select>
                     </div>
+                    <div class="lg-c-bonus" role="cell">
+                        <input v-model.number="row.bonus_qty" class="lg-cell lg-cell--num" type="number" inputmode="decimal" min="0" step="any" placeholder="0" :disabled="locked || !row.item" :aria-label="`${$t('Bonus')} ${index + 1}`" :title="$t('Free units received, in the base unit')" data-cell="bonus" :data-row="index">
+                    </div>
                     <div class="lg-c-price" role="cell">
                         <input v-model.number="row.unit_price" class="lg-cell lg-cell--num" :class="{ 'is-invalid': problemKeys.has(row.key) }" type="number" inputmode="decimal" min="0" step="any" :placeholder="$t('Unit price')" :disabled="locked || !row.item" :aria-label="`${$t('Unit price')} ${index + 1}`" data-cell="price" :data-row="index" @input="row.price_touched = true" @keydown.enter.prevent="go(index, 'price')">
                         <span v-if="change(row)" class="lg-delta" :class="`lg-delta--${change(row).direction}`" role="status" :title="`${$t('vs last price')} ${money(change(row).ref)}`">
@@ -131,6 +135,13 @@
                     <div class="lg-c-del" role="cell">
                         <button v-if="!readOnly" type="button" class="lg-x" :disabled="locked" :aria-label="`${$t('Remove line')} ${index + 1}`" @click="removeRow(index)"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                     </div>
+                </div>
+                <div v-if="bonusReceipt(row)" class="lg-insight" role="note">
+                    <span class="lg-c-no" aria-hidden="true"></span>
+                    <p class="lg-insight-text">
+                        <span>{{ $t('Received with bonus') }}: <bdi class="pi-num" data-no-i18n>{{ formatQty(bonusReceipt(row).base) }}</bdi> <span data-no-i18n>{{ baseUnitText(row.item) }}</span></span>
+                        <span>{{ $t('Cost per unit after bonus') }}: <bdi class="pi-num" data-no-i18n>{{ money(bonusReceipt(row).cost) }}</bdi></span>
+                    </p>
                 </div>
                 <div v-if="!readOnly && insightFor(row)" class="lg-insight" :class="{ 'is-up': insightFor(row).increase }" role="note" :aria-label="`${$t('Purchase history')} ${index + 1}`">
                     <span class="lg-c-no" aria-hidden="true"></span>
@@ -226,7 +237,7 @@ import PurchaseItemCombobox from './PurchaseItemCombobox.vue';
 import { purchasesApi, describeError } from './purchasesApi.js';
 import {
     TAX_RATES, MAX_LINES, addOrIncrement, applyItem, buildLines, findRowByItem, invoiceTotals, isBlankRow, isEntered,
-    lineAmounts, mergeRows, newRow, nextCell, packKey, paperTotalState, priceChange, purchaseInsight, rowFromLine, sameDraft, selectUnit,
+    bonusReceipt, lineAmounts, mergeRows, newRow, nextCell, packKey, paperTotalState, priceChange, purchaseInsight, rowFromLine, sameDraft, selectUnit,
     toNumber,
 } from './purchaseMath.js';
 
@@ -294,7 +305,7 @@ const startsTracking = (row) => !readOnly.value && Boolean(row.item?.starts_trac
 function serialize() {
     return JSON.stringify([
         form.supplier_id, form.supplier_invoice_no.trim(), form.invoice_date, form.payment_status, form.paper_total, form.notes,
-        rows.value.filter(row => row.item).map(row => [row.item.item_key, row.qty, row.unit_label, row.unit_factor, row.unit_price, row.tax_rate]),
+        rows.value.filter(row => row.item).map(row => [row.item.item_key, row.qty, row.bonus_qty, row.unit_label, row.unit_factor, row.unit_price, row.tax_rate]),
     ]);
 }
 const snapshot = computed(serialize);
