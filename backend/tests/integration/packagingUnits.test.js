@@ -39,7 +39,11 @@ describe('packaging units', () => {
     it('validates packs and refuses a pack barcode owned by another product', async () => {
         expect((await savePacks(gum, [{ label: 'Packet', factor: 0 }])).status).toBe(400);
         expect((await savePacks(gum, [{ label: 'Packet', factor: 20 }, { label: 'packet', factor: 10 }])).status).toBe(400);
-        expect((await savePacks(gum, [{ label: 'Packet', factor: 20, barcode: 'X1' }])).status).toBe(400);
+        // A pack that is not sold has no sale entry, so a barcode typed without a price is dropped.
+        const unpriced = await savePacks(gum, [{ label: 'Packet', factor: 20, barcode: 'X1' }]);
+        expect(unpriced.status, JSON.stringify(unpriced.body)).toBe(200);
+        expect(unpriced.body.packs[0]).toMatchObject({ barcode: null, sale_product_id: null });
+        expect((await savePacks(gum, [])).status).toBe(200);
         const taken = await savePacks(gum, [{ label: 'Packet', factor: 20, sale_price: 9, barcode: String(SEED.product1.barcode || 'GUM-PIECE') }]);
         expect(taken.status).toBe(409);
         expect((await admin('get', `/api/admin/products/${gum}/packs`)).body.packs).toEqual([]);
@@ -105,6 +109,21 @@ describe('packaging units', () => {
         const [[retired]] = await pool.query('SELECT is_active, barcode FROM products WHERE id=?', [before]);
         expect(retired).toEqual({ is_active: 0, barcode: null });
         expect(await lookup('GUM-PACKET')).toBeNull();
+
+        // Past pack sales still count as base units of the product after the pack stops selling.
+        const today = (await pool.query("SELECT DATE_FORMAT(CURRENT_DATE, '%Y-%m-%d') AS d"))[0][0].d;
+        const report = (await admin('get', `/api/admin/reports/product-profit?start_date=2026-09-01&end_date=${today}`)).body;
+        expect(report.products.some(product => product.product_id === before)).toBe(false);
+        expect(report.products.find(product => product.product_id === gum)).toMatchObject({ net_qty: 23, net_sales: 10.5 });
+        const removed = await savePacks(gum, []);
+        expect(removed.status).toBe(400);
+        expect((await admin('get', `/api/admin/products/${gum}/packs`)).body.packs).toHaveLength(1);
+
+        // Selling the pack again brings back the same sale entry.
+        const resold = await savePacks(gum, [{ label: 'Packet', factor: 20, sale_price: 9, barcode: 'GUM-PACKET' }]);
+        expect(resold.status, JSON.stringify(resold.body)).toBe(200);
+        expect(resold.body.packs[0]).toMatchObject({ sale_product_id: before, sale_price: 9, barcode: 'GUM-PACKET' });
+        expect(await lookup('GUM-PACKET')).toMatchObject({ id: before });
     });
 
     it('hides a category from the POS grid while its products still sell by barcode', async () => {

@@ -56,8 +56,8 @@ function normalize(input) {
         labels.add(label.toLowerCase());
         const factor = normalizeFactor(pack.factor, label);
         const salePrice = normalizeSalePrice(pack.sale_price, label);
-        const barcode = productBarcodes.normalizeMainBarcode(pack.barcode || null) || null;
-        if (barcode && salePrice === null) throw invalid(`The pack ${label} has a barcode; give it a sale price too.`);
+        // The barcode belongs to the pack's sale entry, so a pack without a sale price has none.
+        const barcode = salePrice === null ? null : productBarcodes.normalizeMainBarcode(pack.barcode || null) || null;
         if (barcode) {
             if (barcodes.has(barcode.toLowerCase())) throw invalid(`Barcode ${barcode} is repeated on this product.`);
             barcodes.add(barcode.toLowerCase());
@@ -67,7 +67,7 @@ function normalize(input) {
 }
 
 function present(row) {
-    const sold = row.sale_product_id != null && Number(row.sale_active) === 1;
+    const sold = row.sale_product_id != null && Number(row.sale_linked) === 1;
     return {
         id: Number(row.id),
         label: row.label,
@@ -82,7 +82,8 @@ async function list(db, value) {
     const id = productId(value);
     const [rows] = await db.query(
         `SELECT pk.id, pk.label, CAST(pk.factor AS CHAR) AS factor, pk.sale_product_id,
-                sp.price AS sale_price, sp.tax_rate AS sale_tax_rate, sp.barcode AS sale_barcode, sp.is_active AS sale_active
+                sp.price AS sale_price, sp.tax_rate AS sale_tax_rate, sp.barcode AS sale_barcode,
+                EXISTS(SELECT 1 FROM product_stock_links sl WHERE sl.product_id = pk.sale_product_id) AS sale_linked
            FROM product_packs pk LEFT JOIN products sp ON sp.id = pk.sale_product_id
           WHERE pk.product_id = ? ORDER BY pk.sort_order, pk.id`, [id]);
     return rows.map(present);
@@ -148,6 +149,7 @@ async function replace(conn, value, input, actorId, ipAddress) {
            FROM product_packs pk WHERE pk.product_id = ? ORDER BY pk.sort_order, pk.id FOR UPDATE`, [id]);
     const previousByLabel = new Map(existing.map((row) => [row.label.toLowerCase(), row]));
     const keepSale = new Set();
+    const labels = new Set(packs.map((pack) => pack.label.toLowerCase()));
     for (const pack of packs) {
         const previous = previousByLabel.get(pack.label.toLowerCase());
         if (pack.sale_price !== null && previous?.sale_product_id != null) keepSale.add(Number(previous.sale_product_id));
@@ -155,7 +157,13 @@ async function replace(conn, value, input, actorId, ipAddress) {
     const changed = new Set();
     for (const row of existing) {
         const saleId = row.sale_product_id == null ? null : Number(row.sale_product_id);
-        if (saleId !== null && !keepSale.has(saleId)) {
+        if (saleId === null) continue;
+        // Past sales of the pack are reported through this row, so a pack that has sold stays defined.
+        if (!labels.has(row.label.toLowerCase())) {
+            const [[sold]] = await conn.query('SELECT 1 AS sold FROM order_items WHERE product_id = ? LIMIT 1', [saleId]);
+            if (sold) throw invalid(`The pack ${row.label} has sales; clear its sale price to stop selling it instead of removing it.`);
+        }
+        if (!keepSale.has(saleId)) {
             await retireSaleProduct(conn, saleId);
             changed.add(saleId);
         }
@@ -167,10 +175,9 @@ async function replace(conn, value, input, actorId, ipAddress) {
     await conn.query('DELETE FROM product_packs WHERE product_id = ?', [id]);
     const saved = [];
     for (const [index, pack] of packs.entries()) {
-        let saleId = null;
+        const previous = previousByLabel.get(pack.label.toLowerCase());
+        let saleId = previous?.sale_product_id == null ? null : Number(previous.sale_product_id);
         if (pack.sale_price !== null) {
-            const previous = previousByLabel.get(pack.label.toLowerCase());
-            saleId = previous?.sale_product_id == null ? null : Number(previous.sale_product_id);
             if (pack.barcode) await productBarcodes.assertFree(conn, saleId || 0, [pack.barcode]);
             const values = [base.category_id, saleName(base, pack.label), grossToNet(pack.sale_price, taxRate), taxRate,
                 base.jofotara_tax_category, pack.barcode, Number(base.is_active) === 1 ? 1 : 0];
@@ -206,7 +213,9 @@ async function replace(conn, value, input, actorId, ipAddress) {
 async function syncSaleProductsActive(conn, baseProductId, isActive) {
     await conn.query(
         `UPDATE products p JOIN product_packs pk ON pk.sale_product_id = p.id
-            SET p.is_active = ? WHERE pk.product_id = ?`, [isActive ? 1 : 0, baseProductId]);
+            SET p.is_active = ?
+          WHERE pk.product_id = ? AND EXISTS (SELECT 1 FROM product_stock_links sl WHERE sl.product_id = p.id)`,
+        [isActive ? 1 : 0, baseProductId]);
 }
 
 module.exports = { MAX_PACKS, normalize, list, replace, syncSaleProductsActive };
