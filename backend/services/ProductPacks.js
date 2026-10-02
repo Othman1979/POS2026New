@@ -94,6 +94,7 @@ async function baseStockItem(conn, base, actorId, ipAddress) {
     let [links] = await conn.query(
         'SELECT stock_item_id, CAST(qty_per_sale AS CHAR) AS qty_per_sale FROM product_stock_links WHERE product_id = ? FOR UPDATE', [base.id]);
     if (!links.length) {
+        await conn.query('UPDATE products SET stock = 0 WHERE id = ? AND stock IS NULL', [base.id]);
         await stockActivation.activate(conn, base.id, {
             expected_stock_version: base.stock_version,
             request_key: `packs_${randomBytes(12).toString('hex')}`,

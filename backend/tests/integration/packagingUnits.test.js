@@ -132,4 +132,25 @@ describe('packaging units', () => {
         expect(await grid()).toEqual([]);
         expect(await lookup('GUM-PIECE')).toMatchObject({ id: gum });
     });
+
+    it('starts a product with no stock entered at a known zero when its first pack is saved', async () => {
+        const [p] = await pool.query("INSERT INTO products (name, price, tax_rate, category_id, barcode) VALUES ('Cola can', 0.35, 0, ?, 'COLA-PIECE')", [category]);
+        const saved = await savePacks(p.insertId, [{ label: 'Shrink', factor: 24, sale_price: 7.5, barcode: 'COLA-SHRINK' }]);
+        expect(saved.status, JSON.stringify(saved.body)).toBe(200);
+        const created = await admin('post', '/api/admin/purchases/invoices').send({
+            client_key: randomUUID(), kind: 'product', supplier_id: supplierId, supplier_invoice_no: `INV-${randomUUID().slice(0, 8)}`,
+            invoice_date: '2026-09-29', payment_status: 'credit',
+            lines: [{ item_key: `product:${p.insertId}`, qty: 1, unit_label: 'Shrink', unit_factor: 24, unit_price: 6, tax_rate: 0 }],
+        });
+        expect(created.status, JSON.stringify(created.body)).toBe(200);
+        const posted = await admin('post', `/api/admin/purchases/invoices/${created.body.data.id}/post`)
+            .send({ expected_version: created.body.data.version, request_key: randomUUID() });
+        expect(posted.status, JSON.stringify(posted.body)).toBe(200);
+        const [[row]] = await pool.query(
+            `SELECT CAST(b.quantity AS CHAR) AS quantity, b.quantity_known FROM product_stock_links l
+               JOIN stock_balances b ON b.stock_item_id = l.stock_item_id WHERE l.product_id = ?`, [p.insertId]);
+        expect({ quantity: Number(row.quantity), known: Number(row.quantity_known) }).toEqual({ quantity: 24, known: 1 });
+        const insights = (await admin('get', `/api/admin/purchases/items/insights?kind=product&keys=product:${p.insertId}`)).body.data[0];
+        expect(insights).toMatchObject({ on_hand: 24 });
+    });
 });
