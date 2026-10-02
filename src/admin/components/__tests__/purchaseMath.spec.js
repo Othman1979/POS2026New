@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-    addOrIncrement, applyItem, bonusReceipt, buildLines, invoiceTotals, lineAmounts, mergeRows, newRow, nextCell, paperTotalState, priceChange, purchaseInsight,
+    MAX_LINES, addOrIncrement, applyItem, bonusReceipt, buildLines, invoiceTotals, lineAmounts, mergeRows, newRow, nextCell, paperTotalState, priceChange, purchaseInsight,
     rowFromLine, sameDraft, sameLines, selectUnit,
 } from '../purchases/purchaseMath.js';
 
@@ -143,11 +143,11 @@ describe('repeat last invoice and add category merging', () => {
         expect(rows.map(row => row.item?.item_key ?? null)).toEqual(['product:1', 'product:2', null]);
         expect(rows[0].qty).toBe(5);
     });
-    it('honors the 100-line cap', () => {
-        const many = Array.from({ length: 100 }, (_, index) => filled(index + 1, 1, 1));
+    it('honors the 200-line cap', () => {
+        const many = Array.from({ length: MAX_LINES }, (_, index) => filled(index + 1, 1, 1));
         const { rows, skipped } = mergeRows(many, [filled(500, 1, 1)]);
         expect(skipped).toBe(1);
-        expect(rows.filter(row => row.item).length).toBe(100);
+        expect(rows.filter(row => row.item).length).toBe(200);
     });
     it('repeat-last rows keep quantity and price and have no badge', () => {
         const row = rowFromLine({ item_key: 'product:4', name: 'Milk', base_unit: 'ml', qty: '6.000', unit_label: 'box', unit_factor: '12', unit_price: '3.5000', tax_rate: '16.00', last_unit_price_before: '3.5' });

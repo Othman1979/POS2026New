@@ -17,7 +17,7 @@ const posting = require('./StockDocumentPosting');
 const { taxRegistrationTypeFromSettings } = require('../config/taxRegistration');
 const { getBusinessDate } = require('../utils/businessDate');
 
-const MAX_LINES = 100;
+const MAX_LINES = 200;
 const LOCK_WAIT_SECONDS = 3;
 const TAX_RATES = [0, 4, 16];
 const KEY_PATTERN = /^[A-Za-z0-9_-]{8,64}$/;
@@ -381,7 +381,7 @@ async function searchItems(pool, { q, supplierId, categoryId, barcode, limit, ki
 // supplier, the latest from `supplierId`, the quantity-weighted average price before tax, and the
 // current quantity. Prices are per base unit so lines bought in different packs compare directly.
 async function itemInsights(pool, { kind, itemKeys, supplierId }) {
-    const keys = [...new Set(itemKeys)].filter((key) => items.parseKey(key)?.kind === kind).slice(0, 100);
+    const keys = [...new Set(itemKeys)].filter((key) => items.parseKey(key)?.kind === kind).slice(0, MAX_LINES);
     if (!keys.length) return [];
     const filter = itemFilter('l', keys);
     const latest = async (bySupplier) => {

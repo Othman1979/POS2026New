@@ -487,6 +487,27 @@ describe('purchase invoices', () => {
         });
     });
 
+    it('posts and reverses an invoice of 150 ingredient lines', async () => {
+        const many = [];
+        for (let index = 0; index < 150; index += 1) {
+            const [row] = await pool.query("INSERT INTO ingredients(name,measure,display_unit) VALUES (?, 'weight', 'g')", [`Bulk ingredient ${index}`]);
+            const preview = await request(app).get(`/api/admin/stock/ingredients/${row.insertId}/activation`).set('Cookie', cookie);
+            const on = await request(app).post(`/api/admin/stock/ingredients/${row.insertId}/activate`).set('Cookie', cookie)
+                .send({ observation_token: preview.body.observation_token, request_key: key() });
+            expect(on.status, JSON.stringify(on.body)).toBe(200);
+            many.push({ id: row.insertId, itemId: on.body.stock_item_id });
+        }
+        const lines = many.map(({ id }) => ({ item_key: `ingredient:${id}`, qty: 2, unit_label: 'kg', unit_factor: 1000, unit_price: 1, tax_rate: 0 }));
+        const invoice = await createDraft({ kind: 'ingredient', lines });
+        expect(invoice.lines).toHaveLength(150);
+        const posted = await post(invoice);
+        expect(posted.status, JSON.stringify(posted.body)).toBe(200);
+        for (const { itemId } of [many[0], many[99], many[100], many[149]]) expect(await balance(itemId)).toBe(2000);
+        const reversed = await reverse(invoice.id);
+        expect(reversed.status, JSON.stringify(reversed.body)).toBe(200);
+        for (const { itemId } of [many[0], many[100], many[149]]) expect(await balance(itemId)).toBe(0);
+    });
+
     it('keeps the routes admin only', async () => {
         const cashier = (await request(app).post('/api/auth/login').send({ user_number: SEED.cashierUser.user_number })).headers['set-cookie'][0];
         const res = await request(app).get('/api/admin/purchases/suppliers').set('Cookie', cashier);

@@ -399,7 +399,7 @@ function removeRow(index) {
 function go(index, cell) {
     const target = nextCell(rows.value, index, cell);
     if (target.createRow) {
-        if (rows.value.length >= MAX_LINES) { note.value = t('An invoice can have at most 100 lines.'); return; }
+        if (rows.value.length >= MAX_LINES) { note.value = t('An invoice can have at most 200 lines.'); return; }
         rows.value.push(newRow());
     }
     focusCell(target.row, target.cell);
@@ -561,7 +561,7 @@ function validate() {
     const { lines, problems } = buildLines(rows.value);
     if (problems.length) { problemKeys.value = new Set(problems.map(p => p.key)); return t('Fix the highlighted lines. Each needs a quantity and a price.'); }
     if (!lines.length) return t('Add at least one item with a quantity.');
-    if (lines.length > MAX_LINES) return t('An invoice can have at most 100 lines.');
+    if (lines.length > MAX_LINES) return t('An invoice can have at most 200 lines.');
     return '';
 }
 

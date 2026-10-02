@@ -5,7 +5,7 @@
 export const TAX_RATES = [0, 4, 16];
 export const PRICE_CHANGE_THRESHOLD = 0.1;
 export const PAPER_TOTAL_TOLERANCE = 0.005;
-export const MAX_LINES = 100;
+export const MAX_LINES = 200;
 // Cell order inside a row; Enter walks this left to right.
 export const CELLS = ['item', 'qty', 'unit', 'price', 'tax'];
 
@@ -263,7 +263,7 @@ export function rowFromLine(line, { keepQty = true, repeated = false } = {}) {
 }
 
 // Merge incoming rows (repeat-last, add-category) into the editor: blank rows go, items
-// already on the invoice are kept as they are, the 100-line cap holds, and one blank
+// already on the invoice are kept as they are, the 200-line cap holds, and one blank
 // row stays at the end for the next entry.
 export function mergeRows(rows, incoming) {
     const kept = (rows || []).filter(row => !isBlankRow(row));

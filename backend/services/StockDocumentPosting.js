@@ -178,16 +178,17 @@ async function receive(conn, { documentId, lines, locked, actor, businessDate, p
         }));
     }
     const ingredients = linesOf(lines, locked, null, 'ingredient');
-    if (ingredients.length) {
+    for (let offset = 0; offset < ingredients.length; offset += CHUNK) {
+        const part = offset / CHUNK;
         const batch = await recipes.recordStockBatch(conn, {
-            kind: 'receipt', clientKey: `pinv-${documentId}-post`, actor, businessDate,
+            kind: 'receipt', clientKey: part ? `pinv-${documentId}-post-${part}` : `pinv-${documentId}-post`, actor, businessDate,
             source: { label: recipes.PURCHASE_SOURCE_LABEL, id: Number(documentId) },
-            entries: ingredients.map(({ line, item }) => ({
+            entries: ingredients.slice(offset, offset + CHUNK).map(({ line, item }) => ({
                 ingredient_id: item.ingredient_id, qty: line.base_qty, unit: item.base_unit,
                 ...(line.cost == null ? {} : { unit_cost: line.cost }),
             })),
         });
-        result.ingredient_movements = batch.movements.map((row) => ({ ingredient_id: Number(row.ingredient_id), movement_id: Number(row.id) }));
+        result.ingredient_movements.push(...batch.movements.map((row) => ({ ingredient_id: Number(row.ingredient_id), movement_id: Number(row.id) })));
     }
     return result;
 }
