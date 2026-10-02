@@ -454,7 +454,9 @@ router.all('/products', async (req, res) => {
                 }
 
                 const [threshRows] = await pool.query("SELECT setting_value FROM settings WHERE setting_key = 'low_stock_threshold'");
-                const threshold = threshRows.length > 0 ? parseInt(threshRows[0].setting_value, 10) : 3;
+                const rawThreshold = threshRows[0]?.setting_value;
+                const parsedThreshold = rawThreshold != null && String(rawThreshold).trim() !== '' ? Number(rawThreshold) : Number.NaN;
+                const threshold = Number.isFinite(parsedThreshold) && parsedThreshold >= 0 ? parsedThreshold : 3;
 
                 if (stockStatus === 'low') {
                     where.push(`${availabilitySql('p')} <= ?`);
