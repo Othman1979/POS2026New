@@ -3570,5 +3570,18 @@
   "Reset the whole system": "تهيئة النظام بالكامل",
   "This deletes all products, categories, stock and sales permanently. Continue?": "سيتم حذف كل المواد والمجموعات والمخزون والمبيعات نهائياً. هل تريد المتابعة؟",
   "The system was reset to a fresh start.": "تمت تهيئة النظام كبرنامج جديد.",
-  "Unable to reset the system.": "تعذرت تهيئة النظام."
+  "Unable to reset the system.": "تعذرت تهيئة النظام.",
+  "Edit invoice": "تعديل الفاتورة",
+  "To correct a posted invoice, press Edit invoice: it is reversed and reopened as a draft.": "لتصحيح فاتورة مرحّلة اضغط «تعديل الفاتورة»: تُعكس ثم تُفتح من جديد كمسودة.",
+  "This invoice was reversed. Edit invoice reopens its lines as a new draft.": "هذه الفاتورة معكوسة. «تعديل الفاتورة» يفتح أسطرها في مسودة جديدة.",
+  "Edit this posted invoice? It is reversed (its stock is undone) and reopened as a new draft with the same lines. Post the draft again after editing.": "تعديل هذه الفاتورة المرحّلة؟ ستُعكس (يُلغى أثرها على المخزون) وتُفتح كمسودة جديدة بنفس الأسطر. بعد التعديل رحّل المسودة من جديد.",
+  "Reopen this reversed invoice as a new draft with the same lines?": "فتح هذه الفاتورة المعكوسة كمسودة جديدة بنفس الأسطر؟",
+  "The invoice was reversed and reopened as a draft. Edit it, then post it again.": "عُكست الفاتورة وفُتحت كمسودة. عدّلها ثم رحّلها من جديد.",
+  "An unsaved invoice was found on this device (for example after a power cut).": "وُجدت فاتورة غير محفوظة على هذا الجهاز (مثلاً بعد انقطاع الكهرباء).",
+  "lines": "سطر",
+  "Restore it": "استرجعها",
+  "Discard it": "تجاهلها",
+  "The saved draft is no longer editable, so the recovery copy could not be applied.": "المسودة المحفوظة لم تعد قابلة للتعديل، فتعذّر استرجاع النسخة.",
+  "The unsaved invoice was restored. Save it as a draft or post it.": "استُرجعت الفاتورة غير المحفوظة. احفظها كمسودة أو رحّلها.",
+  "Discard the recovered invoice? It cannot be restored afterwards.": "تجاهل الفاتورة المسترجعة؟ لن تستطيع استرجاعها بعد ذلك."
 }

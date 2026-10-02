@@ -508,9 +508,44 @@ describe('purchase invoices', () => {
         for (const { itemId } of [many[0], many[100], many[149]]) expect(await balance(itemId)).toBe(0);
     });
 
+    it('reopens a posted invoice as a draft with the same number and lines', async () => {
+        const invoice = await createDraft({ lines: [{ ...cola(), bonus_qty: 2 }, box()] });
+        const posted = await post(invoice);
+        expect(posted.status, JSON.stringify(posted.body)).toBe(200);
+        const before = await balance(product.itemId);
+        const body = { request_key: key(), client_key: key() };
+        const res = await api('post', `/invoices/${invoice.id}/revise`).send(body);
+        expect(res.status, JSON.stringify(res.body)).toBe(200);
+        const { invoice: draft, reversed } = res.body.data;
+        expect(reversed).toMatchObject({ id: invoice.id, status: 'reversed', supplier_invoice_no: `${invoice.supplier_invoice_no}-R${invoice.id}` });
+        expect(draft).toMatchObject({ status: 'draft', supplier_invoice_no: invoice.supplier_invoice_no, total: invoice.total });
+        expect(draft.id).not.toBe(invoice.id);
+        expect(draft.lines.map(line => [line.item_key, line.qty, line.bonus_qty, line.unit_factor, line.unit_price]))
+            .toEqual(invoice.lines.map(line => [line.item_key, line.qty, line.bonus_qty, line.unit_factor, line.unit_price]));
+        expect(await balance(product.itemId)).toBe(before - 26);
+        const again = await api('post', `/invoices/${invoice.id}/revise`).send(body);
+        expect(again.status, JSON.stringify(again.body)).toBe(200);
+        expect(again.body.data.invoice.id).toBe(draft.id);
+        expect(await balance(product.itemId)).toBe(before - 26);
+        const [audit] = await pool.query("SELECT id FROM audit_events WHERE event_type='purchase_invoice_reopened' AND entity_id=?", [invoice.id]);
+        expect(audit).toHaveLength(1);
+        expect((await post(draft)).status).toBe(200);
+        expect(await balance(product.itemId)).toBe(before);
+        const onDraft = await api('post', `/invoices/${draft.id}/revise`).send({ request_key: key(), client_key: key() });
+        expect(onDraft.status).toBe(200);
+        const fresh = await createDraft();
+        const refused = await api('post', `/invoices/${fresh.id}/revise`).send({ request_key: key(), client_key: key() });
+        expect(refused.status).toBe(409);
+    });
+
     it('keeps the routes admin only', async () => {
         const cashier = (await request(app).post('/api/auth/login').send({ user_number: SEED.cashierUser.user_number })).headers['set-cookie'][0];
         const res = await request(app).get('/api/admin/purchases/suppliers').set('Cookie', cashier);
         expect(res.status).toBe(403);
+        const invoice = await createDraft();
+        expect((await post(invoice)).status).toBe(200);
+        const revise = await request(app).post(`/api/admin/purchases/invoices/${invoice.id}/revise`).set('Cookie', cashier).send({ request_key: key(), client_key: key() });
+        expect(revise.status).toBe(403);
+        expect((await api('get', `/invoices/${invoice.id}`)).body.data.status).toBe('posted');
     });
 });

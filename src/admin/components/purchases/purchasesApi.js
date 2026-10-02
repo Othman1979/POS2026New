@@ -108,6 +108,10 @@ export const purchasesApi = {
     async postInvoice(id, expectedVersion, requestKey) {
         return (await call(`/invoices/${encodeURIComponent(id)}/post`, { method: 'POST', body: { expected_version: expectedVersion, request_key: requestKey }, timeoutMs: 45000 })).data;
     },
+    // Reverses a posted invoice and reopens its lines as a new draft: { invoice, reversed }.
+    async reviseInvoice(id, requestKey, clientKey) {
+        return (await call(`/invoices/${encodeURIComponent(id)}/revise`, { method: 'POST', body: { request_key: requestKey, client_key: clientKey }, timeoutMs: 45000 })).data;
+    },
     async reverseInvoice(id, requestKey) {
         return (await call(`/invoices/${encodeURIComponent(id)}/reverse`, { method: 'POST', body: { request_key: requestKey }, timeoutMs: 45000 })).data;
     },

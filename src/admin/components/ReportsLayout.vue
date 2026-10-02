@@ -37,6 +37,17 @@
                         <span>{{ $t('Custom period') }}</span>
                     </button>
 
+                    <template v-if="activePage !== 'reports-product-profit'">
+                        <button type="button" class="report-action-button report-action-button--secondary report-export-button" :disabled="!!exporting" @click="exportExcel">
+                            <i :class="exporting === 'excel' ? 'fa-solid fa-circle-notch fa-spin' : 'fa-solid fa-file-excel'" aria-hidden="true"></i>
+                            <span>{{ $t('Export to Excel') }}</span>
+                        </button>
+                        <button type="button" class="report-action-button report-action-button--secondary report-export-button" @click="exportPdf">
+                            <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+                            <span>{{ $t('Print PDF') }}</span>
+                        </button>
+                    </template>
+
                     <ReportPrintMenu v-if="!['reports-ingredients', 'reports-product-profit'].includes(activePage)"
                         :label="$t('Print')"
                         :disabled="!reportSupported"
@@ -68,7 +79,7 @@
         </transition>
 
 
-        <main class="report-sheet">
+        <main ref="sheet" class="report-sheet">
             <router-view v-slot="{ Component, route: childRoute }">
                 <transition name="reports-page">
                     <component :is="Component" :key="childRoute.name" />
@@ -86,6 +97,8 @@ import { addBusinessDateDays, businessDayWindowLabel, currentBusinessDate, parse
 import { useBrowserReportPrint } from '../composables/useBrowserReportPrint.js';
 import { reportPages } from '../reportPages.js';
 import ReportPrintMenu from './ReportPrintMenu.vue';
+import { t } from '@/shared/i18n.js';
+import { exportReportExcel, printReportPdf } from '../utils/reportExport.js';
 
 const MAX_PERIOD_DAYS = 366;
 const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
@@ -185,6 +198,30 @@ export default {
             ? printReport(layout, printProvider.value)
             : false;
 
+        const sheet = ref(null);
+        const exporting = ref('');
+        const exportDetails = () => {
+            const range = startDate.value === endDate.value ? startDate.value : `${startDate.value}_${endDate.value}`;
+            return {
+                title: t(activeReport.value.label),
+                period: businessDayWindowLabel(startDate.value, endDate.value),
+                fileBase: `${String(activePage.value || 'report')}_${range}`,
+                rtl: isRtl.value,
+            };
+        };
+        const exportExcel = async () => {
+            if (exporting.value) return;
+            exporting.value = 'excel';
+            try {
+                await exportReportExcel(sheet.value, exportDetails());
+            } catch {
+                if (typeof window.showAdminAlert === 'function') await window.showAdminAlert(t('Export failed'));
+            } finally {
+                exporting.value = '';
+            }
+        };
+        const exportPdf = () => printReportPdf(sheet.value, exportDetails());
+
         return {
             activeReport,
             activePage,
@@ -202,6 +239,10 @@ export default {
             canMoveNext: computed(() => endDate.value < today.value),
             reportSupported,
             isPrinting,
+            sheet,
+            exporting,
+            exportExcel,
+            exportPdf,
             moveDay,
             selectToday,
             toggleCustomPeriod,

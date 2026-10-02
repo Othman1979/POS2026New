@@ -41,7 +41,8 @@ describe('Daily Reports Navigation Structure', () => {
         expect(source).not.toContain('print_method');
         expect(source).not.toContain('pos_receipt_printer_id');
         expect(source).not.toContain('api/print/print');
-        expect(source).not.toContain('Export');
+        expect(source).toContain('exportReportExcel');
+        expect(source).toContain('printReportPdf');
         for (const label of ['Previous', 'Today', 'Next', 'Custom period']) {
             expect(source).toContain(label);
         }

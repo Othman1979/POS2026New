@@ -774,9 +774,58 @@ async function reverseInvoice(pool, { id, body, actor, ipAddress }) {
     });
 }
 
+// Correcting a posted invoice: undo its stock, free its supplier number on the reversed
+// copy, and reopen the same header and lines as a new draft to edit and post again.
+const reopenedSuffix = (id) => `-R${id}`;
+function originalReference(reference, id) {
+    const suffix = reopenedSuffix(id);
+    return reference.endsWith(suffix) ? reference.slice(0, -suffix.length) : reference;
+}
+
+async function reviseInvoice(pool, { id, body, actor, ipAddress }) {
+    const reverseKey = requestKey(body.request_key, 'request_key');
+    const clientKey = requestKey(body.client_key, 'client_key');
+    let source = await getInvoice(pool, id);
+    if (source.status === 'draft') fail(409, 'PURCHASE_INVOICE_NOT_POSTED', 'Only a posted or reversed invoice can be reopened.');
+    let scope = null;
+    if (source.status === 'posted') {
+        const reversed = await reverseInvoice(pool, { id, body: { request_key: reverseKey }, actor, ipAddress });
+        source = reversed.invoice;
+        scope = reversed.scope;
+    }
+    const original = originalReference(source.supplier_invoice_no, id);
+    const suffix = reopenedSuffix(id);
+    const renamed = `${original.slice(0, 60 - suffix.length)}${suffix}`;
+    await pool.query(
+        "UPDATE stock_documents SET reference = ?, version = version + 1 WHERE id = ? AND doc_type = 'purchase' AND status = 'reversed' AND reference = ?",
+        [renamed, id, original]);
+    const { invoice, replay } = await createDraft(pool, {
+        client_key: clientKey,
+        kind: source.item_kind,
+        supplier_id: source.supplier_id,
+        supplier_invoice_no: original,
+        invoice_date: source.invoice_date,
+        payment_status: source.payment_status,
+        paper_total: source.paper_total,
+        notes: source.notes,
+        lines: source.lines.map((line) => ({
+            item_key: line.item_key, qty: line.qty, bonus_qty: line.bonus_qty, unit_label: line.unit_label,
+            unit_factor: line.unit_factor, unit_price: line.unit_price, tax_rate: line.tax_rate,
+        })),
+    }, actor);
+    if (!replay) {
+        await appendAuditEvent(pool, {
+            eventType: 'purchase_invoice_reopened', userId: actor.id, entityType: 'purchase_invoice', entityId: id,
+            newValue: { draft_id: invoice.id, supplier_id: source.supplier_id, supplier_invoice_no: original, request_key: clientKey },
+            ipAddress: ipAddress || null,
+        });
+    }
+    return { invoice, reversed: await loadInvoice(pool, id), scope };
+}
+
 module.exports = {
     PurchaseError, purchaseKind, listSuppliers, createSupplier, updateSupplier, searchItems, itemInsights, listCategories, listInvoices,
-    lastInvoiceForSupplier, getInvoice, createDraft, updateDraft, deleteDraft, postInvoice, reverseInvoice,
+    lastInvoiceForSupplier, getInvoice, createDraft, updateDraft, deleteDraft, postInvoice, reverseInvoice, reviseInvoice,
     // exported for tests
     lineSubtotal, lineTax, baseQuantity,
 };

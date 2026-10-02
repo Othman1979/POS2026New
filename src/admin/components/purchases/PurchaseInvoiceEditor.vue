@@ -24,9 +24,14 @@
                     </div>
                 </div>
             </template>
-            <button v-else-if="meta.status === 'posted' && !loading" type="button" class="lg-btn lg-btn--danger" :disabled="busy || !!pending" @click="reverseInvoice">
-                <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>{{ $t('Reverse invoice') }}
-            </button>
+            <template v-else-if="!loading">
+                <button type="button" class="lg-btn" :disabled="busy || !!pending" @click="reviseInvoice">
+                    <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>{{ $t('Edit invoice') }}
+                </button>
+                <button v-if="meta.status === 'posted'" type="button" class="lg-btn lg-btn--danger" :disabled="busy || !!pending" @click="reverseInvoice">
+                    <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>{{ $t('Reverse invoice') }}
+                </button>
+            </template>
             <button type="button" class="lg-btn" :aria-label="$t('New invoice')" @click="$emit('request-new')">
                 <i class="fa-solid fa-plus" aria-hidden="true"></i><span class="lg-btn-label">{{ $t('New invoice') }}</span><kbd class="lg-kbd">Alt N</kbd>
             </button>
@@ -71,7 +76,14 @@
             </header>
 
             <p v-if="loading" class="lg-note" role="status">{{ $t('Loading...') }}</p>
-            <p v-if="readOnly && !loading" class="lg-note">{{ meta.status === 'posted' ? $t('Posted invoices cannot be edited.') : $t('This invoice was reversed and cannot be edited.') }}</p>
+            <p v-if="readOnly && !loading" class="lg-note">{{ meta.status === 'posted' ? $t('To correct a posted invoice, press Edit invoice: it is reversed and reopened as a draft.') : $t('This invoice was reversed. Edit invoice reopens its lines as a new draft.') }}</p>
+            <p v-if="backupOffer" class="lg-note lg-note--warn" role="alert" data-test="purchase-backup">
+                <span>{{ $t('An unsaved invoice was found on this device (for example after a power cut).') }} <bdi dir="ltr" data-no-i18n>{{ backupOffer.when }} · {{ backupOffer.lines }}</bdi> {{ $t('lines') }}</span>
+                <span class="lg-actions">
+                    <button type="button" class="lg-btn lg-btn--sm lg-btn--ink" :disabled="busy || loading" @click="restoreBackup">{{ $t('Restore it') }}</button>
+                    <button type="button" class="lg-btn lg-btn--sm" :disabled="busy || loading" @click="discardBackup">{{ $t('Discard it') }}</button>
+                </span>
+            </p>
 
             <!-- The ruled lines. Every row is exactly one ruled line tall. -->
             <div class="lg-sheet" role="table" :aria-label="$t('Items')">
@@ -259,7 +271,7 @@ const blankForm = () => ({ supplier_id: null, supplier_name: '', supplier_invoic
 
 const form = reactive(blankForm());
 const rows = ref([newRow()]);
-const meta = reactive({ id: null, version: null, status: 'draft', cost_includes_tax: null, create_key: createRequestId(), post_key: createRequestId(), reverse_key: createRequestId(), baseline: '' });
+const meta = reactive({ id: null, version: null, status: 'draft', cost_includes_tax: null, create_key: createRequestId(), post_key: createRequestId(), reverse_key: createRequestId(), revise_key: createRequestId(), baseline: '' });
 
 const busy = ref(false);
 const loading = ref(false);
@@ -521,7 +533,7 @@ function adoptStatus(invoice) {
 function resetToNew() {
     Object.assign(form, blankForm());
     rows.value = [newRow()];
-    Object.assign(meta, { id: null, version: null, status: 'draft', cost_includes_tax: null, create_key: createRequestId(), post_key: createRequestId(), reverse_key: createRequestId() });
+    Object.assign(meta, { id: null, version: null, status: 'draft', cost_includes_tax: null, create_key: createRequestId(), post_key: createRequestId(), reverse_key: createRequestId(), revise_key: createRequestId() });
     pending.value = null;
     clearMessages();
     markClean();
@@ -538,7 +550,7 @@ async function loadInvoice(id) {
         if (current !== loadSequence) return;
         pending.value = null;
         applyInvoice(invoice);
-        Object.assign(meta, { post_key: createRequestId(), reverse_key: createRequestId() });
+        Object.assign(meta, { post_key: createRequestId(), reverse_key: createRequestId(), revise_key: createRequestId() });
     } catch (error) {
         if (current === loadSequence) loadError.value = describeError(error);
     } finally {
@@ -593,6 +605,7 @@ function adoptSaved(invoice, lineCount, submitted = null) {
     if (!rows.value.length) rows.value = [newRow()];
     if (submitted === null) markClean();
     else meta.baseline = submitted;
+    if (meta.baseline === serialize()) clearBackup();
     emit('saved', summaryOf(invoice, lineCount));
 }
 
@@ -668,6 +681,7 @@ function finishPosted(invoice, mode) {
     const label = `${invoice.supplier_invoice_no || form.supplier_invoice_no} · ${invoice.supplier_name || supplierLabel()} · JD ${money(invoice.total ?? totals.value.total)}`;
     emit('saved', summaryOf({ ...invoice, status: invoice.status || 'posted' }, rows.value.filter(isEntered).length));
     pending.value = null;
+    clearBackup();
     if (mode === 'new') {
         resetToNew();
         note.value = `${t('Posted invoice')} ${label}`;
@@ -706,6 +720,31 @@ function finishReversed(invoice) {
     note.value = t('Invoice reversed.');
 }
 
+async function reviseInvoice() {
+    if (busy.value || pending.value || meta.status === 'draft' || !meta.id) return;
+    busy.value = true;
+    try {
+        const question = meta.status === 'posted'
+            ? t('Edit this posted invoice? It is reversed (its stock is undone) and reopened as a new draft with the same lines. Post the draft again after editing.')
+            : t('Reopen this reversed invoice as a new draft with the same lines?');
+        if (!await ask(`${question} ${form.supplier_invoice_no} · JD ${money(totals.value.total)}`, t('Edit invoice'))) return;
+        clearMessages();
+        try {
+            const { invoice, reversed } = await purchasesApi.reviseInvoice(meta.id, meta.reverse_key, meta.revise_key);
+            emit('saved', summaryOf(reversed, reversed.lines?.length || 0));
+            applyInvoice(invoice);
+            Object.assign(meta, { create_key: createRequestId(), post_key: createRequestId(), reverse_key: createRequestId(), revise_key: createRequestId() });
+            emit('saved', summaryOf(invoice, invoice.lines?.length || 0));
+            note.value = t('The invoice was reversed and reopened as a draft. Edit it, then post it again.');
+        } catch (error) {
+            // Keys are kept: pressing Edit invoice again finishes the same correction without repeating it.
+            showFailure(error);
+        }
+    } finally {
+        busy.value = false;
+    }
+}
+
 async function deleteDraft() {
     if (busy.value || locked.value || !meta.id) return;
     busy.value = true;
@@ -725,6 +764,7 @@ async function deleteDraft() {
     }
 }
 function finishDeleted(id) {
+    clearBackup();
     emit('deleted', id);
     resetToNew();
     note.value = t('Draft deleted.');
@@ -803,7 +843,11 @@ async function reloadFromServer() {
 async function confirmDiscard() {
     if (busy.value) return false;
     if (pending.value) return ask(t('The result is unconfirmed. Check it before leaving. Leave anyway?'), t('Unconfirmed result'));
-    if (dirty.value) return ask(t('Discard the unsaved changes to this invoice?'), t('Unsaved changes'));
+    if (dirty.value) {
+        const discard = await ask(t('Discard the unsaved changes to this invoice?'), t('Unsaved changes'));
+        if (discard) clearBackup();
+        return discard;
+    }
     return true;
 }
 
@@ -812,8 +856,77 @@ function focusNewLine() {
     addRow();
 }
 
-onMounted(() => { if (props.openId) loadInvoice(props.openId); else focusSupplier(); });
-onBeforeUnmount(() => { loadSequence += 1; insightSequence += 1; clearTimeout(insightTimer); });
+// Local recovery copy -----------------------------------------------------
+// Every unsaved change is mirrored to this device so a power cut or a closed tab does not lose
+// a long invoice. It is removed once the invoice is saved, posted, deleted or knowingly discarded.
+const backupKey = `pos_purchase_backup_${props.itemKind}`;
+const backupOffer = ref(null);
+let backupTimer = null;
+
+function readBackup() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(backupKey) || 'null');
+        return saved && Array.isArray(saved.rows) && saved.form ? saved : null;
+    } catch {
+        return null;
+    }
+}
+function clearBackup() {
+    clearTimeout(backupTimer);
+    backupOffer.value = null;
+    try { localStorage.removeItem(backupKey); } catch { /* storage unavailable */ }
+}
+function writeBackup() {
+    if (readOnly.value || loading.value || backupOffer.value || !dirty.value) return;
+    const entered = rows.value.filter(row => row.item || !isBlankRow(row)).map(({ key, ...row }) => row);
+    try {
+        localStorage.setItem(backupKey, JSON.stringify({ saved_at: Date.now(), id: meta.id, version: meta.version, form: { ...form }, rows: entered }));
+    } catch { /* storage full or unavailable: the server draft is still the record */ }
+}
+watch([snapshot, () => meta.id], () => {
+    clearTimeout(backupTimer);
+    backupTimer = setTimeout(writeBackup, 400);
+});
+
+function offerBackup() {
+    const saved = readBackup();
+    if (!saved) return;
+    if (props.openId && saved.id !== props.openId) return;
+    if (!saved.rows.some(row => row.item) && !saved.form.supplier_id) return;
+    backupOffer.value = {
+        id: saved.id,
+        when: new Date(saved.saved_at).toLocaleString(),
+        lines: saved.rows.filter(row => row.item).length,
+    };
+}
+async function restoreBackup() {
+    const saved = readBackup();
+    if (!saved) { backupOffer.value = null; return; }
+    if (saved.id && meta.id !== saved.id) await loadInvoice(saved.id);
+    if (saved.id && (meta.id !== saved.id || meta.status !== 'draft')) {
+        errorText.value = t('The saved draft is no longer editable, so the recovery copy could not be applied.');
+        return;
+    }
+    Object.assign(form, saved.form);
+    await nextTick();
+    rows.value = saved.rows.map(row => newRow(row));
+    ensureTrailingBlank();
+    if (!rows.value.length) rows.value = [newRow()];
+    backupOffer.value = null;
+    clearMessages();
+    note.value = t('The unsaved invoice was restored. Save it as a draft or post it.');
+    writeBackup();
+}
+async function discardBackup() {
+    if (!await ask(t('Discard the recovered invoice? It cannot be restored afterwards.'), t('Discard it'))) return;
+    clearBackup();
+}
+
+onMounted(async () => {
+    if (props.openId) await loadInvoice(props.openId); else focusSupplier();
+    offerBackup();
+});
+onBeforeUnmount(() => { loadSequence += 1; insightSequence += 1; clearTimeout(insightTimer); clearTimeout(backupTimer); writeBackup(); });
 
 const unsaved = computed(() => dirty.value || !!pending.value);
 defineExpose({ saveDraft, requestPost, focusNewLine, focusSupplier, confirmDiscard, dirty, busy, unsaved, resetToNew });
