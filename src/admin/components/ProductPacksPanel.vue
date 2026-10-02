@@ -70,7 +70,7 @@ async function load() {
         packs.value = (data.packs || []).map(view);
         dirty.value = false;
     } catch (failure) {
-        if (current === sequence) error.value = failure instanceof Error ? failure.message : t('Unable to load the packs.');
+        if (current === sequence) error.value = failure instanceof Error ? t(failure.message) : t('Unable to load the packs.');
     } finally {
         if (current === sequence) loading.value = false;
     }
@@ -109,7 +109,7 @@ async function save() {
         notice.value = t('Packs saved.');
         emit('saved', data.packs || []);
     } catch (failure) {
-        error.value = failure instanceof Error ? failure.message : t('Unable to save the packs.');
+        error.value = failure instanceof Error ? t(failure.message) : t('Unable to save the packs.');
     } finally {
         saving.value = false;
         emit('busy', false);
