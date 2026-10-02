@@ -5,9 +5,18 @@
                 <h3>{{ $t('Stock levels') }}</h3>
                 <p>{{ $t('Unknown quantity is not zero.') }}</p>
             </div>
-            <button type="button" class="control" :disabled="loading" @click="reload">{{ $t('Refresh') }}</button>
+            <div class="working-actions">
+                <button type="button" class="control" :disabled="loading || !!exporting" @click="exportExcel">
+                    <i :class="exporting === 'excel' ? 'fa-solid fa-circle-notch fa-spin' : 'fa-solid fa-file-excel'" aria-hidden="true"></i> {{ $t('Export to Excel') }}
+                </button>
+                <button type="button" class="control" :disabled="loading || !!exporting" @click="exportPdf">
+                    <i :class="exporting === 'pdf' ? 'fa-solid fa-circle-notch fa-spin' : 'fa-solid fa-file-pdf'" aria-hidden="true"></i> {{ $t('Print PDF') }}
+                </button>
+                <button type="button" class="control" :disabled="loading" @click="reload">{{ $t('Refresh') }}</button>
+            </div>
         </header>
         <p v-if="error" role="alert">{{ $t(error) }} <button type="button" @click="reload">{{ $t('Retry') }}</button></p>
+        <p v-if="exportError" role="alert">{{ $t(exportError) }}</p>
         <div class="working-filters">
             <label>{{ $t('Search') }}<input v-model="search" type="search" :placeholder="$t('Name')"></label>
             <label>{{ $t('Attention') }}<select v-model="attention">
@@ -56,6 +65,9 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { fetchJson } from '@/shared/http.js';
+import { currentLanguage, getDirection, t } from '@/shared/i18n.js';
+import { currentBusinessDate } from '@/utils/businessDate.js';
+import { exportTableExcel, printHtml, tableReportHtml } from '../utils/reportExport.js';
 
 const OTHER_ITEMS = 'Other items'; // the backend's label for products without a category
 const items = ref([]);
@@ -106,6 +118,81 @@ async function load(reset = true) {
     }
 }
 
+// Exports cover every item that matches the current filters, not only the loaded page.
+const exporting = ref('');
+const exportError = ref('');
+
+async function fetchAll() {
+    const all = [];
+    let cursor = null;
+    do {
+        const data = await fetchJson(`api/admin/stock/items?${new URLSearchParams(query({ limit: '100', ...(cursor ? { cursor } : {}) }))}`);
+        if (!data.success) throw new Error(data.message || 'Load failed.');
+        all.push(...(data.items || []));
+        cursor = data.next_cursor || null;
+    } while (cursor);
+    return all;
+}
+
+function groupOf(item) {
+    if (item.kind === 'ingredient') return t('Ingredients');
+    return item.group_label === OTHER_ITEMS ? t('Other items') : item.group_label;
+}
+
+function exportTable(list) {
+    const header = [t('Item'), t('Group'), t('Kind'), t('Expected balance'), t('Unit'), t('Attention')];
+    const rows = list.map(item => [
+        item.name,
+        groupOf(item),
+        t(item.kind === 'ingredient' ? 'Ingredient' : 'Product'),
+        item.quantity_known ? formatQuantity(item.quantity) : t('Not counted yet'),
+        t(unitLabel(item.base_unit)),
+        t(attentionLabel(item.attention)),
+    ]);
+    const filters = [
+        kind.value !== 'all' ? t(kind.value === 'product' ? 'Products' : 'Ingredients') : '',
+        attention.value ? t(attentionLabel(attention.value)) : '',
+        search.value.trim(),
+    ].filter(Boolean).join(' · ');
+    return {
+        header,
+        rows,
+        options: {
+            title: t('Stock levels'),
+            period: [currentBusinessDate(), filters].filter(Boolean).join(' · '),
+            fileBase: `stock-levels_${currentBusinessDate()}`,
+            rtl: getDirection(currentLanguage.value) === 'rtl',
+            numeric: [3],
+            footer: `${rows.length} ${t('Items')}`,
+        },
+    };
+}
+
+async function runExport(type) {
+    if (exporting.value) return;
+    exporting.value = type;
+    exportError.value = '';
+    try {
+        const { header, rows, options } = exportTable(await fetchAll());
+        if (type === 'excel') {
+            await exportTableExcel(header, rows.map(row => {
+                const copy = [...row];
+                const amount = Number(copy[3]);
+                if (copy[3] !== '' && Number.isFinite(amount)) copy[3] = amount;
+                return copy;
+            }), options);
+        } else {
+            printHtml(tableReportHtml(header, rows, options));
+        }
+    } catch (caught) {
+        exportError.value = caught.message || 'Export failed';
+    } finally {
+        exporting.value = '';
+    }
+}
+const exportExcel = () => runExport('excel');
+const exportPdf = () => runExport('pdf');
+
 function reload() { nextCursor.value = null; return load(true); }
 function loadMore() { if (nextCursor.value) return load(false); }
 
@@ -122,6 +209,8 @@ onUnmounted(() => { sequence++; clearTimeout(debounce); });
 .stock-working { min-width: 0; padding: 16px; color: #273544; font-size: 13px; }
 .working-heading { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
 .working-heading > div { min-width: 0; }
+.working-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.working-actions .control { display: inline-flex; align-items: center; gap: 6px; }
 .working-heading h3 { font-size: 20px; font-weight: 700; }
 .working-heading p { color: #66717f; margin-top: 4px; }
 .working-filters { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }

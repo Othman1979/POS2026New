@@ -3,8 +3,11 @@ import { effectScope, nextTick } from 'vue';
 
 vi.mock('vue', async original => ({ ...await original(), useSSRContext: () => ({ modules: new Set() }), onMounted: vi.fn(), onUnmounted: vi.fn() }));
 vi.mock('@/shared/http.js', () => ({ fetchJson: vi.fn() }));
+vi.mock('@/utils/businessDate.js', () => ({ currentBusinessDate: () => '2026-10-02' }));
+vi.mock('../../utils/reportExport.js', () => ({ exportTableExcel: vi.fn(), printHtml: vi.fn(), tableReportHtml: vi.fn(() => '<html>') }));
 import List from '../StockWorkingList.vue';
 import { fetchJson } from '@/shared/http.js';
+import { exportTableExcel, printHtml, tableReportHtml } from '../../utils/reportExport.js';
 
 let scope, state;
 const page = (items, extra = {}) => ({ success: true, items, next_cursor: extra.next_cursor || null });
@@ -71,5 +74,36 @@ describe('bounded stock working list', () => {
         const html = await renderToString(app);
         const small = [...html.matchAll(/<small[^>]*>([^<]*)<\/small>/g)].map(match => match[1]);
         expect(small).toEqual(['Products', 'AR(Ingredients)', 'AR(Other items)']);
+    });
+});
+
+describe('stock levels export', () => {
+    it('exports every page that matches the filters, with balances as numbers in Excel', async () => {
+        fetchJson.mockResolvedValue(page([]));
+        state.kind.value = 'product';
+        await nextTick();
+        fetchJson.mockReset();
+        fetchJson
+            .mockResolvedValueOnce(page([{ item_key: 'product:1', kind: 'product', name: 'Cola', group_label: 'Drinks', base_unit: 'unit', quantity_known: true, quantity: '24.000000', attention: 'ok' }], { next_cursor: 'c2' }))
+            .mockResolvedValueOnce(page([{ item_key: 'product:2', kind: 'product', name: 'Gum', group_label: 'Other items', base_unit: 'unit', quantity_known: false, quantity: null, attention: 'unknown' }]));
+        await state.exportExcel();
+        expect(fetchJson.mock.calls.map(([url]) => url)).toEqual([
+            'api/admin/stock/items?limit=100&kind=product',
+            'api/admin/stock/items?limit=100&kind=product&cursor=c2',
+        ]);
+        const [, rows, options] = exportTableExcel.mock.calls[0];
+        expect(rows.map(row => [row[0], row[1], row[3]])).toEqual([['Cola', 'Drinks', 24], ['Gum', 'Other items', 'Not counted yet']]);
+        expect(options).toMatchObject({ fileBase: 'stock-levels_2026-10-02', footer: '2 Items' });
+        expect(state.exporting.value).toBe('');
+    });
+
+    it('prints the same rows as an A4 table and reports a failed load', async () => {
+        fetchJson.mockResolvedValueOnce(page([{ item_key: 'ingredient:1', kind: 'ingredient', name: 'Flour', base_unit: 'g', quantity_known: true, quantity: '1500.500000', attention: 'low' }]));
+        await state.exportPdf();
+        expect(tableReportHtml.mock.calls[0][1]).toEqual([['Flour', 'Ingredients', 'Ingredient', '1500.5', 'Grams', 'Low']]);
+        expect(printHtml).toHaveBeenCalledWith('<html>');
+        fetchJson.mockResolvedValueOnce({ success: false, message: 'Load failed.' });
+        await state.exportPdf();
+        expect(state.exportError.value).toBe('Load failed.');
     });
 });

@@ -3583,5 +3583,6 @@
   "Discard it": "تجاهلها",
   "The saved draft is no longer editable, so the recovery copy could not be applied.": "المسودة المحفوظة لم تعد قابلة للتعديل، فتعذّر استرجاع النسخة.",
   "The unsaved invoice was restored. Save it as a draft or post it.": "استُرجعت الفاتورة غير المحفوظة. احفظها كمسودة أو رحّلها.",
-  "Discard the recovered invoice? It cannot be restored afterwards.": "تجاهل الفاتورة المسترجعة؟ لن تستطيع استرجاعها بعد ذلك."
+  "Discard the recovered invoice? It cannot be restored afterwards.": "تجاهل الفاتورة المسترجعة؟ لن تستطيع استرجاعها بعد ذلك.",
+  "Group": "المجموعة"
 }

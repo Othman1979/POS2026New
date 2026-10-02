@@ -81,10 +81,50 @@ tr { page-break-inside: avoid; }
 
 export function printReportPdf(root, { title, period, rtl }) {
     const styles = [...document.querySelectorAll('style, link[rel="stylesheet"]')].map(node => node.outerHTML).join('');
+    printHtml(reportPrintHtml(root, { title, period, rtl, styles }));
+}
+
+// Data-driven variants for screens that page their rows: the caller passes every row, not the visible page.
+export async function exportTableExcel(header, rows, { title, period, fileBase, rtl }) {
+    const XLSX = await import('xlsx');
+    const sheet = XLSX.utils.aoa_to_sheet([[title], [period], [], header, ...rows]);
+    sheet['!cols'] = header.map((label, index) => ({
+        wch: Math.min(60, Math.max(10, String(label).length + 2, ...rows.map(row => String(row[index] ?? '').length + 2))),
+    }));
+    const workbook = XLSX.utils.book_new();
+    if (rtl) workbook.Workbook = { Views: [{ RTL: true }] };
+    XLSX.utils.book_append_sheet(workbook, sheet, String(title).slice(0, 31).replace(/[\\/?*[\]:]/g, ' ') || 'Report');
+    XLSX.writeFile(workbook, `${fileBase}.xlsx`);
+}
+
+export function tableReportHtml(header, rows, { title, period, rtl, numeric = [], footer = '' }) {
+    const align = index => (numeric.includes(index) ? ' class="num"' : '');
+    const head = header.map((label, index) => `<th${align(index)}>${escapeHtml(label)}</th>`).join('');
+    const body = rows.map(row => `<tr>${row.map((value, index) => `<td${align(index)}>${escapeHtml(value ?? '')}</td>`).join('')}</tr>`).join('');
+    return `<!doctype html><html lang="${rtl ? 'ar' : 'en'}" dir="${rtl ? 'rtl' : 'ltr'}"><head><meta charset="utf-8"><title>${escapeHtml(title)}</title>
+<style>
+@page { size: A4; margin: 12mm; }
+body { margin: 0; color: #18181b; font: 12px system-ui, "Segoe UI", Tahoma, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #18181b; padding-bottom: 6px; margin-bottom: 10px; }
+h1 { margin: 0; font-size: 18px; }
+header p { margin: 0; color: #52525b; }
+table { width: 100%; border-collapse: collapse; }
+thead { display: table-header-group; }
+th { background: #f4f4f5; font-weight: 700; }
+th, td { border: 1px solid #d4d4d8; padding: 5px 8px; text-align: start; }
+tbody tr:nth-child(even) td { background: #fafafa; }
+tr { page-break-inside: avoid; }
+.num { text-align: end; font-variant-numeric: tabular-nums; white-space: nowrap; }
+footer { margin-top: 8px; color: #52525b; }
+</style></head><body><header><h1>${escapeHtml(title)}</h1><p dir="ltr">${escapeHtml(period)}</p></header>
+<table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>${footer ? `<footer>${escapeHtml(footer)}</footer>` : ''}</body></html>`;
+}
+
+export function printHtml(html) {
     const frame = document.createElement('iframe');
     frame.setAttribute('aria-hidden', 'true');
     frame.style.cssText = 'position:fixed;width:0;height:0;border:0;inset-inline-start:-9999px';
-    frame.srcdoc = reportPrintHtml(root, { title, period, rtl, styles });
+    frame.srcdoc = html;
     frame.onload = () => {
         const view = frame.contentWindow;
         view.addEventListener('afterprint', () => frame.remove(), { once: true });
