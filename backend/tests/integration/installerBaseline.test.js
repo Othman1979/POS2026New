@@ -21,7 +21,7 @@ function fakeExecutor() {
 describe('fresh database baseline', () => {
     it('contains the current POS schema without retired purchasing tables or business rows', () => {
         const sql = fs.readFileSync(baselinePath, 'utf8');
-        expect((sql.match(/^CREATE TABLE /gm) || []).length).toBe(74);
+        expect((sql.match(/^CREATE TABLE /gm) || []).length).toBe(75);
         expect(sql).not.toMatch(/CREATE TABLE (?:subscription_|customer_subscription)/);
         expect(sql).toContain('CREATE TABLE deleted (');
         expect(sql).toContain('CREATE TABLE IF NOT EXISTS table_action_operations');

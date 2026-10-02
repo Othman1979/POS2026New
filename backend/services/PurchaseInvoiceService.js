@@ -17,7 +17,7 @@ const posting = require('./StockDocumentPosting');
 const { taxRegistrationTypeFromSettings } = require('../config/taxRegistration');
 const { getBusinessDate } = require('../utils/businessDate');
 
-const MAX_LINES = 100;
+const MAX_LINES = 200;
 const LOCK_WAIT_SECONDS = 3;
 const TAX_RATES = [0, 4, 16];
 const KEY_PATTERN = /^[A-Za-z0-9_-]{8,64}$/;
@@ -120,8 +120,11 @@ function normalizeLines(input) {
             fail(400, code, `${at}: tax rate must be 0, 4 or 16.`);
         }
         const unitLabel = text(raw.unit_label, 40, { code, label: `${at} unit`, required: true });
+        // Free goods on the line, in base units: received with it without changing what was paid.
+        const bonus = raw.bonus_qty == null || String(raw.bonus_qty).trim() === ''
+            ? 0n : parseDecimal(raw.bonus_qty, 3, { code, label: `${at} bonus`, max: 9999999 });
         if (baseQuantity(qty, factor) <= 0n) fail(400, code, `${at}: quantity is too small for its unit.`);
-        if (baseQuantity(qty, factor) > 9999999999999999n) fail(400, code, `${at}: quantity is too large.`);
+        if (baseQuantity(qty, factor) + bonus * 1000n > 9999999999999999n) fail(400, code, `${at}: quantity is too large.`);
         const subtotal = lineSubtotal(qty, price);
         const tax = lineTax(subtotal, rate);
         return {
@@ -130,6 +133,7 @@ function normalizeLines(input) {
             product_id: item.kind === 'product' ? item.id : null,
             ingredient_id: item.kind === 'ingredient' ? item.id : null,
             qty: format(qty, 3),
+            bonus_qty: format(bonus, 3),
             unit_label: unitLabel,
             unit_factor: format(factor, 6),
             unit_price: format(price, 4),
@@ -184,6 +188,7 @@ function shapeLine(row, lastBefore) {
         name: row.name,
         base_unit: row.base_unit,
         qty: Number(row.qty),
+        bonus_qty: Number(row.bonus_qty || 0),
         unit_label: row.unit_label,
         unit_factor: Number(row.unit_factor),
         unit_price: Number(row.unit_price),
@@ -376,7 +381,7 @@ async function searchItems(pool, { q, supplierId, categoryId, barcode, limit, ki
 // supplier, the latest from `supplierId`, the quantity-weighted average price before tax, and the
 // current quantity. Prices are per base unit so lines bought in different packs compare directly.
 async function itemInsights(pool, { kind, itemKeys, supplierId }) {
-    const keys = [...new Set(itemKeys)].filter((key) => items.parseKey(key)?.kind === kind).slice(0, 100);
+    const keys = [...new Set(itemKeys)].filter((key) => items.parseKey(key)?.kind === kind).slice(0, MAX_LINES);
     if (!keys.length) return [];
     const filter = itemFilter('l', keys);
     const latest = async (bySupplier) => {
@@ -407,7 +412,7 @@ async function itemInsights(pool, { kind, itemKeys, supplierId }) {
         latest(false),
         supplierId ? latest(true) : new Map(),
         pool.query(
-            `SELECT ${itemKeySql('l')} AS item_key, SUM(l.line_subtotal) AS amount, SUM(l.qty * l.unit_factor) AS base_qty
+            `SELECT ${itemKeySql('l')} AS item_key, SUM(l.line_subtotal) AS amount, SUM(l.qty * l.unit_factor + l.bonus_qty) AS base_qty
                FROM stock_document_lines l
                JOIN stock_documents d ON d.id = l.document_id
               WHERE ${filter.sql} AND d.doc_type = 'purchase' AND d.status = 'posted' AND l.unit_price IS NOT NULL AND l.qty > 0
@@ -541,8 +546,8 @@ async function checkReferences(pool, { supplierId, lines, kind, currentSupplierI
 
 const insertLines = (conn, invoiceId, lines) => conn.query(
     `INSERT INTO stock_document_lines
-        (document_id, line_no, product_id, ingredient_id, qty, unit_label, unit_factor, unit_price, tax_rate, line_subtotal, line_tax, line_total) VALUES ?`,
-    [lines.map((line) => [invoiceId, line.line_no, line.product_id, line.ingredient_id, line.qty, line.unit_label, line.unit_factor,
+        (document_id, line_no, product_id, ingredient_id, qty, bonus_qty, unit_label, unit_factor, unit_price, tax_rate, line_subtotal, line_tax, line_total) VALUES ?`,
+    [lines.map((line) => [invoiceId, line.line_no, line.product_id, line.ingredient_id, line.qty, line.bonus_qty, line.unit_label, line.unit_factor,
         line.unit_price, line.tax_rate, line.line_subtotal, line.line_tax, line.line_total])]);
 
 function duplicateInvoice() {
@@ -671,17 +676,18 @@ async function readPostingSource(pool, id) {
     const [[header]] = await pool.query(`${HEADER_SELECT} WHERE d.id = ? AND d.doc_type = 'purchase'`, [id]);
     if (!header) fail(404, 'PURCHASE_INVOICE_NOT_FOUND', 'Purchase invoice not found.');
     const [lines] = await pool.query(
-        `SELECT l.line_no, ${itemKeySql('l')} AS item_key, l.qty, l.unit_factor, l.line_subtotal, l.line_total
+        `SELECT l.line_no, ${itemKeySql('l')} AS item_key, l.qty, CAST(l.bonus_qty AS CHAR) AS bonus_qty, l.unit_factor, l.line_subtotal, l.line_total
            FROM stock_document_lines l WHERE l.document_id = ? ORDER BY l.line_no`, [id]);
     return { header, lines };
 }
 
-// Base quantities and cost per base unit for each line, exactly.
+// Base quantities (bought plus bonus) and cost per base unit for each line, exactly.
 function planLines(lines, costIncludesTax) {
     return lines.map((line) => {
         const qty = parseDecimal(line.qty, 3, { code: 'PURCHASE_INVOICE_LINES_INVALID', label: 'Quantity', max: 9999999, positive: true });
         const factor = parseDecimal(line.unit_factor, 6, { code: 'PURCHASE_INVOICE_LINES_INVALID', label: 'Unit factor', max: 9999999, positive: true });
-        const base = baseQuantity(qty, factor);
+        const bonus = parseDecimal(line.bonus_qty ?? '0', 6, { code: 'PURCHASE_INVOICE_LINES_INVALID', label: 'Bonus', max: 9999999999 });
+        const base = baseQuantity(qty, factor) + bonus;
         const amount = parseDecimal(costIncludesTax ? line.line_total : line.line_subtotal, 3, { code: 'PURCHASE_INVOICE_LINES_INVALID', label: 'Amount', max: 99999999999 });
         // Zero-priced goods carry no price: they must not drag the purchase-average estimate to zero.
         const cost = amount === 0n ? null : format(divRound(amount * 1000n * pow10(8), base), 8);
@@ -768,9 +774,58 @@ async function reverseInvoice(pool, { id, body, actor, ipAddress }) {
     });
 }
 
+// Correcting a posted invoice: undo its stock, free its supplier number on the reversed
+// copy, and reopen the same header and lines as a new draft to edit and post again.
+const reopenedSuffix = (id) => `-R${id}`;
+function originalReference(reference, id) {
+    const suffix = reopenedSuffix(id);
+    return reference.endsWith(suffix) ? reference.slice(0, -suffix.length) : reference;
+}
+
+async function reviseInvoice(pool, { id, body, actor, ipAddress }) {
+    const reverseKey = requestKey(body.request_key, 'request_key');
+    const clientKey = requestKey(body.client_key, 'client_key');
+    let source = await getInvoice(pool, id);
+    if (source.status === 'draft') fail(409, 'PURCHASE_INVOICE_NOT_POSTED', 'Only a posted or reversed invoice can be reopened.');
+    let scope = null;
+    if (source.status === 'posted') {
+        const reversed = await reverseInvoice(pool, { id, body: { request_key: reverseKey }, actor, ipAddress });
+        source = reversed.invoice;
+        scope = reversed.scope;
+    }
+    const original = originalReference(source.supplier_invoice_no, id);
+    const suffix = reopenedSuffix(id);
+    const renamed = `${original.slice(0, 60 - suffix.length)}${suffix}`;
+    await pool.query(
+        "UPDATE stock_documents SET reference = ?, version = version + 1 WHERE id = ? AND doc_type = 'purchase' AND status = 'reversed' AND reference = ?",
+        [renamed, id, original]);
+    const { invoice, replay } = await createDraft(pool, {
+        client_key: clientKey,
+        kind: source.item_kind,
+        supplier_id: source.supplier_id,
+        supplier_invoice_no: original,
+        invoice_date: source.invoice_date,
+        payment_status: source.payment_status,
+        paper_total: source.paper_total,
+        notes: source.notes,
+        lines: source.lines.map((line) => ({
+            item_key: line.item_key, qty: line.qty, bonus_qty: line.bonus_qty, unit_label: line.unit_label,
+            unit_factor: line.unit_factor, unit_price: line.unit_price, tax_rate: line.tax_rate,
+        })),
+    }, actor);
+    if (!replay) {
+        await appendAuditEvent(pool, {
+            eventType: 'purchase_invoice_reopened', userId: actor.id, entityType: 'purchase_invoice', entityId: id,
+            newValue: { draft_id: invoice.id, supplier_id: source.supplier_id, supplier_invoice_no: original, request_key: clientKey },
+            ipAddress: ipAddress || null,
+        });
+    }
+    return { invoice, reversed: await loadInvoice(pool, id), scope };
+}
+
 module.exports = {
     PurchaseError, purchaseKind, listSuppliers, createSupplier, updateSupplier, searchItems, itemInsights, listCategories, listInvoices,
-    lastInvoiceForSupplier, getInvoice, createDraft, updateDraft, deleteDraft, postInvoice, reverseInvoice,
+    lastInvoiceForSupplier, getInvoice, createDraft, updateDraft, deleteDraft, postInvoice, reverseInvoice, reviseInvoice,
     // exported for tests
     lineSubtotal, lineTax, baseQuantity,
 };

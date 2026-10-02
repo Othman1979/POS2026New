@@ -219,3 +219,66 @@ describe('purchase invoice starts-tracking cue', () => {
         expect(editor.startsTracking(row)).toBe(false);
     });
 });
+
+describe('purchase invoice editor corrections and recovery', () => {
+    const storage = () => {
+        const data = new Map();
+        return { getItem: key => data.get(key) ?? null, setItem: (key, value) => data.set(key, String(value)), removeItem: key => data.delete(key), data };
+    };
+
+    it('reopens a posted invoice as a draft through one keyed request and lists both', async () => {
+        editor.meta.id = 5;
+        editor.meta.status = 'posted';
+        const { reverse_key: reverseKey, revise_key: reviseKey } = editor.meta;
+        purchasesApi.reviseInvoice = vi.fn().mockResolvedValue({
+            reversed: serverInvoice({ status: 'reversed', supplier_invoice_no: 'A-1-R5' }),
+            invoice: serverInvoice({ id: 9, lines: [{ item_key: 'product:11', name: 'Milk', base_unit: 'ml', qty: 2, unit_label: 'box', unit_factor: 12000, unit_price: 10, tax_rate: 16 }] }),
+        });
+        await editor.reviseInvoice();
+        expect(purchasesApi.reviseInvoice).toHaveBeenCalledWith(5, reverseKey, reviseKey);
+        expect(events('saved').map(invoice => [invoice.id, invoice.status])).toEqual([[5, 'reversed'], [9, 'draft']]);
+        expect(editor.meta).toMatchObject({ id: 9, status: 'draft' });
+        expect(editor.rows.value.filter(row => row.item).map(row => row.item.item_key)).toEqual(['product:11']);
+        expect(editor.meta.revise_key).not.toBe(reviseKey);
+    });
+
+    it('does not reopen when the manager declines', async () => {
+        editor.meta.id = 5;
+        editor.meta.status = 'posted';
+        confirm.mockResolvedValue(false);
+        purchasesApi.reviseInvoice = vi.fn();
+        await editor.reviseInvoice();
+        expect(purchasesApi.reviseInvoice).not.toHaveBeenCalled();
+    });
+
+    it('mirrors unsaved lines to the device, offers them to a new editor, and restores them', async () => {
+        const local = storage();
+        vi.stubGlobal('localStorage', local);
+        editor.writeBackup();
+        const saved = JSON.parse(local.data.get('pos_purchase_backup_product'));
+        expect(saved.form).toMatchObject({ supplier_id: 3, supplier_invoice_no: 'A-1' });
+        expect(saved.rows.map(row => row.item?.item_key)).toEqual(['product:11', 'product:12']);
+
+        scope.stop();
+        scope = effectScope();
+        editor = makeEditor('product');
+        editor.offerBackup();
+        expect(editor.backupOffer.value).toMatchObject({ id: null, lines: 2 });
+        await editor.restoreBackup();
+        expect(editor.form.supplier_invoice_no).toBe('A-1');
+        expect(editor.rows.value.filter(row => row.item).map(row => [row.item.item_key, row.qty, row.unit_price])).toEqual([['product:11', 2, 10], ['product:12', '', '']]);
+        expect(editor.backupOffer.value).toBeNull();
+        expect(editor.dirty.value).toBe(true);
+    });
+
+    it('drops the device copy once the invoice is saved', async () => {
+        const local = storage();
+        vi.stubGlobal('localStorage', local);
+        editor.writeBackup();
+        expect(local.data.has('pos_purchase_backup_product')).toBe(true);
+        purchasesApi.createInvoice.mockResolvedValue(serverInvoice());
+        editor.rows.value = editor.rows.value.slice(0, 1);
+        await editor.saveDraft();
+        expect(local.data.has('pos_purchase_backup_product')).toBe(false);
+    });
+});

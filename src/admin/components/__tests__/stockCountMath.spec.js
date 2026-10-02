@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-    canonQty, formatThousandths, groupName, nextIndex, parseQty, sameUnit, sortByAbsValue, sumValues, toBaseQty, toThousandths, trimQty, unitKey, unitOptionText,
+    canonQty, formatThousandths, groupName, mixedBaseQty, nextIndex, parseQty, sameUnit, sortByAbsValue, sumValues, toBaseQty, toThousandths, trimQty, unitKey, unitOptionText,
 } from '../counts/countMath.js';
 
 describe('parseQty', () => {
@@ -105,5 +105,18 @@ describe('navigation and ordering', () => {
             { name: 'd', variance_value: '0.000' },
         ]);
         expect(sorted.map(line => line.name)).toEqual(['c', 'a', 'd', 'b']);
+    });
+});
+
+describe('mixedBaseQty', () => {
+    it('totals a count written in several units in the base unit', () => {
+        expect(mixedBaseQty([{ qty: '3', factor: '20' }, { qty: '7', factor: '1' }])).toEqual({ state: 'ok', value: '67.000' });
+        expect(mixedBaseQty([{ qty: '1', factor: '10000' }, { qty: '2,5', factor: '1000' }, { qty: '', factor: '1' }])).toEqual({ state: 'ok', value: '12500.000' });
+        expect(mixedBaseQty([{ qty: '0', factor: '24' }, { qty: '', factor: '1' }])).toEqual({ state: 'ok', value: '0.000' });
+    });
+
+    it('is empty when nothing is written and invalid when any part is not a number', () => {
+        expect(mixedBaseQty([{ qty: '', factor: '24' }, { qty: ' ', factor: '1' }])).toEqual({ state: 'empty', value: null });
+        expect(mixedBaseQty([{ qty: '2', factor: '24' }, { qty: 'x', factor: '1' }])).toEqual({ state: 'invalid', value: null });
     });
 });

@@ -335,9 +335,22 @@
                                     <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
                                     {{ $t('Reset operational data') }}
                                 </h3>
-                                <p class="mt-2 text-xs leading-relaxed text-rose-700">
-                                    {{ $t('Clears orders, held orders, shifts, expenses, JoFotara documents and print history. Products, categories, customers, users and settings stay intact.') }}
-                                </p>
+                                <div class="mt-3 grid gap-2 sm:grid-cols-2" role="radiogroup">
+                                    <label :class="['flex items-start gap-2 p-3 rounded-lg border cursor-pointer text-xs', maintenanceScope === 'operational' ? 'border-rose-400 bg-card' : 'border-rose-200']">
+                                        <input type="radio" value="operational" v-model="maintenanceScope" class="accent-rose-600 mt-0.5">
+                                        <span>
+                                            <span class="font-semibold block text-rose-800">{{ $t('Operational data only') }}</span>
+                                            <span class="text-rose-700 leading-relaxed block mt-0.5">{{ $t('Clears orders, held orders, shifts, expenses, JoFotara documents and print history. Products, categories, customers, users and settings stay intact.') }}</span>
+                                        </span>
+                                    </label>
+                                    <label :class="['flex items-start gap-2 p-3 rounded-lg border cursor-pointer text-xs', maintenanceScope === 'factory' ? 'border-rose-400 bg-card' : 'border-rose-200']">
+                                        <input type="radio" value="factory" v-model="maintenanceScope" class="accent-rose-600 mt-0.5">
+                                        <span>
+                                            <span class="font-semibold block text-rose-800">{{ $t('Full reset (fresh start)') }}</span>
+                                            <span class="text-rose-700 leading-relaxed block mt-0.5">{{ $t('Also deletes all products, categories, packs, ingredients, recipes, suppliers, customers, purchase invoices, stock counts, stock movements and the activity log. Users, permissions, settings, order types, tables and printers stay.') }}</span>
+                                        </span>
+                                    </label>
+                                </div>
                                 <p class="mt-1 text-[10px] font-semibold text-rose-700">
                                     {{ $t('Use only while terminals are idle, then reload each POS terminal.') }}
                                 </p>
@@ -356,7 +369,7 @@
                                     >
                                         <i v-if="maintenanceResetting" class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>
                                         <i v-else class="fa-solid fa-trash-can" aria-hidden="true"></i>
-                                        {{ $t('Reset operational data') }}
+                                        {{ maintenanceScope === 'factory' ? $t('Reset the whole system') : $t('Reset operational data') }}
                                     </button>
                                 </form>
                             </div>
@@ -1008,6 +1021,7 @@ export default {
         const toastMessage = ref('');
         const maintenancePassword = ref('');
         const maintenanceResetting = ref(false);
+        const maintenanceScope = ref('operational');
         let toastTimeout = null;
 
         // Order Types State
@@ -1276,9 +1290,12 @@ export default {
 
         const resetOperationalData = async () => {
             if (!maintenancePassword.value || maintenanceResetting.value) return;
+            const factory = maintenanceScope.value === 'factory';
+            if (factory && !window.confirm(t('This deletes all products, categories, stock and sales permanently. Continue?'))) return;
             maintenanceResetting.value = true;
             try {
-                const data = await fetchJson('/api/admin/maintenance/reset-operational-data', {
+                const url = factory ? '/api/admin/maintenance/factory-reset' : '/api/admin/maintenance/reset-operational-data';
+                const data = await fetchJson(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ password: maintenancePassword.value })
@@ -1288,7 +1305,7 @@ export default {
                     return;
                 }
                 maintenancePassword.value = '';
-                showToast(t('Operational data was reset.'));
+                showToast(factory ? t('The system was reset to a fresh start.') : t('Operational data was reset.'));
                 await loadData();
             } catch (error) {
                 await window.showAdminAlert(error.message || t('Failed to reset operational data.'));
@@ -1650,7 +1667,7 @@ export default {
             orderTypes, showOrderTypeModal, typeForm, editOrderType, saveOrderType, deleteOrderType, getSubcategories, mainCategories,
             currentDefaultOrderType, isSavingDefaultOrderType, setDefaultOrderType,
             serviceChargeEnabled, serviceChargePercentage, serviceChargeTaxRate, serviceChargeTaxCategory, autoApplyServiceCharge,
-            maintenancePassword, maintenanceResetting, resetOperationalData,
+            maintenancePassword, maintenanceResetting, maintenanceScope, resetOperationalData,
             storeIcon, fileInput, isUploadingIcon, handleIconUpload, handleIconRemove, iconVersion
         };
     }

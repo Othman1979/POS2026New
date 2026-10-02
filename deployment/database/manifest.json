@@ -3,7 +3,7 @@
   "baseline": {
     "id": "posapp-fresh-baseline-v1",
     "file": "baseline.sql",
-    "sha256": "d3261b7e0b5789b5aaacec1e54b44828fdee66da314f2c00f22abf73ffa28cd1"
+    "sha256": "8b87a3528ad3e2d388226832fb89f16717c7a1c3d2293abca8d1e12bae6b66fc"
   },
   "migrations": []
 }

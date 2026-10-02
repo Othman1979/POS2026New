@@ -131,6 +131,17 @@ router.post('/invoices/:id/post', handle(async (req, res) => {
     return sendAdminSuccess(res, { data: result.invoice });
 }));
 
+router.post('/invoices/:id/revise', handle(async (req, res) => {
+    const result = await purchases.reviseInvoice(pool, {
+        id: positive(req.params.id, 'Invoice'),
+        body: req.body || {},
+        actor: actorOf(req),
+        ipAddress: req.ip
+    });
+    if (result.scope) announce(req, result.scope);
+    return sendAdminSuccess(res, { data: { invoice: result.invoice, reversed: result.reversed } });
+}));
+
 router.post('/invoices/:id/reverse', handle(async (req, res) => {
     const result = await purchases.reverseInvoice(pool, { id: positive(req.params.id, 'Invoice'), body: req.body || {}, actor: actorOf(req), ipAddress: req.ip });
     announce(req, result.scope);

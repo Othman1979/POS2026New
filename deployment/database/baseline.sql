@@ -196,6 +196,7 @@ CREATE TABLE categories (
           name varchar(50) NOT NULL,
           is_active tinyint(1) DEFAULT 1,
           is_notes tinyint(1) DEFAULT 0,
+          hide_in_pos tinyint(1) NOT NULL DEFAULT 0,
           price_list_root_id int(11) DEFAULT NULL,
           PRIMARY KEY (id),
           KEY idx_categories_parent_id (parent_id),
@@ -1421,6 +1422,7 @@ CREATE TABLE IF NOT EXISTS stock_document_lines (
   product_id INT NULL,
   ingredient_id INT NULL,
   qty DECIMAL(14,3) NULL,
+  bonus_qty DECIMAL(16,6) NOT NULL DEFAULT 0,
   unit_label VARCHAR(40) NOT NULL,
   unit_factor DECIMAL(16,6) NOT NULL,
   unit_price DECIMAL(14,4) NULL,
@@ -1444,6 +1446,7 @@ CREATE TABLE IF NOT EXISTS stock_document_lines (
     (product_id IS NOT NULL AND ingredient_id IS NULL) OR (product_id IS NULL AND ingredient_id IS NOT NULL)),
   CONSTRAINT ck_stock_document_line_qty CHECK (qty IS NULL OR qty >= 0),
   CONSTRAINT ck_stock_document_line_factor CHECK (unit_factor > 0),
+  CONSTRAINT ck_stock_document_line_bonus CHECK (bonus_qty >= 0),
   CONSTRAINT ck_stock_document_line_price CHECK (unit_price IS NULL OR unit_price >= 0),
   CONSTRAINT ck_stock_document_line_tax CHECK (tax_rate IN (0,4,16))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1457,4 +1460,19 @@ CREATE TABLE IF NOT EXISTS product_barcodes (
   UNIQUE KEY uq_product_barcode (barcode),
   KEY idx_product_barcodes_product (product_id, id),
   CONSTRAINT fk_product_barcodes_product FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS product_packs (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  product_id INT NOT NULL,
+  label VARCHAR(40) NOT NULL,
+  factor DECIMAL(16,6) NOT NULL,
+  sort_order SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  sale_product_id INT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_product_pack_label (product_id, label),
+  UNIQUE KEY uq_product_pack_sale_product (sale_product_id),
+  CONSTRAINT fk_product_packs_product FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE,
+  CONSTRAINT fk_product_packs_sale_product FOREIGN KEY (sale_product_id) REFERENCES products (id) ON DELETE SET NULL,
+  CONSTRAINT ck_product_pack_factor CHECK (factor > 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

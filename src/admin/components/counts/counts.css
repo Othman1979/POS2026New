@@ -222,3 +222,13 @@
     .ct-add { min-width: 0; }
     .ct-title { font-size: 20px; }
 }
+
+/* A count written in several units, under its line. */
+.ct-c-unit { display: flex; align-items: center; gap: 2px; min-width: 0; }
+.ct-mix-toggle { flex: 0 0 auto; width: 28px; height: 28px; border: 0; border-radius: 4px; background: transparent; color: var(--muted); }
+.ct-mix-toggle.is-on, .ct-mix-toggle:hover { background: var(--ink-wash); color: var(--ink); }
+.ct-mix { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding-block: 6px; border-block-end: 1px solid var(--rule); background: var(--ink-wash); }
+.ct-mix .ct-c-no { width: var(--lg-margin); }
+.ct-mix-part { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; }
+.ct-mix-part .lg-cell { width: 72px; }
+.ct-mix-total { font-weight: 800; }

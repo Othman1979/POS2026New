@@ -16,7 +16,7 @@ export class PurchaseApiError extends Error {
 const ERROR_MESSAGES = {
     PURCHASE_INVOICE_DUPLICATE: 'This supplier invoice number was already entered for this supplier.',
     PURCHASE_SUPPLIER_DUPLICATE: 'A supplier with this name already exists.',
-    PURCHASE_INVOICE_LINES_INVALID: 'An invoice needs 1 to 100 lines, and each item can appear only once.',
+    PURCHASE_INVOICE_LINES_INVALID: 'An invoice needs 1 to 200 lines, and each item can appear only once.',
     PURCHASE_INVOICE_STALE: 'This invoice was changed somewhere else. Reload it before saving again.',
     PURCHASE_INVOICE_BUSY: 'Stock is busy right now. Nothing was posted. Try again in a moment.',
     PURCHASE_INVOICE_NOT_FOUND: 'This invoice no longer exists.',
@@ -107,6 +107,10 @@ export const purchasesApi = {
     },
     async postInvoice(id, expectedVersion, requestKey) {
         return (await call(`/invoices/${encodeURIComponent(id)}/post`, { method: 'POST', body: { expected_version: expectedVersion, request_key: requestKey }, timeoutMs: 45000 })).data;
+    },
+    // Reverses a posted invoice and reopens its lines as a new draft: { invoice, reversed }.
+    async reviseInvoice(id, requestKey, clientKey) {
+        return (await call(`/invoices/${encodeURIComponent(id)}/revise`, { method: 'POST', body: { request_key: requestKey, client_key: clientKey }, timeoutMs: 45000 })).data;
     },
     async reverseInvoice(id, requestKey) {
         return (await call(`/invoices/${encodeURIComponent(id)}/reverse`, { method: 'POST', body: { request_key: requestKey }, timeoutMs: 45000 })).data;

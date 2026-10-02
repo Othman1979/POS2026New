@@ -46,6 +46,38 @@ let languageRequestId = 0;
 
 const dynamicTranslations = [
     {
+        pattern: /^Enter how many base units the pack (.+) holds\.$/,
+        ar: ([, label]) => `اكتب عدد الوحدات الأساسية داخل العبوة ${label}.`
+    },
+    {
+        pattern: /^The pack (.+) must hold more or less than one base unit\.$/,
+        ar: ([, label]) => `العبوة ${label} لا يمكن أن تساوي وحدة أساسية واحدة؛ الوحدة الأساسية معرّفة تلقائياً.`
+    },
+    {
+        pattern: /^The sale price of the pack (.+) is invalid\.$/,
+        ar: ([, label]) => `سعر بيع العبوة ${label} غير صالح.`
+    },
+    {
+        pattern: /^A product can have at most ([0-9]+) packs\.$/,
+        ar: ([, count]) => `الحد الأقصى ${count} عبوات للمادة الواحدة.`
+    },
+    {
+        pattern: /^Each pack needs a name of at most ([0-9]+) characters\.$/,
+        ar: ([, count]) => `كل عبوة تحتاج اسماً لا يزيد عن ${count} حرفاً.`
+    },
+    {
+        pattern: /^The pack (.+) is repeated\.$/,
+        ar: ([, label]) => `العبوة ${label} مكررة.`
+    },
+    {
+        pattern: /^Barcode (.+) is repeated on this product\.$/,
+        ar: ([, barcode]) => `الباركود ${barcode} مكرر في هذه المادة.`
+    },
+    {
+        pattern: /^The pack (.+) has sales; clear its sale price to stop selling it instead of removing it\.$/,
+        ar: ([, label]) => `العبوة ${label} لها مبيعات سابقة؛ امسح سعر بيعها لإيقاف بيعها بدلاً من حذفها.`
+    },
+    {
         pattern: /^([0-9]+) selected$/,
         ar: ([, count]) => `${count} عناصر محددة`
     },

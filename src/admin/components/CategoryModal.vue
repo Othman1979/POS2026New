@@ -31,6 +31,13 @@
                             <span>{{ $t('Notes category') }}</span>
                         </label>
                     </div>
+                    <div class="pt-1">
+                        <label class="flex items-center gap-2 cursor-pointer select-none text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                            <input v-model="categoryForm.hide_in_pos" type="checkbox" :true-value="1" :false-value="0" class="accent-primary rounded text-primary focus:ring-0 w-4 h-4 cursor-pointer">
+                            <span>{{ $t('Hide from the POS screen') }}</span>
+                        </label>
+                        <p class="mt-1 text-[10px] font-medium normal-case tracking-normal text-muted-foreground">{{ $t('Its products still sell by scanning their barcode.') }}</p>
+                    </div>
                     <div v-if="!categoryForm.parent_id && !categoryForm.is_notes" class="pt-1">
                         <label class="flex items-center gap-2 cursor-pointer select-none text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                             <input v-model="categoryForm.is_price_list_root" type="checkbox" :true-value="true" :false-value="false" class="accent-primary rounded text-primary focus:ring-0 w-4 h-4 cursor-pointer">
@@ -64,7 +71,7 @@ export default {
     emits: ['close', 'saved'],
     setup(props, { emit }) {
         const categoryForm = ref({
-            id: null, name: '', parent_id: '', is_active: 1, is_notes: 0, is_price_list_root: false
+            id: null, name: '', parent_id: '', is_active: 1, is_notes: 0, hide_in_pos: 0, is_price_list_root: false
         });
 
         const isEditing = computed(() => !!props.category);
@@ -86,11 +93,12 @@ export default {
                     parent_id: category.parent_id || '',
                     is_active: category.is_active ?? 1,
                     is_notes: category.is_notes ?? 0,
+                    hide_in_pos: Number(category.hide_in_pos) === 1 ? 1 : 0,
                     is_price_list_root: Boolean(category.is_price_list_root)
                 };
             } else {
                 categoryForm.value = {
-                    id: null, name: '', parent_id: '', is_active: 1, is_notes: 0, is_price_list_root: false
+                    id: null, name: '', parent_id: '', is_active: 1, is_notes: 0, hide_in_pos: 0, is_price_list_root: false
                 };
             }
         });

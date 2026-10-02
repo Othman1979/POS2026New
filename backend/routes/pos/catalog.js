@@ -95,6 +95,17 @@ router.get('/products', requireAuth, async (req, res) => {
                   AND inactive_root.is_active <> 1
             )`;
 
+        // The grid leaves out categories kept off the POS screen (or under a parent that is) and the sale
+        // entries of packs; both still sell by barcode and search.
+        const visibleCategoryCondition = `COALESCE(c.hide_in_pos, 0) = 0 AND NOT EXISTS (
+                SELECT 1 FROM categories hidden_parent
+                WHERE hidden_parent.id = c.parent_id AND hidden_parent.hide_in_pos = 1
+            )`;
+        const gridProductCondition = `(p.category_id IS NULL OR (${visibleCategoryCondition}))
+            AND NOT EXISTS (SELECT 1 FROM product_packs sale_pack WHERE sale_pack.sale_product_id = p.id)`;
+        const gridCategorySql = ` AND ${visibleCategoryCondition}`;
+        const gridProductSql = ` AND ${gridProductCondition}`;
+
         // A committed catalog mutation can invalidate a cold read while its queries
         // are still in flight. Retry that read under the new generation so neither
         // the owner nor callers sharing its promise receive a stale snapshot.
@@ -143,7 +154,7 @@ router.get('/products', requireAuth, async (req, res) => {
                     categoryFilterIds = [subcategoryId];
                 } else if (selectedCategoryId) {
                     const [subRows] = await pool.query(
-                        `SELECT c.id FROM categories c WHERE c.parent_id = ? AND c.is_active = 1${categoryContextSql}`,
+                        `SELECT c.id FROM categories c WHERE c.parent_id = ? AND c.is_active = 1${categoryContextSql}${gridCategorySql}`,
                         [selectedCategoryId]
                     );
                     categoryFilterIds = [selectedCategoryId, ...subRows.map(r => r.id)];
@@ -160,7 +171,7 @@ router.get('/products', requireAuth, async (req, res) => {
                 pool.query(`
                     SELECT c.*
                     FROM categories c
-                    WHERE c.is_active = 1${categoryContextSql}
+                    WHERE c.is_active = 1${categoryContextSql}${gridCategorySql}
                     ORDER BY id ASC
                 `),
                 getSettings(pool, POS_CATALOG_SETTING_KEYS),
@@ -168,7 +179,7 @@ router.get('/products', requireAuth, async (req, res) => {
                     SELECT p.category_id, COUNT(*) AS total
                     FROM products p
                     LEFT JOIN categories c ON c.id = p.category_id
-                    WHERE p.is_active = 1${productContextSql}
+                    WHERE p.is_active = 1${productContextSql}${gridProductSql}
                     GROUP BY p.category_id
                 `)
             ]);
@@ -213,9 +224,12 @@ router.get('/products', requireAuth, async (req, res) => {
             where.push(`(p.name LIKE ? OR p.barcode LIKE ? OR p.sku LIKE ? OR p.id = ${EXTRA_OWNER_IDS_SQL})`);
             const query = `%${search}%`;
             params.push(query, query, query, search);
-        } else if (categoryFilterIds.length > 0) {
-            where.push(`p.category_id IN (${categoryFilterIds.map(() => '?').join(',')})`);
-            params.push(...categoryFilterIds);
+        } else {
+            if (categoryFilterIds.length > 0) {
+                where.push(`p.category_id IN (${categoryFilterIds.map(() => '?').join(',')})`);
+                params.push(...categoryFilterIds);
+            }
+            where.push(gridProductCondition);
         }
 
         const whereSql = where.join(' AND ');

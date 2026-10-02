@@ -617,7 +617,7 @@ describe('stock documents', () => {
     // Must stay the last block: it drops and recreates the shared tables.
     describe('upgrade from the old invoice tables', () => {
         it('keeps posted invoices reversible with their ids, amounts and stock movements, and gives each its kind', async () => {
-            const names = ['2026-10-01-stock-documents-v1', '2026-10-02-purchase-item-kind-v1'];
+            const names = ['2026-10-01-stock-documents-v1', '2026-10-02-purchase-item-kind-v1', '2026-10-04-packaging-units-v1'];
             const chain = names.map((name) => migrations.migrations.find((row) => row.name === name));
             const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'posapp-sd-upgrade-'));
             fs.writeFileSync(path.join(dir, 'manifest.json'), JSON.stringify({ migrations: chain }));

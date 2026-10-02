@@ -262,8 +262,8 @@ html[dir="ltr"] .pi-flip { transform: scaleX(-1); }
 .lg-row {
     position: relative;
     display: grid;
-    grid-template-columns: var(--lg-margin) minmax(150px, 1fr) 76px 104px 112px 72px 100px 34px;
-    grid-template-areas: "no item qty unit price tax total del";
+    grid-template-columns: var(--lg-margin) minmax(150px, 1fr) 76px 104px 64px 112px 72px 100px 34px;
+    grid-template-areas: "no item qty unit bonus price tax total del";
     grid-template-rows: var(--lg-line);
     align-items: center;
     height: var(--lg-line);
@@ -276,6 +276,7 @@ html[dir="ltr"] .pi-flip { transform: scaleX(-1); }
 .lg-c-item { grid-area: item; min-width: 0; padding-inline: 8px 4px; }
 .lg-c-qty { grid-area: qty; }
 .lg-c-unit { grid-area: unit; }
+.lg-c-bonus { grid-area: bonus; }
 .lg-c-price { grid-area: price; position: relative; }
 .lg-c-tax { grid-area: tax; }
 .lg-c-total { grid-area: total; padding-inline: 8px; text-align: end; font-weight: 800; font-variant-numeric: tabular-nums; }
@@ -315,7 +316,7 @@ select.lg-cell {
 }
 html[dir="ltr"] select.lg-cell { background-position: right 8px center; }
 select.lg-cell:disabled, .lg-book--posted select.lg-cell, .lg-book--reversed select.lg-cell { background-image: none; cursor: default; }
-.lg-row.is-empty .lg-c-qty, .lg-row.is-empty .lg-c-unit, .lg-row.is-empty .lg-c-price, .lg-row.is-empty .lg-c-tax { visibility: hidden; }
+.lg-row.is-empty .lg-c-qty, .lg-row.is-empty .lg-c-unit, .lg-row.is-empty .lg-c-bonus, .lg-row.is-empty .lg-c-price, .lg-row.is-empty .lg-c-tax { visibility: hidden; }
 
 /* Price change: a small pencilled note at the far edge of the price cell. */
 .lg-delta {
@@ -553,16 +554,16 @@ select.lg-cell:disabled, .lg-book--posted select.lg-cell, .lg-book--reversed sel
 @container ledger (max-width: 740px) {
     .lg-row--head { display: none; }
     .lg-row:not(.lg-add) {
-        grid-template-columns: var(--lg-margin) repeat(3, minmax(0, 1fr)) 72px 34px;
+        grid-template-columns: var(--lg-margin) repeat(4, minmax(0, 1fr)) 72px 34px;
         grid-template-areas:
-            "no item item item total del"
-            "no qty unit price tax tax";
+            "no item item item item total del"
+            "no qty unit bonus price tax tax";
         grid-template-rows: var(--lg-line) var(--lg-line);
         height: calc(var(--lg-line) * 2);
         background: linear-gradient(to bottom, transparent calc(var(--lg-line) - 1px), var(--rule) calc(var(--lg-line) - 1px) var(--lg-line), transparent var(--lg-line));
     }
     .lg-row.is-empty:not(.lg-add) { grid-template-rows: var(--lg-line) 0; height: var(--lg-line); background: none; }
-    .lg-row.is-empty .lg-c-qty, .lg-row.is-empty .lg-c-unit, .lg-row.is-empty .lg-c-price, .lg-row.is-empty .lg-c-tax { display: none; }
+    .lg-row.is-empty .lg-c-qty, .lg-row.is-empty .lg-c-unit, .lg-row.is-empty .lg-c-bonus, .lg-row.is-empty .lg-c-price, .lg-row.is-empty .lg-c-tax { display: none; }
     .lg-add-text .lg-kbd { display: none; }
 }
 /* Phone-narrow: three ruled lines per item so every value keeps a readable width. */
@@ -572,7 +573,7 @@ select.lg-cell:disabled, .lg-book--posted select.lg-cell, .lg-book--reversed sel
         grid-template-areas:
             "no item item del"
             "no qty unit price"
-            "no tax total total";
+            "no bonus tax total";
         grid-template-rows: var(--lg-line) var(--lg-line) var(--lg-line);
         height: calc(var(--lg-line) * 3);
         background: repeating-linear-gradient(to bottom, transparent 0 calc(var(--lg-line) - 1px), var(--rule) calc(var(--lg-line) - 1px) var(--lg-line));

@@ -92,9 +92,8 @@
                             <span aria-hidden="true"></span>
                             <span class="ct-group-text" role="cell"><span data-no-i18n>{{ section.label }}</span> <bdi class="pi-num" data-no-i18n>{{ section.counted }} / {{ section.lines.length }}</bdi></span>
                         </div>
+                        <template v-for="line in section.lines" :key="line.id">
                         <div
-                            v-for="line in section.lines"
-                            :key="line.id"
                             class="ct-row"
                             :class="{ 'is-hl': highlightId === line.id, 'is-done': isCounted(line), 'is-bad': marker(line) === 'error' || marker(line) === 'invalid' }"
                             role="row"
@@ -114,14 +113,18 @@
                                     :disabled="loading"
                                     :aria-label="`${$t('Counted quantity')}: ${line.name}`"
                                     :data-qty="line.id"
+                                    :readonly="Boolean(line.mix)"
                                     @input="onQtyInput(line)"
                                     @keydown.enter.prevent="onQtyEnter($event, line)"
                                 >
                             </div>
                             <div class="ct-c-unit" role="cell">
-                                <select class="lg-cell" :value="unitKey(currentUnit(line))" :disabled="loading" :aria-label="`${$t('Unit')}: ${line.name}`" @change="onUnitChange(line, $event.target.value)">
+                                <select class="lg-cell" :value="unitKey(currentUnit(line))" :disabled="loading || Boolean(line.mix)" :aria-label="`${$t('Unit')}: ${line.name}`" @change="onUnitChange(line, $event.target.value)">
                                     <option v-for="option in unitOptions(line)" :key="unitKey(option)" :value="unitKey(option)" data-no-i18n>{{ unitText(option, line) }}</option>
                                 </select>
+                                <button v-if="unitOptions(line).length > 1" type="button" class="ct-mix-toggle" :class="{ 'is-on': line.mix }" :disabled="loading" :aria-expanded="Boolean(line.mix)" :title="$t('Count in several units')" :aria-label="`${$t('Count in several units')}: ${line.name}`" @click="toggleMix(line)">
+                                    <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+                                </button>
                             </div>
                             <div class="ct-c-meta" role="cell">
                                 <span v-if="marker(line) === 'pending'" class="ct-dot" role="status" :title="$t('Saving...')"><span class="sr-only">{{ $t('Saving...') }}</span></span>
@@ -132,6 +135,15 @@
                                 <span v-else-if="line.counted_at" class="ct-by" data-no-i18n>{{ byText(line) }}</span>
                             </div>
                         </div>
+                        <div v-if="line.mix" class="ct-mix" role="group" :aria-label="`${$t('Count in several units')}: ${line.name}`">
+                            <span class="ct-c-no" aria-hidden="true"></span>
+                            <label v-for="option in unitOptions(line)" :key="unitKey(option)" class="ct-mix-part">
+                                <input v-model="line.mix[unitKey(option)]" class="lg-cell lg-cell--num" type="text" inputmode="decimal" autocomplete="off" placeholder="0" :disabled="loading" @input="onMixInput(line)">
+                                <span data-no-i18n>{{ unitText(option, line) }}</span>
+                            </label>
+                            <span class="ct-mix-total">= <bdi class="pi-num" data-no-i18n>{{ parseQty(line.qty).state === 'ok' ? trimQty(line.qty) : '—' }}</bdi> <span data-no-i18n>{{ unitText(baseOption(line), line) }}</span></span>
+                        </div>
+                        </template>
                     </template>
                     <p v-if="!loading && !sections.length" class="lg-note ct-empty">{{ lines.length ? $t('No items match this view.') : $t('This count has no items yet.') }}</p>
                     <div class="lg-spare" aria-hidden="true"></div>
@@ -175,7 +187,7 @@ import { t } from '@/shared/i18n.js';
 import { isUnansweredRequest } from '@/shared/http.js';
 import { formatReportBusinessTime } from '../../utils/reportFormatting.js';
 import { countsApi, describeError } from './countsApi.js';
-import { MAX_BATCH, canonQty, groupName, trimFactor, nextIndex, parseQty, sameUnit, trimQty, unitKey, unitOptionText } from './countMath.js';
+import { MAX_BATCH, canonQty, groupName, mixedBaseQty, trimFactor, nextIndex, parseQty, sameUnit, trimQty, unitKey, unitOptionText } from './countMath.js';
 import './counts.css';
 
 const props = defineProps({
@@ -242,6 +254,7 @@ function lineView(line) {
         counted_at: line.counted_at || null,
         counted_by_name: line.counted_by_name || '',
         saved: { qty, unit_label: line.unit_label, unit_factor: String(line.unit_factor) },
+        mix: null,
         status: 'idle',
     };
 }
@@ -424,6 +437,28 @@ function onQtyInput(line) {
     note.value = '';
     if (line.status === 'error') line.status = 'idle';
     scheduleSave();
+}
+// The base unit (factor 1) a mixed count is saved in.
+const baseOption = (line) => unitOptions(line).find(option => trimFactor(option.factor) === '1' && option.label === line.base_unit)
+    || { label: line.base_unit, factor: '1' };
+function toggleMix(line) {
+    if (line.mix) {
+        line.mix = null;
+        return;
+    }
+    const mix = Object.fromEntries(unitOptions(line).map(option => [unitKey(option), '']));
+    // Start from what is already written, in its unit.
+    if (parseQty(line.qty).state === 'ok') mix[unitKey(currentUnit(line))] = line.qty;
+    line.mix = mix;
+}
+function onMixInput(line) {
+    const parts = unitOptions(line).map(option => ({ qty: line.mix[unitKey(option)], factor: option.factor }));
+    const total = mixedBaseQty(parts);
+    const base = baseOption(line);
+    line.unit_label = base.label;
+    line.unit_factor = String(base.factor);
+    line.qty = total.state === 'ok' ? trimQty(total.value) : total.state === 'invalid' ? '?' : '';
+    onQtyInput(line);
 }
 function onUnitChange(line, key) {
     const option = unitOptions(line).find(candidate => unitKey(candidate) === key);

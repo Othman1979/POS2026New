@@ -25,6 +25,7 @@ const stockActivation = require('../../services/StockActivationService');
 const { announceStockChanged } = require('../../services/StockEventScope');
 const stockRead = require('../../services/StockReadService');
 const productBarcodes = require('../../services/productBarcodes');
+const productPacks = require('../../services/ProductPacks');
 const {
     grossToNet,
     collectCategorySubtree,
@@ -453,7 +454,9 @@ router.all('/products', async (req, res) => {
                 }
 
                 const [threshRows] = await pool.query("SELECT setting_value FROM settings WHERE setting_key = 'low_stock_threshold'");
-                const threshold = threshRows.length > 0 ? parseInt(threshRows[0].setting_value, 10) : 3;
+                const rawThreshold = threshRows[0]?.setting_value;
+                const parsedThreshold = rawThreshold != null && String(rawThreshold).trim() !== '' ? Number(rawThreshold) : Number.NaN;
+                const threshold = Number.isFinite(parsedThreshold) && parsedThreshold >= 0 ? parsedThreshold : 3;
 
                 if (stockStatus === 'low') {
                     where.push(`${availabilitySql('p')} <= ?`);
@@ -484,7 +487,8 @@ router.all('/products', async (req, res) => {
 
                 const [products] = await pool.query(`
                     SELECT p.*, ${availabilitySql('p')} AS stock, c.name as category_name,
-                    (SELECT CAST(MIN(stock_item_id) AS CHAR) FROM product_stock_links WHERE product_id=p.id) AS stock_item_id
+                    (SELECT CAST(MIN(stock_item_id) AS CHAR) FROM product_stock_links WHERE product_id=p.id) AS stock_item_id,
+                    (SELECT pk.product_id FROM product_packs pk WHERE pk.sale_product_id=p.id) AS pack_of_product_id
                     FROM products p
                     LEFT JOIN categories c ON p.category_id = c.id
 
@@ -515,7 +519,8 @@ router.all('/products', async (req, res) => {
 
             const [products] = await pool.query(`
                 SELECT p.*, ${availabilitySql('p')} AS stock, c.name as category_name,
-                    (SELECT CAST(MIN(stock_item_id) AS CHAR) FROM product_stock_links WHERE product_id=p.id) AS stock_item_id
+                    (SELECT CAST(MIN(stock_item_id) AS CHAR) FROM product_stock_links WHERE product_id=p.id) AS stock_item_id,
+                    (SELECT pk.product_id FROM product_packs pk WHERE pk.sale_product_id=p.id) AS pack_of_product_id
                 FROM products p
                 LEFT JOIN categories c ON p.category_id = c.id
 
@@ -704,9 +709,11 @@ router.all('/products', async (req, res) => {
                     // shared identities retain their physical name and status.
                     await conn.query(`UPDATE stock_items s JOIN products p ON p.id=s.legacy_product_id
                         SET s.name=p.name,s.barcode=p.barcode,s.is_active=p.is_active
-                        WHERE p.id=? AND (SELECT COUNT(*) FROM product_stock_links l WHERE l.stock_item_id=s.id)<=1`,[data.id]);
+                        WHERE p.id=? AND (SELECT COUNT(*) FROM product_stock_links l WHERE l.stock_item_id=s.id
+                            AND NOT EXISTS (SELECT 1 FROM product_packs sp WHERE sp.sale_product_id=l.product_id))<=1`,[data.id]);
                     await refreshAttention(conn,identities.map(row=>row.id));
                 }
+                if (has('is_active')) await productPacks.syncSaleProductsActive(conn, data.id, data.is_active);
                 if (extraBarcodes !== undefined) await productBarcodes.replaceExtras(conn, data.id, extraBarcodes);
                 if (has('stock')) await appendAuditEvent(conn, {
                     eventType: 'stock_adjusted', userId: req.user?.id || null, entityType: 'product', entityId: data.id,
@@ -765,9 +772,11 @@ router.all('/products', async (req, res) => {
             try {
                 await conn.beginTransaction();
                 await conn.query('UPDATE products SET is_active=0 WHERE id=?',[req.body.id]);
+                await productPacks.syncSaleProductsActive(conn, req.body.id, false);
                 const [identities]=await conn.query('SELECT id FROM stock_items WHERE legacy_product_id=? ORDER BY id FOR UPDATE',[req.body.id]);
                 await conn.query(`UPDATE stock_items s SET s.is_active=0 WHERE s.legacy_product_id=?
-                    AND (SELECT COUNT(*) FROM product_stock_links l WHERE l.stock_item_id=s.id)<=1`,[req.body.id]);
+                    AND (SELECT COUNT(*) FROM product_stock_links l WHERE l.stock_item_id=s.id
+                            AND NOT EXISTS (SELECT 1 FROM product_packs sp WHERE sp.sale_product_id=l.product_id))<=1`,[req.body.id]);
                 await refreshAttention(conn,identities.map(row=>row.id));
                 await conn.commit();
             } catch(error){await conn.rollback();throw error;}finally{conn.release();}
@@ -816,6 +825,7 @@ router.all('/categories', async (req, res) => {
             }
             const parentId = optionalCategoryId(req.body.parent_id);
             const isNotes = requestBoolean(req.body, 'is_notes', false) ? 1 : 0;
+            const hideInPos = requestBoolean(req.body, 'hide_in_pos', false) ? 1 : 0;
             const isRoot = requestBoolean(req.body, 'is_price_list_root', false);
             if (isRoot && parentId != null) return sendError(res, 400, 'A price-list root must be top-level.');
             if (isRoot && isNotes) return sendError(res, 400, 'A notes category cannot be a price-list root.');
@@ -826,8 +836,8 @@ router.all('/categories', async (req, res) => {
                 await conn.beginTransaction();
                 const inheritedRootId = isRoot ? null : await inheritedRootForParent(conn, parentId);
                 const [result] = await conn.query(
-                    'INSERT INTO categories (name, parent_id, is_notes, price_list_root_id) VALUES (?, ?, ?, ?)',
-                    [name, parentId, isNotes, inheritedRootId]
+                    'INSERT INTO categories (name, parent_id, is_notes, hide_in_pos, price_list_root_id) VALUES (?, ?, ?, ?, ?)',
+                    [name, parentId, isNotes, hideInPos, inheritedRootId]
                 );
                 categoryId = Number(result.insertId);
                 if (isRoot) {
@@ -838,7 +848,7 @@ router.all('/categories', async (req, res) => {
                     userId: req.user?.id || null,
                     entityType: 'category',
                     entityId: categoryId,
-                    newValue: { name, parent_id: parentId, is_price_list_root: isRoot ? 1 : 0 },
+                    newValue: { name, parent_id: parentId, hide_in_pos: hideInPos, is_price_list_root: isRoot ? 1 : 0 },
                     ipAddress: req.ip || null
                 });
                 await conn.commit();
@@ -865,7 +875,7 @@ router.all('/categories', async (req, res) => {
                 await conn.beginTransaction();
                 // ponytail: the catalog is intentionally loaded once; use a recursive CTE only if category scale makes this measurable.
                 const [categories] = await conn.query(
-                    'SELECT id, parent_id, name, is_active, is_notes, price_list_root_id FROM categories ORDER BY id FOR UPDATE'
+                    'SELECT id, parent_id, name, is_active, is_notes, hide_in_pos, price_list_root_id FROM categories ORDER BY id FOR UPDATE'
                 );
                 const categoriesById = new Map(categories.map(row => [Number(row.id), row]));
                 const current = categoriesById.get(categoryId);
@@ -882,6 +892,7 @@ router.all('/categories', async (req, res) => {
 
                 const isNotes = requestBoolean(req.body, 'is_notes', Number(current.is_notes) === 1) ? 1 : 0;
                 const isActive = requestBoolean(req.body, 'is_active', Number(current.is_active) === 1) ? 1 : 0;
+                const hideInPos = requestBoolean(req.body, 'hide_in_pos', Number(current.hide_in_pos) === 1) ? 1 : 0;
                 const wasRoot = Number(current.price_list_root_id) === categoryId;
                 const rootIntent = requestBoolean(req.body, 'is_price_list_root', wasRoot);
                 if (rootIntent && parentId != null) throw categoryError(400, 'A price-list root must be top-level.');
@@ -897,17 +908,18 @@ router.all('/categories', async (req, res) => {
                             parent_id = CASE WHEN id = ? THEN ? ELSE parent_id END,
                             is_active = CASE WHEN id = ? THEN ? ELSE is_active END,
                             is_notes = CASE WHEN id = ? THEN ? ELSE is_notes END,
+                            hide_in_pos = CASE WHEN id = ? THEN ? ELSE hide_in_pos END,
                             price_list_root_id = ?
                       WHERE id IN (${placeholders})`,
-                    [categoryId, name, categoryId, parentId, categoryId, isActive, categoryId, isNotes, inheritedRootId, ...subtreeIds]
+                    [categoryId, name, categoryId, parentId, categoryId, isActive, categoryId, isNotes, categoryId, hideInPos, inheritedRootId, ...subtreeIds]
                 );
                 await appendAuditEvent(conn, {
                     eventType: 'category_updated',
                     userId: req.user?.id || null,
                     entityType: 'category',
                     entityId: categoryId,
-                    oldValue: { name: current.name, parent_id: current.parent_id, price_list_root_id: current.price_list_root_id },
-                    newValue: { name, parent_id: parentId, price_list_root_id: inheritedRootId, subtree_ids: subtreeIds },
+                    oldValue: { name: current.name, parent_id: current.parent_id, hide_in_pos: current.hide_in_pos, price_list_root_id: current.price_list_root_id },
+                    newValue: { name, parent_id: parentId, hide_in_pos: hideInPos, price_list_root_id: inheritedRootId, subtree_ids: subtreeIds },
                     ipAddress: req.ip || null
                 });
                 await conn.commit();
