@@ -15,7 +15,7 @@ beforeEach(async () => {
     vi.stubGlobal('document', { visibilityState: 'visible' });
     vi.stubGlobal('fetch', vi.fn(async (url, options) => {
         requests.push({ url, method: options?.method || 'GET', body: options?.body ?? null });
-        if (url === RESET_URL) return { json: async () => resetResponse };
+        if (url === RESET_URL || url === '/api/admin/maintenance/factory-reset') return { json: async () => resetResponse };
         return { json: async () => url === 'api/system/settings' ? { success: true } : { success: false } };
     }));
     page = scope.run(() => Settings.setup());
@@ -68,6 +68,35 @@ describe('Settings operational reset', () => {
         await page.resetOperationalData();
 
         expect(window.showAdminAlert).toHaveBeenCalledWith('Wrong maintenance password.');
+        expect(page.maintenancePassword.value).toBe('venue-secret');
+    });
+});
+
+describe('Settings factory reset', () => {
+    const FACTORY_URL = '/api/admin/maintenance/factory-reset';
+    const factoryRequests = () => requests.filter(({ url }) => url === FACTORY_URL);
+
+    it('asks for confirmation and sends the password to the factory reset endpoint', async () => {
+        window.confirm = vi.fn(() => true);
+        page.maintenanceScope.value = 'factory';
+        page.maintenancePassword.value = 'venue-secret';
+
+        await page.resetOperationalData();
+
+        expect(window.confirm).toHaveBeenCalledTimes(1);
+        expect(factoryRequests()).toEqual([{ url: FACTORY_URL, method: 'POST', body: JSON.stringify({ password: 'venue-secret' }) }]);
+        expect(resetRequests()).toEqual([]);
+        expect(page.maintenancePassword.value).toBe('');
+    });
+
+    it('does nothing when the confirmation is declined', async () => {
+        window.confirm = vi.fn(() => false);
+        page.maintenanceScope.value = 'factory';
+        page.maintenancePassword.value = 'venue-secret';
+
+        await page.resetOperationalData();
+
+        expect(factoryRequests()).toEqual([]);
         expect(page.maintenancePassword.value).toBe('venue-secret');
     });
 });

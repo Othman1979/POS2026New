@@ -3563,5 +3563,12 @@
   "Unable to save the packs.": "تعذّر حفظ العبوات.",
   "A bundle cannot have packs.": "لا يمكن إضافة عبوات لمنتج مجمّع.",
   "This product is the sale entry of a pack; edit the packs of its base product instead.": "هذا المنتج صنف بيع لعبوة؛ عدّل عبوات المنتج الأساسي بدلاً منه.",
-  "This product takes its stock from several items, so its packs cannot be sold.": "يأخذ هذا المنتج رصيده من أكثر من مادة، لذلك لا يمكن بيع عبواته."
+  "This product takes its stock from several items, so its packs cannot be sold.": "يأخذ هذا المنتج رصيده من أكثر من مادة، لذلك لا يمكن بيع عبواته.",
+  "Operational data only": "الحركات التشغيلية فقط",
+  "Full reset (fresh start)": "تهيئة كاملة (كبرنامج جديد)",
+  "Also deletes all products, categories, packs, ingredients, recipes, suppliers, customers, purchase invoices, stock counts, stock movements and the activity log. Users, permissions, settings, order types, tables and printers stay.": "يحذف أيضاً كل المواد والمجموعات والعبوات والمواد الأولية والوصفات والموردين والعملاء وفواتير الشراء والجرد وحركات المخزون وسجل النشاط. يبقى المستخدمون والصلاحيات والإعدادات وأنواع الطلبات والطاولات والطابعات.",
+  "Reset the whole system": "تهيئة النظام بالكامل",
+  "This deletes all products, categories, stock and sales permanently. Continue?": "سيتم حذف كل المواد والمجموعات والمخزون والمبيعات نهائياً. هل تريد المتابعة؟",
+  "The system was reset to a fresh start.": "تمت تهيئة النظام كبرنامج جديد.",
+  "Unable to reset the system.": "تعذرت تهيئة النظام."
 }
